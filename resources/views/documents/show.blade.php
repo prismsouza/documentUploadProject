@@ -1,22 +1,16 @@
 @extends ('layout')
 
 @section ('content')
-    <div id="wrapper">
-        <div id="page" class="container">
             <div id="content">
+                <b>Title</b>
                 <div class="title">
-                    <h2>{{ $article->title }}</h2>
+                    <h2>{{ $document->title }}</h2>
                 </div>
-                <p>
-                    <img
-                        src="/images/banner.jpg"
-                        alt=""
-                        class="image image-full" />
-                </p>
 
-                {{ $article->body }}
+                <p><b>Excerpt: </b>{{ $document->excerpt }}</p>
+                <p><b>File Path:</b> {{ $document->file_path }}</p>
+                <p><b>Author Cod:</b> {{ $document->author_cod }}</p>
 
+                <a href="{{ url('/view/'.$document->file_path)}}" > Download</a>
             </div>
-        </div>
-    </div>
 @endsection

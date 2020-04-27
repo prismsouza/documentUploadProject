@@ -13,18 +13,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/documents', function () {
+Route::get('/', function () {
     return view('home');
 });
 
-Route::get('/home', function () {
-    return view('home');
-});
-
-Route::get('/documents', 'DocumentsController@index');//->name('documents.index');
+Route::get('/documents', 'DocumentsController@index')->name('documents.index');
 Route::post('/documents', 'DocumentsController@store');
 Route::get('/documents/create', 'DocumentsController@create');
-Route::get('/documents/{document}', 'DocumentsController@show');//->name('articles.show');
+Route::get('/documents/{document}', 'DocumentsController@show')->name('documents.show');
 Route::get('/documents/{document}/edit', 'DocumentsController@edit');
 Route::put('/documents/{document}', 'DocumentsController@update');
 

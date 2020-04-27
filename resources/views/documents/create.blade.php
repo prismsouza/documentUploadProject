@@ -7,9 +7,9 @@
 @section ('content')
     <div id="wrapper">
         <div id="page" class="container">
-            <h1 class="heading has-text-weight-bold is-size-4">New Article</h1>
+            <h1 class="heading has-text-weight-bold is-size-4">New Document</h1>
 
-            <form method="POST" action="/articles">
+            <form method="POST" action="/documents">
                 @csrf
                 <div class="field">
                     <label class="label" for="title">Title</label>
@@ -32,12 +32,12 @@
                     <label class="label" for="excerpt">Excerpt</label>
 
                     <div class="control">
-                        <textarea
-                            class="textarea @error('excerpt') is-danger @enderror"
+                        <input
+                            class="input @error('excerpt') is-danger @enderror"
+                            type="text"
                             name="excerpt"
                             id="excerpt"
                             value="{{ old('excerpt') }}">
-                        </textarea>
 
                         @error('excerpt')
                             <p class="help is-danger">{{ $errors->first('excerpt') }}</p>
@@ -46,18 +46,28 @@
                 </div>
 
                 <div class="field">
-                    <label class="label" for="body">Body</label>
+                    <label for="file_path">Upload a document</label><br>
+                    <input
+                        class="input @error('file_path') is-danger @enderror form-control"
+                        type="file"
+                        name="file_path"
+                        id="file_path"
+                        value="{{ old('file_path') }}">
+                </div>
+
+                <div class="field">
+                    <label class="label" for="author_cod">Author</label>
 
                     <div class="control">
-                        <textarea
-                            class="textarea @error('body') is-danger @enderror"
-                            name="body"
-                            id="body"
-                            value="{{ old('body') }}">
-                        </textarea>
+                        <input
+                            class="input @error('author_cod') is-danger @enderror"
+                            type="text"
+                            name="author_cod"
+                            id="author_cod"
+                            value="{{ old('author_cod') }}">
 
-                        @error('body')
-                            <p class="help is-danger">{{ $errors->first('body') }}</p>
+                        @error('title')
+                        <p class="help is-danger">{{ $errors->first('author_cod') }}</p>
                         @enderror
                     </div>
                 </div>
@@ -69,6 +79,7 @@
                 </div>
 
             </form>
+
         </div>
     </div>
 @endsection

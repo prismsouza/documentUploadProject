@@ -1,29 +1,19 @@
-@extends ('layout')
+@extends('layout')
+@section('content')
 
-@section ('content')
-    <div id="wrapper">
-        <div id="page" class="container">
+<div id="content">
+@foreach($documents as $document)
+    <div class="title">
+        <h3>
+            <a href="{{ $document->path()  }}">
+                {{ $document->title }}
+            </a>
+        </h3>
+     </div>
+    <p>
+        {{ $document->excerpt }}
+    </p>
 
-            @foreach($articles as $article)
-            <div id="content">
-                <div class="title">
-                    <h3>
-                        <a href="{{ $article->path()  }}">
-                            {{ $article->title }}
-                        </a>
-                    </h3>
-                </div>
-                <p>
-                    <img
-                        src="/images/banner.jpg"
-                        alt=""
-                        class="image image-full" />
-                </p>
-                <p>
-                    {{ $article->excerpt }}
-                </p>
-                @endforeach
-            </div>
-        </div>
-    </div>
+@endforeach
+</div>
 @endsection
