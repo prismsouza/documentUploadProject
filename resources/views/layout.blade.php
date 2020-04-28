@@ -1,5 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 
+<?php $themes = App\Theme::all(); ?>
+
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -7,44 +9,43 @@
     <meta name="keywords" content="" />
     <meta name="description" content="" />
     <link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,600,700,900" rel="stylesheet" />
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.16.0/css/mdb.min.css" rel="stylesheet">
+
     <link href="/css/default.css" rel="stylesheet" />
     <link href="/css/fonts.css" rel="stylesheet" />
 </head>
 
 <body>
-<div id="header-wrapper">
-    <div id="header" class="container">
-        <div id="logo">
-            <h1><a href="/documents">CBMMG Documents</a></h1>
-        </div>
-    </div>
-</div>
+
+@include('header')
 
 <div id="wrapper">
-    <div id="page" class="container">
-        <div id="content">
+    <div id="page" class="container row">
+
+        <div class="col-10">
             @yield('content')
         </div>
-        <div id="sidebar">
-            <ul class="style2">
-                <h2>Filters</h2>
+        <div class="col-2 text-center bg-white light lighten-1">
+
+            <ul class="nav nav-tabs flex-column lighten-4 py-4 ">
+                <li class="nav-item nav-link active"><h3>Temas</h3></li>
+                <li class="nav-item"><a class="nav-link" href="/documents">Todos</a>
+                </li>
                 @foreach($themes as $theme)
-                    <li>
-                        <h3>
-                            <a href={{ $theme->path() }}>
-                                {{ $theme->title }}
-                            </a>
-                        </h3>
-                    </li>
+                <li class="nav-item">
+                    <a class="nav-link" href={{ $theme->path() }}>{{ $theme->title }}</a>
+                </li>
+
                 @endforeach
             </ul>
         </div>
-
     </div>
 </div>
 
+@include('footer')
 
-<div id="copyright" class="container">
-    <p>&copy; Untitled. All rights reserved. | Photos by <a href="http://fotogrph.com/">Fotogrph</a> | Design by <a href="http://templated.co" rel="nofollow">TEMPLATED</a>.</p>
-</div>
 </body>

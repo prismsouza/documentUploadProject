@@ -11,18 +11,18 @@ class DocumentsController extends Controller
     public function index()
     {
         $documents = Document::all();
-        return view('documents.index', ['documents' => $documents, 'themes' => Theme::all()]);
+        return view('documents.index', ['documents' => $documents, 'theme_option' =>null]);
     }
 
     public function home()
     {
         $documents = Document::latest();
-        return view('documents.home', ['documents' => $documents, 'themes' => Theme::all()]);
+        return view('documents.home', ['documents' => $documents]);
     }
 
     public function create()
     {
-        return view('documents.create', ['themes' => Theme::all()]);
+        return view('documents.create');
     }
 
     public function store(Request $request)
@@ -34,23 +34,25 @@ class DocumentsController extends Controller
     public function show(Document $document)
     {
         $themes = Theme::all();
-        return view('documents.show', ['document' => $document, 'themes' => $themes]);
+        return view('documents.show', ['document' => $document]);
     }
 
     public function showByTheme(Theme $theme)
     {
         $documents = $theme->documents;
-        return view('documents.index', ['documents' => $documents, 'themes' => Theme::all()]);
+        $theme_option = $theme->title;
+        return view('documents.index', ['documents' => $documents, 'theme_option' => $theme_option]);
     }
 
     public function edit(Document $document)
     {
-        //
+        return view('documents.edit', compact('document'));
     }
 
     public function update(Request $request, Document $document)
     {
-        //
+        $document->update($this->validateDocument());
+        return redirect($document->path());
     }
 
     public function destroy(Document $document)
@@ -61,7 +63,7 @@ class DocumentsController extends Controller
     public function validateDocument()
     {
         return request()->validate([
-            'theme_id' => 'required',
+
             'title' => 'required',
             'excerpt' => 'required',
             'file_path' => 'required',
