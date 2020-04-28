@@ -8,7 +8,7 @@ body
 {
 	margin: 0px;
 	padding: 0px;
-	background: #2b2b2b;
+	background: #1D2D3D;
 	font-family: 'Source Sans Pro', sans-serif;
 	font-size: 11pt;
 	font-weight: 300;
@@ -368,7 +368,7 @@ ul.contact li a.icon-rss:before
 
 #header-wrapper
 {
-	background: #2b2b2b url(../images/banner.jpg) no-repeat center;
+	background: #1D2D3D url(../images/banner2.jpg) no-repeat right;
 	background-size: auto 100%;
 }
 
@@ -385,7 +385,7 @@ ul.contact li a.icon-rss:before
 #logo
 {
 	position: absolute;
-	top: 6em;
+	top: 3em;
 	width: 100%;
 }
 
@@ -538,14 +538,16 @@ ul.contact li a.icon-rss:before
 
 #wrapper
 {
-	background: #FFF;
+    background: #F8F6F7 url('../images/bg-topo.jpg') no-repeat top center;
+	<!--background: #FFF;-->
 }
 
 #page
 {
+    background: #F8F6F7 url('../images/bg-topo.jpg') no-repeat top center;
 	overflow: hidden;
 	padding: 6em 0em 6em 0em;
-	background: #FFF;
+
 }
 
 #page .button
@@ -608,8 +610,9 @@ ul.contact li a.icon-rss:before
 #copyright
 {
 	overflow: hidden;
-	padding: 6em 0em 10em 0em;
+	padding: 6em 0em 2em 0em;
 	border-top: 1px solid rgba(255,255,255,0.08);
+    background: #1D2D3D;
 }
 
 #copyright p

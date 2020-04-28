@@ -22,27 +22,24 @@
 
 <div id="wrapper">
     <div id="page" class="container">
-        @yield('content')
+        <div id="content">
+            @yield('content')
+        </div>
         <div id="sidebar">
             <ul class="style2">
                 <h2>Filters</h2>
-                <li>
-                    <h3><a href="#">BGBM</a></h3>
-                </li>
-                <li>
-                    <h3><a href="#">Legislacoes</a></h3>
-                </li>
-                <li>
-                    <h3><a href="#">Tipo de Documento x</a></h3>
-                </li>
-                <li>
-                    <h3><a href="#">Tipo de Documento x+1</a></h3>
-                </li>
-                <li>
-                    <h3><a href="#">Tipo de Documento x+2</a></h3>
-                </li>
+                @foreach($themes as $theme)
+                    <li>
+                        <h3>
+                            <a href={{ $theme->path() }}>
+                                {{ $theme->title }}
+                            </a>
+                        </h3>
+                    </li>
+                @endforeach
             </ul>
         </div>
+
     </div>
 </div>
 

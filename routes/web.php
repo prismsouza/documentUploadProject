@@ -14,13 +14,19 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('home');
-});
+    $themes = \App\Theme::all();
+    return view('home', ['themes' => $themes]);
+})->name('documents.home');
 
+Route::get('/documents/themes/{theme}', 'DocumentsController@showByTheme')->name('documents_theme.index');
 Route::get('/documents', 'DocumentsController@index')->name('documents.index');
 Route::post('/documents', 'DocumentsController@store');
-Route::get('/documents/create', 'DocumentsController@create');
+Route::get('/documents/upload', 'DocumentsController@create');
 Route::get('/documents/{document}', 'DocumentsController@show')->name('documents.show');
 Route::get('/documents/{document}/edit', 'DocumentsController@edit');
 Route::put('/documents/{document}', 'DocumentsController@update');
+
+Route::get('/themes', 'ThemesController@index')->name('themes.index');
+Route::get('/themes/create', 'ThemesController@create');
+Route::post('/themes', 'ThemesController@store');
 

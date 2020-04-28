@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Document;
+use App\Theme;
 use Illuminate\Http\Request;
 
 class DocumentsController extends Controller
@@ -10,12 +11,18 @@ class DocumentsController extends Controller
     public function index()
     {
         $documents = Document::all();
-        return view('documents.index', ['documents' => $documents]);
+        return view('documents.index', ['documents' => $documents, 'themes' => Theme::all()]);
+    }
+
+    public function home()
+    {
+        $documents = Document::latest();
+        return view('documents.home', ['documents' => $documents, 'themes' => Theme::all()]);
     }
 
     public function create()
     {
-        return view('documents.create');
+        return view('documents.create', ['themes' => Theme::all()]);
     }
 
     public function store(Request $request)
@@ -26,7 +33,14 @@ class DocumentsController extends Controller
 
     public function show(Document $document)
     {
-        return view('documents.show', ['document' => $document]);
+        $themes = Theme::all();
+        return view('documents.show', ['document' => $document, 'themes' => $themes]);
+    }
+
+    public function showByTheme(Theme $theme)
+    {
+        $documents = $theme->documents;
+        return view('documents.index', ['documents' => $documents, 'themes' => Theme::all()]);
     }
 
     public function edit(Document $document)
@@ -47,10 +61,11 @@ class DocumentsController extends Controller
     public function validateDocument()
     {
         return request()->validate([
+            'theme_id' => 'required',
             'title' => 'required',
             'excerpt' => 'required',
             'file_path' => 'required',
-            'author_cod' => 'required'
+            'user_id' => 'required'
         ]);
     }
 

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateDocumentsTable extends Migration
+class CreateThemesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,10 @@ class CreateDocumentsTable extends Migration
      */
     public function up()
     {
-        Schema::create('documents', function (Blueprint $table) {
+        Schema::create('themes', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('theme_id');
-            $table->foreign('theme_id')->references('id')->on('themes');
             $table->string('title');
-            $table->text('excerpt');
-            $table->text('file_path');
-            $table->integer('user_id');
+            $table->text('description');
 
             $table->timestamps();
         });
@@ -33,6 +29,6 @@ class CreateDocumentsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('documents');
+        Schema::dropIfExists('themes');
     }
 }

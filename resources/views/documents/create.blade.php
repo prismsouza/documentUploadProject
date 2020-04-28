@@ -5,12 +5,28 @@
 @endsection
 
 @section ('content')
-    <div id="wrapper">
-        <div id="page" class="container">
+    <div id="content">
             <h1 class="heading has-text-weight-bold is-size-4">New Document</h1>
 
             <form method="POST" action="/documents">
                 @csrf
+                <div class="field">
+                    <label class="label" for="theme_id">Theme ID</label>
+
+                    <div class="control">
+                        <input
+                            class="input @error('theme_id') is-danger @enderror"
+                            type="text"
+                            name="theme_id"
+                            id="theme_id"
+                            value="{{ old('theme_id') }}">
+
+                        @error('theme_id')
+                        <p class="help is-danger">{{ $errors->first('theme_id') }}</p>
+                        @enderror
+                    </div>
+                </div>
+
                 <div class="field">
                     <label class="label" for="title">Title</label>
 
@@ -56,18 +72,18 @@
                 </div>
 
                 <div class="field">
-                    <label class="label" for="author_cod">Author</label>
+                    <label class="label" for="user_id">User ID</label>
 
                     <div class="control">
                         <input
-                            class="input @error('author_cod') is-danger @enderror"
+                            class="input @error('user_id') is-danger @enderror"
                             type="text"
-                            name="author_cod"
-                            id="author_cod"
-                            value="{{ old('author_cod') }}">
+                            name="user_id"
+                            id="user_id"
+                            value="{{ old('user_id') }}">
 
-                        @error('title')
-                        <p class="help is-danger">{{ $errors->first('author_cod') }}</p>
+                        @error('user_id')
+                        <p class="help is-danger">{{ $errors->first('user_id') }}</p>
                         @enderror
                     </div>
                 </div>
@@ -80,6 +96,5 @@
 
             </form>
 
-        </div>
     </div>
 @endsection

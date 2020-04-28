@@ -1,7 +1,6 @@
 @extends('layout')
 @section('content')
 
-<div id="content">
 @foreach($documents as $document)
     <div class="title">
         <h3>
@@ -12,8 +11,7 @@
      </div>
     <p>
         {{ $document->excerpt }}
-    </p>
+    </p><br>
 
 @endforeach
-</div>
 @endsection
