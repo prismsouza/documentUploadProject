@@ -40,14 +40,16 @@
                     </div>
                 </div>
 
-                <div class="field">
-                    <label for="file_path">Upload a document</label><br>
+                <div class="field"><br>
+                    <label for="file_path">Replace document <b>{{ $document->file_path }}</b></label><br>
                     <input
-                        class="input"
-                        type="text"
+                        class="upload"
+                        type="file"
                         name="file_path"
                         id="file_path"
-                        value="{{ $document->file_path }}">
+                        accept=".pdf, application/pdf"
+                    >
+
                 </div>
 
                 <div class="field">

@@ -20,6 +20,9 @@ class CreateDocumentsTable extends Migration
             $table->string('title');
             $table->text('excerpt');
             $table->text('file_path');
+            //$table->date('date');
+            //$table->unsignedBigInteger('unit_id');
+            //$table->foreign('unit_id')->references('id')->on('units');
             $table->integer('user_id');
 
             $table->timestamps();

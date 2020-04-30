@@ -27,7 +27,7 @@ class DocumentsController extends Controller
 
     public function store(Request $request)
     {
-        Document::create($this->validateDocument());
+        Document::create($this->validateDocument(''));
         return redirect(route('documents.index'));
     }
 
@@ -51,19 +51,31 @@ class DocumentsController extends Controller
 
     public function update(Request $request, Document $document)
     {
-        $document->update($this->validateDocument());
+        if (!request('file_path'))
+            $document->update($this->validateDocument("dont_update_path"));
+        else
+            $document->update($this->validateDocument(''));
         return redirect($document->path());
     }
 
     public function destroy(Document $document)
     {
-        //
+        $document->delete();
+        return view('documents.index');
     }
 
-    public function validateDocument()
+    public function validateDocument($option)
     {
+        if ($option == "dont_update_path"){
+            return request()->validate([
+                'theme_id' => 'required',
+                'title' => 'required',
+                'excerpt' => 'required',
+                'user_id' => 'required'
+            ]);
+        }
         return request()->validate([
-
+            'theme_id' => 'required',
             'title' => 'required',
             'excerpt' => 'required',
             'file_path' => 'required',

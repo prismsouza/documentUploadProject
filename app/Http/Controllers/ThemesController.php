@@ -31,12 +31,13 @@ class ThemesController extends Controller
 
     public function edit(Theme $theme)
     {
-        //
+        return view('themes.edit', compact('theme'));
     }
 
     public function update(Request $request, Theme $theme)
     {
-        //
+        $theme->update($this->validateTheme());
+        return redirect($theme->path());
     }
 
     public function destroy(Theme $theme)

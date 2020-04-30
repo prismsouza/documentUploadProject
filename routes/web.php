@@ -25,8 +25,12 @@ Route::get('/documents/upload', 'DocumentsController@create');
 Route::get('/documents/{document}', 'DocumentsController@show')->name('documents.show');
 Route::get('/documents/{document}/edit', 'DocumentsController@edit');
 Route::put('/documents/{document}', 'DocumentsController@update');
+Route::delete('/documents/{document}', 'DocumentsController@destroy');
 
 Route::get('/themes', 'ThemesController@index')->name('themes.index');
-Route::get('/themes/create', 'ThemesController@create');
 Route::post('/themes', 'ThemesController@store');
+Route::get('/themes/create', 'ThemesController@create');
+Route::get('/themes/{theme}', 'ThemesController@show')->name('themes.show');
+Route::get('/themes/{theme}/edit', 'ThemesController@edit');
+Route::put('/themes/{theme}', 'ThemesController@update');
 

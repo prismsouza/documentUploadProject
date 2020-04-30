@@ -66,6 +66,7 @@
                     <input
                         class="input @error('file_path') is-danger @enderror form-control"
                         type="file"
+                        accept=".pdf, application/pdf"
                         name="file_path"
                         id="file_path"
                         value="{{ old('file_path') }}">
