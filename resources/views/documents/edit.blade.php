@@ -28,15 +28,15 @@
                     <label class="label" for="title">Title</label>
 
                     <div class="control">
-                        <input class="input" type="text" name="title" id="title" value="{{ $document->title }}">
+                        <input class="input" type="text" name="name" id="name" value="{{ $document->name }}">
                     </div>
                 </div>
 
                 <div class="field">
-                    <label class="label" for="excerpt">Excerpt</label>
+                    <label class="label" for="description">Description</label>
 
                     <div class="control">
-                        <textarea class="textarea" name="excerpt" id="excerpt">{{ $document->excerpt }}</textarea>
+                        <textarea class="textarea" name="description" id="description">{{ $document->description }}</textarea>
                     </div>
                 </div>
 
@@ -62,6 +62,22 @@
                             name="user_id"
                             id="user_id"
                             value="{{ $document->user_id }}">
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label class="label" for="tags">Tags</label>
+
+                    <div class="select is-multiple control">
+                        <select name="tags[]" multiple>
+                            @foreach($tags as $tag)
+                                <option value="{{ $tag->id }}">{{ $tag->name }}</option>
+                            @endforeach
+                        </select>
+
+                        @error('tags')
+                        <p class="help is-danger">{{ $message }}</p>
+                        @enderror
                     </div>
                 </div>
 

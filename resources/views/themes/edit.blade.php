@@ -9,15 +9,15 @@
         <div id="page" class="container">
             <h1 class="heading has-text-weight-bold is-size-4">Update Theme</h1>
 
-            <form method="POST" action="/themes/{{ $theme->title }}">
+            <form method="POST" action="/themes/{{ $theme->name }}">
                 @csrf
                 @method('PUT')
 
                 <div class="field">
-                    <label class="label" for="title">Title</label>
+                    <label class="label" for="name">Nome</label>
 
                     <div class="control">
-                        <input class="input" type="text" name="title" id="title" value="{{ $theme->title }}">
+                        <input class="input" type="text" name="name" id="name" value="{{ $theme->name }}">
                     </div>
                 </div>
 

@@ -6,7 +6,7 @@
     <div class="title">
         <h3>
             <a href="{{ $theme->path()  }}">
-                {{ $theme->title }}
+                {{ $theme->name }}
             </a>
         </h3>
      </div>

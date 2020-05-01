@@ -48,7 +48,7 @@ class ThemesController extends Controller
     public function validateTheme()
     {
         return request()->validate([
-            'title' => 'required',
+            'name' => 'required',
             'description' => 'required'
         ]);
     }

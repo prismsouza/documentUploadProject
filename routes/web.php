@@ -22,6 +22,7 @@ Route::get('/documents/themes/{theme}', 'DocumentsController@showByTheme')->name
 Route::get('/documents', 'DocumentsController@index')->name('documents.index');
 Route::post('/documents', 'DocumentsController@store');
 Route::get('/documents/upload', 'DocumentsController@create');
+Route::get('/documents/{document}/download', 'DocumentsController@download')->name('documents.download');
 Route::get('/documents/{document}', 'DocumentsController@show')->name('documents.show');
 Route::get('/documents/{document}/edit', 'DocumentsController@edit');
 Route::put('/documents/{document}', 'DocumentsController@update');

@@ -11,23 +11,27 @@
     <table class="table table-striped table-bordered">
         <thead class="black white-text">
         <tr>
-            <th scope="col">Titulo</th>
-            <th scope="col">Autor/Unidade</th>
+            <th scope="col">Nome</th>
+            <th scope="col">Descricao</th>
             <th scope="col">Tema</th>
+            <th scope="col">Download</th>
             <th scope="col">Tamanho</th>
         </tr>
         </thead>
         <tbody>
     @endif
 
-    @foreach($documents as $document)
+    @forelse($documents as $document)
         <tr>
-            <td><a href="{{ $document->path()  }}">{{ $document->title }}</a></th>
-            <td>{{ $document->user_id }}</td>
-            <td>{{ $document->theme->title }}</td>
-            <td>1KB</td>
+            <td><a href="{{ $document->path()  }}">{{ $document->name }}</a></th>
+            <td>{{ $document->description }}</td>
+            <td>{{ $document->theme->name }}</td>
+            <td><a href="{{ route('documents.download', $document->id) }}">{{ $document->file_path }}</a></td>
+            <td>{{ $document->size }} KB</td>
         </tr>
-    @endforeach
+    @empty
+        <p>No relevant articles yet.</p>
+    @endforelse
 
         </tbody>
     </table>

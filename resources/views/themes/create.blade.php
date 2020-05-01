@@ -11,24 +11,24 @@
             <form method="POST" action="/themes">
                 @csrf
                 <div class="field">
-                    <label class="label" for="title">Title</label>
+                    <label class="label" for="name">Nome</label>
 
                     <div class="control">
                         <input
-                            class="input @error('title') is-danger @enderror"
+                            class="input @error('name') is-danger @enderror"
                             type="text"
-                            name="title"
-                            id="title"
-                            value="{{ old('title') }}">
+                            name="name"
+                            id="name"
+                            value="{{ old('name') }}">
 
-                        @error('title')
-                            <p class="help is-danger">{{ $errors->first('title') }}</p>
+                        @error('name')
+                            <p class="help is-danger">{{ $errors->first('name') }}</p>
                         @enderror
                     </div>
                 </div>
 
                 <div class="field">
-                    <label class="label" for="description">Description</label>
+                    <label class="label" for="description">Descricao</label>
 
                     <div class="control">
                         <input

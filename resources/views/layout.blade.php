@@ -41,7 +41,7 @@
 
                 @foreach($themes as $theme)
                 <li class="nav-item ">
-                    <a class="list-group-item {{ Request::is('documents/themes/'.$theme->title) ? 'active' : ''}}" href={{ $theme->path() }}>{{ $theme->title }}</a>
+                    <a class="list-group-item {{ Request::is('documents/themes/'.$theme->name) ? 'active' : ''}}" href={{ $theme->path() }}>{{ $theme->name }}</a>
                 </li>
                 @endforeach
             </ul>

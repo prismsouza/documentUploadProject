@@ -28,32 +28,32 @@
                 </div>
 
                 <div class="field">
-                    <label class="label" for="title">Title</label>
+                    <label class="label" for="name">Nome</label>
 
                     <div class="control">
                         <input
-                            class="input @error('title') is-danger @enderror"
+                            class="input @error('name') is-danger @enderror"
                             type="text"
-                            name="title"
-                            id="title"
-                            value="{{ old('title') }}">
+                            name="name"
+                            id="name"
+                            value="{{ old('name') }}">
 
-                        @error('title')
-                            <p class="help is-danger">{{ $errors->first('title') }}</p>
+                        @error('name')
+                            <p class="help is-danger">{{ $errors->first('name') }}</p>
                         @enderror
                     </div>
                 </div>
 
                 <div class="field">
-                    <label class="label" for="excerpt">Excerpt</label>
+                    <label class="label" for="description">Descricao</label>
 
                     <div class="control">
                         <input
-                            class="input @error('excerpt') is-danger @enderror"
+                            class="input @error('description') is-danger @enderror"
                             type="text"
-                            name="excerpt"
-                            id="excerpt"
-                            value="{{ old('excerpt') }}">
+                            name="description"
+                            id="description"
+                            value="{{ old('description') }}">
 
                         @error('excerpt')
                             <p class="help is-danger">{{ $errors->first('excerpt') }}</p>
@@ -73,18 +73,17 @@
                 </div>
 
                 <div class="field">
-                    <label class="label" for="user_id">User ID</label>
+                    <label class="label" for="tags">Tags</label>
 
-                    <div class="control">
-                        <input
-                            class="input @error('user_id') is-danger @enderror"
-                            type="text"
-                            name="user_id"
-                            id="user_id"
-                            value="{{ old('user_id') }}">
+                    <div class="select is-multiple control">
+                        <select name="tags[]" multiple>
+                            @foreach($tags as $tag)
+                                <option value="{{ $tag->id }}">{{ $tag->name }}</option>
+                            @endforeach
+                        </select>
 
-                        @error('user_id')
-                        <p class="help is-danger">{{ $errors->first('user_id') }}</p>
+                        @error('tags')
+                        <p class="help is-danger">{{ $message }}</p>
                         @enderror
                     </div>
                 </div>
