@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Document extends Model
 {
-    protected $fillable = ['theme_id', 'name', 'description', 'file_path', 'user_id'];
+    protected $fillable = ['theme_id', 'name', 'description', 'file_name', 'user_id'];
 
     public function getRouteKeyName()
     {
@@ -16,6 +16,11 @@ class Document extends Model
     public function path()
     {
         return route('documents.show', $this);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 
     public function theme()

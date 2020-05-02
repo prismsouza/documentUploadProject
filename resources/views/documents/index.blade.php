@@ -2,12 +2,11 @@
 @section('content')
     @if($theme_option)
         <h2>{{ $theme_option }}</h2><br><br>
+    @else
+        <h2>Todos Documentos</h2><br><br>
     @endif
 
-    @if($documents=='[]')
-        <h5>No documents found for this filter</h5>
-
-    @else
+    @if($documents!='[]')
     <table class="table table-striped table-bordered">
         <thead class="black white-text">
         <tr>
@@ -25,9 +24,9 @@
         <tr>
             <td><a href="{{ $document->path()  }}">{{ $document->name }}</a></th>
             <td>{{ $document->description }}</td>
-            <td>{{ $document->theme->name }}</td>
-            <td><a href="{{ route('documents.download', $document->id) }}">{{ $document->file_path }}</a></td>
-            <td>{{ $document->size }} KB</td>
+            <td><a href="{{ $document->theme->path()  }}">{{ $document->theme->name }}</td>
+            <td><a href="{{ route('documents.download', $document->id) }}">{{ $document->file_name }}</a></td>
+            <td>{{ $document->size }}</td>
         </tr>
     @empty
         <p>No relevant articles yet.</p>

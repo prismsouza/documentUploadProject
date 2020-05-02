@@ -18,20 +18,20 @@ Route::get('/', function () {
     return view('home', ['themes' => $themes]);
 })->name('documents.home');
 
-Route::get('/documents/themes/{theme}', 'DocumentsController@showByTheme')->name('documents_theme.index');
-Route::get('/documents', 'DocumentsController@index')->name('documents.index');
-Route::post('/documents', 'DocumentsController@store');
-Route::get('/documents/upload', 'DocumentsController@create');
-Route::get('/documents/{document}/download', 'DocumentsController@download')->name('documents.download');
-Route::get('/documents/{document}', 'DocumentsController@show')->name('documents.show');
-Route::get('/documents/{document}/edit', 'DocumentsController@edit');
-Route::put('/documents/{document}', 'DocumentsController@update');
-Route::delete('/documents/{document}', 'DocumentsController@destroy');
+Route::get('/documentos/categorias/{theme}', 'DocumentsController@showByTheme')->name('documents_theme.index');
+Route::get('/documentos', 'DocumentsController@index')->name('documents.index');
+Route::post('/documentos', 'DocumentsController@store');
+Route::get('/documentos/upload', 'DocumentsController@create');
+Route::get('/documentos/{document}/download', 'DocumentsController@download')->name('documents.download');
+Route::get('/documentos/{document}', 'DocumentsController@show')->name('documents.show');
+Route::get('/documentos/{document}/edit', 'DocumentsController@edit');
+Route::put('/documentos/{document}', 'DocumentsController@update');
+Route::delete('/documentos/{document}', 'DocumentsController@destroy');
 
-Route::get('/themes', 'ThemesController@index')->name('themes.index');
-Route::post('/themes', 'ThemesController@store');
-Route::get('/themes/create', 'ThemesController@create');
-Route::get('/themes/{theme}', 'ThemesController@show')->name('themes.show');
-Route::get('/themes/{theme}/edit', 'ThemesController@edit');
-Route::put('/themes/{theme}', 'ThemesController@update');
+Route::get('/categorias', 'ThemesController@index')->name('themes.index');
+Route::post('/categorias', 'ThemesController@store');
+Route::get('/categorias/create', 'ThemesController@create');
+Route::get('/categorias/{theme}', 'ThemesController@show')->name('themes.show');
+Route::get('/categorias/{theme}/edit', 'ThemesController@edit');
+Route::put('/categorias/{theme}', 'ThemesController@update');
 

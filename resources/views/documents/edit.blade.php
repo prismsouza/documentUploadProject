@@ -7,7 +7,7 @@
 @section('content')
             <h1 class="heading has-text-weight-bold is-size-4">Update Document</h1>
 
-            <form method="POST" action="/documents/{{ $document->id }}">
+            <form method="POST" action="/documentos/{{ $document->id }}">
                 @csrf
                 @method('PUT')
 
@@ -41,12 +41,12 @@
                 </div>
 
                 <div class="field"><br>
-                    <label for="file_path">Replace document <b>{{ $document->file_path }}</b></label><br>
+                    <label for="file_name">Replace document <b>{{ $document->file_name }}</b></label><br>
                     <input
                         class="upload"
                         type="file"
-                        name="file_path"
-                        id="file_path"
+                        name="file_name"
+                        id="file_name"
                         accept=".pdf, application/pdf"
                     >
 

@@ -36,12 +36,12 @@
             <ul class="nav nav-tabs flex-column lighten-4 py-4 list-group">
                 <li><h3>Temas</h3></li>
                 <li class=" nav-item">
-                    <a class="list-group-item {{ Request::is('documents') ? 'active' : ''}}" href="/documents">Todos</a>
+                    <a class="list-group-item {{ Request::is('documentos') ? 'active' : ''}}" href="/documentos">Todos</a>
                 </li>
 
                 @foreach($themes as $theme)
                 <li class="nav-item ">
-                    <a class="list-group-item {{ Request::is('documents/themes/'.$theme->name) ? 'active' : ''}}" href={{ $theme->path() }}>{{ $theme->name }}</a>
+                    <a class="list-group-item {{ Request::is('documentos/categorias/'.$theme->name) ? 'active' : ''}}" href={{ $theme->path() }}>{{ $theme->name }}</a>
                 </li>
                 @endforeach
             </ul>
