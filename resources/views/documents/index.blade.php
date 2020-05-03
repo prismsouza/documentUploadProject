@@ -7,12 +7,12 @@
     @endif
 
     @if($documents!='[]')
-    <table class="table table-striped table-bordered">
+    <table class="table table-bordered">
         <thead class="black white-text">
         <tr>
             <th scope="col">Nome</th>
             <th scope="col">Descricao</th>
-            <th scope="col">Tema</th>
+            <th scope="col">Categoria</th>
             <th scope="col">Download</th>
             <th scope="col">Tamanho</th>
         </tr>

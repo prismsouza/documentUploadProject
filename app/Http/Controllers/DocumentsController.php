@@ -6,6 +6,7 @@ use App\Document;
 use App\Tag;
 use App\Theme;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Storage;
 
 
@@ -40,8 +41,7 @@ class DocumentsController extends Controller
     public function store(Request $request)
     {
         $this->validateDocument('');
-        $document = new Document(request(['theme_id', 'name', 'description', 'file_name']));
-        $document->date = '2020-01-01';
+        $document = new Document(request(['theme_id', 'name', 'description', 'date', 'is_active', 'file_name']));
         $document->user_id = 1;
         $document = $this->getFile($request, $document);
         $document->save();
@@ -56,6 +56,15 @@ class DocumentsController extends Controller
     public function show(Document $document)
     {
         return view('documents.show', ['document' => $document]);
+    }
+
+    public function viewfile(Document $document)
+    {
+        $file_path = public_path('documents') . '/' . $document->file_name;
+        return  Response::make(file_get_contents($file_path), 200, [
+            'Content-Type' => 'application/pdf',
+            'Content-Disposition' => 'inline'
+        ]);
     }
 
     public function showByTheme(Theme $theme)
@@ -95,7 +104,6 @@ class DocumentsController extends Controller
 
     public function download(Document $document)
     {
-
         $file_path = public_path('documents') . '/' . $document->file_name;
         return response()->download($file_path, $document->name, ['Content-Type:' . $document->filemimetype]);
     }
@@ -113,6 +121,8 @@ class DocumentsController extends Controller
                 'theme_id' => 'required',
                 'name' => 'required',
                 'description' => 'required',
+                'date' => 'required',
+                'is_active' => 'required',
                 'tags' => 'exists:tags,id'
             ]);
         }
@@ -120,6 +130,8 @@ class DocumentsController extends Controller
             'theme_id' => 'required',
             'name' => 'required',
             'description' => 'required',
+            'date' => 'required',
+            'is_active' => 'required',
             'file_name' => 'required',
             'tags' => 'exists:tags,id'
         ]);

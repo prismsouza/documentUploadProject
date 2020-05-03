@@ -11,12 +11,23 @@
     <p><b>Criado pela unidade:</b> {{ $document->user->unit->name }}</p>
     <p><b>Criado pelo usuario:</b> {{ $document->user->name }}</p>
 
+    <p><b>Data do documento:</b> {{ $document->date }}</p>
+
+
+    <b>Validade:</b> Este documento esta <?php echo ($document->is_active ? "vigente" : "invalido"); ?><br><br>
+
     <p><b>Download:</b>
         <a href="{{ route('documents.download', $document->id) }}">
             {{ $document->file_name }}
         </a>
     </p>
 
+    <p><b>Visualizar em uma nova aba:</b>
+        <a href="{{ route('documents.viewfile', $document->id) }}" target="_blank">
+            {{ $document->file_name }}
+        </a>
+    </p>
+    
     <p style="margin-top: 1em">
         <b>Tags: </b>
         @forelse ($document->tags as $tag)
@@ -24,6 +35,6 @@
         @empty
             Nenhuma tag cadastrada
         @endforelse
-
     </p>
+
 @endsection

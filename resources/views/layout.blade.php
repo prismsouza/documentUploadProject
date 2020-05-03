@@ -19,6 +19,7 @@
 
     <link href="/css/default.css" rel="stylesheet" />
     <link href="/css/fonts.css" rel="stylesheet" />
+    <link href="/css/mystyle.css" rel="stylesheet" />
 </head>
 
 <body>
@@ -31,10 +32,10 @@
         <div class="col-10">
             @yield('content')
         </div>
-        <div class="menu col-2 text-center bg-white light lighten-1">
+        <div class="menu col-2 text-center light lighten-1">
 
             <ul class="nav nav-tabs flex-column lighten-4 py-4 list-group">
-                <li><h3>Temas</h3></li>
+                <li><h3>Categorias</h3></li>
                 <li class=" nav-item">
                     <a class="list-group-item {{ Request::is('documentos') ? 'active' : ''}}" href="/documentos">Todos</a>
                 </li>

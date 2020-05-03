@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Document extends Model
 {
-    protected $fillable = ['theme_id', 'name', 'description', 'file_name', 'user_id'];
+    protected $fillable = ['theme_id', 'name', 'description', 'date', 'is_active', 'file_name', 'user_id'];
 
     public function getRouteKeyName()
     {

@@ -6,9 +6,9 @@
 
 @section ('content')
     <div id="content">
-            <h1 class="heading has-text-weight-bold is-size-4">New Theme</h1>
+            <h1 class="heading has-text-weight-bold is-size-4">Nova Categoria</h1>
 
-            <form method="POST" action="/themes">
+            <form method="POST" action="/categorias">
                 @csrf
                 <div class="field">
                     <label class="label" for="name">Nome</label>
@@ -46,7 +46,7 @@
 
                 <div class="field is-grouped">
                     <div class="control">
-                        <button class="button is-link" type="submit">Submit</button>
+                        <button class="button is-link" type="submit">Criar</button>
                     </div>
                 </div>
 
