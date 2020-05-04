@@ -6,22 +6,20 @@ use App\Document;
 use Faker\Generator as Faker;
 
 $factory->define(Document::class, function (Faker $faker) {
+    $user_id = App\User::all()->random();
+    $user = App\User::find($user_id)->first();
+    $unit_id = $user->unit_id;
     return [
-        //'id'
         'theme_id' => function(){
-            return Theme::all()->random();
+            return App\Theme::all()->random();
         },
-        'name' => $faker->title,
+        'name' => $faker->word,
         'description' => $faker->sentence,
         'file_name' => "bgbm.pdf",
-        'user_id' => function(){
-            return User::all()->random();
-        },
+        'user_id' => $user_id,
         'date' => $faker->date(),
         'is_active' => $faker->boolean,
-        'unit_id' => function(){
-            return Unit::all()->random();
-        },
+        'unit_id' => $unit_id,
         'size' => "2 MB"
     ];
 });

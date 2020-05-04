@@ -22,7 +22,7 @@ $factory->define(User::class, function (Faker $faker) {
         'name' => $faker->name,
         'masp' => $faker->numberBetween(1111111, 1777777),
         'unit_id' => function(){
-            return Unit::all()->random();
+            return App\Unit::all()->random();
         }
     ];
 });

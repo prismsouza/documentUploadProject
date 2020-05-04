@@ -11,6 +11,7 @@ class User extends Authenticatable
     use Notifiable;
 
     protected $fillable = ['name', 'masp'];
+    public $timestamps = false;
 
     public function documents()
     {

@@ -31,8 +31,13 @@ Route::delete('/documentos/{document}', 'DocumentsController@destroy');
 
 Route::get('/categorias', 'ThemesController@index')->name('themes.index');
 Route::post('/categorias', 'ThemesController@store');
-Route::get('/categorias/create', 'ThemesController@create');
+Route::get('/categorias/novo', 'ThemesController@create');
 Route::get('/categorias/{theme}', 'ThemesController@show')->name('themes.show');
 Route::get('/categorias/{theme}/edit', 'ThemesController@edit');
 Route::put('/categorias/{theme}', 'ThemesController@update');
+
+Route::get('/tags', 'TagsController@index')->name('tags.index');
+Route::post('/tags', 'TagsController@store');
+Route::get('/tags/novo', 'TagsController@create');
+Route::get('/tags/{tag}', 'TagsController@show')->name('tags.show');
 
