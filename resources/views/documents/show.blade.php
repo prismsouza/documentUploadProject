@@ -1,7 +1,7 @@
 @extends ('layout')
 
 @section ('content')
-    <p><b>Categoria: </b>{{ $document->theme->name }}</p>
+    <p><b>Categoria: </b>{{ $document->category->name }}</p>
     <b>Documento</b>
     <div class="title">
         <h2>{{ $document->name }}</h2>
@@ -27,7 +27,7 @@
             {{ $document->file_name }}
         </a>
     </p>
-    
+
     <p style="margin-top: 1em">
         <b>Tags: </b>
         @forelse ($document->tags as $tag)

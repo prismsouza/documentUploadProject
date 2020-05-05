@@ -374,8 +374,11 @@ ul.contact li a.icon-rss:before
 
 #header
 {
-	position: relative;
-	height: 150px;
+    background: #1D2D3D;
+    position: relative;
+	height: 45px;
+    text-align: center;
+    color: white;
 }
 
 /*********************************************************************************/

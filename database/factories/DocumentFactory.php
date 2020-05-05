@@ -10,8 +10,8 @@ $factory->define(Document::class, function (Faker $faker) {
     $user = App\User::find($user_id)->first();
     $unit_id = $user->unit_id;
     return [
-        'theme_id' => function(){
-            return App\Theme::all()->random();
+        'category_id' => function(){
+            return App\Category::all()->random();
         },
         'name' => $faker->word,
         'description' => $faker->sentence,

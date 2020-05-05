@@ -7,9 +7,9 @@
 @section('content')
     <div id="wrapper">
         <div id="page" class="container">
-            <h1 class="heading has-text-weight-bold is-size-4">Update Theme</h1>
+            <h1 class="heading has-text-weight-bold is-size-4">Update Category</h1>
 
-            <form method="POST" action="/themes/{{ $theme->name }}">
+            <form method="POST" action="/categorias/{{ $category->name }}">
                 @csrf
                 @method('PUT')
 
@@ -17,7 +17,7 @@
                     <label class="label" for="name">Nome</label>
 
                     <div class="control">
-                        <input class="input" type="text" name="name" id="name" value="{{ $theme->name }}">
+                        <input class="input" type="text" name="name" id="name" value="{{ $category->name }}">
                     </div>
                 </div>
 
@@ -25,7 +25,7 @@
                     <label class="label" for="description">Description</label>
 
                     <div class="control">
-                        <textarea class="textarea" name="description" id="description">{{ $theme->description }}</textarea>
+                        <textarea class="textarea" name="description" id="description">{{ $category->description }}</textarea>
                     </div>
                 </div>
 

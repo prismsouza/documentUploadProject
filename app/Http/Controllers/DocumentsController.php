@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Document;
 use App\Tag;
-use App\Theme;
+use App\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Storage;
@@ -12,6 +12,13 @@ use Illuminate\Support\Facades\Storage;
 
 class DocumentsController extends Controller
 {
+    public function search(Request $request)
+    {
+        $word = request('word');
+        $documents = Document::where('name','LIKE','%'.$word.'%')->get();
+        return view('documents.index', ['documents' => $documents, 'category_option' => null])->withDetails($documents)->withQuery($word);
+    }
+
     public function index()
     {
         if (request('tag')) {
@@ -19,12 +26,7 @@ class DocumentsController extends Controller
         } else {
             $documents = Document::latest()->get();
         }
-        return view('documents.index', ['documents' => $documents, 'theme_option' => null]);
-
-        /*
-        $documents = Document::all();
-        return view('documents.index', ['documents' => $documents, 'theme_option' =>null]);
-        */
+        return view('documents.index', ['documents' => $documents, 'category_option' => null]);
     }
 
     public function home()
@@ -35,13 +37,13 @@ class DocumentsController extends Controller
 
     public function create()
     {
-        return view('documents.create', ['tags' => Tag::all(), 'themes' => Theme::all()]);
+        return view('documents.create', ['tags' => Tag::all(), 'categories' => Category::all()]);
     }
 
     public function store(Request $request)
     {
         $this->validateDocument('');
-        $document = new Document(request(['theme_id', 'name', 'description', 'date', 'is_active', 'file_name']));
+        $document = new Document(request(['category_id', 'name', 'description', 'date', 'is_active', 'file_name']));
         $document->user_id = 1;
         $document = $this->getFile($request, $document);
         $document->save();
@@ -67,11 +69,11 @@ class DocumentsController extends Controller
         ]);
     }
 
-    public function showByTheme(Theme $theme)
+    public function showByCategory(Category $category)
     {
-        $documents = $theme->documents;
-        $theme_option = $theme->name;
-        return view('documents.index', ['documents' => $documents, 'theme_option' => $theme_option]);
+        $documents = $category->documents;
+        $category_option = $category->name;
+        return view('documents.index', ['documents' => $documents, 'category_option' => $category_option]);
     }
 
     public function edit(Document $document)
@@ -83,10 +85,10 @@ class DocumentsController extends Controller
     {
         if (!request('file_name')) {
             $this->validateDocument("dont_update_path");
-            //$this->update(request(['theme_id', 'name', 'description', 'user_id']));
+            //$this->update(request(['category_id', 'name', 'description', 'user_id']));
         } else {
             $this->validateDocument('');
-            //$this->update(request(['theme_id', 'name', 'description', 'file_name', 'user_id']));
+            //$this->update(request(['category_id', 'name', 'description', 'file_name', 'user_id']));
         }
 
         if (request()->has('tags')) {
@@ -118,7 +120,7 @@ class DocumentsController extends Controller
     {
         if ($option == "dont_update_path"){
             return request()->validate([
-                'theme_id' => 'required',
+                'category_id' => 'required',
                 'name' => 'required',
                 'description' => 'required',
                 'date' => 'required',
@@ -127,7 +129,7 @@ class DocumentsController extends Controller
             ]);
         }
         return request()->validate([
-            'theme_id' => 'required',
+            'category_id' => 'required',
             'name' => 'required',
             'description' => 'required',
             'date' => 'required',

@@ -2,16 +2,16 @@
 @section('content')
 
 <div id="content">
-@foreach($themes as $theme)
+@foreach($categories as $category)
     <div class="title">
         <h3>
-            <a href="{{ $theme->path()  }}">
-                {{ $theme->name }}
+            <a href="{{ $category->path()  }}">
+                {{ $category->name }}
             </a>
         </h3>
      </div>
     <p>
-        {{ $theme->description }}
+        {{ $category->description }}
     </p>
 
 @endforeach

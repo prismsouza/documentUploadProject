@@ -4,9 +4,9 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Theme extends Model
+class Category extends Model
 {
-    protected $fillable = ['title', 'description'];
+    protected $fillable = ['name', 'description'];
 
     public function getRouteKeyName()
     {
@@ -20,10 +20,10 @@ class Theme extends Model
 
     public function path()
     {
-        return route('documents_theme.index', $this);
+        return route('documents_category.index', $this);
     }
 
-    public function pathTheme()
+    public function pathCategory()
     {
         return route('documents.index', $this);
     }

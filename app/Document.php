@@ -6,8 +6,19 @@ use Illuminate\Database\Eloquent\Model;
 
 class Document extends Model
 {
-    protected $fillable = ['theme_id', 'name', 'description', 'date', 'is_active', 'file_name', 'user_id'];
-
+    protected $fillable = ['category_id', 'name', 'description', 'date', 'is_active', 'file_name', 'user_id'];
+    protected $searchable = [
+        'columns' => [
+            'documents.name' => 10,
+            'documents.date' => 5,
+            'documents.bio' => 3,
+            'profiles.country' => 2,
+            'profiles.city' => 1,
+        ],
+        'joins' => [
+            'profiles' => ['users.id','profiles.user_id'],
+        ],
+    ];
     public function getRouteKeyName()
     {
         return 'id';
@@ -23,9 +34,9 @@ class Document extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function theme()
+    public function category()
     {
-        return $this->belongsTo(Theme::class);
+        return $this->belongsTo(Category::class);
     }
 
     public function tags()

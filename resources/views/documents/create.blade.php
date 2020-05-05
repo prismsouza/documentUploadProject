@@ -32,23 +32,23 @@
 
 @section ('content')
     <div id="content">
-            <h1 class="heading has-text-weight-bold is-size-4">Upload de Documento</h1>
+            <h1 class="heading has-text-weight-bold is-size-4">Novo Documento</h1>
 
             <form method="POST" action="/documentos" enctype="multipart/form-data">
                 @csrf
                 <div class="field">
-                    <label class="label" for="theme_id">Categoria</label>
+                    <label class="label" for="category_id">Categoria</label>
 
                     <div class="control">
                         <select
-                            id="theme_id"
-                            name="theme_id"
+                            id="category_id"
+                            name="category_id"
                             class="selectpicker"
-                            value="theme_id"
+                            value="category_id"
                             data-live-search="true">
 
-                            @foreach($themes as $theme)
-                                <option value={{ $theme->id }}>{{ $theme->name }}</option>
+                            @foreach($categories as $category)
+                                <option value={{ $category->id }}>{{ $category->name }}</option>
                             @endforeach
                         </select>
                     </div>

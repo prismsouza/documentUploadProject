@@ -2,10 +2,10 @@
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 
-use App\Theme;
+use App\Category;
 use Faker\Generator as Faker;
 
-$factory->define(Theme::class, function (Faker $faker) {
+$factory->define(Category::class, function (Faker $faker) {
     return [
         'name' => $faker->word,
         'description' => $faker->sentence,

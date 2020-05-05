@@ -12,15 +12,15 @@
                 @method('PUT')
 
                 <div class="field">
-                    <label class="label" for="theme_id">Theme ID</label>
+                    <label class="label" for="category_id">Category ID</label>
 
                     <div class="control">
                         <input
                             class="input"
                             type="text"
-                            name="theme_id"
-                            id="theme_id"
-                            value="{{ $document->theme_id }}">
+                            name="category_id"
+                            id="category_id"
+                            value="{{ $document->category_id }}">
                     </div>
                 </div>
 
