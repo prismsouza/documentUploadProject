@@ -19,7 +19,7 @@ Route::get('/', function () {
     return view('home', ['categories' => $categories]);
 })->name('documents.home');
 
-Route::any('/documentos/pesquisar/{word}','DocumentsController@search')->name('documents.search');
+
 
 Route::get('/documentos/categorias/{category}', 'DocumentsController@showByCategory')->name('documents_category.index');
 Route::get('/documentos', 'DocumentsController@index')->name('documents.index');
@@ -43,6 +43,11 @@ Route::get('/tags', 'TagsController@index')->name('tags.index');
 Route::post('/tags', 'TagsController@store');
 Route::get('/tags/novo', 'TagsController@create');
 Route::get('/tags/{tag}', 'TagsController@show')->name('tags.show');
+
+
+Route::any('/documentos/w','DocumentsController@searchByWord')->name('documents.search_word');
+Route::any('/documentos/d','DocumentsController@searchByDate')->name('documents.search_date');
+Route::any('/documentos/y','DocumentsController@searchByYear')->name('documents.search_year');
 
 function dumpArray($array) {
     echo "<pre>";

@@ -12,11 +12,31 @@ use Illuminate\Support\Facades\Storage;
 
 class DocumentsController extends Controller
 {
-    public function search(Request $request)
+    public function searchByWord(Request $request)
     {
         $word = request('word');
-        $documents = Document::where('name','LIKE','%'.$word.'%')->get();
+        $documents = Document::where('name','LIKE','%'.$word.'%')->orWhere('description','LIKE','%'.$word.'%')->get();
         return view('documents.index', ['documents' => $documents, 'category_option' => null])->withDetails($documents)->withQuery($word);
+    }
+
+    public function searchByDate(Request $request)
+    {
+        $first_date = request('first_date');
+        $last_date = request('last_date');
+        $documents = Document::where('date','>',$first_date , 'and', 'date', '<', $last_date)->get();
+
+        return view('documents.index', ['documents' => $documents, 'category_option' => null])->withDetails($documents)->withQuery($first_date, $last_date);
+    }
+
+    public function searchByYear(Request $request)
+    {
+        $year = request('year');
+        $year_end = $year . "/12/30";
+        $year = $year . "/01/01";
+
+        $documents = Document::where('date','>=',$year , 'and', 'date', '<=', $year_end)->get();
+
+        return view('documents.index', ['documents' => $documents, 'category_option' => null])->withDetails($documents)->withQuery($year);
     }
 
     public function index()
@@ -37,7 +57,7 @@ class DocumentsController extends Controller
 
     public function create()
     {
-        return view('documents.create', ['tags' => Tag::all(), 'categories' => Category::all()]);
+        return view('documents.create', ['tags' => Tag::all(), 'categories' => Category::all(), 'documents' => DOcument::all()]);
     }
 
     public function store(Request $request)

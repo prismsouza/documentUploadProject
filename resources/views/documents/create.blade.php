@@ -113,6 +113,23 @@
                     </div>
                 </div>
 
+                <div class="field">
+                    <label class="label" for="document_id">Documento relacionado: </label>
+                        <select
+                            id="document_id"
+                            name="document_id"
+                            class="selectpicker"
+                            multiple
+                            value="document_id"
+                            data-live-search="true">
+
+                            @foreach($documents as $document)
+                                <option value={{ $document->id }}>{{ $document->name }} - {{ $document->description }}</option>
+                            @endforeach
+                        </select>
+
+                </div>
+
                 <div class="field"><br>
                     <label for="file_name">Upload a document: </label>
                     <i class="fa fa-upload p-1"></i>

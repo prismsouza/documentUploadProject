@@ -13,8 +13,11 @@
 
     <p><b>Data do documento:</b> {{ $document->date }}</p>
 
-
     <b>Validade:</b> Este documento esta <?php echo ($document->is_active ? "vigente" : "invalido"); ?><br><br>
+
+    <b>Documentos relacionados:</b>
+    <?php echo ($document->name); ?><br><br>
+
 
     <p><b>Download:</b>
         <a href="{{ route('documents.download', $document->id) }}">

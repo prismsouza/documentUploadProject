@@ -376,9 +376,25 @@ ul.contact li a.icon-rss:before
 {
     background: #1D2D3D;
     position: relative;
-	height: 45px;
+	height: 50px;
     text-align: center;
     color: white;
+}
+
+#headeritem
+{
+    position: relative;
+    display:block;
+    padding:.75rem 1.25rem;
+    margin-bottom:-1px;
+    background-color:#1D2D3D;
+    color:lightgray;
+}
+
+#navheader
+{
+    background: #1D2D3D;
+    text-align: center;
 }
 
 /*********************************************************************************/
@@ -541,15 +557,15 @@ ul.contact li a.icon-rss:before
 
 #wrapper
 {
-    background: #F8F6F7 url('../images/bg-topo.jpg') no-repeat top center;
+    background: #F8F6F7;// url('../images/bg-topo.jpg') no-repeat top center;
 	<!--background: #FFF;-->
 }
 
 #page
 {
-    background: #F8F6F7 url('../images/bg-topo.jpg') no-repeat top center;
+    background: #F8F6F7;// url('../images/bg-topo.jpg') no-repeat top center;
 	overflow: hidden;
-	padding: 6em 0em 6em 0em;
+	padding: 2em 0em 2em 0em;
 
 }
 
