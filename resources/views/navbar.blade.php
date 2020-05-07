@@ -1,36 +1,35 @@
 <?php $documents = App\Document::all(); ?>
 
-<div class="container">
-    <nav class="mb-1 navbar navbar-expand-lg navbar-light">
-    <a class="navbar-brand" href="/">Inicio</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent-333"
-            aria-controls="navbarSupportedContent-333" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent-333">
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
-            <li class="nav-item" >
-                <a class="list-group-item {{ Request::is('categorias') ? 'bg-light' : 'navbar-light'}}"
+            <li class="nav-item">
+                <a class="nav-link {{ Request::is('/') ? 'active' : 'bg-light'}}"
+                   href="/">Inicio
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link {{ Request::is('categorias') ? 'active' : 'bg-light'}}"
                    href="/categorias">Categorias
                 </a>
             </li>
             <li class="nav-item">
-                <a class="list-group-item {{ Request::is('departamentos') ? 'bg-light' : 'navbar-light'}}"
+                <a class="nav-link {{ Request::is('departamentos') ? 'active' : 'bg-light'}}"
                    href="/unidades">Departamentos
                 </a>
             </li>
-
             <li class="nav-item dropdown">
-                <a class="list-group-item {{ Request::is('documentos') ? 'bg-light' : 'navbar-light'}} dropdown-toggle" id="navbarDropdownMenuLink-333" data-toggle="dropdown"
-                   aria-haspopup="true" aria-expanded="false">Documentos
+                <a class="nav-link dropdown-toggle {{ Request::is('documentos') ? 'active' : 'bg-light'}}"
+                   id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                   href="/documents">Documents
                 </a>
-                <div class="dropdown-menu dropdown-default" aria-labelledby="navbarDropdownMenuLink-333">
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                     @foreach($documents as $document)
-                        <a class="dropdown-item" href="documentos/{{ $document->id }}"> {{  $document->name }}</a>
+                        <a class="dropdown-item" href="/documentos/{{ $document->id }}"> {{  $document->name }}</a>
+                        <div class="dropdown-divider"></div>
                     @endforeach
                 </div>
             </li>
         </ul>
     </div>
 </nav>
-</div>

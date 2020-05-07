@@ -9,35 +9,35 @@
     <title>Documents Module</title>
     <meta name="keywords" content="" />
     <meta name="description" content="" />
-    <link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,600,700,900" rel="stylesheet" />
+    <link rel="stylesheet" href="{{ asset('site/style.css') }}">
+    <!--<link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,600,700,900" rel="stylesheet" />-->
 
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.16.0/css/mdb.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.5/bulma.css" rel="stylesheet">
+    <!--<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">-->
+    <!--<link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">-->
+    <!--<link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.16.0/css/mdb.min.css" rel="stylesheet">-->
+    <!--<link href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.5/bulma.css" rel="stylesheet">-->
 
-    <link href="/css/default.css" rel="stylesheet" />
-    <link href="/css/fonts.css" rel="stylesheet" />
-    <link href="/css/mystyle.css" rel="stylesheet" />
+    <!--<link href="/css/default.css" rel="stylesheet" />-->
+    <!--<link href="/css/fonts.css" rel="stylesheet" />-->
+    <!--<link href="/css/mystyle.css" rel="stylesheet" />-->
 
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-    <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
-
-    <script>
-        $(document).on('click', '.dropdown-menu-button', function (e) {
-            e.stopPropagation()
-        });</script>
+    <!--<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>-->
+    <!--<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>-->
 </head>
 
 <body>
-<div style="background: #F8F6F7">
+<script src="{{ asset('site/jquery.js') }}"></script>
+<script src="{{ asset('site/bootstrap.js') }}"></script>
+
+
+<div class="container">
 @include('header')
 @include('navbar')
 @include('searchbar')
 
 <div id="wrapper">
-    <div id="page" class="container row">
+    <div id="page" class="container row py-3">
 
         <div class="col-9">
             @yield('content')
@@ -68,5 +68,6 @@
 </div>
 </div>
 @include('footer')
+
 
 </body>

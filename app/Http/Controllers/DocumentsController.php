@@ -170,7 +170,7 @@ class DocumentsController extends Controller
             for ($i = 0; $file_size > 1024; $i++) {
                 $file_size /= 1000;
             }
-            $file_size = round($file_size, 2) . ' ' . $units[$i];
+            $file_size = round($file_size, 1) . ' ' . $units[$i];
 
             $document->file_name = $file_name;
             $document->size = $file_size;

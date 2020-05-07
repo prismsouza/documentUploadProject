@@ -12,15 +12,14 @@
 
     @if($documents!='[]')
     <table class="table table-bordered bg-white table-striped">
-        <thead class="black white-text">
+        <thead class="text-center">
         <tr>
-            <th scope="col">#</th>
-            <th scope="col">Nome</th>
-            <th scope="col">Descricao</th>
-            <th scope="col">Categoria</th>
-            <th scope="col">Data</th>
-            <th scope="col">Tamanho</th>
-            <th scope="col"></th>
+            <th scope="col" style="width: 3%">#</th>
+            <th scope="col" style="width: 25%">Nome</th>
+            <th scope="col" style="width: 35%">Descricao</th>
+            <th scope="col" style="width: 16%">Categoria</th>
+            <th scope="col" style="width: 9%">Data</th>
+            <th scope="col" style="width: 12%" colspan="2">Download</th>
         </tr>
         </thead>
         <tbody>
@@ -29,16 +28,17 @@
     <?php $count = 0; ?>
     @forelse($documents as $document)
         <?php $count += 1; ?>
-        <tr>
-            <td>{{$count}}</td>
+        <tr class="small">
+            <td class="text-center">{{$count}}</td>
             <td><a href="{{ $document->path()  }}">{{ $document->name }}</a></td>
-            <td>{{ $document->description }}</td>
+            <td> {{ $document->description }}</td>
             <td><a href="{{ $document->category->path()  }}">{{ $document->category->name }}</td>
-            <td>{{ $document->date }}</td>
-            <td>{{ $document->size }}</td>
-            <td><a href="{{ route('documents.download', $document->id) }}">
+            <td class="text-center">{{ $document->date }}</td>
+            <td class="text-center">{{ $document->size }}
+            <a href="{{ route('documents.download', $document->id) }}">
                     <i class="fa fa-download" aria-hidden="true"></i>
-                </a></td>
+                </a>
+            </td>
         </tr>
     @empty
         <p><h5>Nao ha resultados para esta pesquisa</h5></p>

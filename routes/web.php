@@ -19,8 +19,6 @@ Route::get('/', function () {
     return view('home', ['categories' => $categories]);
 })->name('documents.home');
 
-
-
 Route::get('/documentos/categorias/{category}', 'DocumentsController@showByCategory')->name('documents_category.index');
 Route::get('/documentos', 'DocumentsController@index')->name('documents.index');
 Route::post('/documentos', 'DocumentsController@store');

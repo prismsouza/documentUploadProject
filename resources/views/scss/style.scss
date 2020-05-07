@@ -1,0 +1,25 @@
+@import "~bootstrap/scss/bootstrap";
+
+a {
+    color: black;
+}
+
+.bg-navy {
+    background-color: #1D2D3D;
+}
+
+.navbar-navy,
+.navbar-navy .nav-link ,
+.navbar-navy .navbar-brand ,
+.navbar-navy .nav-item {
+    color: lightgray;
+}
+.navbar-navy .navbar-brand:hover,
+.navbar-navy .navbar-brand:focus {
+    color: white;
+}
+
+
+
+
+

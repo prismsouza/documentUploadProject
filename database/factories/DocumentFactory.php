@@ -20,6 +20,6 @@ $factory->define(Document::class, function (Faker $faker) {
         'date' => $faker->date(),
         'is_active' => $faker->boolean,
         'unit_id' => $unit_id,
-        'size' => "2 MB"
+        'size' => "2.1 MB"
     ];
 });
