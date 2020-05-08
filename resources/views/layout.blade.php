@@ -4,7 +4,6 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>Documents Module</title>
     <meta name="keywords" content="" />
@@ -27,14 +26,15 @@
 </head>
 
 <body>
-<script src="{{ asset('site/jquery.js') }}"></script>
-<script src="{{ asset('site/bootstrap.js') }}"></script>
+    <script src="{{ asset('site/jquery.js') }}"></script>
+    <script src="{{ asset('site/bootstrap.js') }}"></script>
 
 
-<div class="container">
-@include('header')
-@include('navbar')
-@include('searchbar')
+
+    @include('header')
+    <div class="container">
+    @include('navbar')
+    @include('searchbar')
 
 <div id="wrapper">
     <div id="page" class="container row py-3">
@@ -68,6 +68,4 @@
 </div>
 </div>
 @include('footer')
-
-
 </body>

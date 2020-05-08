@@ -1,7 +1,7 @@
-@extends ('layout')
+@extends ('layout_standalone')
 
 @section ('content')
-    <h1 class="heading has-text-weight-bold is-size-4">Novo Documento</h1>
+    <h1 class="heading has-text-weight-bold is-size-4 py-6">Novo Documento</h1>
 
     <form method="POST" action="/documentos" enctype="multipart/form-data" class="py-2"> @csrf
 
@@ -72,7 +72,7 @@
         <div class="control py-2">
         <label class="label" for="document_id">Documento relacionado: </label><br>
         <select
-            id="document_id" name="document_id"
+            id="document_has_document" name="document_has_document[]"
             class="selectpicker" multiple
             value="document_id" data-live-search="true">
 

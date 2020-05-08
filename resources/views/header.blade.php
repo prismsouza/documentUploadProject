@@ -1,4 +1,5 @@
 <nav class="navbar navbar-expand-lg navbar-navy bg-navy">
+    <div class="container">
     <a class="navbar-brand" href="http://intranet.bombeiros.mg.gov.br">Intranet</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -28,17 +29,21 @@
             </li>
         </ul>
     </div>
+    </div>
 </nav>
 
-<div class="row p-4" >
-    <div class="col-sm-3">
-        <a href="http://intranet.bombeiros.mg.gov.br/">
-            <img src="http://intranet.bombeiros.mg.gov.br/assets/images/logo.png" class="ui small image" id="imgLogo">
-        </a>
-    </div>
-    <div class="col-sm-9">
-        <h5><b>MODULO DE DOCUMENTOS</b></h5>
-        <smal>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed posuere lacinia lorem, a lacinia leo facilisis ut.
-              Aliquam sed porta mi. Nunc nisi nibh, facilisis sit amet scelerisque sed, tincidunt id dolor..</smal>
+<div class="container">
+    <div class="row p-4">
+        <div class="col-sm-3">
+            <a href="http://intranet.bombeiros.mg.gov.br/">
+                <img src="http://intranet.bombeiros.mg.gov.br/assets/images/logo.png" class="ui small image" id="imgLogo">
+            </a>
+        </div>
+        <div class="col-sm-9">
+            <h5><b>MODULO DE DOCUMENTOS</b></h5>
+            <smal>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed posuere lacinia lorem, a lacinia leo facilisis ut.
+                  Aliquam sed porta mi. Nunc nisi nibh, facilisis sit amet scelerisque sed, tincidunt id dolor..</smal>
+        </div>
     </div>
 </div>
+

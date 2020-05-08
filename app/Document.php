@@ -33,4 +33,13 @@ class Document extends Model
         return $this->belongsToMany(Tag::class);//->withTimestamps();
     }
 
+    public function relateddocuments()
+    {
+        return $this->belongsToMany('App\Document', 'document_has_document', 'document_id', 'document_related_id');
+    }
+
+    public function hasdocument()
+    {
+        return $this->belongsToMany('App\Document', 'document_has_document', 'document_id', 'document_related_id');
+    }
 }

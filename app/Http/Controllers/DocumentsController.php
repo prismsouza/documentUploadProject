@@ -7,7 +7,6 @@ use App\Tag;
 use App\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
-use Illuminate\Support\Facades\Storage;
 
 
 class DocumentsController extends Controller
@@ -68,6 +67,10 @@ class DocumentsController extends Controller
         $document = $this->getFile($request, $document);
         $document->save();
 
+        if (request()->has('document_has_document')) {
+            DB::table('document_has_document')->insert('document_has_document');
+        }
+
         if (request()->has('tags')) {
             $document->tags()->attach(request('tags'));
         }
@@ -77,7 +80,9 @@ class DocumentsController extends Controller
 
     public function show(Document $document)
     {
-        return view('documents.show', ['document' => $document]);
+        $doc = \App\Document::find($document->id);
+        $related_documents = $doc->hasdocument;
+        return view('documents.show', ['document' => $document, 'related_documents' => $related_documents]);
     }
 
     public function viewfile(Document $document)
