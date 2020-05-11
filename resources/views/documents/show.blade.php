@@ -13,6 +13,13 @@
 
     <p><b>Data de publicacao do documento:</b> {{ $document->date }}</p>
 
+    @if ($document->category->name != 'BGBM')
+
+    <p><b>Publicado no BGBM:</b>
+        <a href= {{$document->bgbm_document_id}}>
+            {{ $document->where('id', $document->bgbm_document_id)->first()->name }}</p>
+    </a>
+
     <p><b>Validade:</b> Este documento <b><?php echo ($document->is_active ? "<span style=color:green>esta vigente" : "<span style=color:red>nao esta vigente"); ?></b></p>
 
     <b>Documentos relacionados:</b>
@@ -23,7 +30,7 @@
                     Nenhum documento relacionado
                 @endforelse
             </table>
-    <p></p>
+    <p></p>@endif
 
     <p><b>Download:</b><br>
         PDF:
@@ -42,7 +49,7 @@
         </a>
     </p>
 
-
+    @if ($document->category->name != 'BGBM')
     </p><b>Tags: </b>
     <table class="table-bordered">
         @forelse ($document->tags as $tag)
@@ -51,5 +58,6 @@
             Nenhuma tag cadastrada
         @endforelse
     </table>
+    @endif
 
 @endsection

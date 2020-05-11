@@ -22,6 +22,8 @@ Route::get('/documentos/categorias/{category}', 'DocumentsController@showByCateg
 Route::get('/documentos', 'DocumentsController@index')->name('documents.index');
 Route::post('/documentos', 'DocumentsController@store');
 Route::get('/documentos/novo', 'DocumentsController@create');
+Route::post('/documentos/categorias/bgbm', 'DocumentsController@store_bgbm');
+Route::get('/documentos/novo/bgbm', 'DocumentsController@create_bgbm');
 Route::get('/documentos/{document}/download/{type}', 'DocumentsController@download')->name('documents.download');
 Route::get('/documentos/{document}/visualizar', 'DocumentsController@viewfile')->name('documents.viewfile');
 Route::get('/documentos/{document}', 'DocumentsController@show')->name('documents.show');

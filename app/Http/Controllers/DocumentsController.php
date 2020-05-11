@@ -41,6 +41,11 @@ class DocumentsController extends Controller
         $document = new Document(request(['category_id', 'name', 'description', 'date', 'is_active']));
 
         $document->user_id = 1;
+
+        if (request()->has('bgbm_document_id')) {
+            $document->bgbm_document_id = request('bgbm_document_id');
+        }
+
         $document->save();
 
         uploadFile($request, $document, 'pdf');
@@ -56,6 +61,26 @@ class DocumentsController extends Controller
 
         return redirect(route('documents.index'));
     }
+
+    public function create_bgbm()
+    {
+        return view('documents.create_bgbm', ['documents' => Document::all()]);
+    }
+
+    public function store_bgbm(Request $request)
+    {
+        $document = new Document(request(['name', 'description', 'date']));
+        $document->category_id = 1;
+        $document->user_id = 1;
+        $document->save();
+
+        uploadFile($request, $document, 'pdf');
+        uploadFile($request, $document, 'doc');
+
+        return redirect(route('documents.index'));
+    }
+
+
 
     public function show(Document $document)
     {
