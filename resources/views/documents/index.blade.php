@@ -16,10 +16,10 @@
         <tr>
             <th scope="col" style="width: 3%">#</th>
             <th scope="col" style="width: 25%">Nome</th>
-            <th scope="col" style="width: 35%">Descricao</th>
-            <th scope="col" style="width: 16%">Categoria</th>
+            <th scope="col" style="width: 33%">Descricao</th>
+            <th scope="col" style="width: 14%">Categoria</th>
             <th scope="col" style="width: 9%">Data</th>
-            <th scope="col" style="width: 12%" colspan="2">Download</th>
+            <th scope="col" style="width: 16%" colspan="3">Download</th>
         </tr>
         </thead>
         <tbody>
@@ -30,13 +30,24 @@
         <?php $count += 1; ?>
         <tr class="small">
             <td class="text-center">{{$count}}</td>
-            <td><a href="{{ $document->path()  }}">{{ $document->name }}</a></td>
+            <td><a href="{{ $document->path()  }}" data-toggle="tooltip" title="acessar documento">
+                    {{ $document->name }} </a>
+            </td>
             <td> {{ $document->description }}</td>
-            <td><a href="{{ $document->category->path()  }}">{{ $document->category->name }}</td>
+            <td><a href="{{ $document->category->path() }}"  data-toggle="tooltip" title="acessar documentos dessa categoria">
+                    {{ $document->category->name }}</a>
+            </td>
             <td class="text-center">{{ $document->date }}</td>
-            <td class="text-center">{{ $document->size }}
-            <a href="{{ route('documents.download', $document->id) }}">
-                    <i class="fa fa-download" aria-hidden="true"></i>
+            <?php $file = $document->files->where('extension','pdf')->first(); ?>
+            <td class="text-center ">{{ $file['size'] }}</td>
+            <td style="width: 2%">
+                <a href="{{ route('documents.download', [$document->id , "doc"]) }}" data-toggle="tooltip" title="download em formato word">
+                    <i class="fa fa-file-word" aria-hidden="true"></i>
+                </a>
+            </td>
+                <td style="width: 2%">
+                    <a href="{{ route('documents.download', [$document->id , "pdf"]) }}"  data-toggle="tooltip" title="download em formato pdf">
+                    <i class="fa fa-file-pdf" aria-hidden="true"></i>
                 </a>
             </td>
         </tr>

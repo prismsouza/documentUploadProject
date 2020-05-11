@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Document extends Model
 {
-    protected $fillable = ['category_id', 'name', 'description', 'date', 'is_active', 'file_name', 'user_id'];
+    protected $fillable = ['category_id', 'name', 'description', 'date', 'is_active', 'user_id'];
 
     public function getRouteKeyName()
     {
@@ -33,13 +33,13 @@ class Document extends Model
         return $this->belongsToMany(Tag::class);//->withTimestamps();
     }
 
-    public function relateddocuments()
+    public function hasdocument()
     {
         return $this->belongsToMany('App\Document', 'document_has_document', 'document_id', 'document_related_id');
     }
 
-    public function hasdocument()
+    public function files()
     {
-        return $this->belongsToMany('App\Document', 'document_has_document', 'document_id', 'document_related_id');
+        return $this->hasMany(File::class);
     }
 }

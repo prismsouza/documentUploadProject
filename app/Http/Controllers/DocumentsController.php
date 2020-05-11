@@ -7,36 +7,12 @@ use App\Tag;
 use App\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
+include "File.php";
+include "Filters.php";
 
 
 class DocumentsController extends Controller
 {
-    public function searchByWord(Request $request)
-    {
-        $word = request('word');
-        $documents = Document::where('name','LIKE','%'.$word.'%')->orWhere('description','LIKE','%'.$word.'%')->get();
-        return view('documents.index', ['documents' => $documents, 'category_option' => null])->withDetails($documents)->withQuery($word);
-    }
-
-    public function searchByDate(Request $request)
-    {
-        $first_date = request('first_date');
-        $last_date = request('last_date');
-        $documents = Document::where('date','>',$first_date , 'and', 'date', '<', $last_date)->get();
-
-        return view('documents.index', ['documents' => $documents, 'category_option' => null])->withDetails($documents)->withQuery($first_date, $last_date);
-    }
-
-    public function searchByYear(Request $request)
-    {
-        $year = request('year');
-        $year_end = $year . "/12/30";
-        $year = $year . "/01/01";
-
-        $documents = Document::where('date','>=',$year , 'and', 'date', '<=', $year_end)->get();
-
-        return view('documents.index', ['documents' => $documents, 'category_option' => null])->withDetails($documents)->withQuery($year);
-    }
 
     public function index()
     {
@@ -62,13 +38,16 @@ class DocumentsController extends Controller
     public function store(Request $request)
     {
         $this->validateDocument('');
-        $document = new Document(request(['category_id', 'name', 'description', 'date', 'is_active', 'file_name']));
+        $document = new Document(request(['category_id', 'name', 'description', 'date', 'is_active']));
+
         $document->user_id = 1;
-        $document = $this->getFile($request, $document);
         $document->save();
 
+        uploadFile($request, $document, 'pdf');
+        uploadFile($request, $document, 'doc');
+
         if (request()->has('document_has_document')) {
-            DB::table('document_has_document')->insert('document_has_document');
+            $document->hasdocument()->attach(request('document_has_document'));
         }
 
         if (request()->has('tags')) {
@@ -81,13 +60,18 @@ class DocumentsController extends Controller
     public function show(Document $document)
     {
         $doc = \App\Document::find($document->id);
+
         $related_documents = $doc->hasdocument;
-        return view('documents.show', ['document' => $document, 'related_documents' => $related_documents]);
+
+        $pdf_file = $document->files->where('extension','pdf')->first();
+        $doc_file = $document->files->where('extension','doc')->first();
+
+        return view('documents.show', ['document' => $document, 'related_documents' => $related_documents, 'doc_file' => $doc_file, 'pdf_file' => $pdf_file]);
     }
 
     public function viewfile(Document $document)
     {
-        $file_path = public_path('documents') . '/' . $document->file_name;
+        $file_path = public_path('documents') . '/' . $document->files->where('extension','pdf')->first()->alias;
         return  Response::make(file_get_contents($file_path), 200, [
             'Content-Type' => 'application/pdf',
             'Content-Disposition' => 'inline'
@@ -129,10 +113,13 @@ class DocumentsController extends Controller
         return redirect($document->path());*/
     }
 
-    public function download(Document $document)
+    public function download(Document $document, $type)
     {
-        $file_path = public_path('documents') . '/' . $document->file_name;
-        return response()->download($file_path, $document->name, ['Content-Type:' . $document->filemimetype]);
+        $file = $document->files->where('extension', $type)->first();
+        $file_alias = $file->alias;
+        $filemimetype = $file->filemimetype;
+        $file_path = public_path('documents') . '/' . $file_alias;
+        return response()->download($file_path, $document->name, ['Content-Type:' . $filemimetype]);
     }
 
     public function destroy(Document $document)
@@ -159,29 +146,12 @@ class DocumentsController extends Controller
             'description' => 'required',
             'date' => 'required',
             'is_active' => 'required',
-            'file_name' => 'required',
-            'tags' => 'exists:tags,id'
+            'file_name_pdf' => 'required',
+            'tags' => 'exists:tags,id',
+            'document_has_document' => 'exists:document_has_document,document_id',
         ]);
     }
 
-    public function getFile($request, $document)
-    {
-        if ($request->hasFile('file_name')) {
-            $file_name = $document->name . '_' . $document->date . '.pdf';// . $document->date;
-            $request->file_name->storeAs('documents', $file_name);
-
-            $units = ['B', 'KB', 'MB', 'GB'];
-            $file_size = $request->file('file_name')->getSize();
-            for ($i = 0; $file_size > 1024; $i++) {
-                $file_size /= 1000;
-            }
-            $file_size = round($file_size, 1) . ' ' . $units[$i];
-
-            $document->file_name = $file_name;
-            $document->size = $file_size;
-        }
-        return $document;
-    }
     public function dumpArray($array) {
         echo "<pre>";
         var_dump($array);

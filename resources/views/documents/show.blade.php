@@ -13,7 +13,7 @@
 
     <p><b>Data de publicacao do documento:</b> {{ $document->date }}</p>
 
-    <p><b>Validade:</b> Este documento esta <b><?php echo ($document->is_active ? "<span style=color:green>vigente" : "<span style=color:red>invalido"); ?></b></p>
+    <p><b>Validade:</b> Este documento <b><?php echo ($document->is_active ? "<span style=color:green>esta vigente" : "<span style=color:red>nao esta vigente"); ?></b></p>
 
     <b>Documentos relacionados:</b>
             <table class="table-bordered">
@@ -25,15 +25,20 @@
             </table>
     <p></p>
 
-    <p><b>Download:</b>
-        <a style="color:navy" href="{{ route('documents.download', $document->id) }}">
-            {{ $document->file_name }}
+    <p><b>Download:</b><br>
+        PDF:
+        <a style="color:navy" href="{{ route('documents.download', [$document->id , "pdf"]) }}">
+            {{ $pdf_file->alias }}
+        </a><br>
+        DOC:
+        <a style="color:navy" href="{{ route('documents.download', [$document->id , "doc"]) }}">
+            {{ $doc_file->alias }}
         </a>
     </p>
 
-    <p><b>Visualizar em uma nova aba:</b>
+    <p><b>Visualizar PDF em nova aba:</b>
         <a style="color:navy" href="{{ route('documents.viewfile', $document->id) }}" target="_blank">
-            {{ $document->file_name }}
+            {{ $pdf_file->alias }}
         </a>
     </p>
 

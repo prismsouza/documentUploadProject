@@ -22,7 +22,7 @@ Route::get('/documentos/categorias/{category}', 'DocumentsController@showByCateg
 Route::get('/documentos', 'DocumentsController@index')->name('documents.index');
 Route::post('/documentos', 'DocumentsController@store');
 Route::get('/documentos/novo', 'DocumentsController@create');
-Route::get('/documentos/{document}/download', 'DocumentsController@download')->name('documents.download');
+Route::get('/documentos/{document}/download/{type}', 'DocumentsController@download')->name('documents.download');
 Route::get('/documentos/{document}/visualizar', 'DocumentsController@viewfile')->name('documents.viewfile');
 Route::get('/documentos/{document}', 'DocumentsController@show')->name('documents.show');
 Route::get('/documentos/{document}/editar', 'DocumentsController@edit');
