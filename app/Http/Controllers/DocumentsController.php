@@ -8,7 +8,7 @@ use App\File;
 use App\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
-include "Filters.php";
+include "FiltersHelper.php";
 
 
 class DocumentsController extends Controller
@@ -182,6 +182,25 @@ class DocumentsController extends Controller
             'document_has_document' => 'exists:document_has_document,document_id',
         ]);
     }
+
+    public function filter(Request $request, $filter_type)
+    {
+        if ($filter_type == "searchbyword") {
+            $word = request('word');
+            return searchByWord($word);
+        } elseif ($filter_type == "searchbydate") {
+            $first_date = request('first_date');
+            $last_date = request('last_date');
+            return searchByDate($first_date, $last_date);
+        } elseif ($filter_type == "searchbyyear") {
+            $year = request('year');
+            return searchByYear($year);
+        } elseif ($filter_type == "searchbytags") {
+            $tags = request('tags');
+            return searchByTags($tags);
+        }
+}
+
 
     public function searchByWord(Request $request)
     {

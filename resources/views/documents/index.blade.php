@@ -5,7 +5,7 @@
         <h2>{{ $category_option }}</h2><br>
     @elseif(isset($details))
         <h2>Resultados</h2><br>
-        <p> Os resultados para a consulta <b> {{ $query }} </b> sao :</p>
+        <p> Os resultados para a consulta <b> </b> sao :</p>
     @else
         <h2>Todos Documentos</h2><br>
     @endif
@@ -30,27 +30,29 @@
         <?php $count += 1; ?>
         <tr class="small">
             <td class="text-center">{{$count}}</td>
-            <td><a href="{{ $document->path()  }}" data-toggle="tooltip" title="acessar documento">
-                    {{ $document->name }} </a>
+            <td>
+                <a href="{{ $document->path()  }}" data-toggle="tooltip" title="acessar documento">
+                    {{ $document->name }}
+                </a>
             </td>
             <td> {{ $document->description }}</td>
-            <td><a href="{{ $document->category->path() }}"  data-toggle="tooltip" title="acessar documentos dessa categoria">
-                    {{ $document->category->name }}</a>
+            <td>
+                <a href="{{ $document->category->path() }}"  data-toggle="tooltip" title="acessar documentos dessa categoria">
+                    {{ $document->category->name }}
+                </a>
             </td>
             <td class="text-center">{{ $document->date }}</td>
 
             <?php $file_pdf = $document->files->where('extension','pdf')->first();  ?>
-            <?php $file_doc = $document->files->where('extension','doc')->first();  ?>
-
-
             @if ($file_pdf != NULL)
                 <td class="text-center px-0">{{ $file_pdf['size'] }}
-
                     <a href="{{ route('documents.download', [$document->id , "pdf"]) }}"  data-toggle="tooltip" title="download pdf">
-                    <i class="fa fa-file-pdf" aria-hidden="true"></i>
-                </a>
-            </td>
-                @endif
+                        <i class="fa fa-file-pdf" aria-hidden="true"></i>
+                    </a>
+                </td>
+            @endif
+
+            <?php $file_doc = $document->files->where('extension','doc')->first();  ?>
             @if ($file_doc != NULL)
                 <td class="text-center px-0">{{ $file_doc['size'] }}
                     <a href="{{ route('documents.download', [$document->id , "doc"]) }}" data-toggle="tooltip" title="download word">
