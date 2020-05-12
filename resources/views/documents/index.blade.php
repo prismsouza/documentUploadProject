@@ -15,11 +15,11 @@
         <thead class="text-center">
         <tr>
             <th scope="col" style="width: 3%">#</th>
-            <th scope="col" style="width: 25%">Nome</th>
-            <th scope="col" style="width: 33%">Descricao</th>
+            <th scope="col" style="width: 24%">Nome</th>
+            <th scope="col" style="width: 32%">Descricao</th>
             <th scope="col" style="width: 14%">Categoria</th>
-            <th scope="col" style="width: 9%">Data</th>
-            <th scope="col" style="width: 16%" colspan="3">Download</th>
+            <th scope="col" style="width: 8%">Data</th>
+            <th scope="col" style="width: 19%" colspan="4">Download</th>
         </tr>
         </thead>
         <tbody>
@@ -38,18 +38,26 @@
                     {{ $document->category->name }}</a>
             </td>
             <td class="text-center">{{ $document->date }}</td>
-            <?php $file = $document->files->where('extension','pdf')->first(); ?>
-            <td class="text-center ">{{ $file['size'] }}</td>
-            <td style="width: 2%">
-                <a href="{{ route('documents.download', [$document->id , "doc"]) }}" data-toggle="tooltip" title="download em formato word">
-                    <i class="fa fa-file-word" aria-hidden="true"></i>
-                </a>
-            </td>
-                <td style="width: 2%">
-                    <a href="{{ route('documents.download', [$document->id , "pdf"]) }}"  data-toggle="tooltip" title="download em formato pdf">
+
+            <?php $file_pdf = $document->files->where('extension','pdf')->first();  ?>
+            <?php $file_doc = $document->files->where('extension','doc')->first();  ?>
+
+
+            @if ($file_pdf != NULL)
+                <td class="text-center px-0">{{ $file_pdf['size'] }}
+
+                    <a href="{{ route('documents.download', [$document->id , "pdf"]) }}"  data-toggle="tooltip" title="download pdf">
                     <i class="fa fa-file-pdf" aria-hidden="true"></i>
                 </a>
             </td>
+                @endif
+            @if ($file_doc != NULL)
+                <td class="text-center px-0">{{ $file_doc['size'] }}
+                    <a href="{{ route('documents.download', [$document->id , "doc"]) }}" data-toggle="tooltip" title="download word">
+                        <i class="fa fa-file-word" aria-hidden="true"></i>
+                    </a>
+                </td>
+            @endif
         </tr>
     @empty
         <p><h5>Nao ha resultados para esta pesquisa</h5></p>

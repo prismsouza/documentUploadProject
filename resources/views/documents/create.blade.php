@@ -12,7 +12,7 @@
             value="category_id" data-live-search="true">
 
             @foreach($categories as $category)
-                @if ($category->name != 'BGBM')
+                @if ($category->name != 'Boletim Geral')
                     <option value={{ $category->id }}>{{ $category->name }}</option>
                 @endif
             @endforeach
@@ -34,7 +34,7 @@
             @enderror
         </div>
 
-        <div class="control py-2  row">
+        <div class="control py-2 row">
             <div class="col-sm-1">
                 <label class="label" for="description">Descricao</label>
             </div>
@@ -44,8 +44,8 @@
                 name="description" id="description"
                 value="{{ old('description') }}">
 
-                @error('excerpt')
-                    <p class="help is-danger">{{ $errors->first('excerpt') }}</p>
+                @error('description')
+                    <p class="help is-danger">{{ $errors->first('description') }}</p>
                 @enderror
         </div>
 
@@ -65,7 +65,7 @@
                 <i class="fa fa-upload p-1"></i>
                 <i class="fa fa-file-word" aria-hidden="true"></i>
                 <input
-                    class="input"
+                    class="input @error('file_name_doc') is-danger @enderror"
                     type="file" accept=".doc, .docx, .odt"
                     name="file_name_doc" id="file_name_doc"
                     value="{{ old('file_name_doc') }}">
@@ -80,7 +80,9 @@
             value="document_id" data-live-search="true">
 
             @foreach($documents as $document)
-                <option value={{ $document->id }}>{{ $document->name }} - {{ $document->description }}</option>
+                @if ($document->category_id != 100)
+                    <option value={{ $document->id }}>{{ $document->name }} - {{ $document->description }}</option>
+                @endif
             @endforeach
         </select>
         </div>
@@ -91,8 +93,8 @@
                 id="bgbm_document_id" name="bgbm_document_id"
                 class="selectpicker"
                 value="document_id" data-live-search="true">
-
-                <?php $documents_bgbm = $categories->where('name','BGBM')->first()->documents; ?>
+                <option value="0"></option>
+                <?php $documents_bgbm = $categories->where('name','Boletim Geral')->first()->documents; ?>
                 @foreach($documents_bgbm as $doc_bgbm)
                     <option value={{ $doc_bgbm->id }}>{{ $doc_bgbm->name }} - {{ $doc_bgbm->description }} - {{ $doc_bgbm->date }}</option>
                 @endforeach

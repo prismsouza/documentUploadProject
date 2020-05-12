@@ -4,10 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Document;
 use App\Tag;
+use App\File;
 use App\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
-include "File.php";
 include "Filters.php";
 
 
@@ -32,7 +32,7 @@ class DocumentsController extends Controller
 
     public function create()
     {
-        return view('documents.create', ['tags' => Tag::all(), 'categories' => Category::all(), 'documents' => DOcument::all()]);
+        return view('documents.create', ['tags' => Tag::all(), 'categories' => Category::all(), 'documents' => Document::all()]);
     }
 
     public function store(Request $request)
@@ -44,12 +44,17 @@ class DocumentsController extends Controller
 
         if (request()->has('bgbm_document_id')) {
             $document->bgbm_document_id = request('bgbm_document_id');
+        } else {
+            $document->bgbm_document_id = 0;
         }
 
         $document->save();
 
-        uploadFile($request, $document, 'pdf');
-        uploadFile($request, $document, 'doc');
+        $file_doc = new FilesController();
+        $file_doc->uploadFile($request, $document, 'doc');
+
+        $file_pdf = new FilesController();
+        $file_pdf->uploadFile($request, $document, 'pdf');
 
         if (request()->has('document_has_document')) {
             $document->hasdocument()->attach(request('document_has_document'));
@@ -64,23 +69,22 @@ class DocumentsController extends Controller
 
     public function create_bgbm()
     {
-        return view('documents.create_bgbm', ['documents' => Document::all()]);
+        return view('documents.create_bgbm');
     }
 
     public function store_bgbm(Request $request)
     {
         $document = new Document(request(['name', 'description', 'date']));
-        $document->category_id = 1;
+        $document->category_id = 100;
         $document->user_id = 1;
+        $document->bgbm_document_id = 0;
         $document->save();
 
-        uploadFile($request, $document, 'pdf');
-        uploadFile($request, $document, 'doc');
+        $file_pdf = new FilesController();
+        $file_pdf->uploadFile($request, $document, 'pdf');
 
-        return redirect(route('documents.index'));
+        return redirect(route('documents.bgbm'));
     }
-
-
 
     public function show(Document $document)
     {
@@ -90,7 +94,6 @@ class DocumentsController extends Controller
 
         $pdf_file = $document->files->where('extension','pdf')->first();
         $doc_file = $document->files->where('extension','doc')->first();
-
         return view('documents.show', ['document' => $document, 'related_documents' => $related_documents, 'doc_file' => $doc_file, 'pdf_file' => $pdf_file]);
     }
 
@@ -141,10 +144,13 @@ class DocumentsController extends Controller
     public function download(Document $document, $type)
     {
         $file = $document->files->where('extension', $type)->first();
-        $file_alias = $file->alias;
-        $filemimetype = $file->filemimetype;
-        $file_path = public_path('documents') . '/' . $file_alias;
-        return response()->download($file_path, $document->name, ['Content-Type:' . $filemimetype]);
+        if ($file!=null) {
+            $file_alias = $file->alias;
+            $filemimetype = $file->filemimetype;
+            $file_path = public_path('documents') . '/' . $file_alias;
+            return response()->download($file_path, $document->name, ['Content-Type:' . $filemimetype]);
+        }
+
     }
 
     public function destroy(Document $document)
@@ -175,6 +181,33 @@ class DocumentsController extends Controller
             'tags' => 'exists:tags,id',
             'document_has_document' => 'exists:document_has_document,document_id',
         ]);
+    }
+
+    public function searchByWord(Request $request)
+    {
+        $word = request('word');
+        $documents = Document::where('name','LIKE','%'.$word.'%')->orWhere('description','LIKE','%'.$word.'%')->get();
+        return view('documents.index', ['documents' => $documents, 'category_option' => null])->withDetails($documents)->withQuery($word);
+    }
+
+    public function searchByDate(Request $request)
+    {
+        $first_date = request('first_date');
+        $last_date = request('last_date');
+        $documents = Document::where('date','>',$first_date , 'and', 'date', '<', $last_date)->get();
+
+        return view('documents.index', ['documents' => $documents, 'category_option' => null])->withDetails($documents)->withQuery($first_date, $last_date);
+    }
+
+    public function searchByYear(Request $request)
+    {
+        $year = request('year');
+        $year_end = $year . "/12/30";
+        $year = $year . "/01/01";
+
+        $documents = Document::where('date','>=',$year , 'and', 'date', '<=', $year_end)->get();
+
+        return view('documents.index', ['documents' => $documents, 'category_option' => null])->withDetails($documents)->withQuery($year);
     }
 
     public function dumpArray($array) {

@@ -22,7 +22,6 @@ function uploadFile($request, $document, $type)
 
     $file->alias = $document->name . '_' . $document->date . '.' . $file->extension;
 
-
     $file->document_id = $document->id;
 
     $file->save();

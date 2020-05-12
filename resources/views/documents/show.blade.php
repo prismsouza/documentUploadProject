@@ -13,12 +13,14 @@
 
     <p><b>Data de publicacao do documento:</b> {{ $document->date }}</p>
 
-    @if ($document->category->name != 'BGBM')
+    @if ($document->category_id != 100)
 
-    <p><b>Publicado no BGBM:</b>
-        <a href= {{$document->bgbm_document_id}}>
-            {{ $document->where('id', $document->bgbm_document_id)->first()->name }}</p>
-    </a>
+        @if ($document->bgbm_document_id !=0)
+        <p><b>Publicado no BGBM:</b>
+            <a style="color:navy" href= {{$document->bgbm_document_id}}>
+                {{ $document->where('id', $document->bgbm_document_id)->first()->name }}</p>
+        </a>
+        @endif
 
     <p><b>Validade:</b> Este documento <b><?php echo ($document->is_active ? "<span style=color:green>esta vigente" : "<span style=color:red>nao esta vigente"); ?></b></p>
 
@@ -30,16 +32,16 @@
                     Nenhum documento relacionado
                 @endforelse
             </table>
-    <p></p>@endif
+    <p></p>
 
-    <p><b>Download:</b><br>
-        PDF:
-        <a style="color:navy" href="{{ route('documents.download', [$document->id , "pdf"]) }}">
-            {{ $pdf_file->alias }}
-        </a><br>
-        DOC:
+    <p><b>Download: </b>DOC
         <a style="color:navy" href="{{ route('documents.download', [$document->id , "doc"]) }}">
             {{ $doc_file->alias }}
+        </a></p>
+        @endif
+    <p><b>Download: </b>PDF
+        <a style="color:navy" href="{{ route('documents.download', [$document->id , "pdf"]) }}">
+            {{ $pdf_file->alias }}
         </a>
     </p>
 
@@ -49,7 +51,7 @@
         </a>
     </p>
 
-    @if ($document->category->name != 'BGBM')
+    @if ($document->category_id != 100)
     </p><b>Tags: </b>
     <table class="table-bordered">
         @forelse ($document->tags as $tag)
