@@ -2,6 +2,7 @@
 
 use App\Document;
 use App\Tag;
+use App\Category;
 use Illuminate\Support\Collection;
 
 function searchByWord($word)
@@ -31,4 +32,15 @@ function searchByTags($tags)
     }
     $documents = $documents->collapse();
     return view('documents.index', ['documents' => $documents, 'category_option' => null])->withDetails($documents)->withQuery($tags);
+}
+
+function searchByCategories($categories)
+{
+    $documents = new Collection([]);
+    foreach($categories as $category_id) {
+        $docs = Category::where('id', $category_id)->firstOrFail()->documents;
+        $documents->push($docs);
+    }
+    $documents = $documents->collapse();
+    return view('documents.index', ['documents' => $documents, 'category_option' => null])->withDetails($documents)->withQuery($categories);
 }

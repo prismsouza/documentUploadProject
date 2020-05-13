@@ -198,6 +198,9 @@ class DocumentsController extends Controller
         } elseif ($filter_type == "searchbytags") {
             $tags = request('tags');
             return searchByTags($tags);
+        } elseif ($filter_type == "searchbycategories") {
+            $categories = request('categories');
+            return searchByCategories($categories);
         }
 }
 
