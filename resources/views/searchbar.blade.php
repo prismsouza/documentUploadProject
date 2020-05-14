@@ -1,32 +1,18 @@
-<div class="row">
-    <div class="col-sm">
-        <label for="documents">Documento: </label><br>
-    </div>
-    <div class="col-sm">
-        <label for="categories">Categoria:</label>
-    </div>
-    <div class="col-sm-4">
-        <i class="fas fa-calendar p-2"></i> <label for="date">Data de Publicacao </label>
-    </div>
-    <div class="col-sm">
-        <label for="tags">Tags </label>
-    </div>
-</div>
-
-
-<form method="POST" action="/documentos/pesquisa" enctype="multipart/form-data" class="py-2"> @csrf
+<form method="POST" action="{{ route('documents.filter') }}" enctype="multipart/form-data" class="py-2"> @csrf
     <div class="row">
         <div class="col-sm">
+            Documento:
             <input
                 class="form-control col-sm-12"
                 type="text" name="word" id="word"
-                value="{{ old('word') }}">
+                value="{{ request()->input('word') }}">
         </div>
 
         <div class="col-sm">
-            <a href="#" data-toggle="dropdown" class="dropdown-toggle">
-                <label for="categories" class="form-control-label  border col-sm-10"></label>
-                <b class="caret"></b>
+            Categorias:<br>
+            <a class="nav-link dropdown-toggle"
+               id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Selecione...
             </a>
 
             <ul class="dropdown-menu">
@@ -38,7 +24,8 @@
                                         <input
                                             type="checkbox" value=" {{ $category->id }} "
                                             id="categories" name="categories[]"
-                                            style="transform: scale(1.5);">
+                                            style="transform: scale(1.5);"
+                                            placeholder="Selecionado">
                                         {{ $category->name }}
                                     </label>
                                 </div>
@@ -51,20 +38,24 @@
         </div>
 
         <div class="col-sm-4">
+            <i class="fas fa-calendar p-2"></i>Data de Publicacao:<br>
             <label class="px-1 small">De</label>
             <input
                 name="first_date" id="first_date" type="date"
-                data-display-mode="inline" data-is-range="true" data-close-on-select="false">
+                data-display-mode="inline" data-is-range="true" data-close-on-select="false"
+                value="{{ request()->input('first_date') }}">
             <label class="px-1 small">a</label>
             <input
                 name="last_date" id="last_date" type="date"
-                data-display-mode="inline" data-is-range="true" data-close-on-select="false">
+                data-display-mode="inline" data-is-range="true" data-close-on-select="false"
+                value="{{ request()->input('last_date') }}">
         </div>
 
         <div class="col-sm">
-            <a href="#" data-toggle="dropdown" class="dropdown-toggle">
-                <label for="tags" class="form-control-label border col-sm-10"></label>
-                <b class="caret"></b>
+            Tags: <br>
+            <a class="nav-link dropdown-toggle"
+               id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Selecione...
             </a>
 
             <ul class="dropdown-menu">
@@ -92,8 +83,13 @@
 
     <div class="field is-grouped">
         <div class="control float-md-right py-2">
-            <button class="btn btn-dark" type="submit">
-                Pequisar
+            <button class="btn btn-light border" type="submit"  action="{{ route('documents.index') }}">
+                <a href="{{ route('documents.index') }}">
+                    Limpar campos <i class="fas fa-eraser px-2"></i>
+                </a>
+            </button>
+            <button class="btn btn-dark" type="submit" >
+                Pequisar <i class="fas fa-search px-2"></i>
             </button>
             <span class="p-2"></span>
         </div>
@@ -101,5 +97,47 @@
 
 </form>
 
+<br>
+<br>
+@if (request()->input('word') || request()->input('categories') || request()->input('first_date') || request()->input('last_date') || request()->input('tags'))
+    <div class="border p-2">
+        <b>Filtro aplicado:</b><br>
+    @if (request()->input('word'))
+        Nome Documento / Descricao:
+        <b class="px-2"> {{ request()->input('word') }} </b>
+    @endif
+
+    @if (request()->input('categories'))
+        <br>Categorias:
+        @foreach ( request()->input('categories')  as $cat)
+            <b class="p-1">{{ $category = $categories->where('id', $cat)->first()->name }}</b>,
+        @endforeach
+    @endif
+
+    @if (request()->input('first_date') || request()->input('last_date'))
+
+        @if (request()->input('first_date') && request()->input('last_date'))
+                <br>Data de publicacao:
+                <b class="px-2">de {{ request()->input('first_date') }}
+                ate {{ request()->input('last_date') }}</b>
+        @elseif (request()->input('first_date'))
+                        <br>Documentos publicados:
+                <b class="px-2">a partir de
+                    {{ request()->input('first_date') }}</b>
+                ate a data de hoje.
+        @elseif (request()->input('last_date'))
+                                <br>Documentos publicados:
+                <b class="px-2">ate {{ request()->input('last_date') }}</b>
+        @endif
+
+    @endif
 
 
+    @if (request()->input('tags'))
+           <br>Tags:
+                @foreach ( request()->input('tags')  as $tag)
+                    <b class="p-1">{{ $tag = $tags->where('id', $tag)->first()->name }} </b>
+                @endforeach
+    @endif
+    </div>
+@endif
