@@ -13,21 +13,19 @@
     </div>
 </div>
 
-<div class="row">
-    <div class="col-sm">
-        <form action="{{ route('documents.filter' , 'searchbyword') }}" method="POST" role="search" class="form-inline">
-            {{ csrf_field() }}
-            <input class="form-control col-sm-10" type="text" name="word" id="word">
-            <button type="submit" id="searchbyword"><i class="fa fa-search py-2" aria-hidden="true"></i></button>
-        </form>
-    </div>
 
-    <div class="col-sm">
-        <form action="{{ route('documents.filter' , 'searchbycategories') }}" method="POST" role="search">
-            {{ csrf_field() }}
+<form method="POST" action="/documentos/pesquisa" enctype="multipart/form-data" class="py-2"> @csrf
+    <div class="row">
+        <div class="col-sm">
+            <input
+                class="form-control col-sm-12"
+                type="text" name="word" id="word"
+                value="{{ old('word') }}">
+        </div>
 
+        <div class="col-sm">
             <a href="#" data-toggle="dropdown" class="dropdown-toggle">
-                <label for="categories" class="form-control-label  border col-sm-6"></label>
+                <label for="categories" class="form-control-label  border col-sm-10"></label>
                 <b class="caret"></b>
             </a>
 
@@ -37,7 +35,10 @@
                             @forelse($categories as $category)
                                 <div class="col-sm">
                                     <label class="checkbox-inline">
-                                        <input type="checkbox"  value=" {{ $category->id }} " id="categories" name="categories[]" style="transform: scale(1.5);">
+                                        <input
+                                            type="checkbox" value=" {{ $category->id }} "
+                                            id="categories" name="categories[]"
+                                            style="transform: scale(1.5);">
                                         {{ $category->name }}
                                     </label>
                                 </div>
@@ -47,28 +48,22 @@
                         </label>
                     </div></li>
             </ul>
-            <button type="submit" id="searchbycategories">
-                <i class="fa fa-search py-2" aria-hidden="true"></i>
-            </button>
-        </form>
-    </div>
+        </div>
 
-    <div class="col-sm-4">
-        <form action="{{ route('documents.filter' , 'searchbydate') }}" method="POST" role="search" class="form-inline">
-            {{ csrf_field() }}
+        <div class="col-sm-4">
+            <label class="px-1 small">De</label>
+            <input
+                name="first_date" id="first_date" type="date"
+                data-display-mode="inline" data-is-range="true" data-close-on-select="false">
+            <label class="px-1 small">a</label>
+            <input
+                name="last_date" id="last_date" type="date"
+                data-display-mode="inline" data-is-range="true" data-close-on-select="false">
+        </div>
 
-            <label class="px-1 small">De</label> <input name="first_date" id="first_date" type="date" data-display-mode="inline" data-is-range="true" data-close-on-select="false">
-            <label class="px-1 small">a</label> <input name="last_date" id="last_date" type="date" data-display-mode="inline" data-is-range="true" data-close-on-select="false">
-            <button type="submit" id="searchbydate"><i class="fa fa-search py-2" aria-hidden="true"></i></button>
-        </form>
-    </div>
-
-    <div class="col-sm">
-        <form action="{{ route('documents.filter' , 'searchbytags') }}" method="POST" role="search">
-            {{ csrf_field() }}
-
+        <div class="col-sm">
             <a href="#" data-toggle="dropdown" class="dropdown-toggle">
-                <label for="tags" class="form-control-label  border col-sm-6"></label>
+                <label for="tags" class="form-control-label border col-sm-10"></label>
                 <b class="caret"></b>
             </a>
 
@@ -76,24 +71,35 @@
                 <li><div class="checkbox">
                 <label>
                     <input type="text" placeholder="Pesquisar..." id="myInput" onkeyup="filterFunction()">
-                @forelse($tags as $tag)
-                    <div class="col-sm">
-                        <label class="checkbox-inline">
-                            <input type="checkbox" value="{{ $tag->id }}" id="tags" name="tags[]" style="transform: scale(1.5);">
-                            {{ $tag->name }}
-                        </label>
-                    </div>
-                @empty
-                     <p><h5>Nao ha tags cadastradas</h5></p>
-                @endforelse
+                    @forelse($tags as $tag)
+                        <div class="col-sm">
+                            <label class="checkbox-inline">
+                                <input
+                                    type="checkbox" value="{{ $tag->id }}"
+                                    id="tags" name="tags[]"
+                                    style="transform: scale(1.5);">
+                                {{ $tag->name }}
+                            </label>
+                        </div>
+                    @empty
+                         <p><h5>Nao ha tags cadastradas</h5></p>
+                    @endforelse
                 </label>
                 </div></li>
             </ul>
-        <button type="submit" id="searchbytags">
-            <i class="fa fa-search py-2" aria-hidden="true"></i>
-        </button>
-        </form>
+        </div>
     </div>
-</div>
+
+    <div class="field is-grouped">
+        <div class="control float-md-right py-2">
+            <button class="btn btn-dark" type="submit">
+                Pequisar
+            </button>
+            <span class="p-2"></span>
+        </div>
+    </div>
+
+</form>
+
 
 

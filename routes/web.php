@@ -44,7 +44,7 @@ Route::get('/tags/novo', 'TagsController@create');
 Route::get('/tags/{tag}', 'TagsController@show')->name('tags.show');
 
 
-Route::any('/documentos/pesquisa/{filter}','DocumentsController@filter')->name('documents.filter');
+Route::any('/documentos/pesquisa','DocumentsController@filter')->name('documents.filter');
 
 function dumpArray($array) {
     echo "<pre>";

@@ -24,6 +24,17 @@ class DocumentsController extends Controller
         return view('documents.index', ['documents' => $documents, 'category_option' => null]);
     }
 
+    public function show(Document $document)
+    {
+        $doc = \App\Document::find($document->id);
+
+        $related_documents = $doc->hasdocument;
+
+        $pdf_file = $document->files->where('extension','pdf')->first();
+        $doc_file = $document->files->where('extension','doc')->first();
+        return view('documents.show', ['document' => $document, 'related_documents' => $related_documents, 'doc_file' => $doc_file, 'pdf_file' => $pdf_file]);
+    }
+
     public function home()
     {
         $documents = Document::latest();
@@ -86,17 +97,6 @@ class DocumentsController extends Controller
         return redirect(route('documents.bgbm'));
     }
 
-    public function show(Document $document)
-    {
-        $doc = \App\Document::find($document->id);
-
-        $related_documents = $doc->hasdocument;
-
-        $pdf_file = $document->files->where('extension','pdf')->first();
-        $doc_file = $document->files->where('extension','doc')->first();
-        return view('documents.show', ['document' => $document, 'related_documents' => $related_documents, 'doc_file' => $doc_file, 'pdf_file' => $pdf_file]);
-    }
-
     public function viewfile(Document $document)
     {
         $file_path = public_path('documents') . '/' . $document->files->where('extension','pdf')->first()->alias;
@@ -150,7 +150,6 @@ class DocumentsController extends Controller
             $file_path = public_path('documents') . '/' . $file_alias;
             return response()->download($file_path, $document->name, ['Content-Type:' . $filemimetype]);
         }
-
     }
 
     public function destroy(Document $document)
@@ -183,53 +182,9 @@ class DocumentsController extends Controller
         ]);
     }
 
-    public function filter(Request $request, $filter_type)
+    public function filter(Request $request)
     {
-        if ($filter_type == "searchbyword") {
-            $word = request('word');
-            return searchByWord($word);
-        } elseif ($filter_type == "searchbydate") {
-            $first_date = request('first_date');
-            $last_date = request('last_date');
-            return searchByDate($first_date, $last_date);
-        } elseif ($filter_type == "searchbyyear") {
-            $year = request('year');
-            return searchByYear($year);
-        } elseif ($filter_type == "searchbytags") {
-            $tags = request('tags');
-            return searchByTags($tags);
-        } elseif ($filter_type == "searchbycategories") {
-            $categories = request('categories');
-            return searchByCategories($categories);
-        }
-}
-
-
-    public function searchByWord(Request $request)
-    {
-        $word = request('word');
-        $documents = Document::where('name','LIKE','%'.$word.'%')->orWhere('description','LIKE','%'.$word.'%')->get();
-        return view('documents.index', ['documents' => $documents, 'category_option' => null])->withDetails($documents)->withQuery($word);
-    }
-
-    public function searchByDate(Request $request)
-    {
-        $first_date = request('first_date');
-        $last_date = request('last_date');
-        $documents = Document::where('date','>',$first_date , 'and', 'date', '<', $last_date)->get();
-
-        return view('documents.index', ['documents' => $documents, 'category_option' => null])->withDetails($documents)->withQuery($first_date, $last_date);
-    }
-
-    public function searchByYear(Request $request)
-    {
-        $year = request('year');
-        $year_end = $year . "/12/30";
-        $year = $year . "/01/01";
-
-        $documents = Document::where('date','>=',$year , 'and', 'date', '<=', $year_end)->get();
-
-        return view('documents.index', ['documents' => $documents, 'category_option' => null])->withDetails($documents)->withQuery($year);
+        return getFilteredDocuments($request);
     }
 
     public function dumpArray($array) {

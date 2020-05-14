@@ -5,7 +5,17 @@
         <h2>{{ $category_option }}</h2><br>
     @elseif(isset($details))
         <h2>Resultados</h2><br>
-        <p> Os resultados para a consulta <b> </b> sao :</p>
+        <p> Os resultados para a consulta <b>
+                @foreach ($query as $q)
+                    @if (gettype($q)=="array")
+                        @foreach ($q as $i)
+                            {{ $i }}
+                        @endforeach
+                    @else
+                        {{ $q }}
+                    @endif
+                @endforeach</b>
+            sao :</p>
     @else
         <h2>Todos Documentos</h2><br>
     @endif

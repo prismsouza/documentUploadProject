@@ -12,8 +12,10 @@
             value="category_id" data-live-search="true">
 
             @foreach($categories as $category)
-                @if ($category->name != 'Boletim Geral')
-                    <option value={{ $category->id }}>{{ $category->name }}</option>
+                @if ($category->id != '100') <!-- Boletim Geral -->
+                    <option id="category_id" name="category_id"
+                            value={{ $category->id }}>{{ $category->name }}
+                    </option>
                 @endif
             @endforeach
         </select>
