@@ -1,3 +1,4 @@
+<div class="border p-2">
 <form method="POST" action="{{ route('documents.filter') }}" enctype="multipart/form-data" class="py-2"> @csrf
     <div class="row">
         <div class="col-sm">
@@ -85,18 +86,18 @@
         <div class="control float-md-right py-2">
             <button class="btn btn-light border" type="submit"  action="{{ route('documents.index') }}">
                 <a href="{{ route('documents.index') }}">
-                    Limpar campos <i class="fas fa-eraser px-2"></i>
+                    Limpar filtros <i class="fas fa-eraser px-2"></i>
                 </a>
             </button>
             <button class="btn btn-dark" type="submit" >
-                Pequisar <i class="fas fa-search px-2"></i>
+                Aplicar filtros <i class="fas fa-search px-2"></i>
             </button>
             <span class="p-2"></span>
         </div>
     </div>
 
 </form>
-
+</div>
 <br>
 <br>
 @if (request()->input('word') || request()->input('categories') || request()->input('first_date') || request()->input('last_date') || request()->input('tags'))
@@ -116,18 +117,25 @@
 
     @if (request()->input('first_date') || request()->input('last_date'))
 
+            <?php
+            $first_date = str_replace('-', '/', request()->input('first_date'));
+            $first_date = date('d/m/Y', strtotime($first_date));
+            $last_date = str_replace('-', '/', request()->input('last_date'));
+            $last_date = date('d/m/Y', strtotime($last_date));
+            ?>
+
         @if (request()->input('first_date') && request()->input('last_date'))
                 <br>Data de publicacao:
-                <b class="px-2">de {{ request()->input('first_date') }}
-                ate {{ request()->input('last_date') }}</b>
+                <b class="px-2">de {{ $first_date }}
+                ate {{ $last_date }} </b>
         @elseif (request()->input('first_date'))
                         <br>Documentos publicados:
                 <b class="px-2">a partir de
-                    {{ request()->input('first_date') }}</b>
+                    {{ $first_date }}</b>
                 ate a data de hoje.
         @elseif (request()->input('last_date'))
                                 <br>Documentos publicados:
-                <b class="px-2">ate {{ request()->input('last_date') }}</b>
+                <b class="px-2">ate {{ $last_date }}</b>
         @endif
 
     @endif
@@ -141,3 +149,4 @@
     @endif
     </div>
 @endif
+

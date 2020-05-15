@@ -46,6 +46,9 @@ Route::get('/tags/{tag}', 'TagsController@show')->name('tags.show');
 
 Route::any('/documentos/pesquisa','DocumentsController@filter')->name('documents.filter');
 
+Route::post('/documentos/{document}','MessagesController@store')->name('message.report');
+Route::get('/documentos/mensagem', 'MessagesController@create');
+
 function dumpArray($array) {
     echo "<pre>";
     var_dump($array);

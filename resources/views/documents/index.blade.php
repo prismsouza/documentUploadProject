@@ -24,7 +24,11 @@
 
     <?php $count = 0; ?>
     @forelse($documents as $document)
-        <?php $count += 1; ?>
+        <?php
+        $count += 1;
+        $date = str_replace('-', '/', request()->input('first_date'));
+        $date = date('d/m/Y', strtotime($document->date));
+        ?>
         <tr class="small">
             <td class="text-center">{{$count}}</td>
             <td>
@@ -38,7 +42,9 @@
                     {{ $document->category->name }}
                 </a>
             </td>
-            <td class="text-center">{{ $document->date }}</td>
+            <td class="text-center">
+                {{ $date }}
+            </td>
 
             <?php $file_pdf = $document->files->where('extension','pdf')->first();  ?>
             @if ($file_pdf != NULL)

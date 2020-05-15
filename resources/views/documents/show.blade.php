@@ -23,9 +23,6 @@
         </p>
     <p><b>Descricao: </b>{{ $document->description }}</p>
 
-    <p><b>Criado pela unidade:</b> {{ $document->user->unit->name }}</p>
-    <p><b>Criado pelo usuario:</b> {{ $document->user->name }}</p>
-
     <p><b>Data de publicacao do documento:</b> {{ $document->date }}</p>
 
     @if ($document->category_id != 100)
@@ -66,43 +63,6 @@
         </a>
     </p>
 
-    <button type="button" class="btn btn-dark btn-sm float-md-right" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">
-        Reportar erro ou fazer sugestao
-    </button>
-    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Contato</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form>
-                        <div class="form-group">
-                            <label for="recipient-name" class="col-form-label">
-                                Deseja reportar algum erro na norma ou fazer alguma sugestao/alerta para correcao do conteudo?
-                            </label>
-                        </div>
-                        <div class="form-group">
-                            <textarea
-                                class="form-control"
-                                id="message"
-                                value="{{ old('message') }}"
-                                rows="5">
-                            </textarea>
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
-                    <button type="button" class="btn btn-primary">Enviar</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-
+    @include('documents/message_report')
 
 @endsection

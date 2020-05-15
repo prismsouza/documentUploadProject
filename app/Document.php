@@ -42,4 +42,9 @@ class Document extends Model
     {
         return $this->hasMany(File::class);
     }
+
+    public function messages()
+    {
+        return $this->hasMany(File::class);
+    }
 }
