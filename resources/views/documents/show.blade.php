@@ -23,7 +23,9 @@
         </p>
     <p><b>Descricao: </b>{{ $document->description }}</p>
 
-    <p><b>Data de publicacao do documento:</b> {{ $document->date }}</p>
+    <p><b>Data de publicacao do documento:</b>
+        {{ date('d/m/Y', strtotime($document->date)) }}
+    </p>
 
     @if ($document->category_id != 100)
 
@@ -34,24 +36,27 @@
         </a>
         @endif
 
-    <p><b>Validade:</b> Este documento <b><?php echo ($document->is_active ? "<span style=color:green>esta vigente" : "<span style=color:red>nao esta vigente"); ?></b></p>
+        <p><b>Validade:</b> Este documento <b><?php echo ($document->is_active ? "<span style=color:green>esta vigente" : "<span style=color:red>nao esta vigente"); ?></b></p>
 
-    <b>Documentos relacionados:</b>
-            <table class="table-bordered">
-                @forelse ($related_documents as $doc)
-                    <tr><td class="px-2 py-1"><a style="color:navy" href="{{ $doc->id }}">{{ $doc->name }} </a></td></tr>
-                @empty
-                    Nenhum documento relacionado
-                @endforelse
-            </table>
-    <p></p>
+        <b>Documentos relacionados:</b>
+                <table class="table-bordered">
+                    @forelse ($related_documents as $doc)
+                        <tr><td class="px-2 py-1"><a style="color:navy" href="{{ $doc->id }}">{{ $doc->name }} </a></td></tr>
+                    @empty
+                        Nenhum documento relacionado
+                    @endforelse
+                </table>
+        <p></p>
 
-    <p><b>Download: </b>DOC
-        <a style="color:navy" href="{{ route('documents.download', [$document->id , "doc"]) }}">
-            {{ $doc_file->alias }}
-        </a></p>
+        @if ($doc_file != null)
+        <p><b>Baixar word: </b><i class="fa fa-file-word" aria-hidden="true"></i>
+            <a style="color:navy" href="{{ route('documents.download', [$document->id , "doc"]) }}">
+                  {{ $doc_file->alias }}
+            </a></p>
         @endif
-    <p><b>Download: </b>PDF
+    @endif
+
+    <p><b class="pr-2">Baixar pdf: </b><i class="fa fa-file-pdf" aria-hidden="true"></i>
         <a style="color:navy" href="{{ route('documents.download', [$document->id , "pdf"]) }}">
             {{ $pdf_file->alias }}
         </a>

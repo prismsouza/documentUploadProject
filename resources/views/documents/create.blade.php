@@ -5,25 +5,31 @@
 
     <form method="POST" action="/documentos" enctype="multipart/form-data" class="py-2"> @csrf
 
-        <label class="label" for="category_id">Categoria</label>
-        <select
-            id="category_id" name="category_id"
-            class="selectpicker"
-            value="category_id" data-live-search="true">
-
-            @foreach($categories as $category)
-                @if ($category->id != '100') <!-- Boletim Geral -->
-                    <option id="category_id" name="category_id"
-                            value={{ $category->id }}>{{ $category->name }}
-                    </option>
-                @endif
-            @endforeach
-        </select>
-
-        <div class="control py-2 row">
+<!-- -------------- CATEGORY -------------- -->
+        <div class="control row" id="category">
             <div class="col-sm-1">
-                <label class="label" for="name">Nome</label>
-            </div>
+                <label class="label" for="category_id">Categoria</label>
+            </div><b class="px-1">*</b>
+            <select
+                id="category_id" name="category_id"
+                class="selectpicker"
+                value="category_id" data-live-search="true">
+
+                @foreach($categories as $category)
+                    @if ($category->id != '1') <!-- Boletim Geral -->
+                        <option id="category_id" name="category_id"
+                                value={{ $category->id }}>{{ $category->name }}
+                        </option>
+                    @endif
+                @endforeach
+            </select>
+        </div>
+
+<!-- -------------- NAME -------------- -->
+        <div class="control py-2 row" id="name">
+            <div class="col-sm-1">
+                <label class="label" for="name">Nome </label>
+            </div><b class="px-1">*</b>
             <input
                 class="input @error('name') is-danger @enderror col-3"
                 type="text"
@@ -36,10 +42,12 @@
             @enderror
         </div>
 
-        <div class="control py-2 row">
+<!-- -------------- DESCRIPTION -------------- -->
+        <div class="control py-2 row" id="description">
             <div class="col-sm-1">
-                <label class="label" for="description">Descricao</label>
+                <label class="label " for="description">Descricao</label>
             </div>
+            <b class="px-1">*</b>
             <input
                 class="input @error('description') is-danger @enderror col-5"
                 type="text"
@@ -51,9 +59,10 @@
                 @enderror
         </div>
 
-        <div class="row py-2">
+<!-- -------------- UPLOAD PDF and DOC FILE -------------- -->
+        <div class="row py-2" ID="upload_file">
             <div class="col">
-                <label for="file_name_pdf">Inserir arquivo em formato pdf: </label><br>
+                <label for="file_name_pdf">Inserir arquivo em formato pdf:<b>*</b> </label><br>
                 <i class="fa fa-upload p-1"></i>
                 <i class="fa fa-file-pdf" aria-hidden="true"></i>
                 <input
@@ -61,20 +70,25 @@
                     type="file" accept=".pdf, application/pdf"
                     name="file_name_pdf" id="file_name_pdf"
                     value="{{ old('file_name_pdf') }}">
+
+                @error('file_name_pdf')
+                <p class="help is-danger">{{ $errors->first('file_name_pdf') }}</p>
+                @enderror
             </div>
             <div class="col">
                 <label for="file_name_doc">Inserir arquivo em formato doc: </label><br>
                 <i class="fa fa-upload p-1"></i>
                 <i class="fa fa-file-word" aria-hidden="true"></i>
                 <input
-                    class="input @error('file_name_doc') is-danger @enderror"
+                    class="input"
                     type="file" accept=".doc, .docx, .odt"
                     name="file_name_doc" id="file_name_doc"
                     value="{{ old('file_name_doc') }}">
             </div>
         </div>
 
-        <div class="control py-2">
+<!-- -------------- DOCUMENT_HAS_DOCUMENT -------------- -->
+        <div class="control py-2" id="related_documents">
         <label class="label" for="document_id">Documentos relacionados: </label><br>
         <select
             id="document_has_document" name="document_has_document[]"
@@ -89,7 +103,8 @@
         </select>
         </div>
 
-        <div class="control py-2">
+<!-- -------------- PUBLISHED AT BGBM X -------------- -->
+        <div class="control py-2" ID="published_at">
             <label class="label" for="bgbm_document_id">Publicado no BGBM: </label>
             <select
                 id="bgbm_document_id" name="bgbm_document_id"
@@ -103,31 +118,36 @@
             </select>
         </div>
 
-        <div class="control py-2">
-            <label class="label" for="date">Data de Publicacao do Documento: </label>
+<!-- -------------- DATE -------------- -->
+        <div class="control py-2" id="date">
+            <label class="label" for="date">Data de Publicacao do Documento: <b>*</b></label>
             <i class="fas fa-calendar p-2"></i>
             <input
-                name="date" id="date"
+                name="date" id="date" class="@error('date') is-danger @enderror"
                 type="date" data-display-mode="inline" data-is-range="true" data-close-on-select="false">
 
-            @error('date')
-            <p class="help is-danger">{{ $errors->first('date') }}</p>
-            @enderror
+            @error('date')<p class="help is-danger">{{ $errors->first('date') }}</p>@enderror
         </div>
 
+<!-- -------------- IS_ACTIVE -------------- -->
+        <div class="control" id="is_active">
             <div class="form-check form-check-inline">
                 <input class="form-check-input" type="radio" name="is_active" id="is_active" value="1">
                 <label class="form-check-label" for="inlineRadio1">Esta vigente</label>
             </div>
             <div class="form-check form-check-inline">
                 <input class="form-check-input" type="radio" name="is_active" id="is_active" value="0">
-                <label class="form-check-label" for="inlineRadio1">Nao esta vigente</label>
+                <label class="form-check-label" for="inlineRadio1">Nao esta vigente</label><b class="px-2">*</b>
             </div>
+        @error('is_active')<p class="help is-danger">{{ $errors->first('is_active') }}</p>@enderror
+        </div>
 
-
-        <div class="control py-2">
-        <label class="label" for="tags">Tags</label><br>
-
+<!-- -------------- TAGS -------------- -->
+        <div class="control py-2" id="tags">
+        <label class="label" for="tags">Tags</label>
+            <a href="/tags">
+                <i class="fas fa-plus"></i>
+            </a><br>
             <select
                 id="tags" name="tags[]"
                 class="selectpicker" multiple
@@ -138,10 +158,16 @@
             </select>
         </div>
 
-        <div class="field is-grouped">
+        <span class="small float-md-right">* campos obrigatorios</span><br>
+
+<!-- -------------- BTN Criar Documento -------------- -->
+        <div class="field is-grouped" id="btn_create_document">
             <div class="control">
                 <button class="btn btn-dark float-md-right" type="submit">Criar Documento</button>
             </div>
         </div>
-    </form><br><br>
+
+    </form>
+
+    <br><br>
 @endsection

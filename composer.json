@@ -15,6 +15,7 @@
         "laravel/framework": "^7.0",
         "laravel/tinker": "^2.0",
         "nicolaslopezj/searchable": "1.*",
+        "smalot/pdfparser": "^0.15.0",
         "webpatser/laravel-uuid": "^3.0"
     },
     "require-dev": {

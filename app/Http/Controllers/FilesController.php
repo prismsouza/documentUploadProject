@@ -33,12 +33,12 @@ class FilesController extends Controller
 
         $file->document_id = $document->id;
 
-        echo "<br>name " . $file->name;
+        /*echo "<br>name " . $file->name;
         echo "<br>extension " . $file->extension;
         echo "<br>type " . $file->type;
         echo "<br>size " . $file->size;
         echo "<br>alias " . $file->alias;
-        echo "<br>document id " . $file->document_id;
+        echo "<br>document id " . $file->document_id;*/
 
         $file->save();
 

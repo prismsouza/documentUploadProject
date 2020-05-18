@@ -36,15 +36,23 @@ function getFilteredDocuments($request) {
         $documents = searchByTags($tags, $documents);
     }
 
+    if (request('is_active') != NULL) {
+        $is_active = request('is_active');
+        array_push($query, $is_active);
+        $documents = searchByStatus($is_active, $documents);
+    }
+
     //$documents = $documents->collapse();
     return view('documents.index', ['documents' => $documents, 'category_option' => null])->withDetails($documents)->withQuery($query);
 }
 
 function searchByWord($word, $documents)
 {
-    $docs = Document::where('name','LIKE','%'.$word.'%')->orWhere('description','LIKE','%'.$word.'%')->get();
+    $docs = Document::where('name','LIKE','%'.$word.'%')
+                        ->orWhere('description','LIKE','%'.$word.'%')
+                        ->get();
     $documents = new Collection($docs);
-    //dd($documents);
+
     return $documents;
 }
 
@@ -64,7 +72,8 @@ function searchByCategories($categories, $documents)
 
 function searchByDate($first_date, $last_date, $documents)
 {
-    $docs = $documents->where('date','>',$first_date , 'and', 'date', '<', $last_date);
+    $docs = $documents->where('date','>=',$first_date)
+                        ->where('date','<=',$last_date);
     $documents = new Collection($docs);
     //dd($documents);
     return $documents;
@@ -83,6 +92,14 @@ function searchByTags($tags, $documents)
     }
     //dd($docs_tags);
     return $docs_tags;
+}
+
+function searchByStatus($is_active, $documents)
+{
+    if ($is_active == -1) $is_active = 0;
+    $docs = $documents->where('is_active',$is_active);
+    $documents = new Collection($docs);
+    return $documents;
 }
 
 

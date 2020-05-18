@@ -25,10 +25,9 @@
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                     @foreach($categories as $category)
-                        @foreach($category->documents as $document)
+                        @forelse($category->documents as $document)
                             <a class="dropdown-item" href="/documentos/{{ $document->id }}"> {{  $document->name }}</a>
                         @endforeach
-                        <div class="dropdown-divider"></div>
                     @endforeach
                 </div>
             </li>

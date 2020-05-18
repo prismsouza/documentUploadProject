@@ -48,7 +48,7 @@ class DocumentsController extends Controller
 
     public function store(Request $request)
     {
-        $this->validateDocument('');
+        //$this->validateDocument('');
         $document = new Document(request(['category_id', 'name', 'description', 'date', 'is_active']));
 
         $document->user_id = 1;
@@ -61,8 +61,10 @@ class DocumentsController extends Controller
 
         $document->save();
 
-        $file_doc = new FilesController();
-        $file_doc->uploadFile($request, $document, 'doc');
+        if (request()->has('file_doc')) {
+            $file_doc = new FilesController();
+            $file_doc->uploadFile($request, $document, 'doc');
+        }
 
         $file_pdf = new FilesController();
         $file_pdf->uploadFile($request, $document, 'pdf');
@@ -70,6 +72,7 @@ class DocumentsController extends Controller
         if (request()->has('document_has_document')) {
             $document->hasdocument()->attach(request('document_has_document'));
         }
+        else echo "No related documents";
 
         if (request()->has('tags')) {
             $document->tags()->attach(request('tags'));
@@ -144,12 +147,13 @@ class DocumentsController extends Controller
     public function download(Document $document, $type)
     {
         $file = $document->files->where('extension', $type)->first();
-        if ($file!=null) {
+        if ($file != null) {
             $file_alias = $file->alias;
             $filemimetype = $file->filemimetype;
             $file_path = public_path('documents') . '/' . $file_alias;
             return response()->download($file_path, $document->name, ['Content-Type:' . $filemimetype]);
         }
+        return 0;
     }
 
     public function destroy(Document $document)
