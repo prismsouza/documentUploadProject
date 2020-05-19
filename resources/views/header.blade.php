@@ -40,7 +40,7 @@
             </a>
         </div>
         <div class="col-sm-9">
-            <h5><b>MODULO DE DOCUMENTOS</b></h5>
+            <h5><b><a href="/"> MODULO DE DOCUMENTOS</a></b></h5>
             <smal>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed posuere lacinia lorem, a lacinia leo facilisis ut.
                   Aliquam sed porta mi. Nunc nisi nibh, facilisis sit amet scelerisque sed, tincidunt id dolor..</smal>
         </div>

@@ -1,5 +1,7 @@
 @extends('layout')
 
+<?php $user_id = 1; // admin ?>
+
 @section('content')
     @if($category_option)
         <div class="border p-2">
@@ -19,11 +21,17 @@
             <th onclick="sortTable(2)" scope="col" style="cursor: pointer; width: 31%">
                 Descricao <i class="fas fa-sort"></i>
             </th>
-            <th onclick="sortTable(3)" scope="col" style="cursor: pointer; width: 15%">
+            <th onclick="sortTable(3)" scope="col" style="cursor: pointer; width: 16%">
                 Categoria <i class="fas fa-sort"></i>
             </th>
-            <th scope="col" style="width: 8%">Data</th>
-            <th scope="col" style="width: 19%" colspan="4">Download</th>
+            <th scope="col" style="width: 7%">Data</th>
+            <th scope="col" style="width: 19%" colspan="2">Download</th>
+            @if ($user_id == 1)
+                <th scope="col" style="width: 8%">
+                    <i class="far fa-eye-slash" data-toggle="tooltip" title="visível apenas para Perfil Administrador"></i>
+                </th>
+            @endif
+
         </thead>
         <tbody>
     @endif
@@ -73,12 +81,36 @@
                     </a>
                 </td>
             @else
-                <td class="text-center px-0" colspan="4">{{ $file_pdf['size'] }}
+                <td class="text-center px-0" colspan="2">{{ $file_pdf['size'] }}
                     <a href="{{ route('documents.download', [$document->id , "pdf"]) }}"  data-toggle="tooltip" title="download pdf">
                         <i class="fa fa-file-pdf" aria-hidden="true"></i>
                     </a>
                 </td>
             @endif
+            @if ($user_id == 1)
+                <div id="admin_view">
+                <td>
+                    <a href="{{ route('documents.edit', $document->id) }}">
+                        <i class="fas fa-edit"></i>
+                    </a>
+                    <form method="POST" id="delete-form-{{ $document->id }}"
+                          action="{{ route('documents.destroy', $document) }}"
+                          style="display: none;">
+                        {{ csrf_field() }}
+                        {{ method_field('delete') }}
+                    </form>
+                        <a onclick="if (confirm('Tem certeza que deseja DELETAR esse documento?')){
+                            event.preventDefault();
+                            document.getElementById('delete-form-{{ $document->id }}').submit();
+                            } else {
+                            event.preventDefault();
+                            }"
+                            href=" {{ route ('documents.index') }}">
+                            <i class="fa fa-trash" aria-hidden="true"></i>
+                        </a>
+                </td>
+                </div>
+                @endif
         </tr>
     @empty
         <p><h5>Nao ha resultados para esta pesquisa</h5></p>
@@ -86,14 +118,7 @@
 
         </tbody>
     </table>
-    <style>
 
-        th {
-
-        }
-
-
-    </style>
 
     <script>
         function sortTable(n) {

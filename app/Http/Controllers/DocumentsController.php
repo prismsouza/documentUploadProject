@@ -13,7 +13,6 @@ include "FiltersHelper.php";
 
 class DocumentsController extends Controller
 {
-
     public function index()
     {
         if (request('tag')) {
@@ -48,7 +47,7 @@ class DocumentsController extends Controller
 
     public function store(Request $request)
     {
-        //$this->validateDocument('');
+        $this->validateDocument('');
         $document = new Document(request(['category_id', 'name', 'description', 'date', 'is_active']));
 
         $document->user_id = 1;
@@ -159,7 +158,8 @@ class DocumentsController extends Controller
     public function destroy(Document $document)
     {
         $document->delete();
-        return view('documents.index');
+        return redirect(route('documents.index'))->with('successMsg', 'Document Successfully Deleted');
+        //return view('documents.index');
     }
 
     public function validateDocument($option)

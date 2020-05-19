@@ -1,11 +1,9 @@
 <!DOCTYPE html>
 
-<?php $categories = App\Category::all(); ?>
-
 @include('includes')
 
 <body>
-    @include('header')
+@include('header')
 <div class="container">
     <div id="wrapper">
         <div id="page" class="container py-3">
@@ -13,5 +11,5 @@
         </div>
     </div>
 </div>
-    @include('footer')
+@include('footer')
 </body>

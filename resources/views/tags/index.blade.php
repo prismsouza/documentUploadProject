@@ -2,7 +2,7 @@
 @section('content')
 
 <div id="content">
-        <div class=" border p-2" style="width: 50%">
+        <div class=" border p-2">
             Tags cadastradas:
         </div>
     <div class="field is-grouped col" id="btn_create_document">
@@ -11,9 +11,7 @@
                 <a href="/tags/novo" style="color:white"> Criar nova Tag</a>
             </button>
         </div>
-    </div>
-
-    <br>Search <br><br>
+    </div><br>
 
 @foreach($tags as $tag)
     <div class="px-2">

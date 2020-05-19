@@ -17,7 +17,8 @@
             </a>
 
             <ul class="dropdown-menu">
-                <li><div class="checkbox">
+                <li>
+                    <div class="checkbox">
                         <label>
                             @forelse($categories as $category)
                                 <div class="col-sm">
@@ -34,7 +35,8 @@
                                 <p><h5>Nao ha categorias cadastradas</h5></p>
                             @endforelse
                         </label>
-                    </div></li>
+                    </div>
+                </li>
             </ul>
         </div>
 
@@ -60,15 +62,15 @@
             </a>
 
             <ul class="dropdown-menu">
-                <li><div class="checkbox">
-                <label>
-                    <input type="text" placeholder="Pesquisar..." id="myInput" onkeyup="filterFunction()">
+                <li>
+                    <div class="checkbox">
+                    <label>
                     @forelse($tags as $tag)
                         <div class="col-sm">
                             <label class="checkbox-inline">
                                 <input
                                     type="checkbox" value="{{ $tag->id }}"
-                                    id="tags" name="tags[]"
+                                    id="tag" name="tags[]"
                                     style="transform: scale(1.5);">
                                 {{ $tag->name }}
                             </label>
@@ -76,8 +78,9 @@
                     @empty
                          <p><h5>Nao ha tags cadastradas</h5></p>
                     @endforelse
-                </label>
-                </div></li>
+                    </label>
+                    </div>
+                </li>
             </ul>
         </div>
     </div>
