@@ -10,7 +10,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
 include "FiltersHelper.php";
 
-
 class DocumentsController extends Controller
 {
     public function index()
@@ -18,9 +17,10 @@ class DocumentsController extends Controller
         if (request('tag')) {
             $documents = Tag::where('name', request('tag'))->firstOrFail()->documents;
         } else {
-            $documents = Document::latest()->get();
+            $documents = Document::orderBy('date', 'desc')->paginate();
         }
         return view('documents.index', ['documents' => $documents, 'category_option' => null]);
+
     }
 
     public function show(Document $document)
@@ -110,7 +110,7 @@ class DocumentsController extends Controller
 
     public function showByCategory(Category $category)
     {
-        $documents = $category->documents;
+        $documents = Document::where('category_id', $category->id)->paginate();
         $category_option = $category->name;
         return view('documents.index', ['documents' => $documents, 'category_option' => $category_option]);
     }
@@ -124,23 +124,20 @@ class DocumentsController extends Controller
     {
         if (!request('file_name')) {
             $this->validateDocument("dont_update_path");
-            //$this->update(request(['category_id', 'name', 'description', 'user_id']));
         } else {
             $this->validateDocument('');
-            //$this->update(request(['category_id', 'name', 'description', 'file_name', 'user_id']));
         }
 
         if (request()->has('tags')) {
             $document->tags()->attach(request('tags'));
         }
 
-        return redirect($document->path());
-
-        /*if (!request('file_name'))
+        if (!request('file_name'))
             $document->update($this->validateDocument("dont_update_path"));
         else
             $document->update($this->validateDocument(''));
-        return redirect($document->path());*/
+
+        return redirect($document->path());
     }
 
     public function download(Document $document, $type)

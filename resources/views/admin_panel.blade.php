@@ -3,16 +3,22 @@
 
 
 @section ('content')
+
+        <a href="{{ route('documents.index') }}">
+            <button class="btn btn-light btn-outline-dark float-md-right" type="submit">
+                Voltar
+            </button>
+        </a><p class="py-4"></p>
     <table class="table table-bordered bg-white table-striped text-center"">
         <th colspan="3">Painel do Administrador</th>
         <tr>
             <th>
                 Categorias
             </th>
-            <td class="col-sm-2"><a href="/categorias">
+            <td class="col-sm-2"><a href="{{ route("categories.index") }}">
                     Listar <i class="fas fa-list-ul"></i></a>
             </td>
-            <td class="col-sm-2"><a href="/categorias/novo">
+            <td class="col-sm-2"><a href="{{ route("categories.create") }}">
                     Criar <i class="fas fa-plus-circle"></i></a>
             </td>
         </tr>

@@ -18,7 +18,7 @@ Route::get('/documentos/categorias/{category}', 'DocumentsController@showByCateg
 Route::get('/', 'DocumentsController@index')->name('documents.index');
 Route::get('/documentos', 'DocumentsController@index')->name('documents.index');
 Route::post('/documentos', 'DocumentsController@store');
-Route::get('/documentos/novo', 'DocumentsController@create');
+Route::get('/documentos/novo', 'DocumentsController@create')->name('documents.create');
 Route::post('/documentos/categorias/Boletim Geral', 'DocumentsController@store_bgbm')->name('documents.bgbm');;
 Route::get('/documentos/novo/bgbm', 'DocumentsController@create_bgbm');
 Route::get('/documentos/{document}/download/{type}', 'DocumentsController@download')->name('documents.download');
@@ -30,10 +30,12 @@ Route::delete('/documentos/delete/{document}', 'DocumentsController@destroy')->n
 
 Route::get('/categorias', 'CategoriesController@index')->name('categories.index');
 Route::post('/categorias', 'CategoriesController@store');
-Route::get('/categorias/novo', 'CategoriesController@create');
+Route::get('/categorias/novo', 'CategoriesController@create')->name('categories.create');
 Route::get('/categorias/{category}', 'CategoriesController@show')->name('categories.show');
-Route::get('/categorias/{category}/edit', 'CategoriesController@edit');
+Route::get('/categorias/{category}/edit', 'CategoriesController@edit')->name('categories.edit');
 Route::put('/categorias/{category}', 'CategoriesController@update');
+Route::delete('/categorias/delete/{category}', 'CategoriesController@destroy')->name('categories.destroy');
+
 
 Route::get('/tags', 'TagsController@index')->name('tags.index');
 Route::post('/tags', 'TagsController@store');

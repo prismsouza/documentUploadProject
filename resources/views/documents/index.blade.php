@@ -1,15 +1,23 @@
 @extends('layout')
 
-<?php $user_id = 1; // admin ?>
+<?php $user = "admin"; // admin ?>
 
 @section('content')
     @if($category_option)
         <div class="border p-2">
             Categoria: <b>{{ $category_option }}</b>
         </div>
+    @else
+        @if ($user == "admin")
+        <a href="{{ route('documents.create') }}">
+            <button class="btn btn-light btn-outline-dark" type="submit">
+               Criar Documento
+            </button>
+        </a><p></p>
+        @endif
     @endif
 
-    @if($documents!='[]')
+    @if($documents->total() > 0 )
     <table class="table table-bordered bg-white table-striped" id="myTable">
         <thead class="text-center">
             <th onclick="sortTable(1)" scope="col" style="cursor: pointer; width: 3%">
@@ -26,7 +34,7 @@
             </th>
             <th scope="col" style="width: 7%">Data</th>
             <th scope="col" style="width: 19%" colspan="2">Download</th>
-            @if ($user_id == 1)
+            @if ($user == "admin")
                 <th scope="col" style="width: 8%">
                     <i class="far fa-eye-slash" data-toggle="tooltip" title="visível apenas para Perfil Administrador"></i>
                 </th>
@@ -87,7 +95,7 @@
                     </a>
                 </td>
             @endif
-            @if ($user_id == 1)
+            @if ($user == "admin")
                 <div id="admin_view">
                 <td>
                     <a href="{{ route('documents.edit', $document->id) }}">
@@ -112,12 +120,14 @@
                 </div>
                 @endif
         </tr>
+
     @empty
         <p><h5>Nao ha resultados para esta pesquisa</h5></p>
     @endforelse
 
         </tbody>
     </table>
+    {{ $documents->links() }}
 
 
     <script>

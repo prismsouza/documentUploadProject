@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 class Document extends Model
 {
     protected $fillable = ['category_id', 'name', 'description', 'date', 'is_active', 'user_id'];
+    public $perPage = 10;
+
 
     public function getRouteKeyName()
     {

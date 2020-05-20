@@ -1,6 +1,12 @@
 @extends ('layout_standalone')
 
 @section ('content')
+    <a href="{{ route('documents.index') }}">
+        <button class="btn btn-light btn-outline-dark float-md-right" type="submit">
+            Voltar
+        </button>
+    </a>
+
     <h1 class="heading has-text-weight-bold is-size-4 py-6">Novo Documento</h1>
 
     <form method="POST" action="/documentos" enctype="multipart/form-data" class="py-2"> @csrf

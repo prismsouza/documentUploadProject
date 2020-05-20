@@ -5,8 +5,16 @@
 @endsection
 
 @section ('content')
+
     <div id="content">
+        <a href="{{ route('categories.index') }}">
+            <button class="btn btn-light btn-outline-dark float-md-right" type="submit">
+                Voltar
+            </button>
+        </a>
             <h1 class="heading has-text-weight-bold is-size-4">Nova Categoria</h1>
+
+
 
             <form method="POST" action="/categorias">
                 @csrf

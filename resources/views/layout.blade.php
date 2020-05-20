@@ -2,6 +2,7 @@
 <?php
     $categories = App\Category::all();
     $tags = App\Tag::all();
+    $user = "admin";
 ?>
 
 @include('includes')
@@ -11,6 +12,14 @@
     <div class="container">
     <!-- @ include('navbar') -->
     @include('searchbar')
+
+        @if ($user == "admin")
+            <a href="{{ route('admin_panel') }}">
+                <button class="btn btn-light btn-outline-dark float-md-right" type="submit">
+                    Painel do Administrador
+                </button>
+            </a>
+        @endif
 
 <div id="wrapper">
     <div id="page" class="container row py-3">

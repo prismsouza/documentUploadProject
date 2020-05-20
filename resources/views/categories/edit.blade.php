@@ -1,4 +1,4 @@
-@extends ('layout')
+@extends ('layout_standalone')
 
 @section('head')
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.5/css/bulma.css"/>
@@ -7,6 +7,11 @@
 @section('content')
     <div id="wrapper">
         <div id="page" class="container">
+            <a href="{{ route('categories.index') }}">
+                <button class="btn btn-light btn-outline-dark float-md-right" type="submit">
+                    Voltar
+                </button>
+            </a>
             <h1 class="heading has-text-weight-bold is-size-4">Update Category</h1>
 
             <form method="POST" action="/categorias/{{ $category->name }}">
