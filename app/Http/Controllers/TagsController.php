@@ -24,6 +24,17 @@ class TagsController extends Controller
         return redirect(route('tags.index'));
     }
 
+    public function edit(Tag $tag)
+    {
+        return view('tags.edit', compact('tag'));
+    }
+
+    public function update(Request $request, Tag $tag)
+    {
+        $tag->update($this->validateTag());
+        return redirect($tag->path());
+    }
+
     public function validateTag()
     {
         return request()->validate([

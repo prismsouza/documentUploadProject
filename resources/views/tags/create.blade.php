@@ -1,4 +1,4 @@
-@extends ('layout')
+@extends ('layout_standalone')
 
 @section('head')
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.5/css/bulma.css"/>
@@ -25,11 +25,11 @@
                             <p class="help is-danger">{{ $errors->first('name') }}</p>
                         @enderror
                     </div>
-                </div>
+                </div><br>
 
                 <div class="field is-grouped">
                     <div class="control">
-                        <button class="button is-link" type="submit">Criar</button>
+                        <button class="btn btn-dark" type="submit">Criar</button>
                     </div>
                 </div>
 

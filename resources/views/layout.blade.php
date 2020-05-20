@@ -14,11 +14,7 @@
     @include('searchbar')
 
         @if ($user == "admin")
-            <a href="{{ route('admin_panel') }}">
-                <button class="btn btn-light btn-outline-dark float-md-right" type="submit">
-                    Painel do Administrador
-                </button>
-            </a>
+            @include('navbar_admin')
         @endif
 
 <div id="wrapper">
@@ -29,7 +25,12 @@
         </div>
         <div class="menu col-3 text-left light lighten-1">
             <ul class="nav nav-tabs flex-column lighten-4 list-group">
-                <li style="padding-top: 5px"><h3>Categorias</h3><br></li>
+                <li style="padding-top: 5px">
+                    <h3>
+                        @if ($user=="admin") <a href={{route('categories.index')}}> Categorias </a>
+                        @else Categorias @endif
+                    </h3><br>
+                </li>
                 <li class="nav-item">
                     <a class="list-group-item {{ Request::is('documentos') ? 'active' : ''}}"
                        href="/documentos">

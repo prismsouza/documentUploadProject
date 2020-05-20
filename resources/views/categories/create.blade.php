@@ -50,14 +50,13 @@
                             <p class="help is-danger">{{ $errors->first('description') }}</p>
                         @enderror
                     </div>
-                </div>
+                </div><br>
 
                 <div class="field is-grouped">
                     <div class="control">
-                        <button class="button is-link" type="submit">Criar</button>
+                        <button class="btn btn-dark" type="submit">Criar</button>
                     </div>
                 </div>
-
             </form>
 
     </div>

@@ -1,4 +1,4 @@
-@extends ('layout_admin')
+@extends ('layout')
 <?php $categories = App\Category::all();?>
 
 

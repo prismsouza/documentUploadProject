@@ -17,7 +17,7 @@
         @endif
     @endif
 
-    @if($documents->total() > 0 )
+    @if($documents)
     <table class="table table-bordered bg-white table-striped" id="myTable">
         <thead class="text-center">
             <th onclick="sortTable(1)" scope="col" style="cursor: pointer; width: 3%">
@@ -127,7 +127,11 @@
 
         </tbody>
     </table>
-    {{ $documents->links() }}
+    @if(!$documents instanceof Illuminate\Support\Collection)
+        @if ($documents->total()>0)
+            {{ $documents->links() }}
+        @endif
+    @endif
 
 
     <script>
