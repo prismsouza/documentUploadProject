@@ -4,9 +4,18 @@
 
 @section('content')
     @if($category_option)
-        <div class="border p-2">
-            Categoria: <b>{{ $category_option }}</b>
-        </div>
+
+        @if($category_option == "Boletim Geral" && $user == "admin")
+            <a href="{{ route('documents.create_bgbm') }}">
+                <button class="btn btn-light btn-outline-dark" type="submit">
+                    Criar Boletim Geral
+                </button>
+            </a><p></p>
+
+    @else        <div class="border p-2">
+        Categoria: <b>{{ $category_option }}</b>
+    </div>
+        @endif
     @else
         @if ($user == "admin")
         <a href="{{ route('documents.create') }}">
@@ -17,7 +26,14 @@
         @endif
     @endif
 
-    @if($documents)
+    <?php
+    if ($documents instanceof Illuminate\Support\Collection) {
+        $condition = '$documents';
+    } else {
+        $condition = '$documents->total() > 0';
+    } ?>
+
+    @if ($documents->isNotEmpty())
     <table class="table table-bordered bg-white table-striped" id="myTable">
         <thead class="text-center">
             <th onclick="sortTable(1)" scope="col" style="cursor: pointer; width: 3%">
@@ -114,7 +130,7 @@
                             event.preventDefault();
                             }"
                             href=" {{ route ('documents.index') }}">
-                            <i class="fa fa-trash" aria-hidden="true"></i>
+                            <i class="far fa-trash-alt" aria-hidden="true"></i>
                         </a>
                 </td>
                 </div>

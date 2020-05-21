@@ -29,16 +29,11 @@ class FilesController extends Controller
         $file_size = round($file_size, 1) . ' ' . $units[$i];
         $file->size = $file_size;
 
-        $file->alias = $document->name . '_' . $document->date . '.' . $file->extension;
+        $date = date('d-m-Y', strtotime($document->date));
+        $file->alias = $document->name . '_' . $date . '.' . $file->extension;
 
         $file->document_id = $document->id;
 
-        /*echo "<br>name " . $file->name;
-        echo "<br>extension " . $file->extension;
-        echo "<br>type " . $file->type;
-        echo "<br>size " . $file->size;
-        echo "<br>alias " . $file->alias;
-        echo "<br>document id " . $file->document_id;*/
 
         $file->save();
 

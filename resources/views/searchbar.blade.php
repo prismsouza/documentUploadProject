@@ -121,7 +121,7 @@
 </form>
 </div>
 <br>
-<br>
+
 @if (request()->input('word') || request()->input('categories') || request()->input('first_date') || request()->input('last_date') || request()->input('tags') || request()->input('is_active'))
     <div class="border p-2">
         <b>Filtro aplicado:</b>
@@ -171,5 +171,6 @@
     @endif
 
     </div>
+    <br>
 @endif
 

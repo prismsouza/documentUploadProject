@@ -32,14 +32,13 @@
                     <div class="control">
                         <textarea class="textarea" name="description" id="description">{{ $category->description }}</textarea>
                     </div>
-                </div>
+                </div><br>
 
                 <div class="field is-grouped">
                     <div class="control">
-                        <button class="button is-link" type="submit">Submit</button>
+                        <button class="btn btn-dark" type="submit">Submit</button>
                     </div>
                 </div>
-
             </form>
         </div>
     </div>

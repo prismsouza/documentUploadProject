@@ -86,7 +86,11 @@
                             class="input @error('file_name_pdf') is-danger @enderror"
                             type="file" accept=".pdf, application/pdf"
                             name="file_name_pdf" id="file_name_pdf"
-                            value="{{ 'file_name_pdf' }}">
+                            value="{{ $document->files->first()->name }}">
+
+                        <spam style="color: dimgrey"><br>
+                            {{ $document->files->where('extension', 'pdf')->first()->alias }}
+                        </spam>
 
                         @error('file_name_pdf')
                         <p class="help is-danger">{{ $errors->first('file_name_pdf') }}</p>
@@ -101,7 +105,14 @@
                             type="file" accept=".doc, .docx, .odt"
                             name="file_name_doc" id="file_name_doc"
                             value="{{ 'file_name_doc' }}">
+
+                        @if ($document->files->where('extension', 'doc')->first())
+                            <spam style="color: dimgrey"><br>
+                                {{ $document->files->where('extension', 'doc')->first()->alias }}
+                            </spam>
+                        @endif
                     </div>
+
                 </div>
                 <!-- -------------- DOCUMENT_HAS_DOCUMENT -------------- -->
                 <div class="control py-2" id="related_documents">

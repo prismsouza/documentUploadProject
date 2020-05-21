@@ -60,7 +60,7 @@ class DocumentsController extends Controller
 
         $document->save();
 
-        if (request()->has('file_doc')) {
+        if (request()->has('file_name_doc')) {
             $file_doc = new FilesController();
             $file_doc->uploadFile($request, $document, 'doc');
         }

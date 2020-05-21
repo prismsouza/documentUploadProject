@@ -20,16 +20,17 @@ function uploadFile($request, $document, $type)
     $file_size = round($file_size, 1) . ' ' . $units[$i];
     $file->size = $file_size;
 
-    $file->alias = $document->name . '_' . $document->date . '.' . $file->extension;
+    $date = date('d/m/Y', strtotime($document->date));
+    $file->alias = $document->name . '_' . $date;
 
     $file->document_id = $document->id;
 
     $file->save();
 
     if ($type == 'pdf') {
-        $request->file_name_pdf->storeAs('documents', $file->alias);
+        $request->file_name_pdf->storeAs('documents', $file->alias. '_' .$file->extension);
     }
     elseif ($type == 'doc') {
-        $request->file_name_doc->storeAs('documents', $file->alias);
+        $request->file_name_doc->storeAs('documents', $file->alias. '_' .$file->extension);
     }
 }

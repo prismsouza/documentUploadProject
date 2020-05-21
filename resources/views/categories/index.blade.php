@@ -27,7 +27,7 @@
                         {{ method_field('delete') }}
                     </form>
                     <button type="button" class="btn btn-danger float-md-right">
-                        <a onclick="if (confirm('Tem certeza que deseja DELETAR esse documento?')){
+                        <a onclick="if (confirm('Tem certeza que deseja DELETAR essa categoria?')){
                             event.preventDefault();
                             document.getElementById('delete-form-{{ $category->id }}').submit();
                             } else {
