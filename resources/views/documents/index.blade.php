@@ -25,7 +25,7 @@
         </a><p></p>
         @endif
     @endif
-OLAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+EIi :D
     <?php
     if ($documents instanceof Illuminate\Support\Collection) {
         $condition = '$documents';
