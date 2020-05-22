@@ -1,22 +1,27 @@
-@extends('layout')
+@extends('layout_admin')
 @section('content')
 
 <div id="content">
 
     <a href="{{ route('categories.create') }}">
-        <button class="btn btn-light btn-outline-dark" type="submit">
-            Criar Categoria
+        <button class="btn btn-dark btn-outline-light" type="submit">
+            Nova Categoria
         </button>
     </a><p></p>
 
-@foreach($categories as $category)
+    <table class=" py-10" width="100%">
+@foreach($categories->chunk(3) as $chunked_category)
+            <tr>
+        @foreach( $chunked_category as $category )
+                    <td class="col-sm-4 border py-2">
     <div class="title">
-        <h3>
+        <h5>
             <a href="{{ $category->path()  }}">
 
                 {{ $category->name }}
-                    <button type="button" class="btn btn-info float-md-right">
-                        <a href="{{ route('categories.edit', $category->name) }}" style="color:white">
+                <div class="btn-group float-md-right" role="group" aria-label="Basic example">
+                    <button type="button" class="btn btn-info float-md-right btn-outline-secondary btn-sm">
+                    <a href="{{ route('categories.edit', $category->name) }}" style="color:white">
                             <i class="fas fa-edit"></i>
                         </a>
                     </button>
@@ -26,7 +31,7 @@
                         {{ csrf_field() }}
                         {{ method_field('delete') }}
                     </form>
-                    <button type="button" class="btn btn-danger float-md-right">
+                    <button type="button" class="btn btn-danger float-md-right btn-outline-secondary btn-sm">
                         <a onclick="if (confirm('Tem certeza que deseja DELETAR essa categoria?')){
                             event.preventDefault();
                             document.getElementById('delete-form-{{ $category->id }}').submit();
@@ -37,13 +42,17 @@
                             <i class="fa fa-trash" aria-hidden="true"></i>
                         </a>
                     </button>
+                </div>
             </a>
-        </h3>
+        </h5>
      </div>
-    <p>
+    <p class="small">
         {{ $category->description }}
     </p>
-
+                    </td>
+        @endforeach
+            </tr>
 @endforeach
+    </table>
 </div>
 @endsection

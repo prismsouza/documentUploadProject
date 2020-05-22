@@ -10,7 +10,7 @@ class MessagesController extends Controller
 
     public function index()
     {
-        $messages = Message::orderBy('is_checked', 'ASC')->get();
+        $messages = Message::orderBy('is_checked', 'ASC')->paginate();
         return view('messages/index', ['messages' => $messages]);
     }
 

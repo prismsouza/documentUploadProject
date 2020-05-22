@@ -9,7 +9,8 @@ class TagsController extends Controller
 {
     public function index()
     {
-        $tags = Tag::all();
+        $tags = Tag::orderBy('name', 'asc')->get();
+        //$documents = Document::orderBy('date', 'desc')->paginate();
         return view('tags.index', ['tags' => $tags]);
     }
 

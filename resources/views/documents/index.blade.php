@@ -7,31 +7,25 @@
 
         @if($category_option == "Boletim Geral" && $user == "admin")
             <a href="{{ route('documents.create_bgbm') }}">
-                <button class="btn btn-light btn-outline-dark" type="submit">
-                    Criar Boletim Geral
+                <button class="btn btn-dark btn-outline-light" type="submit">
+                    Novo Boletim Geral
                 </button>
             </a><p></p>
 
-    @else        <div class="border p-2">
+        @else
+            <div class="border p-2">
         Categoria: <b>{{ $category_option }}</b>
     </div>
         @endif
     @else
         @if ($user == "admin")
         <a href="{{ route('documents.create') }}">
-            <button class="btn btn-light btn-outline-dark" type="submit">
-               Criar Documento
+            <button class="btn btn-dark btn-outline-light" type="submit">
+               Novo Documento
             </button>
         </a><p></p>
         @endif
     @endif
-EIi :D
-    <?php
-    if ($documents instanceof Illuminate\Support\Collection) {
-        $condition = '$documents';
-    } else {
-        $condition = '$documents->total() > 0';
-    } ?>
 
     @if ($documents->isNotEmpty())
     <table class="table table-bordered bg-white table-striped" id="myTable">
@@ -55,14 +49,20 @@ EIi :D
                     <i class="far fa-eye-slash" data-toggle="tooltip" title="visível apenas para Perfil Administrador"></i>
                 </th>
             @endif
-
         </thead>
         <tbody>
     @endif
 
-    <?php $count = 0; ?>
+    <?php $c = 0;
+    if(!$documents instanceof Illuminate\Support\Collection)
+        $page = $documents->currentPage();
+    ?>
     @forelse($documents as $document)
-        <?php $count += 1; ?>
+        <?php   if(!$documents instanceof Illuminate\Support\Collection)
+                    $count = ($c + 1) + $page*10 - 10;
+                else
+                    $count = $c+1;
+            $c = $c + 1; ?>
         <tr class="small">
             <td class="text-center">{{$count}}</td>
             <td>

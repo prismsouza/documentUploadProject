@@ -41,7 +41,7 @@
         </div>
 
         <div class="col-sm-4" id="Data Publicacao">
-            <i class="fas fa-calendar p-2"></i>Data de Publicacao:<br>
+            <i class="fas fa-calendar-alt p-2"></i>Data de Publicacao:<br>
             <label class="px-1 small">De</label>
             <input
                 name="first_date" id="first_date" type="date"

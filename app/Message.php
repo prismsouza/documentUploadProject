@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Message extends Model
 {
     protected $fillable = ['message'];
+    public $perPage = 10;
 
     public function document()
     {

@@ -2,7 +2,7 @@
     Reportar erro ou fazer sugestao
 </button>
 
-<form method="POST" action="{{ route ('message.report', $document->id) }}">
+<form method="POST" action="{{ route ('message.store', $document->id) }}">
     @csrf
     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -16,7 +16,7 @@
                 <div class="modal-body">
                     <form>
                         <div class="form-group">
-                            <p class="text-center"><b>{{$document->name}}</b></p>
+                            <p class="text-center"><b>{{ $document->name }}</b></p>
                             <label for="recipient-name" class="col-form-label">
                                 Deseja reportar algum erro na norma ou fazer alguma sugestao/alerta para correcao do conteudo?
                             </label>
