@@ -7,7 +7,7 @@
         <ul class="navbar-nav mr-auto">
 
             <td class="nav-item" style="width: 20%">
-                <a class="nav-link {{ Request::is('documentos') ? 'bg-light' : ''}}"
+                <a class="nav-link {{ (Request::is('documentos') || Request::is('/'))  ? 'bg-light' : ''}}"
                    href={{ route('documents.index') }}>Documentos
                 </a>
             </td>

@@ -1,7 +1,7 @@
 @extends ('layout_standalone')
 
 @section ('content')
-    <h1 class="heading has-text-weight-bold is-size-4 py-6">Novo BGBM</h1>
+    <h1 class="heading has-text-weight-bold is-size-4 py-6">Novo Boletim Geral</h1>
 
     <form method="POST" action="/documentos/categorias/Boletim Geral" enctype="multipart/form-data" class="py-2"> @csrf
 
@@ -22,7 +22,7 @@
 
         <div class="control py-2 row">
             <div class="col-sm-1">
-                <label class="label" for="description">Descricao</label>
+                <label class="label" for="description">Descrição</label>
             </div>
             <input
                 class="input @error('description') is-danger @enderror col-5"

@@ -11,13 +11,13 @@ function getFilteredMessages($request) {
     if (request('word') != NULL) {
         $word = request('word');
         array_push($query, $word);
-        $messages = searchByWord($word, $messages);
+        $messages = searchByWord($word);
     }
 
     if (request('categories') != NULL) {
         $categories = request('categories');
         array_push($query, $categories);
-        $messages  = searchByCategories($categories, $messages );
+        $messages  = searchByCategories($categories);
     }
 
     if (request('first_date') || request('last_date') != NULL) {
@@ -40,13 +40,8 @@ function getFilteredMessages($request) {
     return view('messages.index', ['messages' => $messages])->withDetails($messages)->withQuery($query);
 }
 
-function searchByWord($word, $messages)
-{
+function getMessages($docs) {
     $msgs_docs = new Collection();
-    $docs = App\Document::where('name','LIKE','%'.$word.'%')
-                        ->orWhere('description','LIKE','%'.$word.'%')
-                        ->get()->pluck('id');
-
     $msgs = Message::all()->pluck('document_id');
     $intersected_id_doc_msgs = $docs->intersect($msgs);
 
@@ -57,22 +52,27 @@ function searchByWord($word, $messages)
             $msgs_docs->push($message);
         }
     }
-
     return $msgs_docs;
 }
 
-function searchByCategories($categories, $documents)
+function searchByWord($word)
+{
+    $docs = App\Document::where('name','LIKE','%'.$word.'%')
+                        //->orWhere('description','LIKE','%'.$word.'%')
+                        ->get()->pluck('id');
+    return getMessages($docs);
+}
+
+function searchByCategories($categories)
 {
     $docs_categories = new Collection();
     foreach($categories as $category_id) {
         $docs = Category::where('id', $category_id)->firstOrFail()->documents;
         foreach ($docs as $doc) {
-            $doc = $documents->where('id', $doc->id)->first();
-            if ($doc != null and !$docs_categories->contains($doc)) $docs_categories->push($doc);
+            $docs_categories->push($doc->id);
         }
     }
-    //dd($docs_categories);
-    return $docs_categories;//->collapse();
+    return getMessages($docs_categories);
 }
 
 function searchByDate($first_date, $last_date, $messages)

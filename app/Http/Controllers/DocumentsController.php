@@ -88,7 +88,7 @@ class DocumentsController extends Controller
     public function store_bgbm(Request $request)
     {
         $document = new Document(request(['name', 'description', 'date']));
-        $document->category_id = 100;
+        $document->category_id = 1;
         $document->user_id = 1;
         $document->bgbm_document_id = 0;
         $document->save();

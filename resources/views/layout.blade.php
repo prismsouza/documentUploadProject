@@ -34,8 +34,8 @@
                     </h3><br>
                 </li>
                 <li class="nav-item">
-                    <a class="list-group-item {{ Request::is('documentos') ? 'active' : ''}}"
-                       href="={{ route('documents.index') }}">
+                    <a class="list-group-item {{ (Request::is('documentos') || Request::is('/')) ? 'active' : ''}}"
+                       href="{{ route('documents.index') }}">
                         <b>Todos</b>
                     </a>
                 </li>
