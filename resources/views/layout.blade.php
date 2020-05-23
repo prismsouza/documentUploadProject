@@ -11,11 +11,13 @@
     @include('header')
     <div class="container">
     <!-- @ include('navbar') -->
+    @if ($user == "admin")
+        @include('navbar_admin')
+    @endif
+
     @include('searchbar')
 
-        @if ($user == "admin")
-            @include('navbar_admin')
-        @endif
+
 
 <div id="wrapper">
     <div id="page" class="container row py-3">
@@ -33,7 +35,7 @@
                 </li>
                 <li class="nav-item">
                     <a class="list-group-item {{ Request::is('documentos') ? 'active' : ''}}"
-                       href="/documentos">
+                       href="={{ route('documents.index') }}">
                         <b>Todos</b>
                     </a>
                 </li>

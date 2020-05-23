@@ -25,6 +25,8 @@ function getFilteredDocuments($request) {
     if (request('first_date') || request('last_date') != NULL) {
         $first_date = request('first_date');
         $last_date = request('last_date');
+        if ($first_date == null) $first_date = "0000-00-00";
+        if ($last_date == null) $last_date = date("Y-m-d");
         array_push($query, $first_date);
         array_push($query, $last_date);
         $documents = searchByDate($first_date, $last_date, $documents);
@@ -75,7 +77,8 @@ function searchByDate($first_date, $last_date, $documents)
     $docs = $documents->where('date','>=',$first_date)
                         ->where('date','<=',$last_date);
     $documents = new Collection($docs);
-    //dd($documents);
+    echo "<br>First date: " . $first_date;
+    echo "<br>Last date: " . $last_date . "<br>";
     return $documents;
 }
 

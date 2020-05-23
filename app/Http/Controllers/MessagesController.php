@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Message;
+include "MessagesFilterHelper.php";
 
 class MessagesController extends Controller
 {
@@ -11,7 +12,7 @@ class MessagesController extends Controller
     public function index()
     {
         $messages = Message::orderBy('is_checked', 'ASC')->paginate();
-        return view('messages/index', ['messages' => $messages]);
+        return view('messages.index', ['messages' => $messages]);
     }
 
     public function create()
@@ -49,5 +50,10 @@ class MessagesController extends Controller
         return request()->validate([
             'message' => 'required'
         ]);
+    }
+
+    public function filter(Request $request)
+    {
+        return getFilteredMessages($request);
     }
 }

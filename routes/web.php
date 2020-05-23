@@ -41,13 +41,14 @@ Route::post('/tags', 'TagsController@store')->name('tags.store');
 Route::get('/tags/novo', 'TagsController@create')->name('tags.create');
 Route::get('/tags/{tag}', 'TagsController@show')->name('tags.show');
 Route::get('/tags/{tag}/edit', 'TagsController@edit')->name('tags.edit');
-Route::put('/tags/{tag}', 'TagsController@update')->name('tags.update');;
+Route::put('/tags/{tag}', 'TagsController@update')->name('tags.update');
 Route::delete('/tags/delete/{tag}', 'TagsController@destroy')->name('tags.destroy');
 
 Route::any('/documentos/pesquisa','DocumentsController@filter')->name('documents.filter');
+Route::any('/mensagens/pesquisa','MessagesController@filter')->name('messages.filter');
 
 Route::post('/documentos/{document}','MessagesController@store')->name('message.store');
-Route::get('/documentos/mensagem', 'MessagesController@create')->name('message.create');;
+Route::get('/documentos/mensagem', 'MessagesController@create')->name('message.create');
 
 function dumpArray($array) {
     echo "<pre>";

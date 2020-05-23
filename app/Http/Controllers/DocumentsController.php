@@ -8,7 +8,7 @@ use App\File;
 use App\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
-include "FiltersHelper.php";
+include "DocumentsFilterHelper.php";
 
 class DocumentsController extends Controller
 {

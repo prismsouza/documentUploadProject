@@ -1,6 +1,6 @@
 @extends('layout_admin')
 @section('content')
-
+    @include('searchmessagebar')
 <div id="content">
     <div class=" border p-2 text-center">
         <b>Mensagens Recebidas</b>
@@ -14,10 +14,19 @@
             <th class="col-sm-1 text-center">Data</th>
             <th>Verificada</th>
         </tr>
-    <?php $c = 0;$page = $messages->currentPage(); ?>
+
+        <?php $c = 0;
+        if(!$messages instanceof Illuminate\Support\Collection)
+            $page = $messages->currentPage();
+        ?>
+
     @foreach($messages as $message)
-        <?php $count = ($c + 1) + $page*10 - 10;
-            $c = $c + 1;?>
+            <?php
+            if(!$messages instanceof Illuminate\Support\Collection)
+                $count = ($c + 1) + $page*10 - 10;
+            else
+                $count = $c+1;
+            $c = $c + 1; ?>
         <div class="px-2">
             <tr>
                 <td>{{$count}}</td>
@@ -28,7 +37,7 @@
                 </td>
                 <td>{{ $message->message }}</td>
                 <td class="text-center">
-                    <?php $date= date('d-m-Y', strtotime($message->created_at)); ?>
+                    <?php $date= date('d/m/Y', strtotime($message->created_at)); ?>
                     {{ $date }}
                 </td>
                 <td class="text-center">
@@ -41,11 +50,13 @@
                 </td>
             </tr>
          </div>
-            <?php $count = $count + 1; ?>
     @endforeach
-
     </table>
-    {{ $messages->links() }}
+    @if(!$messages instanceof Illuminate\Support\Collection)
+        @if ($messages->total()>0)
+            {{ $messages->links() }}
+        @endif
+    @endif
 <script>
     function myFunction() {
         document.getElementById("a_click").innerHTML = alert("Status atualizado");
