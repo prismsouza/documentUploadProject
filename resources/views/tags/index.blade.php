@@ -10,7 +10,7 @@
 
     <table width="100%">
     @foreach($tags->chunk(4) as $chunked_tag)
-        <tr>
+        <tr class="d-flex">
         @foreach( $chunked_tag as $tag )
             <td class="col-sm-3 border">
             <div class="py-2">

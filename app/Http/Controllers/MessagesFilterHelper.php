@@ -11,13 +11,13 @@ function getFilteredMessages($request) {
     if (request('word') != NULL) {
         $word = request('word');
         array_push($query, $word);
-        $messages = searchByWord($word);
+        $messages = searchByWord($word, $messages);
     }
 
     if (request('categories') != NULL) {
         $categories = request('categories');
         array_push($query, $categories);
-        $messages  = searchByCategories($categories);
+        $messages  = searchByCategories($categories, $messages);
     }
 
     if (request('first_date') || request('last_date') != NULL) {
@@ -40,9 +40,9 @@ function getFilteredMessages($request) {
     return view('messages.index', ['messages' => $messages])->withDetails($messages)->withQuery($query);
 }
 
-function getMessages($docs) {
+function getMessages($docs, $messages) {
     $msgs_docs = new Collection();
-    $msgs = Message::all()->pluck('document_id');
+    $msgs = $messages->pluck('document_id');
     $intersected_id_doc_msgs = $docs->intersect($msgs);
 
     foreach ($intersected_id_doc_msgs as $id) {
@@ -55,15 +55,15 @@ function getMessages($docs) {
     return $msgs_docs;
 }
 
-function searchByWord($word)
+function searchByWord($word, $messages)
 {
     $docs = App\Document::where('name','LIKE','%'.$word.'%')
                         //->orWhere('description','LIKE','%'.$word.'%')
                         ->get()->pluck('id');
-    return getMessages($docs);
+    return getMessages($docs, $messages);
 }
 
-function searchByCategories($categories)
+function searchByCategories($categories, $messages)
 {
     $docs_categories = new Collection();
     foreach($categories as $category_id) {
@@ -72,7 +72,7 @@ function searchByCategories($categories)
             $docs_categories->push($doc->id);
         }
     }
-    return getMessages($docs_categories);
+    return getMessages($docs_categories, $messages);
 }
 
 function searchByDate($first_date, $last_date, $messages)

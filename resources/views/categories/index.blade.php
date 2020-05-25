@@ -11,7 +11,7 @@
 
     <table class=" py-10" width="100%">
 @foreach($categories->chunk(3) as $chunked_category)
-            <tr>
+            <tr class="d-flex">
         @foreach( $chunked_category as $category )
                     <td class="col-sm-4 border py-2">
     <div class="title">

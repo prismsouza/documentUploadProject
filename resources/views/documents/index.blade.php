@@ -29,7 +29,7 @@
 
     @if ($documents->isNotEmpty())
     <table class="table table-bordered bg-white table-striped" id="myTable">
-        <thead class="text-center">
+        <thead class="text-center" >
             <th onclick="sortTable(1)" scope="col" style="cursor: pointer; width: 3%">
                 #
             </th>

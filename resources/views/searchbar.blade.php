@@ -133,7 +133,7 @@
     @if (request()->input('categories'))
         <br>Categorias:
         @foreach ( request()->input('categories')  as $cat)
-            <b class="p-1">{{ $category = $categories->where('id', $cat)->first()->name }}</b>,
+            <b class="p-1">{{ $category = $categories->where('id', $cat)->first()->name }}</b>
         @endforeach
     @endif
 

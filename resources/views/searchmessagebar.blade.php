@@ -1,7 +1,7 @@
 <?php $categories = App\Category::all(); ?>
 <div class="border p-2">
 <form method="POST" action="{{ route('messages.filter') }}" enctype="multipart/form-data" class="py-2"> @csrf
-    <div class="row">
+    <div class="row d-flex">
         <div class="col-sm-3" id="Nome/Descrição">
             Nome do Documento:
             <input
@@ -98,7 +98,7 @@
     @if (request()->input('categories'))
         <br>Categorias:
         @foreach ( request()->input('categories')  as $cat)
-            <b class="p-1">{{ $category = $categories->where('id', $cat)->first()->name }}</b>,
+            <b class="p-1">{{ $category = $categories->where('id', $cat)->first()->name }}</b>
         @endforeach
     @endif
 
