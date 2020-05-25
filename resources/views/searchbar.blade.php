@@ -1,4 +1,4 @@
-<div class="border p-2">
+<div class="border p-2"  style="font-size:85%">
 <form method="POST" action="{{ route('documents.filter') }}" enctype="multipart/form-data" class="py-2"> @csrf
     <div class="row">
         <div class="col-sm" id="Nome/Descricao">
@@ -42,6 +42,7 @@
 
         <div class="col-sm-4" id="Data Publicacao">
             <i class="fas fa-calendar-alt p-2"></i>Data de Publicacao:<br>
+            <div style="font-size:70%">
             <label class="px-1 small">De</label>
             <input
                 name="first_date" id="first_date" type="date"
@@ -52,6 +53,7 @@
                 name="last_date" id="last_date" type="date"
                 data-display-mode="inline" data-is-range="true" data-close-on-select="false"
                 value="{{ request()->input('last_date') }}">
+            </div>
         </div>
 
         <div class="col-sm" id="Tags">

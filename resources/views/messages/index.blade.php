@@ -1,17 +1,19 @@
 @extends('layout_admin')
+
+@include('searchmessagebar')
 @section('content')
-    @include('searchmessagebar')
+    
 <div id="content">
     <div class=" border p-2 text-center">
         <b>Mensagens Recebidas</b>
     </div>
 
     <table class="border table table-bordered table-striped">
-        <tr>
+        <tr >
             <th>#</th>
-            <th class="col-sm-3">Documento</th>
+            <th>Documento</th>
             <th>Mensagem</th>
-            <th class="col-sm-1 text-center">Data</th>
+            <th class="text-center">Data</th>
             <th>Verificada</th>
         </tr>
 
@@ -28,7 +30,7 @@
                 $count = $c+1;
             $c = $c + 1; ?>
         <div class="px-2">
-            <tr>
+            <tr class="">
                 <td>{{$count}}</td>
                 <td>
                     <a href='/documentos/{{ $message->document_id }}' target="_blank">

@@ -29,7 +29,7 @@
 
     @if ($documents->isNotEmpty())
     <table class="table table-bordered bg-white table-striped" id="myTable">
-        <thead class="text-center" >
+        <thead class="text-center" style="font-size:80%">
             <th onclick="sortTable(1)" scope="col" style="cursor: pointer; width: 3%">
                 #
             </th>
@@ -40,7 +40,7 @@
                 Descricao <i class="fas fa-sort"></i>
             </th>
             <th onclick="sortTable(3)" scope="col" style="cursor: pointer; width: 16%">
-                Categoria <i class="fas fa-sort"></i>
+                Categoria<i class="fas fa-sort"></i>
             </th>
             <th scope="col" style="width: 7%">Data</th>
             <th scope="col" style="width: 19%" colspan="2">Download</th>

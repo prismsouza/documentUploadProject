@@ -1,7 +1,9 @@
-<?php $categories = App\Category::all(); ?>
-<div class="border p-2">
+@section('searchmessagebar')
+
+    <?php $categories = App\Category::all(); ?>
+<div class="border p-2" style="font-size:85%">
 <form method="POST" action="{{ route('messages.filter') }}" enctype="multipart/form-data" class="py-2"> @csrf
-    <div class="row d-flex">
+    <div class="row">
         <div class="col-sm-3" id="Nome/Descrição">
             Nome do Documento:
             <input
@@ -43,6 +45,7 @@
 
         <div class="col-sm-4" id="Data">
             <i class="fas fa-calendar-alt p-2"></i>Data da Mensagem:<br>
+            <div style="font-size:70%">
             <label class="px-1 small">De</label>
             <input
                 name="first_date" id="first_date" type="date"
@@ -52,7 +55,7 @@
             <input
                 name="last_date" id="last_date" type="date"
                 data-display-mode="inline" data-is-range="true" data-close-on-select="false"
-                value="{{ request()->input('last_date') }}">
+                value="{{ request()->input('last_date') }}"></div>
         </div>
 
         <div class="col-sm-2" id="Verificada">
@@ -140,3 +143,4 @@
     <br>
 @endif
 
+@endsection
