@@ -19,7 +19,7 @@ class DocumentsController extends Controller
         } else {
             $documents = Document::orderBy('date', 'desc')->paginate();
         }
-        return view('documents.index', ['documents' => $documents]);
+        return view('documents.index', ['documents' => $documents, 'category_option' => null]);
 
     }
 

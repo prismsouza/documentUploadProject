@@ -42,7 +42,8 @@ class CategoriesController extends Controller
 
     public function destroy(Category $category)
     {
-        //
+        $category->delete();
+        return redirect(route('categories.index'))->with('successMsg', 'Category Successfully Deleted');
     }
 
     public function validateCategory()

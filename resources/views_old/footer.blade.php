@@ -1,4 +1,4 @@
-<div id="copyright" class="bottom fixed-bottom">
+<div id="copyright">
     <div class="container">
         <div class="row">
             <!-- HPM -->

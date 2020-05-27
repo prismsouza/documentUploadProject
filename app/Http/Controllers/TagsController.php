@@ -36,6 +36,12 @@ class TagsController extends Controller
         return redirect($tag->path());
     }
 
+    public function destroy(Tag $tag)
+    {
+        $tag->delete();
+        return redirect(route('tags.index'))->with('successMsg', 'Tag Successfully Deleted');
+    }
+
     public function validateTag()
     {
         return request()->validate([

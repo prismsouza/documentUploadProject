@@ -7,6 +7,17 @@ use Illuminate\Support\Facades\Route;
     return view('home', ['categories' => $categories]);
 })->name('documents.home');*/
 
+Route::get('/', function () {
+    return view('search.searchview');
+})->name('searchview');
+
+Route::any('/pesquisa','DocumentsController@filter')->name('documents.filter');
+Route::get('/resultados', 'DocumentsController@index')->name('documents.index');
+Route::get('/documentos/{document}', 'DocumentsController@show')->name('documents.show');
+Route::get('/documentos/{document}/download/{type}', 'DocumentsController@download')->name('documents.download');
+
+
+/*
 Route::get('/admin', function () {
     return view('admin_panel');
 })->name('admin_panel');
@@ -49,7 +60,7 @@ Route::any('/mensagens/pesquisa','MessagesController@filter')->name('messages.fi
 
 Route::post('/documentos/{document}','MessagesController@store')->name('message.store');
 Route::get('/documentos/mensagem', 'MessagesController@create')->name('message.create');
-
+*/
 function dumpArray($array) {
     echo "<pre>";
     var_dump($array);

@@ -28,7 +28,7 @@
     <div class="row">
         <div class="col-md-2">
             <figure style="padding: 1em; background: #f8f9fa; border-radius: 5px; text-align: center;">
-                <a href="#"><img class="img-fluid" src={{ asset('images/logo.png') }} alt=""></a>
+                <a href="{{ route('documents.index') }}"><img class="img-fluid" src={{ asset('images/logo.png') }} alt=""></a>
             </figure>
         </div>
         <div class="col-md-10">
