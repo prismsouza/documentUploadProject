@@ -11,6 +11,18 @@ Route::get('/', function () {
     return view('search.searchview');
 })->name('searchview');
 
+Route::get('/pesquisa', function () {
+    return view('search.search');
+})->name('search');
+
+Route::get('/pesquisa_tema', function () {
+    return view('search.search-theme');
+})->name('search-theme');
+
+Route::get('/pesquisa_avancada', function () {
+    return view('search.search-advanced');
+})->name('search-advanced');
+
 Route::any('/pesquisa','DocumentsController@filter')->name('documents.filter');
 Route::get('/resultados', 'DocumentsController@index')->name('documents.index');
 Route::get('/documentos/{document}', 'DocumentsController@show')->name('documents.show');

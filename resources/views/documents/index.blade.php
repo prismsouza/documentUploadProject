@@ -5,11 +5,12 @@
 
     @if ($documents->isNotEmpty())
     <table class="table table-bordered bg-white" id="myTable">
-        <span style="font-size: 18px" class="py-4">Mostrando de <b>1</b> a <b></b> de <b>{{ count($documents) }}</b> resultados</span>
+        <span style="font-size: 18px" class="py-4">Mostrando de <b>1</b> a <b>{{ count($documents) }}</b> de <b>{{ $total }}</b> resultados</span>
         <p></p>
             <tr>
                 <td colspan="3"><i class="fas fa-print float-md-right"></i></td>
             </tr>
+
         @forelse($documents as $document)
             <tr>
                 <td>
@@ -40,9 +41,20 @@
     @else
         <p>No results</p>
     @endif
+
+<style>
+    .pagination a:hover:not(.active) {background-color: darkred; color: white}
+    .pagination span:hover:not(.active) {background-color: white; color: black}
+</style>
+
     @if(!$documents instanceof Illuminate\Support\Collection)
         @if ($documents->total()>0)
-            {{ $documents->links() }}
+            {{ $documents->links() }}</spam>
         @endif
     @endif
+
+
+
 @endsection
+
+

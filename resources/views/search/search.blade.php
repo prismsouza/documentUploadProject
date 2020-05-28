@@ -1,4 +1,3 @@
-
     <?php $categories = \App\Category::all(); $documents = \App\Document::all(); ?>
 
     <style>
@@ -83,21 +82,21 @@
                     <b class="p-4">Ordenar por:</b>
                     <div class="row px-4">
                         <div class="px-4 col form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="is_active" id="is_active" value="1">
+                            <input class="form-check-input" type="radio" name="order_by" id="order_by" value="date">
                             Data mais recente
                         </div>
 
                         <div class="col form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="is_active" id="is_active" value="1">
+                            <input class="form-check-input" type="radio" name="order_by" id="order_by" value="category">
                             Tipo
                         </div>
 
                         <div class=" col form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="is_active" id="is_active" value="1">
+                            <input class="form-check-input" type="radio" name="order_by" id="order_by" value="created_at">
                             Não ordenar <br>(pesquisa rápida)
                         </div>
 
-                        <div class="col" id="ResultadosPorPag">
+                        <div class="col" id="results_per_page">
                             Resultados por página
                             <select
                                 id="results_per_page" name="results_per_page"
@@ -111,12 +110,12 @@
                                     <option id="results_per_page" name="results_per_page">100</option>
                             </select>
                         </div>
-                        <div class="col" id="btnBuscar">
+                        <div class="col" id="btnBuscar1">
                             <button class="btn btn-danger btn-lg" data-toggle="tooltip" title="buscar resultados">
                                 Buscar
                             </button>
                             <button class="btn btn-light border btn-lg " type="submit"  action="{{ route('documents.index') }}">
-                                <a href="{{ route('searchview') }}" data-toggle="tooltip" title="limpar campos">
+                                <a href="{{ route('search') }}" data-toggle="tooltip" title="limpar campos">
                                     <i class="fas fa-eraser" style="color: black"></i>
                                 </a>
                             </button>
@@ -135,6 +134,6 @@
                 </div>
     </div>
 
-</div>
+</div> @yield('index_content')
     <p></p><br>
 

@@ -8,17 +8,17 @@
     <div class="bs-example bs-example-tabs" data-example-id="togglable-tabs">
         <ul id="myTabs" class="nav nav-tabs px-lg-5" role="tablist">
             <li role="presentation" class="active">
-                <a href="#search" id="home-tab" role="tab" data-toggle="tab" aria-controls="home" aria-expanded="true">
+                <a href="#search" id="search-tab" role="tab" data-toggle="tab" aria-controls="home" aria-expanded="true">
                     PESQUISA
                 </a>
             </li>
             <li role="presentation">
-                <a href="#search-theme" role="tab" id="profile-tab" data-toggle="tab" aria-controls="profile">
+                <a href="#search-theme" role="tab" id="search-theme-tab" data-toggle="tab" aria-controls="profile">
                     PESQUISA POR TEMA
                 </a>
             </li>
             <li role="presentation">
-                <a href="#search-advanced" role="tab" id="profile-tab" data-toggle="tab" aria-controls="profile">
+                <a href="#search-advanced" role="tab" id="search-advanced-tab" data-toggle="tab" aria-controls="profile">
                     PESQUISA AVANCADA
                 </a>
             </li>
@@ -35,6 +35,5 @@
             </div>
         </div>
     </div>
-@yield('index_content')
 <p style="padding-bottom: 200px"></p>
 @endsection

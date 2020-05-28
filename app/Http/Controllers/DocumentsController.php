@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Document;
+use App\Helpers\CollectionHelper;
 use App\Tag;
 use App\File;
 use App\Category;
@@ -16,9 +17,9 @@ class DocumentsController extends Controller
     {
         if (request('tag')) {
             $documents = Tag::where('name', request('tag'))->firstOrFail()->documents;
-        } else {
-            $documents = Document::orderBy('date', 'desc')->paginate();
-        }
+        } /*else {
+            $documents = Document::orderBy('date', 'desc');//->paginate();
+        }*/
         return view('documents.index', ['documents' => $documents]);
 
     }
