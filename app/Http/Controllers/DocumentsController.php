@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Document;
-use App\Helpers\CollectionHelper;
 use App\Tag;
 use App\File;
 use App\Category;
@@ -17,10 +16,21 @@ class DocumentsController extends Controller
     {
         if (request('tag')) {
             $documents = Tag::where('name', request('tag'))->firstOrFail()->documents;
-        } /*else {
-            $documents = Document::orderBy('date', 'desc');//->paginate();
-        }*/
-        return view('documents.index', ['documents' => $documents]);
+        } else {
+            $documents = Document::orderBy('date', 'desc')->paginate();
+        }
+        return view('documents.index', ['documents' => $documents, 'category_option' => null]);
+
+    }
+
+    public function index_user()
+    {
+        if (request('tag')) {
+            $documents = Tag::where('name', request('tag'))->firstOrFail()->documents;
+        } else {
+            $documents = Document::orderBy('date', 'desc')->paginate();
+        }
+        return view('documents.index_user', ['documents' => $documents, 'category_option' => null]);
 
     }
 
@@ -33,6 +43,17 @@ class DocumentsController extends Controller
         $pdf_file = $document->files->where('extension','pdf')->first();
         $doc_file = $document->files->where('extension','doc')->first();
         return view('documents.show', ['document' => $document, 'related_documents' => $related_documents, 'doc_file' => $doc_file, 'pdf_file' => $pdf_file]);
+    }
+
+    public function showUser(Document $document)
+    {
+        $doc = \App\Document::find($document->id);
+
+        $related_documents = $doc->hasdocument;
+
+        $pdf_file = $document->files->where('extension','pdf')->first();
+        $doc_file = $document->files->where('extension','doc')->first();
+        return view('documents.show_user', ['document' => $document, 'related_documents' => $related_documents, 'doc_file' => $doc_file, 'pdf_file' => $pdf_file]);
     }
 
     public function home()

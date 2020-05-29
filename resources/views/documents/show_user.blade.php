@@ -1,4 +1,4 @@
-@extends ('layout')
+@extends ('layout_user')
 
 <?php $user_id = 1; // admin ?>
 
@@ -70,34 +70,6 @@
         </a>
     </p>
 
-    @if ($user_id == 0)
         @include('documents/message_report')
-    @else
-        <br>
-        <button type="button" class="btn btn-info">
-            <a href="{{ route('documents.edit', $document->id) }}" style="color:white">
-                Editar documento <i class="fas fa-edit"></i>
-            </a>
-        </button>
-        <form method="POST" id="delete-form-{{ $document->id }}"
-              action="{{ route('documents.destroy', $document) }}"
-              style="display: none;">
-            {{ csrf_field() }}
-            {{ method_field('delete') }}
-        </form>
-        <button type="button" class="btn btn-danger">
-            <a onclick="if (confirm('Tem certeza que deseja DELETAR esse documento?')){
-                event.preventDefault();
-                document.getElementById('delete-form-{{ $document->id }}').submit();
-                } else {
-                event.preventDefault();
-                }"
-               href=" {{ route ('documents.index') }}" style="color:white">
-               Excluir documento <i class="fa fa-trash" aria-hidden="true"></i>
-            </a>
-        </button>
-
-
-    @endif
 
 @endsection

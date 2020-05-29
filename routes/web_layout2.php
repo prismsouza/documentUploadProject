@@ -2,16 +2,10 @@
 
 use Illuminate\Support\Facades\Route;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
+/*Route::get('/', function () {
+    $categories = \App\Category::all();
+    return view('home', ['categories' => $categories]);
+})->name('documents.home');*/
 
 Route::get('/versao2', function () {
     return view('search.searchview');
@@ -29,16 +23,18 @@ Route::get('/versao2/pesquisa_avancada', function () {
     return view('search.search-advanced');
 })->name('search-advanced');
 
+Route::any('/pesquisa','DocumentsController@filter')->name('documents.filter');
+Route::get('/resultados', 'DocumentsController@index')->name('documents.index');
+Route::get('/documentos/{document}', 'DocumentsController@show')->name('documents.show');
+Route::get('/documentos/{document}/download/{type}', 'DocumentsController@download')->name('documents.download');
 
 
+/*
 Route::get('/admin', function () {
     return view('admin_panel');
 })->name('admin_panel');
 Route::get('/mensagens', 'MessagesController@index')->name('messages.index');
 Route::get('/mensagens/{message}', 'MessagesController@update')->name('messages.update');
-
-Route::get('/usuario/documentos', 'DocumentsController@index_user')->name('documents_user.index');
-Route::get('/usuario/documentos/{document}', 'DocumentsController@showUser')->name('documents_user.show');
 
 
 Route::get('/documentos/categorias/{category}', 'DocumentsController@showByCategory')->name('documents_category.index');
@@ -76,3 +72,9 @@ Route::any('/mensagens/pesquisa','MessagesController@filter')->name('messages.fi
 
 Route::post('/documentos/{document}','MessagesController@store')->name('message.store');
 Route::get('/documentos/mensagem', 'MessagesController@create')->name('message.create');
+*/
+function dumpArray($array) {
+    echo "<pre>";
+    var_dump($array);
+    echo "</pre>";
+}

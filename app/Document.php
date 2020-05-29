@@ -20,6 +20,11 @@ class Document extends Model
         return route('documents.show', $this);
     }
 
+    public function pathUser()
+    {
+        return route('documents_user.show', $this);
+    }
+
     public function user()
     {
         return $this->belongsTo(User::class);

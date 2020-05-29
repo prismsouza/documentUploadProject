@@ -1,4 +1,5 @@
-<div class="border p-2"  style="font-size:85%">
+<div class="border p-2">
+<?php $tags_array = request('tags') ? request('tags') : []; ?>
 <form method="POST" action="{{ route('documents.filter') }}" enctype="multipart/form-data" class="py-2"> @csrf
     <div class="row">
         <div class="col-sm" id="Nome/Descricao">
@@ -42,7 +43,7 @@
 
         <div class="col-sm-4" id="Data Publicacao">
             <i class="fas fa-calendar-alt p-2"></i>Data de Publicacao:<br>
-            <div style="font-size:90%">
+            <div>
             <label class="px-1 small">De</label>
             <input
                 name="first_date" id="first_date" type="date"
@@ -69,12 +70,14 @@
                     <label>
                     @forelse($tags as $tag)
                         <div class="col-sm">
-                            <label class="checkbox-inline">
+
+                            <label class="box px-5">
                                 <input
                                     type="checkbox" value="{{ $tag->id }}"
-                                    id="tag" name="tags[]"
-                                    style="transform: scale(1.5);">
+                                    id="{{ $tag->id }}" name="tags[]"
+                                <?php echo (in_array($tag->id,$tags_array)) ?'checked':'' ?>>
                                 {{ $tag->name }}
+                                <span class="checkmark"></span>
                             </label>
                         </div>
                     @empty
@@ -99,25 +102,48 @@
                 </a>
             </button>
 
-            <button class="btn btn-light border float-md-left px-2" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+            <button class="btn btn-light border float-md-left px-3" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
                 +
-            </button>
+            </button><br>
 
-            <div class="row px-4">
-                <div class="collapse dropdown-menu-lg-right float-md-left" id="collapseExample" >
-                    <div class="control" id="is_active">
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="is_active" id="is_active" value="1">
-                            <label class="form-check-label" for="inlineRadio1">Esta vigente</label>
+
+                <div class="collapse" id="collapseExample"><br>
+                    <div id="is_active">
+                        <div class="row px-4">Documento:
+                            <div class="form-check form-check-inline px-4">
+                                <input class="form-check-input" type="radio" name="is_active" id="is_active" value="1">
+                                Esta vigente
+                            </div>
+                            <div class="form-check form-check-inline px-3">
+                                <input class="form-check-input" type="radio" name="is_active" id="is_active" value="-1">
+                                Nao esta vigente
+                            </div>
                         </div>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="is_active" id="is_active" value="-1">
-                            <label class="form-check-label" for="inlineRadio2">Nao esta vigente</label>
-                        </div>
+
+                            <?php $tags_array = request('tags') ? request('tags') : []; ?>
+                                <div class="checkbox">
+                                    @foreach($tags->chunk(6) as $chunked_tag)
+                                        <div class="row py-1 px-6 is-flexible">
+                                            @foreach( $chunked_tag as $tag )
+                                                <div class="col-sm-2">
+                                                    <label class="box px-5">
+                                                        <input
+                                                            type="checkbox"
+                                                            id="{{ $tag->id }}" name="tags[]"
+                                                            value="{{ $tag->id }}"
+                                                        <?php echo (in_array($tag->id,$tags_array)) ?'checked':'' ?>>
+                                                        {{ $tag->name }}
+                                                        <span class="checkmark"></span>
+                                                    </label>
+                                                </div>
+                                            @endforeach
+                                        </div>
+                                    @endforeach
+                                </div>
+
                     </div>
                 </div>
             </div>
-        </div>
     </div>
 
 </form>

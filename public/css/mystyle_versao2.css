@@ -40,8 +40,8 @@ table.dataTable thead .sorting_desc_disabled:before {
     position: absolute;
     top: 0;
     left: 0;
-    height: 20px;
-    width: 20px;
+    height: 25px;
+    width: 25px;
     background-color: #eee;
 }
 
@@ -52,7 +52,7 @@ table.dataTable thead .sorting_desc_disabled:before {
 
 /* When the checkbox is checked, add a blue background */
 .box input:checked ~ .checkmark {
-    background-color: cornflowerblue;
+    background-color: indianred;
 }
 
 /* Create the checkmark/indicator (hidden when not checked) */
@@ -78,4 +78,19 @@ table.dataTable thead .sorting_desc_disabled:before {
     -webkit-transform: rotate(45deg);
     -ms-transform: rotate(45deg);
     transform: rotate(45deg);
+}
+
+.pagination > li > a,
+.pagination > li > span {
+    color: red; // use your own color here
+}
+
+.pagination > .active > a,
+.pagination > .active > a:focus,
+.pagination > .active > a:hover,
+.pagination > .active > span,
+.pagination > .active > span:focus,
+.pagination > .active > span:hover {
+    background-color: indianred;
+    border-color: indianred;
 }

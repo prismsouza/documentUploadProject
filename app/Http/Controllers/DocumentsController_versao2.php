@@ -3,12 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Document;
+use App\Helpers\CollectionHelper;
 use App\Tag;
 use App\File;
 use App\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
-include "DocumentsFilterHelper.php";
+include "DocumentsFilterHelperVersao2.php";
 
 class DocumentsController extends Controller
 {
@@ -16,10 +17,10 @@ class DocumentsController extends Controller
     {
         if (request('tag')) {
             $documents = Tag::where('name', request('tag'))->firstOrFail()->documents;
-        } else {
-            $documents = Document::orderBy('date', 'desc')->paginate();
-        }
-        return view('documents.index', ['documents' => $documents, 'category_option' => null]);
+        } /*else {
+            $documents = Document::orderBy('date', 'desc');//->paginate();
+        }*/
+        return view('documents.index', ['documents' => $documents]);
 
     }
 
