@@ -20,7 +20,7 @@
                 <div class="btn-group float-md-right" role="group" aria-label="Basic example">
                     <button type="button" class="btn btn-info float-md-right btn-outline-secondary btn-sm">
                         <a href="{{ route('tags.edit', $tag->id) }}" style="color:white">
-                            <i class="fas fa-edit fa-resize-small"></i>
+                            <i class="fas fa-edit fa-resize-small" style="color: black"></i>
                         </a>
                     </button>
                     <form method="POST" id="delete-form-{{ $tag->id }}"
@@ -37,7 +37,7 @@
                             event.preventDefault();
                             }"
                            href=" {{ route ('tags.index') }}" style="color:white">
-                            <i class="fa fa-trash" aria-hidden="true"></i>
+                            <i class="fa fa-trash" style="color: black" aria-hidden="true"></i>
                         </a>
                     </button>
                 </div>

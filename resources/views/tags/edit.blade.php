@@ -1,4 +1,4 @@
-@extends ('layout_versao2')
+@extends ('version2.layout_versao2')
 
 @section('head')
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.5/css/bulma.css"/>

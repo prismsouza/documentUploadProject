@@ -22,7 +22,7 @@
                 <div class="btn-group float-md-right" role="group" aria-label="Basic example">
                     <button type="button" class="btn btn-info float-md-right btn-outline-secondary btn-sm">
                     <a href="{{ route('categories.edit', $category->name) }}" style="color:white">
-                            <i class="fas fa-edit"></i>
+                            <i class="fas fa-edit" style="color: black"></i>
                         </a>
                     </button>
                     <form method="POST" id="delete-form-{{ $category->id }}"
@@ -39,7 +39,7 @@
                             event.preventDefault();
                             }"
                            href=" {{ route ('categories.index') }}" style="color:white">
-                            <i class="fa fa-trash" aria-hidden="true"></i>
+                            <i class="fa fa-trash" style="color: black" aria-hidden="true"></i>
                         </a>
                     </button>
                 </div>

@@ -2,12 +2,15 @@
 
 namespace App;
 
+use Iatstuti\Database\Support\CascadeSoftDeletes;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Category extends Model
 {
     protected $fillable = ['name', 'description'];
-    public $timestamps = false;
+    use SoftDeletes;
+    protected $dates = ['deleted_at'];
 
     public function getRouteKeyName()
     {
@@ -27,5 +30,16 @@ class Category extends Model
     public function pathCategory()
     {
         return route('documents.index', $this);
+    }
+
+    public static function boot ()
+    {
+        parent::boot();
+
+        self::deleting(function (Category $category) {
+
+            foreach ($category->documents as $document) $document->setOtherCategory();
+
+        });
     }
 }

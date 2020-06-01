@@ -28,24 +28,24 @@
 
     @if ($documents->isNotEmpty())
     <table class="table table-bordered bg-white table-striped" id="myTable">
-        <thead class="text-center" style="font-size:80%">
+        <thead class="text-center">
             <th onclick="sortTable(1)" scope="col" style="cursor: pointer; width: 3%">
                 #
             </th>
-            <th onclick="sortTable(2)" scope="col" style="cursor: pointer; width: 24%">
+            <th onclick="sortTable(2)" scope="col" style="cursor: pointer; width: 25%">
                 Nome <i class="fas fa-sort"></i>
             </th>
-            <th onclick="sortTable(2)" scope="col" style="cursor: pointer; width: 31%">
+            <th onclick="sortTable(2)" scope="col" style="cursor: pointer; width: 33%">
                 Descricao <i class="fas fa-sort"></i>
             </th>
             <th onclick="sortTable(3)" scope="col" style="cursor: pointer; width: 16%">
-                Categoria<i class="fas fa-sort"></i>
+                Categoria <i class="fas fa-sort"></i>
             </th>
-            <th scope="col" style="width: 7%">Data</th>
-            <th scope="col" style="width: 19%" colspan="2">Download</th>
+            <th scope="col" style="width: 10%">Data</th>
+            <th scope="col" style="width: 8%; text-align: center" colspan="2"><i class="fas fa-file-download" style="color:black"></i></th>
             @if ($user == "admin")
-                <th scope="col" style="width: 8%">
-                    <i class="far fa-eye-slash" data-toggle="tooltip" title="visível apenas para Perfil Administrador"></i>
+                <th scope="col" style="width: 5%">
+                    <i class="far fa-eye-slash" data-toggle="tooltip" title="visível apenas para Perfil Administrador" style="color:black"></i>
                 </th>
             @endif
         </thead>
@@ -56,7 +56,9 @@
     if(!$documents instanceof Illuminate\Support\Collection)
         $page = $documents->currentPage();
     ?>
+
     @forelse($documents as $document)
+
         <?php   if(!$documents instanceof Illuminate\Support\Collection)
                     $count = ($c + 1) + $page*10 - 10;
                 else
@@ -92,27 +94,27 @@
             <?php $file_pdf = $document->files->where('extension','pdf')->first();  ?>
             <?php $file_doc = $document->files->where('extension','doc')->first();  ?>
             @if ($file_doc != NULL)
-                <td class="text-center px-0">{{ $file_pdf['size'] }}
-                    <a href="{{ route('documents.download', [$document->id , "pdf"]) }}"  data-toggle="tooltip" title="download pdf">
-                        <i class="fa fa-file-pdf" aria-hidden="true"></i>
+                <td class="text-center px-0">
+                    <a href="{{ route('documents.download', [$document->id , "pdf"]) }}"  data-toggle="tooltip" title="{{ $file_pdf->size }}">
+                        <i class="fa fa-file-pdf fa-lg" aria-hidden="true"></i>
                     </a>
                 </td>
 
-                <td class="text-center px-0">{{ $file_doc['size'] }}
-                    <a href="{{ route('documents.download', [$document->id , "doc"]) }}" data-toggle="tooltip" title="download word">
-                        <i class="fa fa-file-word" aria-hidden="true"></i>
+                <td class="text-center px-0">
+                    <a href="{{ route('documents.download', [$document->id , "doc"]) }}" data-toggle="tooltip" title="{{$file_doc->size}}">
+                        <i class="fa fa-file-word fa-lg"  aria-hidden="true"></i>
                     </a>
                 </td>
             @else
-                <td class="text-center px-0" colspan="2">{{ $file_pdf['size'] }}
-                    <a href="{{ route('documents.download', [$document->id , "pdf"]) }}"  data-toggle="tooltip" title="download pdf">
-                        <i class="fa fa-file-pdf" aria-hidden="true"></i>
+                <td class="text-center px-0" colspan="2">
+                    <a href="{{ route('documents.download', [$document->id , "pdf"]) }}"  data-toggle="tooltip" title="{{$file_pdf->size}}">
+                        <i class="fa fa-file-pdf fa-lg" aria-hidden="true"></i>
                     </a>
                 </td>
             @endif
             @if ($user == "admin")
                 <div id="admin_view">
-                <td>
+                <td class="text-center px-0">
                     <a href="{{ route('documents.edit', $document->id) }}">
                         <i class="fas fa-edit"></i>
                     </a>

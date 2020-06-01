@@ -1,4 +1,4 @@
-@extends ('layout_standalone')
+@extends ('layout_admin')
 
 @section ('content')
     <h1 class="heading has-text-weight-bold is-size-4 py-6">Novo Boletim Geral</h1>
@@ -7,7 +7,7 @@
 
         <div class="control py-2 row">
             <div class="col-sm-1">
-                <label class="label" for="name">Nome</label>
+                <label for="name">Nome</label>
             </div>
             <input
                 class="input @error('name') is-danger @enderror col-3"
@@ -22,7 +22,7 @@
 
         <div class="control py-2 row">
             <div class="col-sm-1">
-                <label class="label" for="description">Descrição</label>
+                <label for="description">Descrição</label>
             </div>
             <input
                 class="input @error('description') is-danger @enderror col-5"
@@ -50,7 +50,7 @@
         @enderror
 
         <div class="control py-2">
-            <label class="label" for="date">Data de Publicacao do BGBM: </label>
+            <label for="date">Data de Publicacao do BGBM: </label>
             <i class="fas fa-calendar p-2"></i>
             <input
                 name="date" id="date"

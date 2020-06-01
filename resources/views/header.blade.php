@@ -31,9 +31,23 @@
                 <a href="#"><img class="img-fluid" src={{ asset('images/logo.png') }} alt=""></a>
             </figure>
         </div>
-        <div class="col-md-10">
+        <div class="col-md-8">
             <h2 style="text-transform: uppercase; font-size: 1.2em; margin-top: 1em">Módulo de Documentos</h2>
             <p>Documentos Publicados do Corpo de Bombeiros Militar de Minas Gerais</p>
+        </div>
+        <div class="col-md-2 py-5">
+            <div class="nav-item dropdown btn-light border">
+                <a class="nav-link text-secondary dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Links relacionados
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="http://pesquisalegislativa.mg.gov.br/Legislacao.aspx" target="_blank">
+                        Normas Poder Executivo MG</a>
+                    <a class="dropdown-item" href="https://www.almg.gov.br/home/index.html" target="_blank">
+                        Leis e Decretos Estaduais
+                    </a>
+                </div>
+            </div>
         </div>
     </div>
 </div>

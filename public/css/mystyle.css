@@ -15,7 +15,7 @@ table.dataTable thead .sorting_desc_disabled:before {
  .box {
      display: block;
      position: relative;
-     padding-left: 35px;
+     padding-left: 2px;
      margin-bottom: 12px;
      cursor: pointer;
      font-size: 14px;
@@ -78,4 +78,14 @@ table.dataTable thead .sorting_desc_disabled:before {
     -webkit-transform: rotate(45deg);
     -ms-transform: rotate(45deg);
     transform: rotate(45deg);
+}
+
+.select-checkbox option::before {
+    content: "\2610";
+    width: 1.3em;
+    text-align: center;
+    display: inline-block;
+}
+.select-checkbox option:checked::before {
+    content: "\2611";
 }

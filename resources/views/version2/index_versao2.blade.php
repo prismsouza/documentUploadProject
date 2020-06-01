@@ -1,4 +1,4 @@
-@extends('search.searchview')
+@extends('version2.search.searchview')
 @section('index_content')
 
 <?php $user = "notadmin"; // admin ?>

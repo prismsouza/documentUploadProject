@@ -1,4 +1,4 @@
-@extends ('layout_versao2')
+@extends ('version2.layout_versao2')
 <?php $categories = App\Category::all();?>
 
 

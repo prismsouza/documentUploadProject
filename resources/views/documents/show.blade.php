@@ -23,9 +23,9 @@
         @endforelse
     @endif
         </p>
-    <p><b>Descricao: </b>{{ $document->description }}</p>
+    <p><b>Descrição: </b>{{ $document->description }}</p>
 
-    <p><b>Data de publicacao do documento:</b>
+    <p><b>Data de publicação do documento:</b>
         {{ date('d/m/Y', strtotime($document->date)) }}
     </p>
 
@@ -33,7 +33,7 @@
 
         @if ($document->bgbm_document_id !=0)
         <p><b>Publicado no BGBM:</b>
-            <a style="color:navy" href= {{$document->bgbm_document_id}}>
+            <a style="color:navy" href= "{{$document->bgbm_document_id}}" target="_blank">
                 {{ $document->where('id', $document->bgbm_document_id)->first()->name }}</p>
         </a>
         @endif
@@ -43,7 +43,10 @@
         <b>Documentos relacionados:</b>
                 <table class="table-bordered">
                     @forelse ($related_documents as $doc)
-                        <tr><td class="px-2 py-1"><a style="color:navy" href="{{ $doc->id }}">{{ $doc->name }} </a></td></tr>
+                        <tr><td class="px-2 py-1">
+                                <a style="color:navy" href="{{ $doc->id }}" target="_blank">
+                                    {{ $doc->name }} </a>
+                        </td></tr>
                     @empty
                         Nenhum documento relacionado
                     @endforelse

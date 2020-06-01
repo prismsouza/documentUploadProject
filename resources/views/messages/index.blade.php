@@ -44,7 +44,8 @@
                 </td>
                 <td class="text-center">
 
-                    <a href="{{ route('messages.update', $message->id) }}" id="a_click" onclick="myFunction()">
+                    <a href="{{ route('messages.update', $message->id) }}" id="a_click"
+                       class="btn border" onclick="myFunction()">
                     <?php echo ($message->is_checked) ?
                         "<i class='far fa-check-circle' style='color: green'></i>"
                         : "<i class='far fa-times-circle' style='color: red'></i>" ?>

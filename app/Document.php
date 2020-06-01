@@ -3,12 +3,17 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Iatstuti\Database\Support\CascadeSoftDeletes;
+
 
 class Document extends Model
 {
     protected $fillable = ['category_id', 'name', 'description', 'date', 'is_active', 'user_id'];
     public $perPage = 10;
-
+    use SoftDeletes, CascadeSoftDeletes;
+    protected $dates = ['deleted_at'];
+    protected $cascadeDeletes = ['files', 'messages'];
 
     public function getRouteKeyName()
     {
@@ -30,10 +35,18 @@ class Document extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function setOtherCategory()
+    {
+        $this->category_id = 23;
+        $this->save();
+    }
+
     public function category()
     {
         return $this->belongsTo(Category::class);
     }
+
+
 
     public function tags()
     {
@@ -52,6 +65,6 @@ class Document extends Model
 
     public function messages()
     {
-        return $this->hasMany(File::class);
+        return $this->hasMany(Message::class);
     }
 }

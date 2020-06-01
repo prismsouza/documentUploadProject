@@ -1,11 +1,7 @@
-@extends ('layout_standalone')
+@extends ('layout_admin')
 
 @section ('content')
-    <a href="{{ route('documents.index') }}">
-        <button class="btn btn-light btn-outline-dark float-md-right" type="submit">
-            Voltar
-        </button>
-    </a>
+
 
     <h1 class="heading has-text-weight-bold is-size-4 py-6">Novo Documento</h1>
 
@@ -14,7 +10,7 @@
 <!-- -------------- CATEGORY -------------- -->
         <div class="control row" id="category">
             <div class="col-sm-1">
-                <label class="label" for="category_id">Categoria</label>
+                <label for="category_id">Categoria</label>
             </div><b class="px-1">*</b>
             <select
                 id="category_id" name="category_id"
@@ -34,7 +30,7 @@
 <!-- -------------- NAME -------------- -->
         <div class="control py-2 row" id="name">
             <div class="col-sm-1">
-                <label class="label" for="name">Nome </label>
+                <label for="name">Nome </label>
             </div><b class="px-1">*</b>
             <input
                 class="input @error('name') is-danger @enderror col-3"
@@ -51,7 +47,7 @@
 <!-- -------------- DESCRIPTION -------------- -->
         <div class="control py-2 row" id="description">
             <div class="col-sm-1">
-                <label class="label " for="description">Descrição</label>
+                <label for="description">Descrição</label>
             </div>
             <b class="px-1">*</b>
             <input
@@ -95,7 +91,7 @@
 
 <!-- -------------- DOCUMENT_HAS_DOCUMENT -------------- -->
         <div class="control py-2" id="related_documents">
-        <label class="label" for="document_id">Documentos relacionados: </label><br>
+        <label for="document_id">Documentos relacionados: </label><br>
         <select
             id="document_has_document" name="document_has_document[]"
             class="selectpicker" multiple
@@ -111,7 +107,7 @@
 
 <!-- -------------- PUBLISHED AT BGBM X -------------- -->
         <div class="control py-2" ID="published_at">
-            <label class="label" for="bgbm_document_id">Publicado no BGBM: </label>
+            <label for="bgbm_document_id">Publicado no BGBM: </label>
             <select
                 id="bgbm_document_id" name="bgbm_document_id"
                 class="selectpicker"
@@ -126,7 +122,7 @@
 
 <!-- -------------- DATE -------------- -->
         <div class="control py-2" id="date">
-            <label class="label" for="date">Data de Publicacao do Documento: <b>*</b></label>
+            <label for="date">Data de Publicacao do Documento: <b>*</b></label>
             <i class="fas fa-calendar p-2"></i>
             <input
                 name="date" id="date" class="@error('date') is-danger @enderror"
@@ -151,7 +147,7 @@
 
 <!-- -------------- TAGS -------------- -->
         <div class="control py-2" id="tags">
-        <label class="label" for="tags">Tags</label>
+        <label for="tags">Tags</label>
             <a href="/tags">
                 <i class="fas fa-plus"></i>
             </a><br>
@@ -169,12 +165,13 @@
 
 <!-- -------------- BTN Criar Documento -------------- -->
         <div class="field is-grouped" id="btn_create_document">
-            <div class="control">
-                <button class="btn btn-dark float-md-right" type="submit">Criar Documento</button>
-            </div>
+                <button class="btn btn-dark" type="submit">Criar Documento</button>
+        <a href="{{ route('home') }}" class="btn btn-light border">
+            <i class="fas fa-home"></i>
+        </a>
         </div>
-
     </form>
+
 
     <br><br>
 @endsection

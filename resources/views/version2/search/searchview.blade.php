@@ -1,4 +1,4 @@
-@extends('layout_versao2')
+@extends('version2.layout_versao2')
 @section('content')
     <style>
         li {
@@ -25,13 +25,13 @@
         </ul>
         <div id="myTabContent" class="tab-content">
             <div role="tabpanel" class="tab-pane fade in active" id="search" aria-labelledby="search-tab">
-                @include('search.search')
+                @include('version2.search.search')
             </div>
             <div role="tabpanel" class="tab-pane fade" id="search-theme" aria-labelledby="search-theme-tab">
-                @include('search.search-theme')
+                @include('version2.search.search-theme')
             </div>
             <div role="tabpanel" class="tab-pane fade" id="search-advanced" aria-labelledby="search-advanced-tab">
-                @include('search.search-advanced')
+                @include('version2.search.search-advanced')
             </div>
         </div>
     </div>

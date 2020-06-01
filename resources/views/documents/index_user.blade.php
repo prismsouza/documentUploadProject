@@ -69,19 +69,19 @@
             <?php $file_doc = $document->files->where('extension','doc')->first();  ?>
             @if ($file_doc != NULL)
                 <td class="text-center px-0">
-                    <a href="{{ route('documents.download', [$document->id , "pdf"]) }}"  data-toggle="tooltip" title="download pdf">
+                    <a href="{{ route('documents.download', [$document->id , "pdf"]) }}"  data-toggle="tooltip" title="{{$document->size}}">
                         <i class="fa fa-file-pdf" aria-hidden="true"></i>
                     </a>
                 </td>
 
                 <td class="text-center px-0">
-                    <a href="{{ route('documents.download', [$document->id , "doc"]) }}" data-toggle="tooltip" title="download word">
+                    <a href="{{ route('documents.download', [$document->id , "doc"]) }}" data-toggle="tooltip" title="{{$document->size}}">
                         <i class="fa fa-file-word" aria-hidden="true"></i>
                     </a>
                 </td>
             @else
                 <td class="text-center px-0" colspan="2">
-                    <a href="{{ route('documents.download', [$document->id , "pdf"]) }}"  data-toggle="tooltip" title="download pdf">
+                    <a href="{{ route('documents.download', [$document->id , "pdf"]) }}"  data-toggle="tooltip" title="{{$document->size}}">
                         <i class="fa fa-file-pdf" aria-hidden="true"></i>
                     </a>
                 </td>

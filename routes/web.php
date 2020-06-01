@@ -13,24 +13,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/versao2', function () {
-    return view('search.searchview');
-})->name('searchview');
-
-Route::get('/versao2/pesquisa', function () {
-    return view('search.search');
-})->name('search');
-
-Route::get('/versao2/pesquisa_tema', function () {
-    return view('search.search-theme');
-})->name('search-theme');
-
-Route::get('/versao2/pesquisa_avancada', function () {
-    return view('search.search-advanced');
-})->name('search-advanced');
-
-
-
 Route::get('/admin', function () {
     return view('admin_panel');
 })->name('admin_panel');
@@ -39,10 +21,11 @@ Route::get('/mensagens/{message}', 'MessagesController@update')->name('messages.
 
 Route::get('/usuario/documentos', 'DocumentsController@index_user')->name('documents_user.index');
 Route::get('/usuario/documentos/{document}', 'DocumentsController@showUser')->name('documents_user.show');
-
+Route::get('/admin/deletados', 'DocumentsController@showDeletedDocuments')->name('documents.deleted_documents');
 
 Route::get('/documentos/categorias/{category}', 'DocumentsController@showByCategory')->name('documents_category.index');
-Route::get('/', 'DocumentsController@index')->name('documents.index');
+Route::get('/', 'DocumentsController@home')->name('home');
+Route::get('/usuario', 'DocumentsController@home_user')->name('home_user');
 Route::get('/documentos', 'DocumentsController@index')->name('documents.index');
 Route::post('/documentos', 'DocumentsController@store')->name('documents.store');
 Route::get('/documentos/novo', 'DocumentsController@create')->name('documents.create');
@@ -54,6 +37,7 @@ Route::get('/documentos/{document}', 'DocumentsController@show')->name('document
 Route::get('/documentos/{document}/editar', 'DocumentsController@edit')->name('documents.edit');
 Route::put('/documentos/{document}', 'DocumentsController@update')->name('documents.update');
 Route::delete('/documentos/delete/{document}', 'DocumentsController@destroy')->name('documents.destroy');
+Route::get('home', 'DocumentsController@restore')->name('documents.restore');
 
 Route::get('/categorias', 'CategoriesController@index')->name('categories.index');
 Route::post('/categorias', 'CategoriesController@store')->name('categories.store');;
@@ -76,3 +60,24 @@ Route::any('/mensagens/pesquisa','MessagesController@filter')->name('messages.fi
 
 Route::post('/documentos/{document}','MessagesController@store')->name('message.store');
 Route::get('/documentos/mensagem', 'MessagesController@create')->name('message.create');
+
+
+
+/*
+Route::get('/versao2', function () {
+    return view('search.searchview');
+})->name('searchview');
+
+Route::get('/versao2/pesquisa', function () {
+    return view('search.search');
+})->name('search');
+
+Route::get('/versao2/pesquisa_tema', function () {
+    return view('search.search-theme');
+})->name('search-theme');
+
+Route::get('/versao2/pesquisa_avancada', function () {
+    return view('search.search-advanced');
+})->name('search-advanced');
+
+*/

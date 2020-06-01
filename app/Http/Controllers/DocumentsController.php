@@ -59,7 +59,12 @@ class DocumentsController extends Controller
     public function home()
     {
         $documents = Document::latest();
-        return view('documents.home', ['documents' => $documents]);
+        return view('home');
+    }
+    public function home_user()
+    {
+        $documents = Document::latest();
+        return view('home_user');
     }
 
     public function create()
@@ -137,6 +142,14 @@ class DocumentsController extends Controller
         return view('documents.index', ['documents' => $documents, 'category_option' => $category_option]);
     }
 
+    public function showDeletedDocuments()
+    {
+
+        $documents = Document::onlyTrashed()->get();
+        return view('documents.deleted_documents', ['documents' => $documents]);
+
+    }
+
     public function edit(Document $document)
     {
         return view('documents.edit', compact('document'),['tags' => Tag::all()]);
@@ -178,6 +191,15 @@ class DocumentsController extends Controller
     {
         $document->delete();
         return redirect(route('documents.index'))->with('successMsg', 'Document Successfully Deleted');
+        //return view('documents.index');
+    }
+
+    public function restore(Document $document)
+    {
+        $document->restore();
+        //$document->files()->restore();
+        //$document->messages()->restore();
+        return redirect(route('documents.index'))->with('successMsg', 'Document Successfully Restored');
         //return view('documents.index');
     }
 
