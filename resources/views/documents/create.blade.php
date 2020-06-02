@@ -159,13 +159,13 @@
                     <option value="{{ $tag->id }}">{{ $tag->name }}</option>
                 @endforeach
             </select>
-        </div>
+        </div><br>
 
-        <span class="small float-md-right">* campos obrigatorios</span><br>
+        <span class="small float-md-left">* campos obrigatorios</span><br>
 
 <!-- -------------- BTN Criar Documento -------------- -->
         <div class="field is-grouped" id="btn_create_document">
-                <button class="btn btn-dark" type="submit">Criar Documento</button>
+                <button class="btn btn-dark btn-outline-light border" type="submit">Criar Documento</button>
         <a href="{{ route('home') }}" class="btn btn-light border">
             <i class="fas fa-home"></i>
         </a>

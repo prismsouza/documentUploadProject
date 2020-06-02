@@ -2,29 +2,19 @@
 @section('content')
 
 <div id="content">
+    @include('categories.create')
+    <p></p>
 
-    <a href="{{ route('categories.create') }}">
-        <button class="btn btn-dark btn-outline-light" type="submit">
-            Nova Categoria
-        </button>
-    </a><p></p>
-
-    <table class=" py-10" width="100%">
-@foreach($categories->chunk(3) as $chunked_category)
-            <tr class="d-flex">
+    <table width="100%">
+    @foreach($categories->chunk(3) as $chunked_category)
+        <tr class="d-flex">
         @foreach( $chunked_category as $category )
-                    <td class="col-sm-4 border py-2">
-    <div class="title">
-        <h5>
-            <a href="{{ $category->path()  }}">
-
-                {{ $category->name }}
+            <td class="col-sm-4 border py-2">
+                <div class="title">
+                    <h5>
+                        <a href="{{ $category->path()  }}">
+                            {{ $category->name }}
                 <div class="btn-group float-md-right" role="group" aria-label="Basic example">
-                    <button type="button" class="btn btn-info float-md-right btn-outline-secondary btn-sm">
-                    <a href="{{ route('categories.edit', $category->name) }}" style="color:white">
-                            <i class="fas fa-edit" style="color: black"></i>
-                        </a>
-                    </button>
                     <form method="POST" id="delete-form-{{ $category->id }}"
                           action="{{ route('categories.destroy', $category) }}"
                           style="display: none;">
@@ -39,9 +29,10 @@
                             event.preventDefault();
                             }"
                            href=" {{ route ('categories.index') }}" style="color:white">
-                            <i class="fa fa-trash" style="color: black" aria-hidden="true"></i>
+                            <i class="fa fa-trash" style="color: black" aria-hidden="true" data-toggle="tooltip" title="excluir"></i>
                         </a>
                     </button>
+                    @include('categories.edit')
                 </div>
             </a>
         </h5>
@@ -49,9 +40,9 @@
     <p class="small">
         {{ $category->description }}
     </p>
-                    </td>
+            </td>
         @endforeach
-            </tr>
+        </tr>
 @endforeach
     </table>
 </div>

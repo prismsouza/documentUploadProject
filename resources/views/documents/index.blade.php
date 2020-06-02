@@ -1,6 +1,6 @@
-@extends('layout')
-
 <?php $user = "admin"; // admin ?>
+@extends('layout_admin')
+@include('searchmessagebar')
 
 @section('content')
     @if($category_option)
@@ -32,19 +32,21 @@
             <th onclick="sortTable(1)" scope="col" style="cursor: pointer; width: 3%">
                 #
             </th>
-            <th onclick="sortTable(2)" scope="col" style="cursor: pointer; width: 25%">
+            <th onclick="sortTable(2)" scope="col" style="cursor: pointer; width: 22%">
                 Nome <i class="fas fa-sort"></i>
             </th>
             <th onclick="sortTable(2)" scope="col" style="cursor: pointer; width: 33%">
                 Descricao <i class="fas fa-sort"></i>
             </th>
-            <th onclick="sortTable(3)" scope="col" style="cursor: pointer; width: 16%">
+            <th onclick="sortTable(3)" scope="col" style="cursor: pointer; width: 14%">
                 Categoria <i class="fas fa-sort"></i>
             </th>
-            <th scope="col" style="width: 10%">Data</th>
-            <th scope="col" style="width: 8%; text-align: center" colspan="2"><i class="fas fa-file-download" style="color:black"></i></th>
+            <th scope="col" style="width: 10%; text-align: center">Data</th>
+            <th scope="col" style="width: 5%; text-align: center">
+                <i class="fas fa-file-download"></i>
+            </th>
             @if ($user == "admin")
-                <th scope="col" style="width: 5%">
+                <th scope="col" style="width: 10%; text-align: center" colspan="2">
                     <i class="far fa-eye-slash" data-toggle="tooltip" title="visível apenas para Perfil Administrador" style="color:black"></i>
                 </th>
             @endif
@@ -92,32 +94,23 @@
             </td>
 
             <?php $file_pdf = $document->files->where('extension','pdf')->first();  ?>
-            <?php $file_doc = $document->files->where('extension','doc')->first();  ?>
-            @if ($file_doc != NULL)
                 <td class="text-center px-0">
-                    <a href="{{ route('documents.download', [$document->id , "pdf"]) }}"  data-toggle="tooltip" title="{{ $file_pdf->size }}">
-                        <i class="fa fa-file-pdf fa-lg" aria-hidden="true"></i>
+                    <a href="{{ route('documents.download', [$document->id , "pdf"]) }}"
+                       data-toggle="tooltip" title="{{$file_pdf->size}}"
+                       class="btn border">
+                        <i class="fa fa-file-pdf fa-lg" style="color: black" aria-hidden="true"></i>
                     </a>
                 </td>
 
-                <td class="text-center px-0">
-                    <a href="{{ route('documents.download', [$document->id , "doc"]) }}" data-toggle="tooltip" title="{{$file_doc->size}}">
-                        <i class="fa fa-file-word fa-lg"  aria-hidden="true"></i>
-                    </a>
-                </td>
-            @else
-                <td class="text-center px-0" colspan="2">
-                    <a href="{{ route('documents.download', [$document->id , "pdf"]) }}"  data-toggle="tooltip" title="{{$file_pdf->size}}">
-                        <i class="fa fa-file-pdf fa-lg" aria-hidden="true"></i>
-                    </a>
-                </td>
-            @endif
             @if ($user == "admin")
                 <div id="admin_view">
                 <td class="text-center px-0">
-                    <a href="{{ route('documents.edit', $document->id) }}">
-                        <i class="fas fa-edit"></i>
+                    <a href="{{ route('documents.edit', $document->id) }}"
+                       class="btn btn-info">
+                        <i class="fas fa-edit" style="color: black"></i>
                     </a>
+                </td>
+                <td class="text-center px-0">
                     <form method="POST" id="delete-form-{{ $document->id }}"
                           action="{{ route('documents.destroy', $document) }}"
                           style="display: none;">
@@ -130,8 +123,9 @@
                             } else {
                             event.preventDefault();
                             }"
-                            href=" {{ route ('documents.index') }}">
-                            <i class="far fa-trash-alt" aria-hidden="true"></i>
+                            href=" {{ route ('documents.index') }}"
+                            class="btn btn-danger btn-outline-secondary">
+                            <i class="far fa-trash-alt" style="color: black" aria-hidden="true"></i>
                         </a>
                 </td>
                 </div>

@@ -1,13 +1,13 @@
 @extends ('layout_admin')
 
 @section ('content')
-    <h1 class="heading has-text-weight-bold is-size-4 py-6">Novo Boletim Geral</h1>
+    <h1 class="heading has-text-weight-bold is-size-4 py-6">Novo Boletim Geral</h1><br>
 
     <form method="POST" action="/documentos/categorias/Boletim Geral" enctype="multipart/form-data" class="py-2"> @csrf
 
         <div class="control py-2 row">
-            <div class="col-sm-1">
-                <label for="name">Nome</label>
+            <div class="col-sm-2">
+                <label for="name">Nome *</label>
             </div>
             <input
                 class="input @error('name') is-danger @enderror col-3"
@@ -21,8 +21,8 @@
         </div>
 
         <div class="control py-2 row">
-            <div class="col-sm-1">
-                <label for="description">Descrição</label>
+            <div class="col-sm-2">
+                <label for="description">Descrição *</label>
             </div>
             <input
                 class="input @error('description') is-danger @enderror col-5"
@@ -36,7 +36,7 @@
         </div>
 
         <div class="py-2">
-                <label for="file_name_pdf">Inserir arquivo em formato pdf: </label><br>
+                <label for="file_name_pdf">Inserir arquivo em formato pdf: *</label><br>
                 <i class="fa fa-upload p-1"></i>
                 <i class="fa fa-file-pdf" aria-hidden="true"></i>
                 <input
@@ -50,7 +50,7 @@
         @enderror
 
         <div class="control py-2">
-            <label for="date">Data de Publicacao do BGBM: </label>
+            <label for="date">Data de Publicacao do BGBM: *</label>
             <i class="fas fa-calendar p-2"></i>
             <input
                 name="date" id="date"
@@ -59,12 +59,16 @@
             @error('date')
             <p class="help is-danger">{{ $errors->first('date') }}</p>
             @enderror
-        </div>
+        </div><br>
 
-        <div class="field is-grouped">
-            <div class="control">
-                <button class="btn btn-dark float-md-right" type="submit">Importar BGBM</button>
-            </div>
+        <span class="small float-md-left">* campos obrigatorios</span><br>
+
+        <!-- -------------- BTN Criar BGBM -------------- -->
+        <div class="field is-grouped" id="btn_create_document">
+            <button class="btn btn-dark btn-outline-light border" type="submit">Criar BGBM</button>
+            <a href="{{ route('home') }}" class="btn btn-light border">
+                <i class="fas fa-home"></i>
+            </a>
         </div>
     </form><br><br>
 @endsection

@@ -1,7 +1,7 @@
 @section('searchmessagebar')
 
     <?php $categories = App\Category::all(); ?>
-<div class="border p-2" style="font-size:85%">
+<div class="border p-2">
 <form method="POST" action="{{ route('messages.filter') }}" enctype="multipart/form-data" class="py-2"> @csrf
     <div class="row">
         <div class="col-3" id="Nome/Descrição">
@@ -82,8 +82,8 @@
                         <i class="fas fa-eraser px-2" data-toggle="tooltip" title="limpar campos"></i>
                     </a>
                 </button>
-                <button class="btn btn-dark border btn-sm" type="submit" >
-                    <i class="fas fa-search px-2" data-toggle="tooltip" title="filtrar"></i>
+                <button class="btn btn-dark btn-outline-light border btn-sm" type="submit" >
+                    <i class="fas fa-search px-2" style="color:grey" data-toggle="tooltip" title="filtrar"></i>
                 </button>
             </div>
         </div>

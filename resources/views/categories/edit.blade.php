@@ -1,25 +1,17 @@
-@extends ('layout_standalone')
+<button class="btn btn-info float-md-right btn-sm" type="button" data-toggle="collapse"
+        data-target="#collapseEdit{{$category->id}}" aria-expanded="false" aria-controls="collapseEdit{{$category->id}}">
+    <a style="color:white" data-toggle="tooltip" title="editar">
+        <i class="fas fa-edit" style="color: black"></i>
+    </a>
+</button><br>
 
-@section('head')
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.5/css/bulma.css"/>
-@endsection
-
-@section('content')
-    <div id="wrapper">
-        <div id="page" class="container">
-            <a href="{{ route('categories.index') }}">
-                <button class="btn btn-light btn-outline-dark float-md-right" type="submit">
-                    Voltar
-                </button>
-            </a>
-            <h1 class="heading has-text-weight-bold is-size-4">Update Category</h1>
-
-            <form method="POST" action="/categorias/{{ $category->name }}">
+<div class="collapse" id="collapseEdit{{$category->id}}"><br>
+            <form method="POST" action="{{route('categories.update', $category)}}">
                 @csrf
                 @method('PUT')
 
                 <div class="field">
-                    <label class="label" for="name">Nome</label>
+                    <label for="name" style="font-size: 80%; color: dimgrey">Nome</label>
 
                     <div class="control">
                         <input class="input" type="text" name="name" id="name" value="{{ $category->name }}">
@@ -27,19 +19,17 @@
                 </div>
 
                 <div class="field">
-                    <label class="label" for="description">Description</label>
+                    <label for="description" style="font-size: 80%; color: dimgrey" >Descrição</label>
 
                     <div class="control">
                         <textarea class="textarea" name="description" id="description">{{ $category->description }}</textarea>
                     </div>
-                </div><br>
-
-                <div class="field is-grouped">
-                    <div class="control">
-                        <button class="btn btn-dark" type="submit">Submit</button>
-                    </div>
                 </div>
+
+                <button class="btn btn-light float-md-right border" style="color: black" type="submit">
+                    <i class="fas fa-save" data-toggle="tooltip" title="salvar"></i>
+                </button>
             </form>
         </div>
     </div>
-@endsection
+

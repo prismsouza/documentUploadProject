@@ -37,7 +37,7 @@ class CategoriesController extends Controller
     public function update(Request $request, Category $category)
     {
         $category->update($this->validateCategory());
-        return redirect($category->path());
+        return redirect(route('categories.index'));
     }
 
     public function destroy(Category $category)

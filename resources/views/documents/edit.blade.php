@@ -23,7 +23,7 @@
 
                 <div class="control row" id="category">
                     <div class="col-sm-1">
-                        <label class="label" for="category_id">Categoria</label>
+                        <label for="category_id">Categoria</label>
                     </div><b class="px-1">*</b>
                     <select
                         id="category_id" name="category_id"
@@ -45,7 +45,7 @@
 <!-- -------------- NAME -------------- -->
                 <div class="control py-2 row" id="name">
                     <div class="col-sm-1">
-                        <label class="label" for="name">Nome </label>
+                        <label for="name">Nome </label>
                     </div><b class="px-1">*</b>
                     <input
                         class="input @error('name') is-danger @enderror col-3"
@@ -62,7 +62,7 @@
 <!-- -------------- DESCRIPTION -------------- -->
                 <div class="control py-2 row" id="description">
                     <div class="col-sm-1">
-                        <label class="label " for="description">Descricao</label>
+                        <label for="description">Descricao</label>
                     </div>
                     <b class="px-1">*</b>
                     <input
@@ -116,7 +116,7 @@
                 </div>
                 <!-- -------------- DOCUMENT_HAS_DOCUMENT -------------- -->
                 <div class="control py-2" id="related_documents">
-                    <label class="label" for="document_id">Documentos relacionados: </label><br>
+                    <label for="document_id">Documentos relacionados: </label><br>
                     <select
                         id="document_has_document" name="document_has_document[]"
                         class="selectpicker" multiple
@@ -132,7 +132,7 @@
 
                 <!-- -------------- PUBLISHED AT BGBM X -------------- -->
                 <div class="control py-2" ID="published_at">
-                    <label class="label" for="bgbm_document_id">Publicado no BGBM: </label>
+                    <label for="bgbm_document_id">Publicado no BGBM: </label>
                     <select
                         id="bgbm_document_id" name="bgbm_document_id"
                         class="selectpicker"
@@ -147,7 +147,7 @@
 
                 <!-- -------------- DATE -------------- -->
                 <div class="control py-2" id="date">
-                    <label class="label" for="date">Data de Publicacao do Documento: <b>*</b></label>
+                    <label for="date">Data de Publicacao do Documento: <b>*</b></label>
                     <i class="fas fa-calendar p-2"></i>
                     <input
                         name="date" id="date" class="@error('date') is-danger @enderror"
@@ -171,7 +171,7 @@
 
                 <!-- -------------- TAGS -------------- -->
                 <div class="control py-2" id="tags">
-                    <label class="label" for="tags">Tags</label>
+                    <label for="tags">Tags</label>
                     <a href="/tags" target="_blank">
                         <i class="fas fa-plus"></i>
                     </a><br>

@@ -1,39 +1,31 @@
-@extends ('layout_admin')
+<button class="btn btn-dark btn-outline-light border" type="button" data-toggle="collapse"
+        data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+    Nova tag
+</button><br>
 
-@section('head')
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.5/css/bulma.css"/>
-@endsection
 
-@section ('content')
-    <div id="content">
-            <h1 class="heading has-text-weight-bold is-size-4">Nova Tag</h1>
-
-            <form method="POST" action="/tags">
-                @csrf
-                <div class="field">
-                    <label class="label" for="name">Tag</label>
-
-                    <div class="control">
-                        <input
-                            class="input @error('name') is-danger @enderror"
-                            type="text"
-                            name="name"
-                            id="name"
-                            value="{{ old('name') }}">
-
-                        @error('name')
-                            <p class="help is-danger">{{ $errors->first('name') }}</p>
-                        @enderror
-                    </div>
-                </div><br>
-
-                <div class="field is-grouped">
-                    <div class="control">
-                        <button class="btn btn-dark" type="submit">Criar</button>
-                    </div>
+<div class="collapse" id="collapseExample"><br>
+    <form method="POST" action="/tags">
+        @csrf
+        <div class="row">
+            <div class="col-10 field">
+                <label for="name">Nome *</label>
+                <input
+                    class="input @error('name') is-danger @enderror col-6"
+                    type="text"
+                    name="name"
+                    id="name"
+                    value="{{ old('name') }}">
+                @error('name')<p class="help is-danger">{{ $errors->first('name') }}</p>@enderror
+            </div>
+            <div class="col-2"><br>
+                <div class="field is-grouped float-md-right" id="btn_create_document">
+                    <button class="btn btn-dark btn-outline-light border" type="submit">Criar</button>
+                    <a href="{{ route('home') }}" class="btn btn-light border">
+                        <i class="fas fa-home"></i>
+                    </a>
                 </div>
-
-            </form>
-
-    </div>
-@endsection
+            </div>
+        </div>
+    </form><br>
+</div>

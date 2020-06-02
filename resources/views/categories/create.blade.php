@@ -1,63 +1,41 @@
-@extends ('layout_admin')
 
-@section('head')
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.5/css/bulma.css"/>
-@endsection
+<button class="btn btn-dark btn-outline-light border" type="button" data-toggle="collapse"
+        data-target="#collapseCreate" aria-expanded="false" aria-controls="collapseCreate">
+    Nova categoria
+</button><br>
 
-@section ('content')
-
-    <div id="content">
-        <a href="{{ route('categories.index') }}">
-            <button class="btn btn-light btn-outline-dark float-md-right" type="submit">
-                Voltar
-            </button>
-        </a>
-            <h1 class="heading has-text-weight-bold is-size-4">Nova Categoria</h1>
-
-
-
-            <form method="POST" action="/categorias">
-                @csrf
-                <div class="field">
-                    <label class="label" for="name">Nome</label>
-
-                    <div class="control">
-                        <input
-                            class="input @error('name') is-danger @enderror"
-                            type="text"
-                            name="name"
-                            id="name"
-                            value="{{ old('name') }}">
-
-                        @error('name')
-                            <p class="help is-danger">{{ $errors->first('name') }}</p>
-                        @enderror
-                    </div>
+<div class="collapse" id="collapseCreate"><br>
+    <form method="POST" action="/categorias">
+        @csrf
+        <div class="row">
+            <div class="col-4 field">
+                <label for="name">Nome *</label>
+                <input
+                    class="input @error('name') is-danger @enderror col-12"
+                    type="text"
+                    name="name"
+                    id="name"
+                    value="{{ old('name') }}">
+                    @error('name')<p class="help is-danger">{{ $errors->first('name') }}</p>@enderror
+            </div>
+            <div class="col-6 field">
+                <label for="description">Descrição *</label>
+                <input
+                    class="input @error('description') is-danger @enderror col-12"
+                    type="text"
+                    name="description"
+                    id="description"
+                    value="{{ old('description') }}">
+                    @error('description')<p class="help is-danger">{{ $errors->first('description') }}</p>@enderror
+            </div>
+            <div class="col-2"><br>
+                <div class="field is-grouped float-md-right" id="btn_create_document">
+                    <button class="btn btn-dark btn-outline-light border" type="submit">Criar</button>
+                    <a href="{{ route('home') }}" class="btn btn-light border">
+                        <i class="fas fa-home"></i>
+                    </a>
                 </div>
-
-                <div class="field">
-                    <label class="label" for="description">Descricao</label>
-
-                    <div class="control">
-                        <input
-                            class="input @error('description') is-danger @enderror"
-                            type="text"
-                            name="description"
-                            id="description"
-                            value="{{ old('description') }}">
-
-                        @error('description')
-                            <p class="help is-danger">{{ $errors->first('description') }}</p>
-                        @enderror
-                    </div>
-                </div><br>
-
-                <div class="field is-grouped">
-                    <div class="control">
-                        <button class="btn btn-dark" type="submit">Criar</button>
-                    </div>
-                </div>
-            </form>
-
-    </div>
-@endsection
+            </div>
+        </div>
+    </form><br>
+</div>

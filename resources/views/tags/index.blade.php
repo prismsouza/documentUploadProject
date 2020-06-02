@@ -2,27 +2,19 @@
 @section('content')
 
 <div id="content">
-    <a href="{{ route('tags.create') }}">
-        <button class="btn btn-dark btn-outline-light" type="submit">
-            Nova Tag
-        </button>
-    </a><p></p>
+    @include('tags.create')
+    <p></p>
 
     <table width="100%">
     @foreach($tags->chunk(4) as $chunked_tag)
         <tr class="d-flex">
         @foreach( $chunked_tag as $tag )
-            <td class="col-sm-3 border">
-            <div class="py-2">
-                <a href='/documentos?tag={{ $tag->name }}'>
-                    {{ $tag->name }}
-
+            <td class="col-sm-3 border py-3">
+                <div class="title">
+                    <h5>
+                        <a href='/documentos?tag={{ $tag->name }}'>
+                            {{ $tag->name }}
                 <div class="btn-group float-md-right" role="group" aria-label="Basic example">
-                    <button type="button" class="btn btn-info float-md-right btn-outline-secondary btn-sm">
-                        <a href="{{ route('tags.edit', $tag->id) }}" style="color:white">
-                            <i class="fas fa-edit fa-resize-small" style="color: black"></i>
-                        </a>
-                    </button>
                     <form method="POST" id="delete-form-{{ $tag->id }}"
                           action="{{ route('tags.destroy', $tag) }}"
                           style="display: none;">
@@ -40,10 +32,11 @@
                             <i class="fa fa-trash" style="color: black" aria-hidden="true"></i>
                         </a>
                     </button>
-                </div>
+                    @include('tags.edit')
+                    </div>
                 </a>
-             </div>
-            <p></p>
+                    </h5>
+                </div>
             </td>
             @endforeach
         </tr>

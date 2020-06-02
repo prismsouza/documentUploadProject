@@ -47,8 +47,8 @@
                     <a href="{{ route('messages.update', $message->id) }}" id="a_click"
                        class="btn border" onclick="myFunction()">
                     <?php echo ($message->is_checked) ?
-                        "<i class='far fa-check-circle' style='color: green'></i>"
-                        : "<i class='far fa-times-circle' style='color: red'></i>" ?>
+                        "<i class='far fa-check-circle' style='color: green' data-toggle='tooltip' title='desmarcar'></i>"
+                        : "<i class='far fa-times-circle' style='color: red' data-toggle='tooltip' title='marcar como verificado'></i> "  ?>
                     </a>
                 </td>
             </tr>
