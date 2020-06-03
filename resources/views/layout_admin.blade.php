@@ -6,6 +6,7 @@
     <div class="container">
         <!-- @ include('navbar') -->
         @include('navbar_admin')
+        @yield('searchbar')
         @yield('searchmessagebar')
         <div id="wrapper">
             <div id="page" class="py-3">

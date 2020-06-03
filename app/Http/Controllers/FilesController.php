@@ -2,14 +2,37 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Response;
 use App\File;
 
 class FilesController extends Controller
 {
+    public function uploadMultipleFiles($request, $document) {
+
+        $files = $request->file('files');
+        if($request->hasFile('files')){
+            foreach ($files as $file) {
+                $file->name = $file->getClientOriginalName();
+
+                echo $file->name;
+                //$file->name = $_FILES['Agendamento Doacao de Sangue Priscila.pdf']['name'];
+                //$extension = $file->mimeType();
+                //echo "e: " . $extension;
+              //  dd($file);
+                //$file->move('images',$name);
+                //$productImage = ProductImage::create(['image'=>$name]);
+               // $input ['product_image_id'] = $document->id;
+            }
+        }
+
+           // dd($request);
+        $file = new File(request(['name', 'extension', 'type', 'size', 'alias']));
+        $file->name = "arquivoteste";
+        $request->originalName->storeAs('documents', $file->alias);
+    }
+
     public function uploadFile($request, $document, $type)
     {
+        dd($request);
         $file = new File(request(['name', 'extension', 'type', 'size', 'alias']));
 
         $file->name = $_FILES['file_name_'.$type]['name'];
@@ -36,12 +59,6 @@ class FilesController extends Controller
 
 
         $file->save();
-
-        if ($type == 'pdf') {
-            $request->file_name_pdf->storeAs('documents', $file->alias);
-        }
-        elseif ($type == 'doc') {
-            $request->file_name_doc->storeAs('documents', $file->alias);
-        }
+        $request->file_name_pdf->storeAs('documents', $file->alias);
     }
 }

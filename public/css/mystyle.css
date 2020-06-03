@@ -89,3 +89,35 @@ table.dataTable thead .sorting_desc_disabled:before {
 .select-checkbox option:checked::before {
     content: "\2611";
 }
+
+#tags_input {
+    padding: 20px;
+    margin-top: -6px;
+    border: 0;
+    border-radius: 0;
+    background: #f1f1f1;
+}
+
+#categories_input {
+    padding: 20px;
+    margin-top: -6px;
+    border: 0;
+    border-radius: 0;
+    background: #f1f1f1;
+}
+.dropdown {
+    position: relative;
+}
+
+.dropdown-menu {
+    display: none;
+}
+
+.toggle, .dropdown-menu {
+    width: 100%;
+}
+
+.is-active .dropdown-menu {
+    display: block;
+}
+

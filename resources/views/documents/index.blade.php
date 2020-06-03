@@ -1,6 +1,6 @@
 <?php $user = "admin"; // admin ?>
 @extends('layout_admin')
-@include('searchmessagebar')
+@include('searchbar')
 
 @section('content')
     @if($category_option)

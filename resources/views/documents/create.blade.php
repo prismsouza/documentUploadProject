@@ -61,9 +61,9 @@
                 @enderror
         </div>
 
-<!-- -------------- UPLOAD PDF and DOC FILE -------------- -->
+<!-- -------------- UPLOAD PDF FILE -------------- -->
         <div class="row py-2" ID="upload_file">
-            <div class="col">
+            <div class="col-4">
                 <label for="file_name_pdf">Inserir arquivo em formato pdf:<b>*</b> </label><br>
                 <i class="fa fa-upload p-1"></i>
                 <i class="fa fa-file-pdf" aria-hidden="true"></i>
@@ -77,20 +77,47 @@
                 <p class="help is-danger">{{ $errors->first('file_name_pdf') }}</p>
                 @enderror
             </div>
-            <div class="col">
-                <label for="file_name_doc">Inserir arquivo em formato doc: </label><br>
-                <i class="fa fa-upload p-1"></i>
-                <i class="fa fa-file-word" aria-hidden="true"></i>
-                <input
-                    class="input"
-                    type="file" accept=".doc, .docx, .odt"
-                    name="file_name_doc" id="file_name_doc"
-                    value="{{ old('file_name_doc') }}">
+<!-- -------------- UPLOAD MORE FILES -------------- -->
+            <div class="col"><br>
+                <button class="add_field_button btn border">Adicionar outro arquivo</button>
+                <div class="input_fields_wrap"></div>
             </div>
         </div>
 
+        <script>
+            $(document).ready(function() {
+                var max_fields      = 6; //maximum input boxes allowed
+                var wrapper   		= $(".input_fields_wrap"); //Fields wrapper
+                var add_button      = $(".add_field_button"); //Add button ID
+
+                var x = 1; //initlal text box count
+                $(add_button).click(function(e){ //on add input button click
+                    e.preventDefault();
+                    if(x < max_fields){ //max input box allowed
+                        x++; //text box increment
+                        $(wrapper).append
+                        ('<div>' +
+                            '<input class="input" type="file" name="files[]" id="file2" value="file2">' +
+                            '<a href="#" class="remove_field">' +
+                            '<i class="far fa-trash-alt" style="color: black" aria-hidden="true"></i>' +
+                            '</a>' +
+                            '</div>');
+                        /*('<div>' +
+                            '<input type="text" name="mytext[]"/>' +
+                            '<a href="#" class="remove_field">' +
+                            '<i class="far fa-trash-alt" style="color: black" aria-hidden="true"></i>' +
+                            '</a></div>'); //add input box*/
+                    }
+                });
+
+                $(wrapper).on("click",".remove_field", function(e){ //user click on remove text
+                    e.preventDefault(); $(this).parent('div').remove(); x--;
+                })
+            });
+        </script>
+
 <!-- -------------- DOCUMENT_HAS_DOCUMENT -------------- -->
-        <div class="control py-2" id="related_documents">
+        <div class="control py-2" id="document_has_document">
         <label for="document_id">Documentos relacionados: </label><br>
         <select
             id="document_has_document" name="document_has_document[]"
@@ -98,8 +125,8 @@
             value="document_id" data-live-search="true">
 
             @foreach($documents as $document)
-                @if ($document->category_id != 100)
-                    <option value={{ $document->id }}>{{ $document->name }} - {{ $document->description }}</option>
+                @if ($document->category_id != 1)
+                    <option value='{{ $document->id }}'> {{ $document->id }} - {{ $document->name }} - {{ $document->description }}</option>
                 @endif
             @endforeach
         </select>
@@ -160,6 +187,30 @@
                 @endforeach
             </select>
         </div><br>
+
+        <div class="dropdown">
+            <button class="btn dropdown-toggle" type="button" data-toggle="dropdown">
+                Tags
+             </button>
+            <ul class="dropdown-menu">
+                <input class="form-control" id="myInput" type="text" placeholder="Search.."
+                       name="tags[]"class="selectpicker" multiple >
+                    @foreach($tags as $tag)
+                        <li><option value="{{ $tag->id }}">{{ $tag->name }}</option></li>
+                    @endforeach
+            </ul>
+        </div>
+
+        <script>
+            $(document).ready(function(){
+                $("#myInput").on("keyup", function() {
+                    var value = $(this).val().toLowerCase();
+                    $(".dropdown-menu option").filter(function() {
+                        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                    });
+                });
+            });
+        </script>
 
         <span class="small float-md-left">* campos obrigatorios</span><br>
 

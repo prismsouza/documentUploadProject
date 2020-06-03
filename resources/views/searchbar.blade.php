@@ -1,5 +1,9 @@
+@section('searchbar')
+    <?php $tags_array = request('tags') ? request('tags') : [];
+$categories = App\Category::all();
+$tags = App\Tag::all();?>
 <div class="border p-2">
-<?php $tags_array = request('tags') ? request('tags') : []; ?>
+
 <form method="POST" action="{{ route('documents.filter') }}" enctype="multipart/form-data" class="py-2"> @csrf
     <div class="row">
         <div class="col-sm" id="Nome/Descricao">
@@ -12,35 +16,34 @@
 
         <div class="col-sm" id="Categorias">
             Categorias:<br>
-            <a class="nav-link dropdown-toggle"
-               id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Selecione...
-            </a>
+            <button id="dLabel" role="button" href="#" class="btn btn-light border"
+                    data-toggle="dropdown" data-target="#" >
+                Selecione... <span class="caret"></span>
+            </button>
 
             <ul class="dropdown-menu" style="width: 110%">
-                    <li class="p-2">
-                        <label>
+                <input class="form-control" id="categories_input" type="text" placeholder="Search..">
                             @forelse($categories as $category)
                                 <div class="col-sm">
+                                    <li class="p-1">
                                     <label class="box px-5 checkbox-inline">
                                         <input
                                             type="checkbox" value=" {{ $category->id }} "
-                                            id="categories" name="categories[]"
+                                            id="{{ $category->id }}" name="categories[]"
                                             style="transform: scale(1.5);"
                                             placeholder="Selecionado">
                                         {{ $category->name }}
-                                        <span class="checkmark px-2"></span>
+                                        <span class="checkmark"></span>
                                     </label>
+                                    </li>
                                 </div>
                             @empty
                                 <p><h5>Nao ha categorias cadastradas</h5></p>
                             @endforelse
-                        </label>
-                    </li>
-                </li>
-            </ul>
-        </div>
 
+            </ul>
+
+        </div>
         <div class="col-sm-4" id="Data Publicacao">
             <i class="fas fa-calendar-alt p-2"></i>Data de Publicacao:<br>
             <div>
@@ -57,18 +60,18 @@
             </div>
         </div>
 
-        <div class="col-sm" id="Tags">
+        <div class="col-sm dropdown keep-open" id="Tags">
             Tags: <br>
-            <a class="nav-link dropdown-toggle"
-               id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Selecione...
-            </a>
+            <button id="dLabel" role="button" href="#" class="btn btn-light border"
+                    data-toggle="dropdown" data-target="#" >
+                Selecione... <span class="caret"></span>
+            </button>
 
             <ul class="dropdown-menu" style="width: 90%">
-                <li class="p-2">
-                    <label>
+                <input class="form-control" id="tags_input" type="text" placeholder="Search..">
                     @forelse($tags as $tag)
                         <div class="col-sm">
+                            <li class="p-1">
                             <label class="box px-5 checkbox-inline">
                                 <input
                                     type="checkbox" value="{{ $tag->id }}"
@@ -77,14 +80,36 @@
                                 {{ $tag->name }}
                                 <span class="checkmark"></span>
                             </label>
+                            </li>
                         </div>
+
                     @empty
                          <p><h5>Nao ha tags cadastradas</h5></p>
                     @endforelse
-                    </label>
-
-                </li>
             </ul>
+            <script>
+                $('.dropdown.keep-open').on({
+                    "click":             function() { this.closable = false; },
+                    "shown.bs.dropdown": function() { this.closable = true; },
+                    "hide.bs.dropdown":  function() { return this.closable; }
+
+                });
+                $(document).ready(function(){
+                    $("#tags_input").on("keyup", function() {
+                        var value = $(this).val().toLowerCase();
+                        $(".dropdown-menu li").filter(function() {
+                            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                        });
+                    });
+                    $("#categories_input").on("keyup", function() {
+                        var value = $(this).val().toLowerCase();
+                        $(".dropdown-menu li").filter(function() {
+                            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                        });
+                    });
+                });
+            </script>
+
         </div>
     </div>
 
@@ -208,3 +233,6 @@
     <br>
 @endif
 
+
+
+@endsection

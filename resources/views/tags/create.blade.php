@@ -11,20 +11,18 @@
             <div class="col-10 field">
                 <label for="name">Nome *</label>
                 <input
-                    class="input @error('name') is-danger @enderror col-6"
+                    class="input @error('name') is-danger @enderror col-5"
                     type="text"
                     name="name"
                     id="name"
                     value="{{ old('name') }}">
                 @error('name')<p class="help is-danger">{{ $errors->first('name') }}</p>@enderror
-            </div>
-            <div class="col-2"><br>
-                <div class="field is-grouped float-md-right" id="btn_create_document">
-                    <button class="btn btn-dark btn-outline-light border" type="submit">Criar</button>
-                    <a href="{{ route('home') }}" class="btn btn-light border">
-                        <i class="fas fa-home"></i>
-                    </a>
-                </div>
+
+                <button class="btn btn-dark btn-outline-light border" type="submit">Criar</button>
+                <span class="px-2"></span>
+                <a href="{{ route('home') }}" class="btn btn-light border">
+                    <i class="fas fa-home"></i>
+                </a>
             </div>
         </div>
     </form><br>

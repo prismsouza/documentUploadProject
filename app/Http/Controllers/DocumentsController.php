@@ -74,7 +74,7 @@ class DocumentsController extends Controller
 
     public function store(Request $request)
     {
-        $this->validateDocument('');
+        //$this->validateDocument('');
         $document = new Document(request(['category_id', 'name', 'description', 'date', 'is_active']));
 
         $document->user_id = 1;
@@ -84,21 +84,25 @@ class DocumentsController extends Controller
         } else {
             $document->bgbm_document_id = 0;
         }
+        $document->name = 'teste';
+        $document->description = 'teste';
+        $document->date = '2020-02-02 00:00:00';
 
-        $document->save();
+            //$document->save();
 
-        if (request()->has('file_name_doc')) {
-            $file_doc = new FilesController();
-            $file_doc->uploadFile($request, $document, 'doc');
-        }
 
+        /*if (request()->has('files')) {
+                $files = new FilesController();
+                $files->uploadMultipleFiles($request, $document);
+        }*/
+        //else echo "none";
+        die();
         $file_pdf = new FilesController();
         $file_pdf->uploadFile($request, $document, 'pdf');
 
         if (request()->has('document_has_document')) {
-            $document->hasdocument()->attach(request('document_has_document'));
+            $document->hasdocument()->toggle(request('document_has_document'));
         }
-        else echo "No related documents";
 
         if (request()->has('tags')) {
             $document->tags()->attach(request('tags'));
@@ -222,8 +226,7 @@ class DocumentsController extends Controller
             'date' => 'required',
             'is_active' => 'required',
             'file_name_pdf' => 'required',
-            'tags' => 'exists:tags,id',
-            'document_has_document' => 'exists:document_has_document,document_id',
+            'tags' => 'exists:tags,id'
         ]);
     }
 
