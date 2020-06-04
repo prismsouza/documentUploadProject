@@ -40,31 +40,14 @@ class DocumentsController extends Controller
 
         $related_documents = $doc->hasdocument;
 
-        $pdf_file = $document->files->where('extension','pdf')->first();
-        $doc_file = $document->files->where('extension','doc')->first();
-        return view('documents.show', ['document' => $document, 'related_documents' => $related_documents, 'doc_file' => $doc_file, 'pdf_file' => $pdf_file]);
-    }
-
-    public function showUser(Document $document)
-    {
-        $doc = \App\Document::find($document->id);
-
-        $related_documents = $doc->hasdocument;
-
-        $pdf_file = $document->files->where('extension','pdf')->first();
-        $doc_file = $document->files->where('extension','doc')->first();
-        return view('documents.show_user', ['document' => $document, 'related_documents' => $related_documents, 'doc_file' => $doc_file, 'pdf_file' => $pdf_file]);
+        $pdf_file = $document->files->whereNotNull('alias')->first();
+        $files = $document->files->whereNull('alias')->all();
+        return view('documents.show', ['document' => $document, 'related_documents' => $related_documents, 'files' => $files, 'pdf_file' => $pdf_file]);
     }
 
     public function home()
     {
-        $documents = Document::latest();
         return view('home');
-    }
-    public function home_user()
-    {
-        $documents = Document::latest();
-        return view('home_user');
     }
 
     public function create()
@@ -74,9 +57,8 @@ class DocumentsController extends Controller
 
     public function store(Request $request)
     {
-        //$this->validateDocument('');
+        $this->validateDocument('');
         $document = new Document(request(['category_id', 'name', 'description', 'date', 'is_active']));
-
         $document->user_id = 1;
 
         if (request()->has('bgbm_document_id')) {
@@ -84,19 +66,14 @@ class DocumentsController extends Controller
         } else {
             $document->bgbm_document_id = 0;
         }
-        $document->name = 'teste';
-        $document->description = 'teste';
-        $document->date = '2020-02-02 00:00:00';
 
-            //$document->save();
+        $document->save();
 
-
-        /*if (request()->has('files')) {
+        if (request()->has('files')) {
                 $files = new FilesController();
                 $files->uploadMultipleFiles($request, $document);
-        }*/
-        //else echo "none";
-        die();
+        }
+
         $file_pdf = new FilesController();
         $file_pdf->uploadFile($request, $document, 'pdf');
 
@@ -132,7 +109,7 @@ class DocumentsController extends Controller
 
     public function viewfile(Document $document)
     {
-        $file_path = public_path('documents') . '/' . $document->files->where('extension','pdf')->first()->alias;
+        $file_path = public_path('documents') . '/' . $document->files->whereNotNull('alias')->first()->alias;
         return  Response::make(file_get_contents($file_path), 200, [
             'Content-Type' => 'application/pdf',
             'Content-Disposition' => 'inline'
@@ -179,7 +156,16 @@ class DocumentsController extends Controller
         return redirect($document->path());
     }
 
-    public function download(Document $document, $type)
+    public function download(Document $document, $file_alias)
+    {
+        if ($file_alias != null) {
+            $file_path = public_path('documents') . '/' . $file_alias;
+            return response()->download($file_path);
+        }
+        return 0;
+    }
+
+    /*public function download(Document $document, $type)
     {
         $file = $document->files->where('extension', $type)->first();
         if ($file != null) {
@@ -189,7 +175,7 @@ class DocumentsController extends Controller
             return response()->download($file_path, $document->name, ['Content-Type:' . $filemimetype]);
         }
         return 0;
-    }
+    }*/
 
     public function destroy(Document $document)
     {

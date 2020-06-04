@@ -5,16 +5,15 @@
 
     <h1 class="heading has-text-weight-bold is-size-4 py-6">Novo Documento</h1>
 
-    <form method="POST" action="/documentos" enctype="multipart/form-data" class="py-2"> @csrf
+    <form method="POST" action="/documentos" enctype="multipart/form-data" class="p-5 border"> @csrf
 
 <!-- -------------- CATEGORY -------------- -->
-        <div class="control row" id="category">
-            <div class="col-sm-1">
-                <label for="category_id">Categoria</label>
-            </div><b class="px-1">*</b>
+        <div class="form-row" id="category">
+            <div class="col-md-12 mb-3">
+            <label for="category_id">Categoria <b>*</b></label>
             <select
                 id="category_id" name="category_id"
-                class="selectpicker"
+                class="selectpicker form-control col-4"
                 value="category_id" data-live-search="true">
 
                 @foreach($categories as $category)
@@ -25,46 +24,43 @@
                     @endif
                 @endforeach
             </select>
+            </div>
         </div>
 
 <!-- -------------- NAME -------------- -->
-        <div class="control py-2 row" id="name">
-            <div class="col-sm-1">
-                <label for="name">Nome </label>
-            </div><b class="px-1">*</b>
-            <input
-                class="input @error('name') is-danger @enderror col-3"
-                type="text"
-                name="name"
-                id="name"
-                value="{{ old('name') }}">
+        <div class="form-row py-4">
+            <div class="col-md-4 mb-3">
+                <label>Nome <b>*</b> </label>
+                <input
+                    class="form-control input @error('name') is-danger @enderror"
+                    type="text"
+                    name="name"
+                    id="name"
+                    value="{{ old('name') }}">
 
             @error('name')
             <p class="help is-danger">{{ $errors->first('name') }}</p>
             @enderror
-        </div>
+            </div>
 
 <!-- -------------- DESCRIPTION -------------- -->
-        <div class="control py-2 row" id="description">
-            <div class="col-sm-1">
-                <label for="description">Descrição</label>
+            <div class="col-md-8 mb-3">
+                <label for="description">Descrição<b> *</b></label>
+                <input
+                    class="form-control input @error('description') is-danger @enderror"
+                    type="text"
+                    name="description" id="description"
+                    value="{{ old('description') }}">
+
+                    @error('description')
+                        <p class="help is-danger">{{ $errors->first('description') }}</p>
+                    @enderror
             </div>
-            <b class="px-1">*</b>
-            <input
-                class="input @error('description') is-danger @enderror col-5"
-                type="text"
-                name="description" id="description"
-                value="{{ old('description') }}">
-
-                @error('description')
-                    <p class="help is-danger">{{ $errors->first('description') }}</p>
-                @enderror
         </div>
-
 <!-- -------------- UPLOAD PDF FILE -------------- -->
-        <div class="row py-2" ID="upload_file">
-            <div class="col-4">
-                <label for="file_name_pdf">Inserir arquivo em formato pdf:<b>*</b> </label><br>
+        <div class="form-row" ID="upload_file">
+            <div class="col-md-6 mb-3">
+                <label for="file_name_pdf">Anexar arquivo em formato pdf:<b>*</b> </label>
                 <i class="fa fa-upload p-1"></i>
                 <i class="fa fa-file-pdf" aria-hidden="true"></i>
                 <input
@@ -76,10 +72,12 @@
                 @error('file_name_pdf')
                 <p class="help is-danger">{{ $errors->first('file_name_pdf') }}</p>
                 @enderror
-            </div>
 <!-- -------------- UPLOAD MORE FILES -------------- -->
-            <div class="col"><br>
-                <button class="add_field_button btn border">Adicionar outro arquivo</button>
+                <br>Anexar mais arquivos (máximo 5)
+                <button class="add_field_button btn border"><i class="fas fa-plus"></i></button>
+
+            </div>
+            <div class="col-md-6 mb-3">
                 <div class="input_fields_wrap"></div>
             </div>
         </div>
@@ -96,17 +94,12 @@
                     if(x < max_fields){ //max input box allowed
                         x++; //text box increment
                         $(wrapper).append
-                        ('<div>' +
-                            '<input class="input" type="file" name="files[]" id="file2" value="file2">' +
-                            '<a href="#" class="remove_field">' +
+                        ('<div class="form-inline px-2 border p-2">' +
+                            '<a href="#" class="remove_field px-2">' +
                             '<i class="far fa-trash-alt" style="color: black" aria-hidden="true"></i>' +
                             '</a>' +
+                        '<input  type="file" style="color:dimgrey" name="files[]" id="file" value="file">' +
                             '</div>');
-                        /*('<div>' +
-                            '<input type="text" name="mytext[]"/>' +
-                            '<a href="#" class="remove_field">' +
-                            '<i class="far fa-trash-alt" style="color: black" aria-hidden="true"></i>' +
-                            '</a></div>'); //add input box*/
                     }
                 });
 
@@ -187,30 +180,6 @@
                 @endforeach
             </select>
         </div><br>
-
-        <div class="dropdown">
-            <button class="btn dropdown-toggle" type="button" data-toggle="dropdown">
-                Tags
-             </button>
-            <ul class="dropdown-menu">
-                <input class="form-control" id="myInput" type="text" placeholder="Search.."
-                       name="tags[]"class="selectpicker" multiple >
-                    @foreach($tags as $tag)
-                        <li><option value="{{ $tag->id }}">{{ $tag->name }}</option></li>
-                    @endforeach
-            </ul>
-        </div>
-
-        <script>
-            $(document).ready(function(){
-                $("#myInput").on("keyup", function() {
-                    var value = $(this).val().toLowerCase();
-                    $(".dropdown-menu option").filter(function() {
-                        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-                    });
-                });
-            });
-        </script>
 
         <span class="small float-md-left">* campos obrigatorios</span><br>
 

@@ -4,15 +4,14 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-//use Iatstuti\Database\Support\CascadeSoftDeletes;
+use Iatstuti\Database\Support\CascadeSoftDeletes;
 
 
 class Document extends Model
 {
     protected $fillable = ['category_id', 'name', 'description', 'date', 'is_active', 'user_id'];
     public $perPage = 20;
-    use SoftDeletes;
-    //use CascadeSoftDeletes;
+    use SoftDeletes, CascadeSoftDeletes;
     protected $dates = ['deleted_at'];
     protected $cascadeDeletes = ['files', 'messages'];
 

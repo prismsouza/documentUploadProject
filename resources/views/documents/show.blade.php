@@ -3,6 +3,11 @@
 <?php $user_id = 1; // admin ?>
 
 @section ('content')
+    <style>
+        p {
+            font-size: 110%;
+        }
+    </style>
     <p><b>Categoria: </b>
         <a href="categorias/{{$document->category->name}}" >
             {{ $document->category->name }}
@@ -40,38 +45,58 @@
 
         <p><b>Validade:</b> Este documento <b><?php echo ($document->is_active ? "<span style=color:green>esta vigente" : "<span style=color:red>nao esta vigente"); ?></b></p>
 
-        <b>Documentos relacionados:</b>
-                <table class="table-bordered">
-                    @forelse ($related_documents as $doc)
+        @if (count($related_documents)>0)
+        <div class="row">
+            <div class="col-3">
+                <p><b>Documentos relacionados:</b></p>
+            </div>
+            <div class="col">
+                <table class="table-bordered" style="width: 50%">
+                    @foreach ($related_documents as $doc)
                         <tr><td class="px-2 py-1">
                                 <a style="color:navy" href="{{ $doc->id }}" target="_blank">
                                     {{ $doc->name }} </a>
-                        </td></tr>
-                    @empty
-                        Nenhum documento relacionado
-                    @endforelse
+                            </td></tr>
+                    @endforeach
                 </table>
+            </div>
+        </div>
         <p></p>
-
-        @if ($doc_file != null)
-        <p><b>Baixar word: </b><i class="fa fa-file-word" aria-hidden="true"></i>
-            <a style="color:navy" href="{{ route('documents.download', [$document->id , "doc"]) }}">
-                  {{ $doc_file->alias }}
-            </a></p>
         @endif
+
+        <p><b class="pr-2">Baixar pdf: </b><i class="fa fa-file-pdf" aria-hidden="true"></i>
+            <a style="color:navy" href="{{ route('documents.download', [$document->id , $pdf_file->alias]) }}">
+                {{ $pdf_file->alias }}
+            </a>
+        </p>
+        <p><b>Visualizar em nova aba:</b>
+            <a style="color:navy" href="{{ route('documents.viewfile', $document->id) }}" target="_blank">
+                {{ $pdf_file->alias }}
+            </a>
+        </p>
+
+        @if (!empty($files))
+        <div class="row">
+            <div class="col-1">
+                <p><b>Anexos:</b></p>
+            </div>
+            <div class="col">
+                <table class="table-bordered" style="width: 60%">
+                    @foreach ($files as $file)
+                        <tr><td class="px-2 py-1">
+                                <a style="color:navy" href="{{ route('documents.download', [$document->id, $file->name]) }}">
+                                    {{ $file->name }}</a>
+                            </td></tr>
+                    @endforeach
+                </table>
+            </div>
+        </div>
+            @endif
     @endif
+<p></p>
 
-    <p><b class="pr-2">Baixar pdf: </b><i class="fa fa-file-pdf" aria-hidden="true"></i>
-        <a style="color:navy" href="{{ route('documents.download', [$document->id , "pdf"]) }}">
-            {{ $pdf_file->alias }}
-        </a>
-    </p>
 
-    <p><b>Visualizar PDF em nova aba:</b>
-        <a style="color:navy" href="{{ route('documents.viewfile', $document->id) }}" target="_blank">
-            {{ $pdf_file->alias }}
-        </a>
-    </p>
+
 
     @if ($user_id == 0)
         @include('documents/message_report')

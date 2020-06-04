@@ -93,9 +93,9 @@
                 {{ date('d/m/Y', strtotime($document->date)) }}
             </td>
 
-            <?php $file_pdf = $document->files->where('extension','pdf')->first();  ?>
+            <?php $file_pdf = $document->files->whereNotNull('alias')->first();?>
                 <td class="text-center px-0">
-                    <a href="{{ route('documents.download', [$document->id , "pdf"]) }}"
+                    <a href="{{ route('documents.download', [$document->id , $file_pdf->alias]) }}"
                        data-toggle="tooltip" title="{{$file_pdf->size}}"
                        class="btn border">
                         <i class="fa fa-file-pdf fa-lg" style="color: black" aria-hidden="true"></i>
