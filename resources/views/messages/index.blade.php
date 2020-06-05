@@ -61,9 +61,8 @@
             {{ $messages->links() }}
         @endif
     @endif
-
-@else
-        <p><h4>Não há resultados para esta pesquisa</h4></p>
+    @else
+    <p><h4>Não há resultados para esta pesquisa</h4></p>
     @endif
 
 <script>

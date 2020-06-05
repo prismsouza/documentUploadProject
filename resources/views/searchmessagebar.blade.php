@@ -139,8 +139,8 @@
             @endif
         </b>
     @endif
-
-@endif</div>
+    </div>
+@endif
     <br>
     <script src="{{ asset('site/searchbar.js') }}"></script>
 @endsection
