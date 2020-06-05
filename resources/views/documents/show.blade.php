@@ -21,7 +21,7 @@
         <div class="col-4">
             <div class="float-right">
                     <a class="btn border" data-toggle="tooltip" title="download {{ $pdf_file->alias }}"
-                       href="{{ route('documents.download', [$document->id , $pdf_file->alias]) }}">
+                       href="{{ route('documents.download', [$document->id , $pdf_file->hash_id]) }}">
                         <i class="fas fa-download fa-4x" style="color:darkseagreen"></i>
                     </a>
                     <a class="btn border" data-toggle="tooltip" title="visualizar {{ $pdf_file->alias }}"
@@ -83,7 +83,7 @@
                 <ul>
                     @foreach ($files as $file)
                     <li class="px-2 py-1">
-                        <a style="color:navy" href="{{ route('documents.download', [$document->id, $file->name]) }}">
+                        <a style="color:navy" href="{{ route('documents.download', [$document->id, $file->hash_id]) }}">
                                     {{ $file->name }}</a>
                     </li>
                     @endforeach

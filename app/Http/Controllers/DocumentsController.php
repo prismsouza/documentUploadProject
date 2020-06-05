@@ -109,7 +109,7 @@ class DocumentsController extends Controller
 
     public function viewfile(Document $document)
     {
-        $file_path = public_path('documents') . '/' . $document->files->whereNotNull('alias')->first()->alias;
+        $file_path = public_path('documents') . '/' . $document->files->whereNotNull('alias')->first()->hash_id;
         return  Response::make(file_get_contents($file_path), 200, [
             'Content-Type' => 'application/pdf',
             'Content-Disposition' => 'inline'
@@ -156,10 +156,10 @@ class DocumentsController extends Controller
         return redirect($document->path());
     }
 
-    public function download(Document $document, $file_alias)
+    public function download(Document $document, $hash_id)
     {
-        if ($file_alias != null) {
-            $file_path = public_path('documents') . '/' . $file_alias;
+        if ($hash_id != null) {
+            $file_path = public_path('documents') . '/' . $hash_id;
             return response()->download($file_path);
         }
         return 0;

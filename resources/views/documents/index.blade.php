@@ -95,7 +95,7 @@
 
             <?php $file_pdf = $document->files->whereNotNull('alias')->first();?>
                 <td class="text-center px-0">
-                    <a href="{{ route('documents.download', [$document->id , $file_pdf->alias]) }}"
+                    <a href="{{ route('documents.download', [$document->id , $file_pdf->hash_id]) }}"
                        data-toggle="tooltip" title="{{$file_pdf->size}}"
                        class="btn border">
                         <i class="fa fa-file-pdf fa-lg" style="color: black" aria-hidden="true"></i>

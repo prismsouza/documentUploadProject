@@ -5,15 +5,15 @@
 <div class="border p-2">
 <form method="POST" action="{{ route('messages.filter') }}" enctype="multipart/form-data" class="py-2"> @csrf
     <div class="row">
-        <div class="col-3" id="Nome/Descrição">
+        <div class="col" id="Nome/Descrição">
             Nome do Documento:
             <input
-                class="form-control col-sm-10"
+                class="form-control col-sm-12"
                 type="text" name="word" id="word"
                 value="{{ request()->input('word') }}">
         </div>
 
-        <div class="col-sm-2" id="Categories">
+        <div class="col-sm" id="Categories">
             Categorias:<br>
             <button id="categories_btn" role="button" href="#" class="btn btn-light border px-5"
                     data-toggle="dropdown" data-target="#" >
@@ -46,7 +46,6 @@
 
         <div class="col-sm-4" id="Data">
             <i class="fas fa-calendar-alt p-2"></i>Data da Mensagem:<br>
-            <div style="font-size:90%">
             <label class="px-1 small">De</label>
             <input
                 name="first_date" id="first_date" type="date"
@@ -56,10 +55,10 @@
             <input
                 name="last_date" id="last_date" type="date"
                 data-display-mode="inline" data-is-range="true" data-close-on-select="false"
-                value="{{ request()->input('last_date') }}"></div>
+                value="{{ request()->input('last_date') }}">
         </div>
 
-        <div class="col-2" id="Verificada">
+        <div class="col" id="Verificada">
             <div class="control" id="is_checked">
                 <div class="form-check form-check-inline">
                     <input class="form-check-input" type="radio" name="is_checked" id="is_checked" value="1">
@@ -128,8 +127,12 @@
         @endif
     @endif
 
+            </div>
     @if (request()->input('is_checked'))
         <br>Mensagens
+
+        </div>
+
         <b class="p-1">
             @if(request()->input('is_checked') == "1")
                 verificadas
@@ -139,10 +142,8 @@
                 verificadas e não verificadas
             @endif
         </b>
-    @endif
+    @endif    <br>
+@endifdo?
 
-    </div>
-    <br>
-@endif
     <script src="{{ asset('site/searchbar.js') }}"></script>
 @endsection

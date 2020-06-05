@@ -10,8 +10,8 @@ $categories_array = request('categories') ? request('categories') : [];
 
 <form method="POST" action="{{ route('documents.filter') }}" enctype="multipart/form-data" class="py-2"> @csrf
     <div class="row">
-        <div class="col-sm" id="Nome/Descricao">
-            Nome/Descricão:
+        <div class="col-sm" id="name_description">
+            Nome/Descrição:
             <input
                 class="form-control col-sm-12"
                 type="text" name="word" id="word"
@@ -48,7 +48,7 @@ $categories_array = request('categories') ? request('categories') : [];
             </ul>
 
         </div>
-        <div class="col-sm-4" id="Data Publicacao">
+        <div class="col-sm-4" id="Data Publicação">
             <i class="fas fa-calendar-alt p-2"></i>Data de Publicacao:<br>
             <div>
             <label class="px-1 small">De</label>

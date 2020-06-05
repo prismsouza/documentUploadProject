@@ -37,7 +37,7 @@
         </div>
         <div class="col-md-2 py-5">
             <div class="nav-item dropdown btn-light border " style="width: 130%">
-                <a class="nav-link text-secondary dropdown-toggle" href="#"
+                <a class="nav-link text-secondary" href="#"
                    id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     Links relacionados
                 </a>
