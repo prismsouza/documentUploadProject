@@ -1,7 +1,11 @@
 @section('searchbar')
-    <?php $tags_array = request('tags') ? request('tags') : [];
+<?php
+$tags = App\Tag::all();
+$tags_array = request('tags') ? request('tags') : [];
 $categories = App\Category::all();
-$tags = App\Tag::all();?>
+$categories_array = request('categories') ? request('categories') : [];
+?>
+
 <div class="border p-2">
 
 <form method="POST" action="{{ route('documents.filter') }}" enctype="multipart/form-data" class="py-2"> @csrf
@@ -14,15 +18,15 @@ $tags = App\Tag::all();?>
                 value="{{ request()->input('word') }}">
         </div>
 
-        <div class="col-sm" id="Categorias">
+        <div class="col-sm" id="Categories">
             Categorias:<br>
-            <button id="dLabel" role="button" href="#" class="btn btn-light border"
+            <button id="categories_btn" role="button" href="#" class="btn btn-light border px-5"
                     data-toggle="dropdown" data-target="#" >
                 Selecione... <span class="caret"></span>
             </button>
 
             <ul class="dropdown-menu" style="width: 110%">
-                <input class="form-control" id="categories_input" type="text" placeholder="Search..">
+                <input class="form-control " id="categories_input" type="text" placeholder="Search..">
                             @forelse($categories as $category)
                                 <div class="col-sm">
                                     <li class="p-1">
@@ -30,8 +34,8 @@ $tags = App\Tag::all();?>
                                         <input
                                             type="checkbox" value=" {{ $category->id }} "
                                             id="{{ $category->id }}" name="categories[]"
-                                            style="transform: scale(1.5);"
-                                            placeholder="Selecionado">
+                                            placeholder="Selecionado"
+                                            <?php echo (in_array($category->id,$categories_array)) ?'checked':'' ?>>
                                         {{ $category->name }}
                                         <span class="checkmark"></span>
                                     </label>
@@ -60,9 +64,9 @@ $tags = App\Tag::all();?>
             </div>
         </div>
 
-        <div class="col-sm dropdown keep-open" id="Tags">
+        <div class="col-sm" id="Tags">
             Tags: <br>
-            <button id="dLabel" role="button" href="#" class="btn btn-light border"
+            <button id="tags_btn" role="button" href="#" class="btn btn-light border px-5"
                     data-toggle="dropdown" data-target="#" >
                 Selecione... <span class="caret"></span>
             </button>
@@ -74,9 +78,10 @@ $tags = App\Tag::all();?>
                             <li class="p-1">
                             <label class="box px-5 checkbox-inline">
                                 <input
-                                    type="checkbox" value="{{ $tag->id }}"
+                                    type="checkbox" value=" {{ $tag->id }} "
                                     id="{{ $tag->id }}" name="tags[]"
-                                <?php echo (in_array($tag->id,$tags_array)) ?'checked':'' ?>>
+                                    placeholder="Selecionado"
+                                    <?php echo (in_array($tag->id,$tags_array)) ?'checked':'' ?>>
                                 {{ $tag->name }}
                                 <span class="checkmark"></span>
                             </label>
@@ -87,29 +92,6 @@ $tags = App\Tag::all();?>
                          <p><h5>Nao ha tags cadastradas</h5></p>
                     @endforelse
             </ul>
-            <script>
-                $('.dropdown.keep-open').on({
-                    "click":             function() { this.closable = false; },
-                    "shown.bs.dropdown": function() { this.closable = true; },
-                    "hide.bs.dropdown":  function() { return this.closable; }
-
-                });
-                $(document).ready(function(){
-                    $("#tags_input").on("keyup", function() {
-                        var value = $(this).val().toLowerCase();
-                        $(".dropdown-menu li").filter(function() {
-                            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-                        });
-                    });
-                    $("#categories_input").on("keyup", function() {
-                        var value = $(this).val().toLowerCase();
-                        $(".dropdown-menu li").filter(function() {
-                            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-                        });
-                    });
-                });
-            </script>
-
         </div>
     </div>
 
@@ -148,29 +130,6 @@ $tags = App\Tag::all();?>
                                 Nao esta vigente
                             </div>
                         </div>
-
-                            <?php $tags_array = request('tags') ? request('tags') : []; ?>
-                                <div class="checkbox">
-                                    @foreach($tags->chunk(6) as $chunked_tag)
-                                        <div class="row py-1 px-6 is-flexible">
-                                            @foreach( $chunked_tag as $tag )
-                                                <div class="col-sm-2">
-                                                    <label class="box px-5">
-                                                        <input
-                                                            type="checkbox"
-                                                            id="{{ $tag->id }}" name="tags[]"
-                                                            value="{{ $tag->id }}"
-                                                        <?php echo (in_array($tag->id,$tags_array)) ?'checked':'' ?>>
-                                                        {{ $tag->name }}
-                                                        <span class="checkmark"></span>
-                                                    </label>
-                                                </div>
-                                            @endforeach
-                                        </div>
-                                    @endforeach
-                                        <?php $tags_array = []; ?>
-                                </div>
-
                     </div>
                 </div>
             </div>
@@ -217,10 +176,9 @@ $tags = App\Tag::all();?>
     @endif
 
     @if (request()->input('tags'))
-        <?php $tags_array =  array_unique(request()->input('tags')) ?>
         <br>Tags:
-        @foreach ($tags_array as $tag)
-            <b class="p-1">{{ $tag = $tags->where('id', $tag)->first()->name }} </b>
+        @foreach (request()->input('tags')  as $t)
+            <b class="p-1">{{ $tag = $tags->where('id', $t)->first()->name }} </b>
         @endforeach
     @endif
 
@@ -234,5 +192,5 @@ $tags = App\Tag::all();?>
 @endif
 
 
-
+    <script src="{{ asset('site/searchbar.js') }}"></script>
 @endsection

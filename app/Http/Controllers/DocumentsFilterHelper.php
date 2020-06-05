@@ -77,8 +77,6 @@ function searchByDate($first_date, $last_date, $documents)
     $docs = $documents->where('date','>=',$first_date)
                         ->where('date','<=',$last_date);
     $documents = new Collection($docs);
-    echo "<br>First date: " . $first_date;
-    echo "<br>Last date: " . $last_date . "<br>";
     return $documents;
 }
 

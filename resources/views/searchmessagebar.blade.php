@@ -1,6 +1,7 @@
 @section('searchmessagebar')
 
-    <?php $categories = App\Category::all(); ?>
+    <?php $categories = App\Category::all();
+    $categories_array = request('categories') ? request('categories') : [];?>
 <div class="border p-2">
 <form method="POST" action="{{ route('messages.filter') }}" enctype="multipart/form-data" class="py-2"> @csrf
     <div class="row">
@@ -12,35 +13,35 @@
                 value="{{ request()->input('word') }}">
         </div>
 
-        <div class="col-sm-2" id="Categorias">
+        <div class="col-sm-2" id="Categories">
             Categorias:<br>
-            <a class="nav-link dropdown-toggle"
-               id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Selecione...
-            </a>
+            <button id="categories_btn" role="button" href="#" class="btn btn-light border px-5"
+                    data-toggle="dropdown" data-target="#" >
+                Selecione... <span class="caret"></span>
+            </button>
 
-            <ul class="dropdown-menu">
-                <li>
-                    <div class="checkbox">
-                        <label>
-                            @forelse($categories as $category)
-                                <div class="col-sm">
-                                    <label class="checkbox-inline">
-                                        <input
-                                            type="checkbox" value=" {{ $category->id }} "
-                                            id="categories" name="categories[]"
-                                            style="transform: scale(1.5);"
-                                            placeholder="Selecionado">
-                                        {{ $category->name }}
-                                    </label>
-                                </div>
-                            @empty
-                                <p><h5>Nao ha categorias cadastradas</h5></p>
-                            @endforelse
-                        </label>
+            <ul class="dropdown-menu" style="width: 150%">
+                <input class="form-control " id="categories_input" type="text" placeholder="Search..">
+                @forelse($categories as $category)
+                    <div class="col-sm">
+                        <li class="p-1">
+                            <label class="box px-5 checkbox-inline">
+                                <input
+                                    type="checkbox" value=" {{ $category->id }} "
+                                    id="{{ $category->id }}" name="categories[]"
+                                    placeholder="Selecionado"
+                                <?php echo (in_array($category->id,$categories_array)) ?'checked':'' ?>>
+                                {{ $category->name }}
+                                <span class="checkmark"></span>
+                            </label>
+                        </li>
                     </div>
-                </li>
+                @empty
+                    <p><h5>Nao ha categorias cadastradas</h5></p>
+                @endforelse
+
             </ul>
+
         </div>
 
         <div class="col-sm-4" id="Data">
@@ -143,5 +144,5 @@
     </div>
     <br>
 @endif
-
+    <script src="{{ asset('site/searchbar.js') }}"></script>
 @endsection

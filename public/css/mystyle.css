@@ -121,3 +121,10 @@ table.dataTable thead .sorting_desc_disabled:before {
     display: block;
 }
 
+html, body{ height:100%; margin:0; }
+
+/* Trick */
+body{
+    display:flex;
+    flex-direction:column;
+}

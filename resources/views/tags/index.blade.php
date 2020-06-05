@@ -29,7 +29,7 @@
                             event.preventDefault();
                             }"
                            href=" {{ route ('tags.index') }}" style="color:white">
-                            <i class="fa fa-trash" style="color: black" aria-hidden="true"></i>
+                            <i class="far fa-trash-alt" style="color: black" aria-hidden="true"></i>
                         </a>
                     </button>
                     @include('tags.edit')

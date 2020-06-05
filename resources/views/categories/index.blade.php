@@ -29,7 +29,7 @@
                             event.preventDefault();
                             }"
                            href=" {{ route ('categories.index') }}" style="color:white">
-                            <i class="fa fa-trash" style="color: black" aria-hidden="true" data-toggle="tooltip" title="excluir"></i>
+                            <i class="far fa-trash-alt" style="color: black" aria-hidden="true" data-toggle="tooltip" title="excluir"></i>
                         </a>
                     </button>
                     @include('categories.edit')

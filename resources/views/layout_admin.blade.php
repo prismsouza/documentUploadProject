@@ -3,7 +3,7 @@
 @include('includes')
 <body>
     @include('header')
-    <div class="container">
+    <div class="container"">
         <!-- @ include('navbar') -->
         @include('navbar_admin')
         @yield('searchbar')

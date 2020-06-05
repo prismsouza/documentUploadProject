@@ -4,6 +4,7 @@
 @section('content')
 
 <div id="content">
+    @if ($messages->isNotEmpty())
     <div class=" border p-2 text-center">
         <b>Mensagens Recebidas</b>
     </div>
@@ -60,11 +61,15 @@
             {{ $messages->links() }}
         @endif
     @endif
+
+@else
+        <p><h4>Não há resultados para esta pesquisa</h4></p>
+    @endif
+
 <script>
     function myFunction() {
         document.getElementById("a_click").innerHTML = alert("Status atualizado");
     }
 </script>
-
 </div>
 @endsection

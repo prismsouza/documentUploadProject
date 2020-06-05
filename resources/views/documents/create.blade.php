@@ -1,10 +1,7 @@
 @extends ('layout_admin')
-
 @section ('content')
 
-
     <h1 class="heading has-text-weight-bold is-size-4 py-6">Novo Documento</h1>
-
     <form method="POST" action="/documentos" enctype="multipart/form-data" class="p-5 border"> @csrf
 
 <!-- -------------- CATEGORY -------------- -->
@@ -73,115 +70,143 @@
                 <p class="help is-danger">{{ $errors->first('file_name_pdf') }}</p>
                 @enderror
 <!-- -------------- UPLOAD MORE FILES -------------- -->
-                <br>Anexar mais arquivos (máximo 5)
+                Anexar mais arquivos (máximo 5)
                 <button class="add_field_button btn border"><i class="fas fa-plus"></i></button>
 
-            </div>
-            <div class="col-md-6 mb-3">
-                <div class="input_fields_wrap"></div>
-            </div>
-        </div>
-
-        <script>
-            $(document).ready(function() {
-                var max_fields      = 6; //maximum input boxes allowed
-                var wrapper   		= $(".input_fields_wrap"); //Fields wrapper
-                var add_button      = $(".add_field_button"); //Add button ID
-
-                var x = 1; //initlal text box count
-                $(add_button).click(function(e){ //on add input button click
-                    e.preventDefault();
-                    if(x < max_fields){ //max input box allowed
-                        x++; //text box increment
-                        $(wrapper).append
-                        ('<div class="form-inline px-2 border p-2">' +
-                            '<a href="#" class="remove_field px-2">' +
-                            '<i class="far fa-trash-alt" style="color: black" aria-hidden="true"></i>' +
-                            '</a>' +
-                        '<input  type="file" style="color:dimgrey" name="files[]" id="file" value="file">' +
-                            '</div>');
-                    }
-                });
-
-                $(wrapper).on("click",".remove_field", function(e){ //user click on remove text
-                    e.preventDefault(); $(this).parent('div').remove(); x--;
-                })
-            });
-        </script>
-
 <!-- -------------- DOCUMENT_HAS_DOCUMENT -------------- -->
-        <div class="control py-2" id="document_has_document">
-        <label for="document_id">Documentos relacionados: </label><br>
-        <select
-            id="document_has_document" name="document_has_document[]"
-            class="selectpicker" multiple
-            value="document_id" data-live-search="true">
+                <div class="dropdown py-5" id="document_has_document">
+                    <label>Documentos Relacionados:</label>
+                    <button id="dLabel" role="button" href="#" class="btn btn-light border"
+                            data-toggle="dropdown" data-target="#" >
+                        Selecione documentos... <span class="caret"></span>
+                    </button>
 
-            @foreach($documents as $document)
-                @if ($document->category_id != 1)
-                    <option value='{{ $document->id }}'> {{ $document->id }} - {{ $document->name }} - {{ $document->description }}</option>
-                @endif
-            @endforeach
-        </select>
-        </div>
+
+                    <ul class="dropdown-menu" style="width: 90%">
+                        <input class="form-control" id="tags_input" type="text" placeholder="Search..">
+                        @foreach($documents as $document)
+                            @if ($document->category_id != 1)
+                                <div class="col-sm">
+                                    <li class="p-1">
+                                        <label class="box px-5 checkbox-inline">
+                                            <input
+                                                type="checkbox" value="{{ $document->id }}"
+                                                id="{{ $document->id }}" name="document_has_document[]">
+                                            {{ $document->name }}
+                                            <span class="checkmark"></span>
+                                        </label>
+                                    </li>
+                                </div>
+                            @endif
+                        @endforeach
+                    </ul>
+                </div>
 
 <!-- -------------- PUBLISHED AT BGBM X -------------- -->
-        <div class="control py-2" ID="published_at">
-            <label for="bgbm_document_id">Publicado no BGBM: </label>
-            <select
-                id="bgbm_document_id" name="bgbm_document_id"
-                class="selectpicker"
-                value="document_id" data-live-search="true">
-                <option value="0"></option>
-                <?php $documents_bgbm = $categories->where('name','Boletim Geral')->first()->documents; ?>
-                @foreach($documents_bgbm as $doc_bgbm)
-                    <option value={{ $doc_bgbm->id }}>{{ $doc_bgbm->name }} - {{ $doc_bgbm->description }} - {{ $doc_bgbm->date }}</option>
-                @endforeach
-            </select>
-        </div>
+                <div class="dropdown " id="published_at">
+                    <label>Publicado no BGBM:</label>
+                    <button id="dropdownPublishedAt" role="button" type="button"
+                            class="btn btn-light border form-control col-10"
+                            data-toggle="dropdown" data-target="#"
+                            aria-haspopup="true" aria-expanded="true">
+                        <span class="caret float-md-right"></span>
+                    </button>
+
+
+                    <ul class="dropdown-menu" style="width: 90%" aria-labelledby="dropdownPublishedAt">
+                        <input class="form-control" id="published_at_input" type="text" placeholder="Search..">
+                            <?php $documents_bgbm = $categories->where('name','Boletim Geral')->first()->documents; ?>
+                            <li class="p-1">
+                                <a>--------------------------------</a>
+                            </li>
+                            @foreach($documents_bgbm as $doc_bgbm)
+                                <li class="p-1">
+                                    <a>{{ $doc_bgbm->name }} - {{ date('d/m/Y', strtotime($document->date)) }}</a>
+                                </li>
+                            @endforeach
+                    </ul>
+                </div>
+            </div>
+
+            <!-- -------------- UPLOAD MORE FILES -------------- -->
+            <div class="col-md-6 mb-3" rowspan="2">
+                <div class="input_fields_wrap" rowspan="2"></div>
+            </div>
+        </div> <!-- end row -->
 
 <!-- -------------- DATE -------------- -->
-        <div class="control py-2" id="date">
-            <label for="date">Data de Publicacao do Documento: <b>*</b></label>
-            <i class="fas fa-calendar p-2"></i>
-            <input
-                name="date" id="date" class="@error('date') is-danger @enderror"
-                type="date" data-display-mode="inline" data-is-range="true" data-close-on-select="false"
-                value="{{ old('date') }}">
+        <div class="form-row">
+            <div class="col-md-12 mb-4">
+                <div class="control py-4" id="date">
+                    <label for="date">Data de Publicacao do Documento: <b>*</b></label>
+                    <i class="fas fa-calendar p-2"></i>
+                    <input
+                        name="date" id="date" class="@error('date') is-danger @enderror"
+                        type="date" data-display-mode="inline" data-is-range="true" data-close-on-select="false"
+                        value="{{ old('date') }}">
 
-            @error('date')<p class="help is-danger">{{ $errors->first('date') }}</p>@enderror
+                    @error('date')<p class="help is-danger">{{ $errors->first('date') }}</p>@enderror
+                </div>
+            </div>
         </div>
 
 <!-- -------------- IS_ACTIVE -------------- -->
-        <div class="control" id="is_active">
-            <div class="form-check form-check-inline" id="is_active">
-                <input class="form-check-input" type="radio" name="is_active" id="is_active" value="1" checked>
-                <label class="form-check-label" for="inlineRadio1">Esta vigente</label>
+        <div class="form-row">
+            <div class="col-md-12 mb-4">
+                <div class="control" id="is_active">
+                    <label for="is_active"class="">O documento: <b>*</b></label>
+                    <div class="form-check form-check-inline px-5" id="is_active">
+                        <input class="form-check-input" type="radio" name="is_active" id="is_active" value="1" checked>
+                        <label class="form-check-label" for="inlineRadio1">Está vigente</label>
+                    </div>
+                    <div class="form-check form-check-inline" id="is_active">
+                        <input class="form-check-input" type="radio" name="is_active" id="is_active" value="0">
+                        <label class="form-check-label" for="inlineRadio1">Não está vigente</label>
+                    </div>
+                @error('is_active')<p class="help is-danger">{{ $errors->first('is_active') }}</p>@enderror
+                </div>
             </div>
-            <div class="form-check form-check-inline" id="is_active">
-                <input class="form-check-input" type="radio" name="is_active" id="is_active" value="0">
-                <label class="form-check-label" for="inlineRadio1">Nao esta vigente</label><b class="px-2">*</b>
-            </div>
-        @error('is_active')<p class="help is-danger">{{ $errors->first('is_active') }}</p>@enderror
         </div>
 
 <!-- -------------- TAGS -------------- -->
-        <div class="control py-2" id="tags">
-        <label for="tags">Tags</label>
-            <a href="/tags">
-                <i class="fas fa-plus"></i>
-            </a><br>
-            <select
-                id="tags" name="tags[]"
-                class="selectpicker" multiple
-                title="Tags">
-                @foreach($tags as $tag)
-                    <option value="{{ $tag->id }}">{{ $tag->name }}</option>
-                @endforeach
-            </select>
-        </div><br>
 
-        <span class="small float-md-left">* campos obrigatorios</span><br>
+        <div class="form-row py-2">
+            <div class="col-md-12">
+                <div class="dropdown" id="Tags">
+                    <label>Tags:</label>
+                    <a href="/tags" class="btn">
+                        <i class="fas fa-cog"></i>
+                    </a>
+                    <button id="dLabel" role="button" href="#" class="btn btn-light border"
+                            data-toggle="dropdown" data-target="#" >
+                        Selecione tags... <span class="caret"></span>
+                    </button>
+
+
+                    <ul class="dropdown-menu" style="width: 90%">
+                        <input class="form-control" id="tags_input" type="text" placeholder="Search..">
+                        @forelse($tags as $tag)
+                            <div class="col-sm">
+                                <li class="p-1">
+                                    <label class="box px-5 checkbox-inline">
+                                        <input
+                                            type="checkbox" value="{{ $tag->id }}"
+                                            id="{{ $tag->id }}" name="tags[]">
+                                        {{ $tag->name }}
+                                        <span class="checkmark"></span>
+                                    </label>
+                                </li>
+                            </div>
+
+                        @empty
+                            <p><h5>Nao ha tags cadastradas</h5></p>
+                        @endforelse
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <br><br><span class="small float-md-left">* campos obrigatorios</span><br>
 
 <!-- -------------- BTN Criar Documento -------------- -->
         <div class="field is-grouped" id="btn_create_document">
@@ -194,4 +219,6 @@
 
 
     <br><br>
+
+    <script src="{{ asset('site/create_document.js') }}"></script>
 @endsection

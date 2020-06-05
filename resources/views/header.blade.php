@@ -36,8 +36,9 @@
             <p>Documentos Publicados do Corpo de Bombeiros Militar de Minas Gerais</p>
         </div>
         <div class="col-md-2 py-5">
-            <div class="nav-item dropdown btn-light border">
-                <a class="nav-link text-secondary dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <div class="nav-item dropdown btn-light border " style="width: 130%">
+                <a class="nav-link text-secondary dropdown-toggle" href="#"
+                   id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     Links relacionados
                 </a>
 
@@ -51,7 +52,7 @@
             </div>
         </div>
         <div class="col-md-1 py-5">
-            <a href="{{ route('home') }}" class="btn btn-light border">
+            <a href="{{ route('home') }}" class="btn btn-light border float-md-right">
                 <i class="fas fa-home"></i>
             </a>
         </div>

@@ -3,20 +3,35 @@
 <?php $user_id = 1; // admin ?>
 
 @section ('content')
-    <style>
-        p {
-            font-size: 110%;
-        }
-    </style>
-    <p><b>Categoria: </b>
-        <a href="categorias/{{$document->category->name}}" >
-            {{ $document->category->name }}
-        </a>
-    </p>
-    <b>Documento</b>
-    <div class="title">
-        <h2>{{ $document->name }}</h2>
+<style>p {font-size: 110%;}</style>
+<div class="border p-5">
+    <div class="row">
+        <div class="col">
+            <p><b>Categoria: </b>
+                <a href="categorias/{{$document->category->name}}" >
+                    {{ $document->category->name }}
+                </a>
+            </p>
+            <div class="title">
+                <h1>{{ $document->name }}</h1>
+            </div>
+            <h4>{{ $document->description }}</h4><br>
+        </div>
+
+        <div class="col-4">
+            <div class="float-right">
+                    <a class="btn border" data-toggle="tooltip" title="download {{ $pdf_file->alias }}"
+                       href="{{ route('documents.download', [$document->id , $pdf_file->alias]) }}">
+                        <i class="fas fa-download fa-4x" style="color:darkseagreen"></i>
+                    </a>
+                    <a class="btn border" data-toggle="tooltip" title="visualizar {{ $pdf_file->alias }}"
+                       href="{{ route('documents.viewfile', $document->id) }}" target="_blank">
+                        <i class="fas fa-eye fa-4x" style="color:cadetblue"></i>
+                    </a>
+             </div>
+        </div>
     </div>
+
     @if ($document->category_id != 100)
         <p style="color: grey">Tags:
         @forelse ($document->tags as $tag)
@@ -27,12 +42,13 @@
             Nenhuma tag cadastrada
         @endforelse
     @endif
-        </p>
-    <p><b>Descrição: </b>{{ $document->description }}</p>
+        </p><br>
 
-    <p><b>Data de publicação do documento:</b>
-        {{ date('d/m/Y', strtotime($document->date)) }}
-    </p>
+    <p><b>Publicado em </b>
+        <span class="border p-3">
+            {{ date('d/m/Y', strtotime($document->date)) }}
+        </span>
+    </p><br>
 
     @if ($document->category_id != 100)
 
@@ -40,62 +56,41 @@
         <p><b>Publicado no BGBM:</b>
             <a style="color:navy" href= "{{$document->bgbm_document_id}}" target="_blank">
                 {{ $document->where('id', $document->bgbm_document_id)->first()->name }}</p>
-        </a>
+        </a><br>
         @endif
 
-        <p><b>Validade:</b> Este documento <b><?php echo ($document->is_active ? "<span style=color:green>esta vigente" : "<span style=color:red>nao esta vigente"); ?></b></p>
+        <p><b>Validade:</b> Este documento <b><?php echo ($document->is_active ? "<span style=color:green>esta vigente" : "<span style=color:red>nao esta vigente"); ?></b></p><br>
 
         @if (count($related_documents)>0)
-        <div class="row">
-            <div class="col-3">
-                <p><b>Documentos relacionados:</b></p>
-            </div>
-            <div class="col">
-                <table class="table-bordered" style="width: 50%">
+
+                <p><b>Documentos Relacionados:</b>
+                <ul>
                     @foreach ($related_documents as $doc)
-                        <tr><td class="px-2 py-1">
+                        <li class="px-2 py-1">
                                 <a style="color:navy" href="{{ $doc->id }}" target="_blank">
                                     {{ $doc->name }} </a>
-                            </td></tr>
+                            </li>
                     @endforeach
-                </table>
-            </div>
-        </div>
-        <p></p>
+                </ul></p>
+
+
+        <p></p><br>
         @endif
 
-        <p><b class="pr-2">Baixar pdf: </b><i class="fa fa-file-pdf" aria-hidden="true"></i>
-            <a style="color:navy" href="{{ route('documents.download', [$document->id , $pdf_file->alias]) }}">
-                {{ $pdf_file->alias }}
-            </a>
-        </p>
-        <p><b>Visualizar em nova aba:</b>
-            <a style="color:navy" href="{{ route('documents.viewfile', $document->id) }}" target="_blank">
-                {{ $pdf_file->alias }}
-            </a>
-        </p>
-
         @if (!empty($files))
-        <div class="row">
-            <div class="col-1">
+
                 <p><b>Anexos:</b></p>
-            </div>
-            <div class="col">
-                <table class="table-bordered" style="width: 60%">
+                <ul>
                     @foreach ($files as $file)
-                        <tr><td class="px-2 py-1">
-                                <a style="color:navy" href="{{ route('documents.download', [$document->id, $file->name]) }}">
+                    <li class="px-2 py-1">
+                        <a style="color:navy" href="{{ route('documents.download', [$document->id, $file->name]) }}">
                                     {{ $file->name }}</a>
-                            </td></tr>
+                    </li>
                     @endforeach
-                </table>
-            </div>
-        </div>
+                </ul>
             @endif
     @endif
-<p></p>
-
-
+</div>
 
 
     @if ($user_id == 0)
@@ -104,7 +99,7 @@
         <br>
         <button type="button" class="btn btn-info">
             <a href="{{ route('documents.edit', $document->id) }}" style="color:white">
-                Editar documento <i class="fas fa-edit"></i>
+                Editar documento <i class="fas fa-edit" style="color:black"></i>
             </a>
         </button>
         <form method="POST" id="delete-form-{{ $document->id }}"
@@ -121,7 +116,7 @@
                 event.preventDefault();
                 }"
                href=" {{ route ('documents.index') }}" style="color:white">
-               Excluir documento <i class="fa fa-trash" aria-hidden="true"></i>
+               Excluir documento <i class="far fa-trash-alt" style="color:black" aria-hidden="true"></i>
             </a>
         </button>
 

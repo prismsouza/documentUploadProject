@@ -133,7 +133,7 @@
         </tr>
 
     @empty
-        <p><h5>Nao ha resultados para esta pesquisa</h5></p>
+        <p><h4>Não há resultados para esta pesquisa</h4></p>
     @endforelse
 
         </tbody>

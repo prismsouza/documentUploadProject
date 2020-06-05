@@ -1,4 +1,9 @@
-<div id="copyright" class="bottom">
+<style>
+    footer {
+        margin-top:auto;
+    }
+</style>
+<footer id="copyright">
     <div class="container">
         <div class="row">
             <!-- HPM -->
@@ -31,5 +36,5 @@
 
         </div><!-- end relaxed -->
     </div>
-</div>
+</footer>
 
