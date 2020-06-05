@@ -69,7 +69,7 @@
                     <label class="form-check-label" for="inlineRadio2">Não verificada</label>
                 </div><br>
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="is_checked" id="is_checked" value="2">
+                    <input class="form-check-input" type="radio" name="is_checked" id="is_checked" checked value="2">
                     <label class="form-check-label" for="inlineRadio2">Todas</label>
                 </div>
             </div>
@@ -127,12 +127,8 @@
         @endif
     @endif
 
-            </div>
     @if (request()->input('is_checked'))
         <br>Mensagens
-
-        </div>
-
         <b class="p-1">
             @if(request()->input('is_checked') == "1")
                 verificadas
@@ -142,8 +138,9 @@
                 verificadas e não verificadas
             @endif
         </b>
-    @endif    <br>
-@endifdo?
+    @endif
 
+@endif</div>
+    <br>
     <script src="{{ asset('site/searchbar.js') }}"></script>
 @endsection
