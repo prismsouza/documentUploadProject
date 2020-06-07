@@ -31,7 +31,7 @@
              </div>
         </div>
     </div>
-
+    @if ($document->boletim_document_id != 0)
         <p style="color: grey">Tags:
         @forelse ($document->tags as $tag)
             <a style="color:darkgrey" class="px-2" href="{{ route ('documents.index',['tag' => $tag->name]) }}">
@@ -41,7 +41,7 @@
             Nenhuma tag cadastrada
         @endforelse
         </p><br>
-
+@endif
     <p><b>Publicado em </b>
         <span class="border p-3">
             {{ date('d/m/Y', strtotime($document->date)) }}
@@ -95,9 +95,18 @@
     @else
         <br>
         <button type="button" class="btn btn-info">
-            <a href="{{ route('documents.edit', $document->id) }}" style="color:white">
-                Editar documento <i class="fas fa-edit" style="color:black"></i>
-            </a>
+            @if($document->category_id == 1 || $document->category_id == 2)
+                <a href="{{ route('documents_boletim.edit', $document->id) }}"
+                   class="btn btn-info">
+                    <i class="fas fa-edit" style="color: black"></i>
+                </a>
+
+            @else
+                <a href="{{ route('documents.edit', $document->id) }}"
+                   class="btn btn-info">
+                    <i class="fas fa-edit" style="color: black"></i>
+                </a>
+            @endif
         </button>
         <form method="POST" id="delete-form-{{ $document->id }}"
               action="{{ route('documents.destroy', $document) }}"

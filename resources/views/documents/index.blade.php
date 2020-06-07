@@ -105,10 +105,19 @@
             @if ($user == "admin")
                 <div id="admin_view">
                 <td class="text-center px-0">
-                    <a href="{{ route('documents.edit', $document->id) }}"
-                       class="btn btn-info">
-                        <i class="fas fa-edit" style="color: black"></i>
-                    </a>
+                    @if($document->category_id == 1 || $document->category_id == 2)
+                        <a href="{{ route('documents_boletim.edit', $document->id) }}"
+                           class="btn btn-info">
+                            <i class="fas fa-edit" style="color: black"></i>
+                        </a>
+
+                        @else
+                        <a href="{{ route('documents.edit', $document->id) }}"
+                           class="btn btn-info">
+                            <i class="fas fa-edit" style="color: black"></i>
+                        </a>
+                        @endif
+
                 </td>
                 <td class="text-center px-0">
                     <form method="POST" id="delete-form-{{ $document->id }}"

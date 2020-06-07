@@ -12,7 +12,7 @@
     </a>
 
     <h1 class="heading has-text-weight-bold is-size-4 py-6">Editar Documento</h1>
-    <form method="POST" action="/documentos/{{ $document->id }}" class="p-5 border">
+    <form method="POST" action="/documentos/boletim/{{ $document->id }}" class="p-5 border">
                 @csrf
                 @method('PUT')
 

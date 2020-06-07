@@ -39,6 +39,8 @@ Route::get('/documentos/{document}/visualizar', 'DocumentsController@viewfile')-
 Route::get('/documentos/{document}', 'DocumentsController@show')->name('documents.show');
 Route::get('/documentos/{document}/editar', 'DocumentsController@edit')->name('documents.edit');
 Route::put('/documentos/{document}', 'DocumentsController@update')->name('documents.update');
+Route::get('/documentos/boletim/{document}/editar', 'DocumentsController@edit_boletim')->name('documents_boletim.edit');
+Route::put('/documentos/boletim/{document}', 'DocumentsController@update_boletim')->name('documents_boletim.update');
 Route::delete('/documentos/delete/{document}', 'DocumentsController@destroy')->name('documents.destroy');
 Route::get('home', 'DocumentsController@restore')->name('documents.restore');
 

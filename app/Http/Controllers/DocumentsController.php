@@ -156,6 +156,7 @@ class DocumentsController extends Controller
             $this->validateDocument('');
         }
 
+
         if (request()->has('boletim_document_id')) {
             $document->boletim_document_id = request('boletim_document_id');
         }
@@ -172,6 +173,17 @@ class DocumentsController extends Controller
         return redirect($document->path());
     }
 
+    public function edit_boletim(Document $document)
+    {
+        return view('documents.edit_boletim', compact('document'),['tags' => Tag::all()]);
+    }
+
+    public function update_boletim(Request $request, Document $document)
+    {
+        $document->update($request->all());
+        return redirect($document->path());
+    }
+
     public function download(Document $document, $hash_id)
     {
         if ($hash_id != null) {
@@ -180,18 +192,6 @@ class DocumentsController extends Controller
         }
         return 0;
     }
-
-    /*public function download(Document $document, $type)
-    {
-        $file = $document->files->where('extension', $type)->first();
-        if ($file != null) {
-            $file_alias = $file->alias;
-            $filemimetype = $file->filemimetype;
-            $file_path = public_path('documents') . '/' . $file_alias;
-            return response()->download($file_path, $document->name, ['Content-Type:' . $filemimetype]);
-        }
-        return 0;
-    }*/
 
     public function destroy(Document $document)
     {
