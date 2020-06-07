@@ -32,7 +32,6 @@
         </div>
     </div>
 
-    @if ($document->category_id != 100)
         <p style="color: grey">Tags:
         @forelse ($document->tags as $tag)
             <a style="color:darkgrey" class="px-2" href="{{ route ('documents.index',['tag' => $tag->name]) }}">
@@ -41,7 +40,6 @@
         @empty
             Nenhuma tag cadastrada
         @endforelse
-    @endif
         </p><br>
 
     <p><b>Publicado em </b>
@@ -50,12 +48,12 @@
         </span>
     </p><br>
 
-    @if ($document->category_id != 100)
+    @if ($document->category_id != 1 && $document->category_id != 2)
 
-        @if ($document->bgbm_document_id !=0)
-        <p><b>Publicado no BGBM:</b>
-            <a style="color:navy" href= "{{$document->bgbm_document_id}}" target="_blank">
-                {{ $document->where('id', $document->bgbm_document_id)->first()->name }}</p>
+        @if ($document->boletim_document_id != 0)
+        <p><b>Publicado no BGBM/BEBM:</b>
+            <a style="color:navy" href= "{{$document->boletim_document_id}}" target="_blank">
+                {{ $document->where('id', $document->boletim_document_id)->first()->name }}</p>
         </a><br>
         @endif
 
@@ -76,20 +74,19 @@
 
         <p></p><br>
         @endif
-
+    @endif
         @if (!empty($files))
 
-                <p><b>Anexos:</b></p>
-                <ul>
-                    @foreach ($files as $file)
+            <p><b>Anexos:</b></p>
+            <ul>
+                @foreach ($files as $file)
                     <li class="px-2 py-1">
                         <a style="color:navy" href="{{ route('documents.download', [$document->id, $file->hash_id]) }}">
-                                    {{ $file->name }}</a>
+                            {{ $file->name }}</a>
                     </li>
-                    @endforeach
-                </ul>
-            @endif
-    @endif
+                @endforeach
+            </ul>
+        @endif
 </div>
 
 

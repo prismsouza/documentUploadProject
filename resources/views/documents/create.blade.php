@@ -8,19 +8,19 @@
         <div class="form-row" id="category">
             <div class="col-md-12 mb-3">
             <label for="category_id">Categoria <b>*</b></label>
-            <select
-                id="category_id" name="category_id"
-                class="selectpicker form-control col-4"
-                value="category_id" data-live-search="true">
+                <select
+                    id="category_id" name="category_id"
+                    class="selectpicker form-control col-4"
+                    value="category_id" data-live-search="true">
 
-                @foreach($categories as $category)
-                    @if ($category->id != '1') <!-- Boletim Geral -->
-                        <option id="category_id" name="category_id"
-                                value={{ $category->id }}>{{ $category->name }}
-                        </option>
-                    @endif
-                @endforeach
-            </select>
+                    @foreach($categories as $category)
+                        @if ($category->id != '1' && $category->id != '2') <!-- BGBM e BEBM -->
+                            <option id="category_id" name="category_id"
+                                    value={{ $category->id }}>{{ $category->name }}
+                            </option>
+                        @endif
+                    @endforeach
+                </select>
             </div>
         </div>
 
@@ -85,7 +85,7 @@
                     <ul class="dropdown-menu" style="width: 90%">
                         <input class="form-control" id="tags_input" type="text" placeholder="Search..">
                         @foreach($documents as $document)
-                            @if ($document->category_id != 1)
+                            @if ($document->category_id != 1 && $document->category_id != 2)
                                 <div class="col-sm">
                                     <li class="p-1">
                                         <label class="box px-5 checkbox-inline">
@@ -104,7 +104,7 @@
 
 <!-- -------------- PUBLISHED AT BGBM X -------------- -->
                 <div class="dropdown " id="published_at">
-                    <label>Publicado no BGBM:</label>
+                    <label>Publicado no BGBM/BEBM:</label>
                     <button id="dropdownPublishedAt" role="button" type="button"
                             class="btn btn-light border form-control col-10"
                             data-toggle="dropdown" data-target="#"
@@ -114,17 +114,30 @@
 
 
                     <ul class="dropdown-menu" style="width: 90%" aria-labelledby="dropdownPublishedAt">
-                        <input class="form-control" id="published_at_input" type="text" placeholder="Search..">
-                            <?php $documents_bgbm = $categories->where('name','Boletim Geral')->first()->documents; ?>
-                            <li class="p-1">
-                                <a>--------------------------------</a>
+                        <input class="form-control" id="boletim_document_input" type="text" placeholder="Search..">
+                            <?php $documents_bgbm = $categories->where('name','BGBM')->first()->documents; ?>
+                            <?php $documents_bebm = $categories->where('name','BEBM')->first()->documents; ?>
+                            <?php $documents_boletins = $documents_bgbm->merge($documents_bebm);//$documents_boletim = $categories->where('name','BGBM')->where('name','BEBM')->first()->documents;?>
+
+                            <li class="px-5" id="0">
+                                <input
+                                    type="radio" name="boletim_document_id"
+                                    id="0" value="0">
+                                vazio
                             </li>
-                            @foreach($documents_bgbm as $doc_bgbm)
-                                <li class="p-1">
-                                    <a>{{ $doc_bgbm->name }} - {{ date('d/m/Y', strtotime($document->date)) }}</a>
+
+                            @foreach($documents_boletins as $doc_boletim)
+                                <li class="px-5">
+                                        <input
+                                        type="radio" name="boletim_document_id"
+                                        id="{{ $doc_boletim->id }}"
+                                        value="{{ $doc_boletim->id }}">
+                                    {{ $doc_boletim->name }} - {{ date('d/m/Y', strtotime($document->date)) }}
                                 </li>
                             @endforeach
+
                     </ul>
+
                 </div>
             </div>
 
@@ -139,7 +152,7 @@
             <div class="col-md-12 mb-4">
                 <div class="control py-4" id="date">
                     <label for="date">Data de Publicacao do Documento: <b>*</b></label>
-                    <i class="fas fa-calendar p-2"></i>
+                    <i class="fas fa-calendar-alt p-2"></i>
                     <input
                         name="date" id="date" class="@error('date') is-danger @enderror"
                         type="date" data-display-mode="inline" data-is-range="true" data-close-on-select="false"

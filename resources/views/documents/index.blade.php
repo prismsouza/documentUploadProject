@@ -4,10 +4,10 @@
 
 @section('content')
     @if($category_option)
-        @if($category_option == "Boletim Geral" && $user == "admin")
-            <a href="{{ route('documents.create_bgbm') }}">
+        @if($category_option == "BGBM" && $user == "admin")
+            <a href="{{ route('documents.create_boletim') }}">
                 <button class="btn btn-dark btn-outline-light" type="submit">
-                    Novo Boletim Geral
+                    Novo BGBM / BEBM
                 </button>
             </a><p></p>
 

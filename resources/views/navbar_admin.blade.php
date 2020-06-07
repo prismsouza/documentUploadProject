@@ -12,8 +12,8 @@
                 </a>
             </td>
             <td class="nav-item" style="width: 20%">
-                <a class="nav-link {{ Request::is('documentos/categorias/Boletim Geral') ? 'bg-light' : ''}}"
-                   href="{{ route('documents_category.index', 'Boletim Geral') }}">Boletim Geral
+                <a class="nav-link {{ Request::is('documentos/categorias/boletim') ? 'bg-light' : ''}}"
+                   href="{{ route('documents_category.index', 'BGBM') }}">BGBM e BEBM
                 </a>
             </td>
             <td class="nav-item" style="width: 20%">

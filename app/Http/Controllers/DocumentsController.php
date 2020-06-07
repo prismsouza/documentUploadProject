@@ -61,12 +61,12 @@ class DocumentsController extends Controller
         $document = new Document(request(['category_id', 'name', 'description', 'date', 'is_active']));
         $document->user_id = 1;
 
-        if (request()->has('bgbm_document_id')) {
-            $document->bgbm_document_id = request('bgbm_document_id');
-        } else {
-            $document->bgbm_document_id = 0;
-        }
 
+        if (request()->has('boletim_document_id')) {
+            $document->boletim_document_id = request('boletim_document_id');
+        } else {
+            $document->boletim_document_id = 0;
+        }
         $document->save();
 
         if (request()->has('files')) {
@@ -88,23 +88,28 @@ class DocumentsController extends Controller
         return redirect(route('documents.index'));
     }
 
-    public function create_bgbm()
+    public function create_boletim()
     {
-        return view('documents.create_bgbm');
+        return view('documents.create_boletim');
     }
 
-    public function store_bgbm(Request $request)
+    public function store_boletim(Request $request)
     {
-        $document = new Document(request(['name', 'description', 'date']));
-        $document->category_id = 1;
+        $document = new Document(request(['category_id', 'name', 'description', 'date']));
         $document->user_id = 1;
-        $document->bgbm_document_id = 0;
+        $document->boletim_document_id = 0;
         $document->save();
+
+        if (request()->has('files')) {
+            $files = new FilesController();
+            $files->uploadMultipleFiles($request, $document);
+        }
 
         $file_pdf = new FilesController();
         $file_pdf->uploadFile($request, $document, 'pdf');
 
-        return redirect(route('documents.bgbm'));
+
+        return redirect(route('documents.boletim'));
     }
 
     public function viewfile(Document $document)
@@ -118,7 +123,14 @@ class DocumentsController extends Controller
 
     public function showByCategory(Category $category)
     {
-        $documents = Document::where('category_id', $category->id)->paginate();
+
+        if ($category->id == 1) {
+            $documents = Document::where('category_id', 1)
+                ->orWhere('category_id', 2)->paginate();
+        }
+        else {
+            $documents = Document::where('category_id', $category->id)->paginate();
+        }
         $category_option = $category->name;
         return view('documents.index', ['documents' => $documents, 'category_option' => $category_option]);
     }
@@ -142,6 +154,10 @@ class DocumentsController extends Controller
             $this->validateDocument("dont_update_path");
         } else {
             $this->validateDocument('');
+        }
+
+        if (request()->has('boletim_document_id')) {
+            $document->boletim_document_id = request('boletim_document_id');
         }
 
         if (request()->has('tags')) {

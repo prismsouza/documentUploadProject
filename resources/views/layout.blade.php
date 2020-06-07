@@ -14,7 +14,7 @@
         @include('navbar_admin')
     @endif
 
-    @include('searchbar')
+    @yield('searchbar')
 
     <div id="wrapper">
         <div id="page" class="row py-3">

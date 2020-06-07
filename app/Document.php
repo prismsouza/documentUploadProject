@@ -14,6 +14,9 @@ class Document extends Model
     use SoftDeletes, CascadeSoftDeletes;
     protected $dates = ['deleted_at'];
     protected $cascadeDeletes = ['files', 'messages'];
+    /**
+     * @var int|mixed
+     */
 
     public function getRouteKeyName()
     {
