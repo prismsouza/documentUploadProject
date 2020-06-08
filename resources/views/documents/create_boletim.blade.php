@@ -34,7 +34,7 @@
                 id="name"
                 value="{{ old('name') }}">
             @error('name')
-            <p class="help is-danger">{{ $errors->first('name') }}</p>
+            <p style="color: darkred">{{ $errors->first('name') }}</p>
             @enderror
         </div>
 
@@ -48,12 +48,12 @@
                     value="{{ old('description') }}">
 
                 @error('description')
-                <p class="help is-danger">{{ $errors->first('description') }}</p>
+                <p style="color: darkred">{{ $errors->first('description') }}</p>
                 @enderror
             </div>
         </div>
 
-        <!-- -------------- UPLOAD PDF FILE -------------- -->
+<!-- -------------- UPLOAD PDF FILE -------------- -->
         <div class="form-row " ID="upload_file">
             <div class="col-md-12 mb-3">
                 <label for="file_name_pdf">Anexar arquivo em formato pdf:<b>*</b> </label>
@@ -66,7 +66,7 @@
                     value="{{ old('file_name_pdf') }}">
 
                 @error('file_name_pdf')
-                <p class="help is-danger">{{ $errors->first('file_name_pdf') }}</p>
+                <p style="color: darkred">{{ $errors->first('file_name_pdf') }}</p>
                 @enderror
 
 <!-- -------------- UPLOAD MORE FILES -------------- -->
@@ -74,6 +74,8 @@
         <button class="add_field_button btn border"><i class="fas fa-plus"></i></button>
         <div class="input_fields_wrap mb-4" style="width: 50%"></div>
 
+
+<!-- -------------- DATE -------------- -->
         <div class="control py-2 mb-4">
             <label for="date">Data de Publicação: <b>*</b></label>
             <i class="fas fa-calendar-alt p-2"></i>
@@ -82,7 +84,7 @@
                 type="date" data-display-mode="inline" data-is-range="true" data-close-on-select="false">
 
             @error('date')
-            <p class="help is-danger">{{ $errors->first('date') }}</p>
+            <p style="color: darkred">{{ $errors->first('date') }}</p>
             @enderror
         </div><br>
 

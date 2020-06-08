@@ -32,20 +32,20 @@
             </figure>
         </div>
         <div class="col-md-7">
-            <h2 style="text-transform: uppercase; font-size: 1.2em; margin-top: 1em">Módulo de Documentos</h2>
+            <h2 style="text-transform: uppercase; font-size: 1.2em; margin-top: 1em"><b>Pesquisa Normativa</b></h2>
             <p>Documentos Publicados do Corpo de Bombeiros Militar de Minas Gerais</p>
         </div>
         <div class="col-md-2 py-5">
             <div class="nav-item dropdown btn-light border " style="width: 130%">
                 <a class="nav-link text-secondary" href="#"
                    id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Links relacionados
+                    Links relacionados<span class="float-md-right"> <span class="caret"></span></span>
                 </a>
 
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="http://pesquisalegislativa.mg.gov.br/Legislacao.aspx" target="_blank">
+                    <a class="dropdown-item py-2" href="http://pesquisalegislativa.mg.gov.br/Legislacao.aspx" target="_blank">
                         Normas Poder Executivo MG</a>
-                    <a class="dropdown-item" href="https://www.almg.gov.br/home/index.html" target="_blank">
+                    <a class="dropdown-item py-2" href="https://www.almg.gov.br/home/index.html" target="_blank">
                         Leis e Decretos Estaduais
                     </a>
                 </div>

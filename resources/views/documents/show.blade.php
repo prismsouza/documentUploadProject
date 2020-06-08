@@ -96,15 +96,13 @@
         <br>
         <button type="button" class="btn btn-info">
             @if($document->category_id == 1 || $document->category_id == 2)
-                <a href="{{ route('documents_boletim.edit', $document->id) }}"
-                   class="btn btn-info">
-                    <i class="fas fa-edit" style="color: black"></i>
+                <a href="{{ route('documents_boletim.edit', $document->id) }}" style="color:white">
+                    Editar Documento  <i class="fas fa-edit" style="color: black"></i>
                 </a>
 
             @else
-                <a href="{{ route('documents.edit', $document->id) }}"
-                   class="btn btn-info">
-                    <i class="fas fa-edit" style="color: black"></i>
+                <a href="{{ route('documents.edit', $document->id) }}" style="color:white">
+                    Editar documento  <i class="fas fa-edit" style="color: black"></i>
                 </a>
             @endif
         </button>

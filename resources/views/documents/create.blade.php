@@ -36,7 +36,7 @@
                     value="{{ old('name') }}">
 
             @error('name')
-            <p class="help is-danger">{{ $errors->first('name') }}</p>
+            <p style="color: darkred">{{ $errors->first('name') }}</p>
             @enderror
             </div>
 
@@ -50,7 +50,7 @@
                     value="{{ old('description') }}">
 
                     @error('description')
-                        <p class="help is-danger">{{ $errors->first('description') }}</p>
+                        <p style="color: darkred">{{ $errors->first('description') }}</p>
                     @enderror
             </div>
         </div>
@@ -60,14 +60,31 @@
                 <label for="file_name_pdf">Anexar arquivo em formato pdf:<b>*</b> </label>
                 <i class="fa fa-upload p-1"></i>
                 <i class="fa fa-file-pdf" aria-hidden="true"></i>
+
                 <input
                     class="input @error('file_name_pdf') is-danger @enderror"
                     type="file" accept=".pdf, application/pdf"
                     name="file_name_pdf" id="file_name_pdf"
-                    value="{{ old('file_name_pdf') }}">
+                    value="{{ old('file_name_pdf') }}"
+                    style="visibility: hidden">
+
+                <label for="file_name_pdf" class="btn border">Anexar...</label>
+                <div id="file_pdf_upload" style="color: darkolivegreen"></div>
+
+                <script>
+                    var input = document.getElementById('file_name_pdf' );
+                    var infoArea = document.getElementById( 'file_pdf_upload' );
+                    input.addEventListener( 'change', showFileName);
+                    function showFileName( event ) {
+                        var input = event.srcElement;
+                        var fileName = input.files[0].name;
+                        infoArea.textContent = fileName;
+                        console.log(fileName);
+                    }
+                </script>
 
                 @error('file_name_pdf')
-                <p class="help is-danger">{{ $errors->first('file_name_pdf') }}</p>
+                <p style="color: darkred">{{ $errors->first('file_name_pdf') }}</p>
                 @enderror
 <!-- -------------- UPLOAD MORE FILES -------------- -->
                 Anexar mais arquivos (máximo 5)
@@ -141,7 +158,7 @@
                 </div>
             </div>
 
-            <!-- -------------- UPLOAD MORE FILES -------------- -->
+<!-- -------------- UPLOAD MORE FILES -------------- -->
             <div class="col-md-6 mb-3" rowspan="2">
                 <div class="input_fields_wrap" rowspan="2"></div>
             </div>
@@ -158,7 +175,7 @@
                         type="date" data-display-mode="inline" data-is-range="true" data-close-on-select="false"
                         value="{{ old('date') }}">
 
-                    @error('date')<p class="help is-danger">{{ $errors->first('date') }}</p>@enderror
+                    @error('date')<p style="color:darkred">{{ $errors->first('date') }}</p>@enderror
                 </div>
             </div>
         </div>
@@ -176,7 +193,7 @@
                         <input class="form-check-input" type="radio" name="is_active" id="is_active" value="0">
                         <label class="form-check-label" for="inlineRadio1">Não está vigente</label>
                     </div>
-                @error('is_active')<p class="help is-danger">{{ $errors->first('is_active') }}</p>@enderror
+                @error('is_active')<p style="color: darkred">{{ $errors->first('is_active') }}</p>@enderror
                 </div>
             </div>
         </div>

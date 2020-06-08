@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Document;
+use App\Http\Requests\BoletimDocumentCreateRequest;
+use App\Http\Requests\DocumentCreateRequest;
 use App\Tag;
 use App\File;
 use App\Category;
@@ -55,9 +57,9 @@ class DocumentsController extends Controller
         return view('documents.create', ['tags' => Tag::all(), 'categories' => Category::all(), 'documents' => Document::all()]);
     }
 
-    public function store(Request $request)
+    public function store(DocumentCreateRequest $request)
     {
-        $this->validateDocument('');
+        $request->validated();
         $document = new Document(request(['category_id', 'name', 'description', 'date', 'is_active']));
         $document->user_id = 1;
 
@@ -93,8 +95,9 @@ class DocumentsController extends Controller
         return view('documents.create_boletim');
     }
 
-    public function store_boletim(Request $request)
+    public function store_boletim(BoletimDocumentCreateRequest $request)
     {
+        $request->validated();
         $document = new Document(request(['category_id', 'name', 'description', 'date']));
         $document->user_id = 1;
         $document->boletim_document_id = 0;

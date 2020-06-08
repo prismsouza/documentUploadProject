@@ -31,6 +31,7 @@ $(document).ready(function() {
     var max_fields      = 6; //maximum input boxes allowed
     var wrapper   		= $(".input_fields_wrap"); //Fields wrapper
     var add_button      = $(".add_field_button"); //Add button ID
+    var input
 
     var x = 1; //initlal text box count
     $(add_button).click(function(e){ //on add input button click
@@ -42,14 +43,26 @@ $(document).ready(function() {
                 '<a href="#" class="remove_field px-2">' +
                 '<i class="far fa-trash-alt" style="color: black" aria-hidden="true"></i>' +
                 '</a>' +
-                '<input  type="file" style="color:dimgrey" name="files[]" id="file" value="file">' +
+                '<input class="input" type="file" name="files[]" id="file">' +
                 '</div>');
+            var input = document.getElementById('file' );
+            var infoArea = document.getElementById( 'files' );
+            }
+
+        input.addEventListener( 'change', showFileName2 );
+        function showFileName2( event ) {
+            var input = event.srcElement;
+            var fileName = input.files[0].name;
+            infoArea.textContent = fileName;
+            console.log(fileName);
         }
     });
 
     $(wrapper).on("click",".remove_field", function(e){ //user click on remove text
         e.preventDefault(); $(this).parent('div').remove(); x--;
     })
+
+
 });
 
 $(".dropdown-menu li a").click(function(){
