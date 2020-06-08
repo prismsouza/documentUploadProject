@@ -25,7 +25,7 @@
                         <i class="fas fa-download fa-4x" style="color:darkseagreen"></i>
                     </a>
                     <a class="btn border" data-toggle="tooltip" title="visualizar {{ $pdf_file->alias }}"
-                       href="{{ route('documents.viewfile', $document->id) }}" target="_blank">
+                       href="{{ route('documents.viewfile', [$document->id, $pdf_file->id]) }}" target="_blank">
                         <i class="fas fa-eye fa-4x" style="color:cadetblue"></i>
                     </a>
              </div>
@@ -83,6 +83,14 @@
                     <li class="px-2 py-1">
                         <a style="color:navy" href="{{ route('documents.download', [$document->id, $file->hash_id]) }}">
                             {{ $file->name }}</a>
+                        <a  data-toggle="tooltip" title="download {{ $file->name }}"
+                           href="{{ route('documents.download', [$document->id , $file->hash_id]) }}">
+                            <i class="fas fa-download" style="color:darkseagreen"></i>
+                        </a>
+                        <a  data-toggle="tooltip" title="visualizar {{ $file->name }}"
+                           href="{{ route('documents.viewfile', [$document->id , $file->id]) }}" target="_blank">
+                            <i class="fas fa-eye" style="color:cadetblue"></i>
+                        </a>
                     </li>
                 @endforeach
             </ul>

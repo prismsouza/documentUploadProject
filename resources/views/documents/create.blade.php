@@ -186,7 +186,7 @@
                 <div class="control" id="is_active">
                     <label for="is_active"class="">O documento: <b>*</b></label>
                     <div class="form-check form-check-inline px-5" id="is_active">
-                        <input class="form-check-input" type="radio" name="is_active" id="is_active" value="1" checked>
+                        <input class="form-check-input" type="radio" name="is_active" id="is_active" value="1">
                         <label class="form-check-label" for="inlineRadio1">Está vigente</label>
                     </div>
                     <div class="form-check form-check-inline" id="is_active">

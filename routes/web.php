@@ -35,7 +35,7 @@ Route::get('/documentos/novo', 'DocumentsController@create')->name('documents.cr
 Route::post('/documentos/categorias/BGBM', 'DocumentsController@store_boletim')->name('documents.boletim');
 Route::get('/documentos/novo/BGBM', 'DocumentsController@create_boletim')->name('documents.create_boletim');
 Route::get('/documentos/{document}/download/{type}', 'DocumentsController@download')->name('documents.download');
-Route::get('/documentos/{document}/visualizar', 'DocumentsController@viewfile')->name('documents.viewfile');
+Route::get('/documentos/{document}/visualizar/{file_id}', 'DocumentsController@viewfile')->name('documents.viewfile');
 Route::get('/documentos/{document}', 'DocumentsController@show')->name('documents.show');
 Route::get('/documentos/{document}/editar', 'DocumentsController@edit')->name('documents.edit');
 Route::put('/documentos/{document}', 'DocumentsController@update')->name('documents.update');

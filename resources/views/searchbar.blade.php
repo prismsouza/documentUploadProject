@@ -65,7 +65,7 @@ $categories_array = request('categories') ? request('categories') : [];
         </div>
 
         <div class="col-sm" id="Tags">
-            Tags: <br>
+            Pesquisar por assunto: <br>
             <button id="tags_btn" role="button" href="#" class="btn btn-light border px-5"
                     data-toggle="dropdown" data-target="#" >
                 Selecione... <span class="caret"></span>
@@ -98,12 +98,12 @@ $categories_array = request('categories') ? request('categories') : [];
     <div class="field is-grouped">
         <div class="control py-2">
             <button class="btn btn-dark border btn-outline-light float-md-right" type="submit" >
-                Aplicar filtros <i class="fas fa-search px-2"></i>
+                Pesquisar <i class="fas fa-search px-2"></i>
             </button>
 
             <button class="btn btn-light border float-md-right" type="submit"  action="{{ route('documents.index') }}">
                 <a href="{{ route('documents.index') }}">
-                    Limpar filtros <i class="fas fa-eraser px-2"></i>
+                    Limpar <i class="fas fa-eraser px-2"></i>
                 </a>
             </button>
             <button class="btn btn-light border float-md-right" type="submit"  action="{{ route('home') }}">

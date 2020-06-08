@@ -115,9 +115,10 @@ class DocumentsController extends Controller
         return redirect(route('documents.boletim'));
     }
 
-    public function viewfile(Document $document)
+    public function viewfile(Document $document, $file_id)
     {
-        $file_path = public_path('documents') . '/' . $document->files->whereNotNull('alias')->first()->hash_id;
+        //$file_path = public_path('documents') . '/' . $document->files->whereNotNull('alias')->first()->hash_id;
+        $file_path = public_path('documents') . '/' . $document->files->where('id', $file_id)->first()->hash_id;
         return  Response::make(file_get_contents($file_path), 200, [
             'Content-Type' => 'application/pdf',
             'Content-Disposition' => 'inline'

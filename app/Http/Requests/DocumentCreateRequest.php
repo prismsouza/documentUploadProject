@@ -23,6 +23,7 @@ class DocumentCreateRequest extends FormRequest
             'description.required' => "O campo 'descrição' é obrigatório",
             'date.required' => "O campo 'data de publicação' é obrigatório",
             'file_name_pdf.required' => "O campo 'Anexar PDF' é obrigatório",
+            'is_active.required' => "O campo 'vigência' é obrigatório",
         ];
     }
     /**
