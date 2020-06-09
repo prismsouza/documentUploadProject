@@ -32,6 +32,11 @@ class Category extends Model
         return route('documents.index', $this);
     }
 
+    public function hassubcategory()
+    {
+        return $this->belongsToMany('App\Category', 'category_has_subcategory', 'category_id', 'subcategory_id');
+    }
+
     public static function boot ()
     {
         parent::boot();

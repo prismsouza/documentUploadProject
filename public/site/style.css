@@ -6064,6 +6064,23 @@ a.badge-dark.focus {
   border-color: #818182;
 }
 
+.list-group-item-sky {
+    color: lightskyblue;
+    background-color: #fdfdfe;
+}
+
+.list-group-item-sky.list-group-item-action:hover,
+.list-group-item-sky.list-group-item-action:focus {
+    color: lightskyblue;
+    background-color: #ececf6;
+}
+
+.list-group-item-sky.list-group-item-action.active {
+    color: #fff;
+    background-color: lightskyblue;
+    border-color: cornflowerblue;
+}
+
 .list-group-item-dark {
   color: #1b1e21;
   background-color: #c6c8ca;
@@ -10910,3 +10927,14 @@ a {
 
 }
 
+/* Add a background color to the button if it is clicked on (add the .active class with JS), and when you move the mouse over it (hover) */
+.active, .collapsible:hover {
+    background-color: #ccc;
+}
+
+/* Style the collapsible content. Note: hidden by default */
+.content {
+    padding: 0 18px;
+    display: none;
+    overflow: hidden;
+}

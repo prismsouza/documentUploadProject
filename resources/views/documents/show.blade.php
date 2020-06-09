@@ -5,6 +5,7 @@
 @section ('content')
 <style>p {font-size: 110%;}</style>
 <div class="border p-5">
+    <div class="border-bottom border-top py-4">
     <div class="row">
         <div class="col">
             <p><b>Categoria: </b>
@@ -40,8 +41,9 @@
         @empty
             Nenhuma tag cadastrada
         @endforelse
-        </p><br>
+        </p>
 @endif
+    </div><br>
     <p><b>Publicado em </b>
         <span class="border p-3">
             {{ date('d/m/Y', strtotime($document->date)) }}
