@@ -10,7 +10,7 @@
 
 <form method="POST" action="{{ route('documents.filter') }}" enctype="multipart/form-data" class="py-2"> @csrf
     <div class="row">
-        <div class="col-sm" id="name_description">
+        <div class="col-sm-3" id="name_description">
             Nome/Descrição:
             <input
                 class="form-control col-sm-12"
@@ -19,7 +19,7 @@
         </div>
 
         <div class="col-sm" id="categories">
-            Categorias:<br>
+            Pesquisar por Categoria:<br>
             <button id="categories_btn" role="button" href="#" class="btn btn-light border px-5"
                     data-toggle="dropdown" data-target="#" >
                 Selecione... <span class="caret"></span>
@@ -78,24 +78,8 @@
             </ul>
         </div>
 
-        <div class="col-sm-4" id="Data Publicação">
-            <i class="fas fa-calendar-alt p-2"></i>Data de Publicacao:<br>
-            <div>
-            <label class="px-1 small">De</label>
-            <input
-                name="first_date" id="first_date" type="date"
-                data-display-mode="inline" data-is-range="true" data-close-on-select="false"
-                value="{{ request()->input('first_date') }}">
-            <label class="px-1 small">a</label>
-            <input
-                name="last_date" id="last_date" type="date"
-                data-display-mode="inline" data-is-range="true" data-close-on-select="false"
-                value="{{ request()->input('last_date') }}">
-            </div>
-        </div>
-
         <div class="col-sm" id="tags">
-            Pesquisar por assunto: <br>
+            Pesquisar por Assunto: <br>
             <button id="tags_btn" role="button" href="#" class="btn btn-light border px-5"
                     data-toggle="dropdown" data-target="#" >
                 Selecione... <span class="caret"></span>
@@ -137,16 +121,26 @@
                     @empty
                          <p><h5>Nao ha tags cadastradas</h5></p>
                     @endforelse
-                <script>
-                    /*console.log($('#tags .checkbox-inline').not(':checked').length de);
-                    if ($('#tagscheckbox.checked').length == $('checkbox-inline').length){
-                        $("#check_all_tags").attr("checked");
-                    }*/
-                </script>
             </ul>
         </div>
-    </div>
 
+        <div class="col-sm-5" id="data_publicação">
+            <i class="fas fa-calendar-alt p-2"></i>Data de Publicação:<br>
+            <div>
+                <label class="px-1 small">De</label>
+                <input
+                    name="first_date" id="first_date" type="date"
+                    data-display-mode="inline" data-is-range="true" data-close-on-select="false"
+                    value="{{ request()->input('first_date') }}">
+                <label class="px-1 small">a</label>
+                <input
+                    name="last_date" id="last_date" type="date"
+                    data-display-mode="inline" data-is-range="true" data-close-on-select="false"
+                    value="{{ request()->input('last_date') }}">
+            </div>
+        </div>
+    </div>
+<br>
     <div class="field is-grouped">
         <div class="control py-2">
             <button class="btn btn-dark border btn-outline-light float-md-right" type="submit" >
@@ -175,11 +169,11 @@
                         <div class="row px-4">Documento:
                             <div class="form-check form-check-inline px-4">
                                 <input class="form-check-input" type="radio" name="is_active" id="is_active" value="1">
-                                Esta vigente
+                                Está vigente
                             </div>
                             <div class="form-check form-check-inline px-3">
                                 <input class="form-check-input" type="radio" name="is_active" id="is_active" value="-1">
-                                Nao esta vigente
+                                Não está vigente
                             </div>
                         </div>
                     </div>
