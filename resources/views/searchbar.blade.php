@@ -1,9 +1,9 @@
 @section('searchbar')
 <?php
-$tags = App\Tag::all();
-$tags_array = request('tags') ? request('tags') : [];
-$categories = App\Category::all();
-$categories_array = request('categories') ? request('categories') : [];
+    $tags = App\Tag::all();
+    $tags_array = request('tags') ? request('tags') : [];
+    $categories = App\Category::all();
+    $categories_array = request('categories') ? request('categories') : [];
 ?>
 
 <div class="border p-2">
@@ -18,7 +18,7 @@ $categories_array = request('categories') ? request('categories') : [];
                 value="{{ request()->input('word') }}">
         </div>
 
-        <div class="col-sm" id="Categories">
+        <div class="col-sm" id="categories">
             Categorias:<br>
             <button id="categories_btn" role="button" href="#" class="btn btn-light border px-5"
                     data-toggle="dropdown" data-target="#" >
@@ -27,27 +27,57 @@ $categories_array = request('categories') ? request('categories') : [];
 
             <ul class="dropdown-menu" style="width: 110%">
                 <input class="form-control " id="categories_input" type="text" placeholder="Search..">
-                            @forelse($categories as $category)
-                                <div class="col-sm">
-                                    <li class="p-1">
+
+                <li class="px-4 p-1">
+                    <label class="box px-5 checkbox-inline">
+                        <input
+                            type="checkbox" value="all"
+                            id="check_all_categories"
+                            placeholder="Selecionado"
+                            <?php if (count($categories) == count($categories_array)) echo "checked"; ?>>
+                        Todas
+                        <span class="checkmark"></span>
+                    </label>
+                </li>
+                <script>
+                    $("#check_all_categories").click(function(){
+                        $('#categories input:checkbox').not(this).prop('checked', this.checked);
+                    });
+                </script>
+                @forelse($categories as $category)
+                                @if (count($category->hasparent)==0)
+                                    <li class="px-4 p-1">
                                     <label class="box px-5 checkbox-inline">
                                         <input
-                                            type="checkbox" value=" {{ $category->id }} "
+                                            type="checkbox" value="{{ $category->id }}"
                                             id="{{ $category->id }}" name="categories[]"
                                             placeholder="Selecionado"
                                             <?php echo (in_array($category->id,$categories_array)) ?'checked':'' ?>>
                                         {{ $category->name }}
                                         <span class="checkmark"></span>
                                     </label>
+                                        @if (count($category->hassubcategory)>0)
+                                            @foreach($category->hassubcategory as $sub_cat)<br>
+                                        <span class="px-4"></span>
+                                                    <label class="box px-5 checkbox-inline">
+                                                        <input
+                                                            type="checkbox" value=" {{ $sub_cat->id }} "
+                                                            id="{{ $sub_cat->id }}" name="categories[]"
+                                                            placeholder="Selecionado"
+                                                        <?php echo (in_array($category->id,$categories_array)) ?'checked':'' ?>>
+                                                        {{ $sub_cat->name }}
+                                                        <span class="checkmark"></span>
+                                                    </label>
+                                            @endforeach
+                                            @endif
                                     </li>
-                                </div>
+                                @endif
                             @empty
                                 <p><h5>Nao ha categorias cadastradas</h5></p>
                             @endforelse
-
             </ul>
-
         </div>
+
         <div class="col-sm-4" id="Data Publicação">
             <i class="fas fa-calendar-alt p-2"></i>Data de Publicacao:<br>
             <div>
@@ -64,7 +94,7 @@ $categories_array = request('categories') ? request('categories') : [];
             </div>
         </div>
 
-        <div class="col-sm" id="Tags">
+        <div class="col-sm" id="tags">
             Pesquisar por assunto: <br>
             <button id="tags_btn" role="button" href="#" class="btn btn-light border px-5"
                     data-toggle="dropdown" data-target="#" >
@@ -73,12 +103,29 @@ $categories_array = request('categories') ? request('categories') : [];
 
             <ul class="dropdown-menu" style="width: 90%">
                 <input class="form-control" id="tags_input" type="text" placeholder="Search..">
+
+                <li class="px-4 p-1">
+                    <label class="box px-5 checkbox-inline">
+                        <input
+                            type="checkbox" value="0"
+                            id="check_all_tags" name="all"
+                            placeholder="Selecionado"
+                        <?php if (count($tags) == count($tags_array)) echo "checked"; ?>>
+                        Todas
+                        <span class="checkmark"></span>
+                    </label>
+                </li>
+                <script>
+                    $("#check_all_tags").click(function(){
+                        $('#tags input:checkbox').not(this).prop('checked', this.checked);
+                    });
+                </script>
+
                     @forelse($tags as $tag)
-                        <div class="col-sm">
-                            <li class="p-1">
+                         <li class="px-4 p-1">
                             <label class="box px-5 checkbox-inline">
                                 <input
-                                    type="checkbox" value=" {{ $tag->id }} "
+                                    type="checkbox" value="{{ $tag->id }}"
                                     id="{{ $tag->id }}" name="tags[]"
                                     placeholder="Selecionado"
                                     <?php echo (in_array($tag->id,$tags_array)) ?'checked':'' ?>>
@@ -86,11 +133,16 @@ $categories_array = request('categories') ? request('categories') : [];
                                 <span class="checkmark"></span>
                             </label>
                             </li>
-                        </div>
 
                     @empty
                          <p><h5>Nao ha tags cadastradas</h5></p>
                     @endforelse
+                <script>
+                    /*console.log($('#tags .checkbox-inline').not(':checked').length de);
+                    if ($('#tagscheckbox.checked').length == $('checkbox-inline').length){
+                        $("#check_all_tags").attr("checked");
+                    }*/
+                </script>
             </ul>
         </div>
     </div>

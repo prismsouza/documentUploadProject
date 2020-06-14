@@ -37,6 +37,11 @@ class Category extends Model
         return $this->belongsToMany('App\Category', 'category_has_subcategory', 'category_id', 'subcategory_id');
     }
 
+    public function hasparent()
+    {
+        return $this->belongsToMany('App\Category', 'category_has_subcategory', 'subcategory_id', 'category_id');
+    }
+
     public static function boot ()
     {
         parent::boot();

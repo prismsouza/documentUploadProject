@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <?php
 $categories = App\Category::all();
@@ -11,7 +12,7 @@ $tags = App\Tag::all();
 
 <div class="container">
     @include('searchbar')
-    
+
 </div>
 @include('footer')
 </body>

@@ -1,5 +1,7 @@
 <?php $user = "admin"; // admin ?>
-@extends('layout_admin')
+
+@extends($user=="admin" ? 'layout_admin' : 'layout_user')
+
 @include('searchbar')
 @section('content')
     <div id="wrapper">

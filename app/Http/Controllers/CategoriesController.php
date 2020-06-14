@@ -10,6 +10,12 @@ class CategoriesController extends Controller
     public function index()
     {
         $categories = Category::orderBy('name', 'asc')->get();
+        /*foreach ($categories as $category) {
+            if (count($category->hasparent)!=0) {
+                $categories = $categories->except([$category->id]);
+            }
+        }*/
+
         return view('categories.index', ['categories' => $categories]);
     }
 

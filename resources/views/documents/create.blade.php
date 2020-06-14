@@ -15,9 +15,23 @@
 
                     @foreach($categories as $category)
                         @if ($category->id != '1' && $category->id != '2') <!-- BGBM e BEBM -->
-                            <option id="category_id" name="category_id"
-                                    value={{ $category->id }}>{{ $category->name }}
-                            </option>
+                            @if (count($category->hassubcategory)>0)
+                                <optgroup label="  {{ $category->name }}" class="px-2">
+                                    @foreach($category->hassubcategory as $sub_cat)<br>
+                                    <option id="category_id" name="category_id"
+                                            class="collapsible list-group-item"
+                                            value={{ $sub_cat->id }}>{{ $sub_cat->name }}
+                                    </option>
+                                    @endforeach
+                                </optgroup>
+
+                            @else
+                                @if (count($category->hasparent)==0)
+                                    <option id="category_id" name="category_id"
+                                            value={{ $category->id }}>{{ $category->name }}
+                                    </option>
+                                @endif
+                            @endif
                         @endif
                     @endforeach
                 </select>

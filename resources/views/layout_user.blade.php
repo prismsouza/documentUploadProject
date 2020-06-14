@@ -8,8 +8,8 @@ $tags = App\Tag::all();
 
 <body>
 @include('header')
-<div class="container">
-    @include('searchbar')
+<div class="container py-5">
+    @yield('searchbar')
 
     <div id="wrapper">
         <div id="page" class="container row py-2">

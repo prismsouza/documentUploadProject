@@ -192,7 +192,8 @@ class DocumentsController extends Controller
     {
         if ($hash_id != null) {
             $file_path = public_path('documents') . '/' . $hash_id;
-            return response()->download($file_path);
+            $file_name = $document->files->where('hash_id', $hash_id)->first()->name;
+            return response()->download($file_path, $file_name);
         }
         return 0;
     }

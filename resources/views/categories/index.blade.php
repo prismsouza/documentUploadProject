@@ -9,11 +9,16 @@
     @foreach($categories->chunk(3) as $chunked_category)
         <tr class="d-flex">
         @foreach( $chunked_category as $category )
+
             <td class="col-sm-4 border py-2">
                 <div class="title">
                     <h5>
                         <a href="{{ $category->path()  }}">
+                            @if (count($category->hasparent)>0)
+                                {{  $category->hasparent->first()->name }} /
+                            @endif
                             {{ $category->name }}
+                        </a>
                 <div class="btn-group float-md-right" role="group" aria-label="Basic example">
                     <form method="POST" id="delete-form-{{ $category->id }}"
                           action="{{ route('categories.destroy', $category) }}"
@@ -33,6 +38,7 @@
                         </a>
                     </button>
                     @include('categories.edit')
+
                 </div>
             </a>
         </h5>
@@ -40,6 +46,9 @@
     <p class="small">
         {{ $category->description }}
     </p>
+
+
+
             </td>
         @endforeach
         </tr>
