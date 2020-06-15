@@ -114,7 +114,7 @@
 
 
                     <ul class="dropdown-menu" style="width: 90%">
-                        <input class="form-control" id="tags_input" type="text" placeholder="Search..">
+                        <input class="form-control" id="document_has_document_input" type="text" placeholder="Search..">
                         @foreach($documents as $document)
                             @if ($document->category_id != 1 && $document->category_id != 2)
                                 <div class="col-sm">
@@ -137,7 +137,7 @@
                 <div class="dropdown " id="published_at">
                     <label>Publicado no BGBM/BEBM:</label>
                     <button id="dropdownPublishedAt" role="button" type="button"
-                            class="btn btn-light border form-control col-10"
+                            class="border p-3 btn-light form-control col-10"
                             data-toggle="dropdown" data-target="#"
                             aria-haspopup="true" aria-expanded="true">
                         <span class="caret float-md-right"></span>
@@ -213,10 +213,9 @@
         </div>
 
 <!-- -------------- TAGS -------------- -->
-
         <div class="form-row py-2">
             <div class="col-md-12">
-                <div class="dropdown" id="Tags">
+                <div class="dropdown" id="tags">
                     <label>Tags:</label>
                     <a href="/tags" class="btn">
                         <i class="fas fa-cog"></i>
@@ -227,7 +226,7 @@
                     </button>
 
 
-                    <ul class="dropdown-menu" style="width: 90%">
+                    <ul class="dropdown-menu" style="width: 90%" id="tags_ul">
                         <input class="form-control" id="tags_input" type="text" placeholder="Search..">
                         @forelse($tags as $tag)
                             <div class="col-sm">

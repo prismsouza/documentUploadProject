@@ -44,19 +44,7 @@
 
         </div>
 
-        <div class="col-sm-4" id="Data">
-            <i class="fas fa-calendar-alt p-2"></i>Data da Mensagem:<br>
-            <label class="px-1 small">De</label>
-            <input
-                name="first_date" id="first_date" type="date"
-                data-display-mode="inline" data-is-range="true" data-close-on-select="false"
-                value="{{ request()->input('first_date') }}">
-            <label class="px-1 small">a</label>
-            <input
-                name="last_date" id="last_date" type="date"
-                data-display-mode="inline" data-is-range="true" data-close-on-select="false"
-                value="{{ request()->input('last_date') }}">
-        </div>
+
 
         <div class="col" id="Verificada">
             <div class="control" id="is_checked">
@@ -74,6 +62,22 @@
                 </div>
             </div>
         </div>
+
+        <div class="col-sm-5" id="Data">
+            <i class="fas fa-calendar-alt p-2"></i>Data da Mensagem:<br>
+            <label class="px-1 small">De</label>
+            <input
+                name="first_date" id="first_date" type="date"
+                data-display-mode="inline" data-is-range="true" data-close-on-select="false"
+                value="{{ request()->input('first_date') }}">
+            <label class="px-1 small">a</label>
+            <input
+                name="last_date" id="last_date" type="date"
+                data-display-mode="inline" data-is-range="true" data-close-on-select="false"
+                value="{{ request()->input('last_date') }}">
+        </div>
+
+
     </div>
         <div class="field is-grouped">
             <div class="control float-md-right py-2">

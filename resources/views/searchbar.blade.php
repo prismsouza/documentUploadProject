@@ -25,7 +25,7 @@
                 Selecione... <span class="caret"></span>
             </button>
 
-            <ul class="dropdown-menu" style="width: 110%">
+            <ul class="dropdown-menu" style="width: 130%">
                 <input class="form-control " id="categories_input" type="text" placeholder="Search..">
 
                 <li class="px-4 p-1">
@@ -85,7 +85,7 @@
                 Selecione... <span class="caret"></span>
             </button>
 
-            <ul class="dropdown-menu" style="width: 90%">
+            <ul class="dropdown-menu" style="width: 110%">
                 <input class="form-control" id="tags_input" type="text" placeholder="Search..">
 
                 <li class="px-4 p-1">
