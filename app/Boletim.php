@@ -6,17 +6,14 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Iatstuti\Database\Support\CascadeSoftDeletes;
 
-
-class Document extends Model
+class Boletim extends Model
 {
-    protected $fillable = ['category_id', 'name', 'description', 'date', 'is_active', 'user_id'];
+    protected $fillable = ['category_id', 'name', 'description', 'date', 'user_id'];
+    protected $table = "boletins";
     public $perPage = 20;
     use SoftDeletes, CascadeSoftDeletes;
     protected $dates = ['deleted_at'];
     protected $cascadeDeletes = ['files', 'messages'];
-    /**
-     * @var int|mixed
-     */
 
     public function getRouteKeyName()
     {
@@ -25,12 +22,7 @@ class Document extends Model
 
     public function path()
     {
-        return route('documents.show', $this);
-    }
-
-    public function pathUser()
-    {
-        return route('documents_user.show', $this);
+        return route('boletins.show', $this);
     }
 
     public function user()
@@ -47,23 +39,6 @@ class Document extends Model
     public function category()
     {
         return $this->belongsTo(Category::class);
-    }
-
-
-
-    public function tags()
-    {
-        return $this->belongsToMany(Tag::class);//->withTimestamps();
-    }
-
-    public function hasdocument()
-    {
-        return $this->belongsToMany('App\Document', 'document_has_document', 'document_id', 'document_related_id');
-    }
-
-    public function hasboletim()
-    {
-        return $this->belongsToMany(Boletim::class, 'document_has_boletim', 'document_id', 'boletim_id');
     }
 
     public function files()

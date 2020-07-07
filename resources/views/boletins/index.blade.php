@@ -3,21 +3,28 @@
 @include('searchbar')
 
 @section('content')
-    @if($category_option)
+
+    @if (session('status'))
+        <div class="alert alert-success">
+            {{ session('status') }}
+        </div>
+    @endif
+
+        @if($user == "admin")
+            <a href="{{ route('boletins.create') }}">
+                <button class="btn btn-dark border btn-outline-light" type="submit">
+                    Novo BGBM / BEBM
+                </button>
+            </a><p></p>
+        @endif
+
+        @if($category_option)
             <div class="border p-2">
                 Categoria: <b>{{ $category_option }}</b>
             </div>
-    @else
-        @if ($user == "admin")
-        <a href="{{ route('documents.create') }}">
-            <button class="btn btn-dark btn-outline-light border" type="submit">
-               Novo Documento
-            </button>
-        </a><p></p>
         @endif
-    @endif
 
-    @if ($documents->isNotEmpty())
+    @if ($boletins->isNotEmpty())
     <table class="table table-bordered bg-white table-striped" id="myTable">
         <thead class="text-center">
             <th scope="col" style="cursor: pointer; width: 3%">
@@ -26,7 +33,7 @@
             <th  scope="col" style="cursor: pointer; width: 22%">
                 Nome <i class="fas fa-sort"></i>
             </th>
-            <th scope="col" style="cursor: pointer; width: 33%">
+            <th style="cursor: pointer; width: 33%">
                 Descricao <i class="fas fa-sort"></i>
             </th>
             <th scope="col" style="cursor: pointer; width: 14%">
@@ -46,13 +53,13 @@
     @endif
 
     <?php $c = 0;
-    if(!$documents instanceof Illuminate\Support\Collection)
-        $page = $documents->currentPage();
+    if(!$boletins instanceof Illuminate\Support\Collection)
+        $page = $boletins->currentPage();
     ?>
 
-    @forelse($documents as $document)
+    @forelse($boletins as $boletim)
 
-        <?php   if(!$documents instanceof Illuminate\Support\Collection)
+        <?php   if(!$boletins instanceof Illuminate\Support\Collection)
                     $count = ($c + 1) + $page*10 - 10;
                 else
                     $count = $c+1;
@@ -60,33 +67,24 @@
         <tr class="small">
             <td class="text-center">{{$count}}</td>
             <td>
-                <a href="{{ $document->path()  }}" data-toggle="tooltip" title="acessar documento">
-                    {{ $document->name }}
+                <a href="{{ $boletim->path()  }}" data-toggle="tooltip" title="acessar documento">
+                    {{ $boletim->name }}
                 </a>
-                @if ($document->is_active )
-                    <a data-toggle="tooltip" title="vigente">
-                        <i class="far fa-check-circle" style="color: green"></i>
-                    </a>
-                @else
-                    <a data-toggle="tooltip" title="revogado">
-                        <i class="far fa-times-circle" style="color: red"></i>
-                    </a>
-                @endif
             </td>
-            <td> {{ $document->description }}</td>
+            <td> {{ $boletim->description }}</td>
             <td>
-                <?php $category_name = $document->category->name; ?>
-                <a href="{{ $document->category->path() }}"  data-toggle="tooltip" title="acessar documentos dessa categoria">
+                <?php $category_name = $boletim->category->name; ?>
+                <a href="{{ $boletim->category->path() }}"  data-toggle="tooltip" title="acessar documentos dessa categoria">
                     {{ $category_name }}
                 </a>
             </td>
             <td class="text-center">
-                {{ date('d/m/Y', strtotime($document->date)) }}
+                {{ date('d/m/Y', strtotime($boletim->date)) }}
             </td>
 
-            <?php $file_pdf = $document->files->whereNotNull('alias')->first();?>
+            <?php $file_pdf = $boletim->files->whereNotNull('alias')->first();?>
                 <td class="text-center px-0">
-                    <a href="{{ route('documents.download', [$document->id , $file_pdf->hash_id]) }}"
+                    <a href="{{ route('boletins.download', [$boletim->id , $file_pdf->hash_id]) }}"
                        data-toggle="tooltip" title="{{$file_pdf->size}}"
                        class="btn border">
                         <i class="fa fa-file-pdf fa-lg" style="color: black" aria-hidden="true"></i>
@@ -96,26 +94,25 @@
             @if ($user == "admin")
                 <div id="admin_view">
                 <td class="text-center px-0">
-                        <a href="{{ route('documents.edit', $document->id) }}"
+                        <a href="{{ route('boletins.edit', $boletim->id) }}"
                            class="btn btn-info">
                             <i class="fas fa-edit" style="color: black"></i>
                         </a>
-
                 </td>
                 <td class="text-center px-0">
-                    <form method="POST" id="delete-form-{{ $document->id }}"
-                          action="{{ route('documents.destroy', $document) }}"
+                    <form method="POST" id="delete-form-{{ $boletim->id }}"
+                          action="{{ route('boletins.destroy', $boletim) }}"
                           style="display: none;">
                         {{ csrf_field() }}
                         {{ method_field('delete') }}
                     </form>
                         <a onclick="if (confirm('Tem certeza que deseja DELETAR esse documento?')){
                             event.preventDefault();
-                            document.getElementById('delete-form-{{ $document->id }}').submit();
+                            document.getElementById('delete-form-{{ $boletim->id }}').submit();
                             } else {
                             event.preventDefault();
                             }"
-                            href=" {{ route ('documents.index') }}"
+                            href=" {{ route ('boletins.index') }}"
                             class="btn btn-danger btn-outline-secondary">
                             <i class="far fa-trash-alt" style="color: black" aria-hidden="true"></i>
                         </a>
@@ -130,9 +127,10 @@
 
         </tbody>
     </table>
-    @if(!$documents instanceof Illuminate\Support\Collection)
-        @if ($documents->total()>0)
-            {{ $documents->links() }}
+    @if(!$boletins instanceof Illuminate\Support\Collection)
+        @if ($boletins->total()>0)
+            {{ $boletins->links() }}
         @endif
     @endif
+
 @endsection

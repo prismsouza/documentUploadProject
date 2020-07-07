@@ -4,13 +4,22 @@
 
 @section('content')
     @if($category_option)
+        @if($category_option == "BGBM" && $user == "admin")
+            <a href="{{ route('boletins.create') }}">
+                <button class="btn btn-dark btn-outline-light" type="submit">
+                    Novo BGBM / BEBM
+                </button>
+            </a><p></p>
+
+        @else
             <div class="border p-2">
                 Categoria: <b>{{ $category_option }}</b>
             </div>
+        @endif
     @else
         @if ($user == "admin")
         <a href="{{ route('documents.create') }}">
-            <button class="btn btn-dark btn-outline-light border" type="submit">
+            <button class="btn btn-dark btn-outline-light" type="submit">
                Novo Documento
             </button>
         </a><p></p>
@@ -20,16 +29,16 @@
     @if ($documents->isNotEmpty())
     <table class="table table-bordered bg-white table-striped" id="myTable">
         <thead class="text-center">
-            <th scope="col" style="cursor: pointer; width: 3%">
+            <th onclick="sortTable(1)" scope="col" style="cursor: pointer; width: 3%">
                 #
             </th>
-            <th  scope="col" style="cursor: pointer; width: 22%">
+            <th onclick="sortTable(2)" scope="col" style="cursor: pointer; width: 22%">
                 Nome <i class="fas fa-sort"></i>
             </th>
-            <th scope="col" style="cursor: pointer; width: 33%">
+            <th onclick="sortTable(2)" scope="col" style="cursor: pointer; width: 33%">
                 Descricao <i class="fas fa-sort"></i>
             </th>
-            <th scope="col" style="cursor: pointer; width: 14%">
+            <th onclick="sortTable(3)" scope="col" style="cursor: pointer; width: 14%">
                 Categoria <i class="fas fa-sort"></i>
             </th>
             <th scope="col" style="width: 10%; text-align: center">Data</th>
@@ -96,10 +105,18 @@
             @if ($user == "admin")
                 <div id="admin_view">
                 <td class="text-center px-0">
+                    @if($document->category_id == 1 || $document->category_id == 2)
+                        <a href="{{ route('documents_boletim.edit', $document->id) }}"
+                           class="btn btn-info">
+                            <i class="fas fa-edit" style="color: black"></i>
+                        </a>
+
+                        @else
                         <a href="{{ route('documents.edit', $document->id) }}"
                            class="btn btn-info">
                             <i class="fas fa-edit" style="color: black"></i>
                         </a>
+                        @endif
 
                 </td>
                 <td class="text-center px-0">
@@ -135,4 +152,53 @@
             {{ $documents->links() }}
         @endif
     @endif
+
+
+    <script>
+        function sortTable(n) {
+            var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+            table = document.getElementById("myTable");
+            switching = true;
+            //Set the sorting direction to ascending:
+            dir = "asc";
+            while (switching) {
+                switching = false;
+                rows = table.rows;
+                for (i = 1; i < (rows.length - 1); i++) {
+                    shouldSwitch = false;
+                    x = rows[i].getElementsByTagName("TD")[n];
+                    y = rows[i + 1].getElementsByTagName("TD")[n];
+
+                    if (dir == "asc") {
+                        if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+                            //if so, mark as a switch and break the loop:
+                            shouldSwitch= true;
+                            break;
+                        }
+                    } else if (dir == "desc") {
+                        if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+                            //if so, mark as a switch and break the loop:
+                            shouldSwitch = true;
+                            break;
+                        }
+                    }
+                }
+                if (shouldSwitch) {
+                    /*If a switch has been marked, make the switch
+                    and mark that a switch has been done:*/
+                    rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+                    switching = true;
+                    //Each time a switch is done, increase this count by 1:
+                    switchcount ++;
+                } else {
+                    /*If no switching has been done AND the direction is "asc",
+                    set the direction to "desc" and run the while loop again.*/
+                    if (switchcount == 0 && dir == "asc") {
+                        dir = "desc";
+                        switching = true;
+                    }
+                }
+            }
+        }
+    </script>
 @endsection

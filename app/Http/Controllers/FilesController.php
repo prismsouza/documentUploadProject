@@ -6,14 +6,15 @@ use App\File;
 
 class FilesController extends Controller
 {
-    public function uploadMultipleFiles($request, $document)
+    public function uploadMultipleFiles($request, $document, $isDocument)
     {
 
         $files = $request->file('files');
         if ($request->hasFile('files')) {
             foreach ($files as $file) {
                 $file_toUpload = new File(request(['name', 'extension', 'type', 'size', 'alias']));
-                $file_toUpload->document_id = $document->id;
+                if ($isDocument) $file_toUpload->document_id = $document->id;
+                else $file_toUpload->boletim_id = $document->id;
                 $file_toUpload->name = $file->getClientOriginalName();
                 $file_toUpload->extension = $file->extension();
                 $file_toUpload->type = $file->getMimeType();
@@ -26,33 +27,35 @@ class FilesController extends Controller
         }
     }
 
-    public function uploadFile($request, $document, $type)
+    public function uploadFile($request, $document, $type , $isDocument)
     {
         $file = new File(request(['name', 'extension', 'type', 'size', 'alias']));
+        //$this->dumpArray($request->all());
 
+            $file->name = $_FILES['file_name_' . $type]['name'];
 
+            $file_ = $_FILES['file_name_' . $type]['name'];
+            $file->hash_id = sha1_file($request->file_name_pdf);
 
-        $file->name = $_FILES['file_name_' . $type]['name'];
+            $file_info = new \SplFileInfo($file_);
+            $extension = $file_info->getExtension();
+            $file->extension = $extension;
 
-        $file_ = $_FILES['file_name_' . $type]['name'];
-        $file->hash_id = sha1_file($request->file_name_pdf);
+            $file->type = $_FILES['file_name_' . $type]['type'];
 
-        $file_info = new \SplFileInfo($file_);
-        $extension = $file_info->getExtension();
-        $file->extension = $extension;
+            $file->size = $this->convertSize($request->file('file_name_' . $type)->getSize());
 
-        $file->type = $_FILES['file_name_' . $type]['type'];
+            $date = date('d-m-Y', strtotime($document->date));
+            $file->alias = $document->name . '_' . $date . '.' . $file->extension;
 
-        $file->size = $this->convertSize($request->file('file_name_' . $type)->getSize());
+            if ($isDocument)
+                $file->document_id = $document->id;
+            else
+                $file->boletim_id = $document->id;
 
-        $date = date('d-m-Y', strtotime($document->date));
-        $file->alias = $document->name . '_' . $date . '.' . $file->extension;
+            $file->save();
 
-        $file->document_id = $document->id;
-
-        $file->save();
-
-        $request->file_name_pdf->storeAs('documents', $file->hash_id);
+            $request->file_name_pdf->storeAs('documents', $file->hash_id);
     }
 
     public function convertSize($file_size)
@@ -62,5 +65,11 @@ class FilesController extends Controller
             $file_size /= 1000;
         }
         return round($file_size, 2) . ' ' . $units[$i];
+    }
+
+    public function dumpArray($array) {
+        echo "<pre>";
+        var_dump($array);
+        echo "</pre>";
     }
 }

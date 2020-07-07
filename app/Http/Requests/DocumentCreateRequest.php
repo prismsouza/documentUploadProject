@@ -19,6 +19,7 @@ class DocumentCreateRequest extends FormRequest
     public function messages()
     {
         return [
+            'category_id.required' => "O campo 'categoria' é obrigatório",
             'name.required' => "O campo 'nome' é obrigatório",
             'description.required' => "O campo 'descrição' é obrigatório",
             'date.required' => "O campo 'data de publicação' é obrigatório",

@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Boletim;
 use App\Document;
-use App\Http\Requests\BoletimDocumentCreateRequest;
 use App\Http\Requests\DocumentCreateRequest;
 use App\Tag;
 use App\File;
@@ -62,22 +62,19 @@ class DocumentsController extends Controller
         $request->validated();
         $document = new Document(request(['category_id', 'name', 'description', 'date', 'is_active']));
         $document->user_id = 1;
-
+        $document->save();
 
         if (request()->has('boletim_document_id')) {
-            $document->boletim_document_id = request('boletim_document_id');
-        } else {
-            $document->boletim_document_id = 0;
+            $document->hasboletim()->toggle(request('boletim_document_id'), $document->id);
         }
-        $document->save();
 
         if (request()->has('files')) {
                 $files = new FilesController();
-                $files->uploadMultipleFiles($request, $document);
+                $files->uploadMultipleFiles($request, $document, 1);
         }
 
         $file_pdf = new FilesController();
-        $file_pdf->uploadFile($request, $document, 'pdf');
+        $file_pdf->uploadFile($request, $document, 'pdf', 1);
 
         if (request()->has('document_has_document')) {
             $document->hasdocument()->toggle(request('document_has_document'));
@@ -90,7 +87,7 @@ class DocumentsController extends Controller
         return redirect(route('documents.index'));
     }
 
-    public function create_boletim()
+    /*public function create_boletim()
     {
         return view('documents.create_boletim');
     }
@@ -113,12 +110,13 @@ class DocumentsController extends Controller
 
 
         return redirect(route('documents.boletim'));
-    }
+    }*/
 
     public function viewfile(Document $document, $file_id)
     {
         //$file_path = public_path('documents') . '/' . $document->files->whereNotNull('alias')->first()->hash_id;
         $file_path = public_path('documents') . '/' . $document->files->where('id', $file_id)->first()->hash_id;
+
         return  Response::make(file_get_contents($file_path), 200, [
             'Content-Type' => 'application/pdf',
             'Content-Disposition' => 'inline'
@@ -129,8 +127,10 @@ class DocumentsController extends Controller
     {
 
         if ($category->id == 1) {
-            $documents = Document::where('category_id', 1)
-                ->orWhere('category_id', 2)->paginate();
+            $documents = Boletim::where('category_id', 1)->paginate();
+        }
+        else if ($category->id == 2) {
+            $documents = Boletim::where('category_id', 2)->paginate();
         }
         else {
             $documents = Document::where('category_id', $category->id)->paginate();
@@ -182,11 +182,20 @@ class DocumentsController extends Controller
         return view('documents.edit_boletim', compact('document'),['tags' => Tag::all()]);
     }
 
-    public function update_boletim(Request $request, Document $document)
+    /*public function update_boletim(Request $request, Document $document)
     {
-        $document->update($request->all());
+        if (request('file_name_pdf') == NULL) {
+            $document->update($this->validateBoletim("dont_update_path"));
+        } else {
+            $document->update($this->validateBoletim(''));
+            $file_pdf = new FilesController();
+            $file_pdf->uploadFile($request, $document, 'pdf');
+        }
+
         return redirect($document->path());
-    }
+        //$document->update($request->all());
+        //return redirect($document->path());
+    }*/
 
     public function download(Document $document, $hash_id)
     {
@@ -234,6 +243,25 @@ class DocumentsController extends Controller
             'is_active' => 'required',
             'file_name_pdf' => 'required',
             'tags' => 'exists:tags,id'
+        ]);
+    }
+
+    public function validateBoletim($option)
+    {
+        if ($option == "dont_update_path"){
+            return request()->validate([
+                'category_id' => 'required',
+                'name' => 'required',
+                'description' => 'required',
+                'date' => 'required'
+            ]);
+        }
+        return request()->validate([
+            'category_id' => 'required',
+            'name' => 'required',
+            'description' => 'required',
+            'file_name_pdf' => 'required',
+            'date' => 'required'
         ]);
     }
 

@@ -12,16 +12,24 @@
                     id="category_id" name="category_id"
                     class="selectpicker form-control col-4"
                     value="category_id" data-live-search="true">
+                    <option class="collapsible list-group-item" value="{{ old('category_id') }}">
+                        @if (old('category_id') != null)
+                            {{ App\Category::where("id", old('category_id'))->first()->name }}
+                        @endif
+
+                    </option>
 
                     @foreach($categories as $category)
-                        @if ($category->id != '1' && $category->id != '2') <!-- BGBM e BEBM -->
+                        @if ($category->id != '1' && $category->id != '2' && $category->id != old('category_id')) <!-- BGBM e BEBM -->
                             @if (count($category->hassubcategory)>0)
                                 <optgroup label="  {{ $category->name }}" class="px-2">
                                     @foreach($category->hassubcategory as $sub_cat)<br>
-                                    <option id="category_id" name="category_id"
-                                            class="collapsible list-group-item"
-                                            value={{ $sub_cat->id }}>{{ $sub_cat->name }}
-                                    </option>
+                                        @if ($sub_cat->id != old('category_id'))
+                                        <option id="category_id" name="category_id"
+                                                class="collapsible list-group-item"
+                                                value={{ $sub_cat->id }}> - {{ $sub_cat->name }}
+                                        </option>
+                                    @endif
                                     @endforeach
                                 </optgroup>
 
@@ -34,7 +42,11 @@
                             @endif
                         @endif
                     @endforeach
+
                 </select>
+                <?php if (old('category_id') == null) { ?>
+                    <p style="color: darkred">{{ $errors->first('category_id') }}</p>
+                <?php } ?>
             </div>
         </div>
 
@@ -116,7 +128,6 @@
                     <ul class="dropdown-menu" style="width: 90%">
                         <input class="form-control" id="document_has_document_input" type="text" placeholder="Search..">
                         @foreach($documents as $document)
-                            @if ($document->category_id != 1 && $document->category_id != 2)
                                 <div class="col-sm">
                                     <li class="p-1">
                                         <label class="box px-5 checkbox-inline">
@@ -128,7 +139,6 @@
                                         </label>
                                     </li>
                                 </div>
-                            @endif
                         @endforeach
                     </ul>
                 </div>
@@ -140,24 +150,25 @@
                             class="border p-3 btn-light form-control col-10"
                             data-toggle="dropdown" data-target="#"
                             aria-haspopup="true" aria-expanded="true">
+                        @if (old('boletim_document_id') != null)
+                            {{ App\Boletim::where("id", old('boletim_document_id'))->first()->name }}
+                            - {{ date('d/m/Y', strtotime(App\Boletim::where("id", old('boletim_document_id'))->first()->date)) }}
+                        @endif
                         <span class="caret float-md-right"></span>
                     </button>
 
 
                     <ul class="dropdown-menu" style="width: 90%" aria-labelledby="dropdownPublishedAt">
-                        <input class="form-control" id="boletim_document_input" type="text" placeholder="Search..">
-                            <?php $documents_bgbm = $categories->where('name','BGBM')->first()->documents; ?>
-                            <?php $documents_bebm = $categories->where('name','BEBM')->first()->documents; ?>
-                            <?php $documents_boletins = $documents_bgbm->merge($documents_bebm);//$documents_boletim = $categories->where('name','BGBM')->where('name','BEBM')->first()->documents;?>
 
+                        <input class="form-control" id="boletim_document_input" type="text" placeholder="Search..">
+                            <?php $boletins = App\Boletim::all(); ?>
                             <li class="px-5" id="0">
                                 <input
                                     type="radio" name="boletim_document_id"
-                                    id="0" value="0">
-                                vazio
+                                    id="0" value="0"> vazio
                             </li>
 
-                            @foreach($documents_boletins as $doc_boletim)
+                            @foreach($boletins as $doc_boletim)
                                 <li class="px-5">
                                         <input
                                         type="radio" name="boletim_document_id"
@@ -198,14 +209,16 @@
         <div class="form-row">
             <div class="col-md-12 mb-4">
                 <div class="control" id="is_active">
-                    <label for="is_active"class="">O documento: <b>*</b></label>
+                    <label for="is_active">O documento: <b>*</b></label>
                     <div class="form-check form-check-inline px-5" id="is_active">
-                        <input class="form-check-input" type="radio" name="is_active" id="is_active" value="1">
-                        <label class="form-check-label" for="inlineRadio1">Está vigente</label>
+                        <input class="form-check-input" type="radio" name="is_active" id="is_active" value="1"
+                        @if ( old('is_active')  == 1) {{"checked"}} @endif >
+                        <label class="form-check-label">Está vigente</label>
                     </div>
                     <div class="form-check form-check-inline" id="is_active">
-                        <input class="form-check-input" type="radio" name="is_active" id="is_active" value="0">
-                        <label class="form-check-label" for="inlineRadio1">Não está vigente</label>
+                        <input class="form-check-input" type="radio" name="is_active" id="is_active" value="0"
+                        @if ( old('is_active')  == 0 && old('is_active')  != null) {{"checked"}} @endif >
+                        <label class="form-check-label">Não está vigente</label>
                     </div>
                 @error('is_active')<p style="color: darkred">{{ $errors->first('is_active') }}</p>@enderror
                 </div>

@@ -8,27 +8,27 @@
 
             <td class="nav-item" style="width: 20%">
                 <a class="nav-link {{ (Request::is('documentos') || Request::is('/'))  ? 'bg-light' : ''}}"
-                   href={{ route('documents.index') }}>Documentos
+                   href={{ route('documents.index') }}><b>Documentos</b>
                 </a>
             </td>
             <td class="nav-item" style="width: 20%">
-                <a class="nav-link {{ Request::is('documentos/categorias/BGBM') ? 'bg-light' : ''}}"
-                   href="{{ route('documents_category.index', 'BGBM') }}">BGBM e BEBM
+                <a class="nav-link {{ Request::is('boletins') ? 'bg-light' : ''}}"
+                   href="{{ route('boletins.index') }}"><b>BGBM e BEBM</b>
                 </a>
             </td>
             <td class="nav-item" style="width: 20%">
                 <a class="nav-link {{ Request::is('categorias') ? 'bg-light' : ''}}"
-                   href={{ route('categories.index') }}>Categorias
+                   href={{ route('categories.index') }}><b>Categorias</b>
                 </a>
             </td>
             <td class="nav-item" style="width: 20%">
                 <a class="nav-link {{ Request::is('tags') ? 'bg-light' : ''}}"
-                   href="{{ route('tags.index') }}">Tags
+                   href="{{ route('tags.index') }}"><b>Tags</b>
                 </a>
             </td>
             <td class="nav-item" style="width: 20%">
                 <a class="nav-link {{ Request::is('mensagens') ? 'bg-light' : ''}}"
-                   href="{{ route('messages.index') }}">Mensagens
+                   href="{{ route('messages.index') }}"><b>Mensagens</b>
                 </a>
             </td>
 

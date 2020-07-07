@@ -1,5 +1,6 @@
 <?php
 
+use App\Boletim;
 use App\Document;
 use App\Tag;
 use App\Category;
@@ -53,7 +54,11 @@ function searchByWord($word, $documents)
     $docs = Document::where('name','LIKE','%'.$word.'%')
                         ->orWhere('description','LIKE','%'.$word.'%')
                         ->get();
-    $documents = new Collection($docs);
+    $docs_boletins = Boletim::where('name','LIKE','%'.$word.'%')
+        ->orWhere('description','LIKE','%'.$word.'%')
+        ->get();
+    $all_docs = $docs->merge($docs_boletins);
+    $documents = new Collection($all_docs);
 
     return $documents;
 }

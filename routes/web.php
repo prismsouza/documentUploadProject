@@ -26,21 +26,36 @@ Route::get('/usuario/documentos', 'DocumentsController@index_user')->name('docum
 Route::get('/usuario/documentos/{document}', 'DocumentsController@showUser')->name('documents_user.show');
 Route::get('/admin/deletados', 'DocumentsController@showDeletedDocuments')->name('documents.deleted_documents');
 
+
+Route::get('/boletins/categorias/{category}', 'DocumentsController@showByCategory')->name('documents_category.index');
+Route::get('/boletins', 'BoletinsController@index')->name('boletins.index');
+Route::get('/boletins/novo', 'BoletinsController@create')->name('boletins.create');
+Route::post('/boletins', 'BoletinsController@store')->name('boletins.store');
+Route::get('/boletins/{boletim}', 'BoletinsController@show')->name('boletins.show');
+Route::get('/boletins/{boletim}/editar', 'BoletinsController@edit')->name('boletins.edit');
+Route::put('/boletins/{boletim}', 'BoletinsController@update')->name('boletins.update');
+Route::delete('/boletins/delete/{boletim}', 'BoletinsController@destroy')->name('boletins.destroy');
+Route::get('/boletins/{boletim}/download/{type}', 'BoletinsController@download')->name('boletins.download');
+Route::get('/boletins/{boletim}/visualizar/{file_id}', 'BoletinsController@viewfile')->name('boletins.viewfile');
+
+
+
+
 Route::get('/documentos/categorias/{category}', 'DocumentsController@showByCategory')->name('documents_category.index');
 Route::get('/', 'DocumentsController@home')->name('home');
 Route::get('/usuario', 'DocumentsController@home_user')->name('home_user');
 Route::get('/documentos', 'DocumentsController@index')->name('documents.index');
 Route::post('/documentos', 'DocumentsController@store')->name('documents.store');
 Route::get('/documentos/novo', 'DocumentsController@create')->name('documents.create');
-Route::post('/documentos/categorias/BGBM', 'DocumentsController@store_boletim')->name('documents.boletim');
-Route::get('/documentos/novo/BGBM', 'DocumentsController@create_boletim')->name('documents.create_boletim');
+//Route::post('/documentos/categorias/BGBM', 'DocumentsController@store_boletim')->name('documents.boletim');
+//Route::get('/documentos/novo/BGBM', 'DocumentsController@create_boletim')->name('documents.create_boletim');
 Route::get('/documentos/{document}/download/{type}', 'DocumentsController@download')->name('documents.download');
 Route::get('/documentos/{document}/visualizar/{file_id}', 'DocumentsController@viewfile')->name('documents.viewfile');
 Route::get('/documentos/{document}', 'DocumentsController@show')->name('documents.show');
 Route::get('/documentos/{document}/editar', 'DocumentsController@edit')->name('documents.edit');
 Route::put('/documentos/{document}', 'DocumentsController@update')->name('documents.update');
-Route::get('/documentos/boletim/{document}/editar', 'DocumentsController@edit_boletim')->name('documents_boletim.edit');
-Route::put('/documentos/boletim/{document}', 'DocumentsController@update_boletim')->name('documents_boletim.update');
+//Route::get('/documentos/boletim/{document}/editar', 'DocumentsController@edit_boletim')->name('documents_boletim.edit');
+//Route::put('/documentos/boletim/{document}', 'DocumentsController@update_boletim')->name('documents_boletim.update');
 Route::delete('/documentos/delete/{document}', 'DocumentsController@destroy')->name('documents.destroy');
 Route::get('home', 'DocumentsController@restore')->name('documents.restore');
 

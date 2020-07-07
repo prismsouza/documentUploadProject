@@ -31,13 +31,13 @@ $(document).ready(function(){
 });
 
 
-$(document).ready(function() {
+/*$(document).ready(function() {
     var max_fields      = 6; //maximum input boxes allowed
     var wrapper   		= $(".input_fields_wrap"); //Fields wrapper
     var add_button      = $(".add_field_button"); //Add button ID
     var input
 
-    var x = 1; //initlal text box count
+    var x = 1; //initial text box count
     $(add_button).click(function(e){ //on add input button click
         e.preventDefault();
         if(x < max_fields){ //max input box allowed
@@ -67,7 +67,7 @@ $(document).ready(function() {
     })
 
 
-});
+});*/
 
 $(".dropdown-menu li a").click(function(){
     console.log("dropdown-menu li a");
@@ -95,3 +95,7 @@ $("div#tags_ul .dropdown-menu li").click(function(){
     $(this).parents(".dropdown ").find('#tags').val($(this).data('value'));
 });
 
+
+$(document).ready(function() {
+
+});

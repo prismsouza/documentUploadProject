@@ -37,11 +37,18 @@
                     @endforeach
                 </div>
             @else
-                @if (count($category->hasparent)==0)
-                <a class="list-group-item {{ Request::is('documentos/categorias/'.$category->name) ? 'active' : ''}}"
-                   href={{ $category->path() }}>
-                    {{ $category->name }}
-                </a>
+                @if ($category->id == 1  || $category->id == 2)
+                    <a class="list-group-item {{ Request::is('boletins/categorias/'.$category->name) ? 'active' : ''}}"
+                       href={{ $category->path() }}>
+                        {{ $category->name }}
+                    </a>
+                @else
+                    @if (count($category->hasparent)==0)
+                        <a class="list-group-item {{ Request::is('documentos/categorias/'.$category->name) ? 'active' : ''}}"
+                           href={{ $category->path() }}>
+                            {{ $category->name }}
+                        </a>
+                    @endif
                 @endif
             @endif
 

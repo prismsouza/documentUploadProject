@@ -21,6 +21,7 @@
 
         <div class="col-4">
             <div class="float-right">
+                    <label class="px-2"> Download </label> <label class="px-4"> Visualizar</label><br>
                     <a class="btn border" data-toggle="tooltip" title="download {{ $pdf_file->alias }}"
                        href="{{ route('documents.download', [$document->id , $pdf_file->hash_id]) }}">
                         <i class="fas fa-download fa-4x" style="color:darkseagreen"></i>
@@ -32,7 +33,6 @@
              </div>
         </div>
     </div>
-    @if ($document->boletim_document_id != 0)
         <p style="color: grey">Tags:
         @forelse ($document->tags as $tag)
             <a style="color:darkgrey" class="px-2" href="{{ route ('documents.index',['tag' => $tag->name]) }}">
@@ -42,7 +42,6 @@
             Nenhuma tag cadastrada
         @endforelse
         </p>
-@endif
     </div><br>
     <p><b>Publicado em </b>
         <span class="border p-3">
@@ -50,16 +49,15 @@
         </span>
     </p><br>
 
-    @if ($document->category_id != 1 && $document->category_id != 2)
 
-        @if ($document->boletim_document_id != 0)
+        @if (count($document->hasboletim) != 0)
         <p><b>Publicado no BGBM/BEBM:</b>
-            <a style="color:navy" href= "{{$document->boletim_document_id}}" target="_blank">
-                {{ $document->where('id', $document->boletim_document_id)->first()->name }}</p>
+            <a style="color:navy" href= "/boletins/{{$document->hasboletim->first()->id}}" target="_blank">
+                {{ $document->hasboletim->first()->name }}</p>
         </a><br>
         @endif
 
-        <p><b>Validade:</b> Este documento <b><?php echo ($document->is_active ? "<span style=color:green>esta vigente" : "<span style=color:red>nao esta vigente"); ?></b></p><br>
+        <p><b>Validade:</b> Este documento <b><?php echo ($document->is_active ? "<span style=color:green>está vigente" : "<span style=color:red>não está vigente"); ?></b></p><br>
 
         @if (count($related_documents)>0)
 
@@ -67,33 +65,48 @@
                 <ul>
                     @foreach ($related_documents as $doc)
                         <li class="px-2 py-1">
-                                <a style="color:navy" href="{{ $doc->id }}" target="_blank">
-                                    {{ $doc->name }} </a>
-                            </li>
+                             {{ $doc->name }} <span class="px-2"></span>
+                            <a data-toggle="tooltip" title="ver detalhes {{ $doc->name }}"
+                                class="btn btn-light"
+                                href="{{ $doc->id }}" target="_blank">
+                                <i class="fas fa-info-circle" style="color:seagreen"></i>
+                            </a>
+                            <?php $d = $doc->files->whereNotNull('alias')->first(); ?>
+                            <a data-toggle="tooltip" title="download {{ $d->name }}"
+                                class="btn btn-light"
+                                href="{{ route('documents.download', [$d->document_id , $d->hash_id]) }}">
+                                <i class="fas fa-download" style="color:darkseagreen"></i>
+                            </a>
+                             <a data-toggle="tooltip" title="visualizar {{ $d->name }}"
+                                class="btn btn-light"
+                                href="{{ route('documents.viewfile', [$d->document_id , $d->id]) }}" target="_blank">
+                                 <i class="fas fa-eye" style="color:cadetblue"></i>
+                             </a>
+                        </li>
                     @endforeach
                 </ul></p>
 
 
         <p></p><br>
         @endif
-    @endif
         @if (!empty($files))
 
             <p><b>Anexos:</b></p>
             <ul>
                 @foreach ($files as $file)
                     <li class="px-2 py-1">
-                        <a style="color:navy" href="{{ route('documents.download', [$document->id, $file->hash_id]) }}">
-                            {{ $file->name }}</a>
-                        <a  data-toggle="tooltip" title="download {{ $file->name }}"
+                        {{ $file->name }}<span class="px-2"></span>
+                        <a  data-toggle="tooltip" title="download {{ $file->name }}" class="btn btn-light"
                            href="{{ route('documents.download', [$document->id , $file->hash_id]) }}">
                             <i class="fas fa-download" style="color:darkseagreen"></i>
                         </a>
-                        <a  data-toggle="tooltip" title="visualizar {{ $file->name }}"
+
+                        @if ($file->type == "application/pdf")
+                        <a data-toggle="tooltip" title="visualizar {{ $file->name }}" class="btn btn-light"
                            href="{{ route('documents.viewfile', [$document->id , $file->id]) }}" target="_blank">
                             <i class="fas fa-eye" style="color:cadetblue"></i>
                         </a>
-                    </li>
+                        @endif
                 @endforeach
             </ul>
         @endif
@@ -105,16 +118,9 @@
     @else
         <br>
         <button type="button" class="btn btn-info">
-            @if($document->category_id == 1 || $document->category_id == 2)
-                <a href="{{ route('documents_boletim.edit', $document->id) }}" style="color:white">
-                    Editar Documento  <i class="fas fa-edit" style="color: black"></i>
-                </a>
-
-            @else
                 <a href="{{ route('documents.edit', $document->id) }}" style="color:white">
                     Editar documento  <i class="fas fa-edit" style="color: black"></i>
                 </a>
-            @endif
         </button>
         <form method="POST" id="delete-form-{{ $document->id }}"
               action="{{ route('documents.destroy', $document) }}"

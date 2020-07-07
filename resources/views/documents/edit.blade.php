@@ -12,7 +12,7 @@
     </a>
 
     <h1 class="heading has-text-weight-bold is-size-4 py-6">Editar Documento</h1>
-    <form method="POST" action="/documentos/boletim/{{ $document->id }}" class="p-5 border">
+    <form method="POST" action="/documentos/{{ $document->id }}" class="p-5 border">
                 @csrf
                 @method('PUT')
 
@@ -27,7 +27,7 @@
 
                                 <option value={{ $document->category->id }}>{{ $document->category->name }}</option>
                                 @foreach($categories as $category)
-                                    @if ($category->name != $document->category->name) <!-- Boletim Geral -->
+                                    @if ($category->name != $document->category->name && $category->id != '1' && $category->id != '2') <!-- BGBM e BEBM -->) <!-- Boletim Geral -->
                                         <option id="category_id" name="category_id"
                                                 value={{ $category->id }} >
                                             {{ $category->name }}
@@ -126,10 +126,8 @@
                                 class="btn btn-light border form-control col-10"
                                 data-toggle="dropdown" data-target="#"
                                 aria-haspopup="true" aria-expanded="true">
-                            @if ($document->boletim_document_id != 0)
-                                <?php   $boletim_id = $document->boletim_document_id;
-                                        $doc_b = App\Document::where('id', $boletim_id)->first();?>
-                                        {{ $doc_b->name }} - {{  date('d/m/Y', strtotime($doc_b->date)) }}
+                            @if (count($document->hasboletim) != 0)
+                                {{ $document->hasboletim->first()->id }} - {{  date('d/m/Y', strtotime($document->hasboletim->first()->date)) }}
                             @endif
                         </button>
 
@@ -140,12 +138,13 @@
                             <?php $documents_bebm = $categories->where('name','BEBM')->first()->documents; ?>
                             <?php $documents_boletins = $documents_bgbm->merge($documents_bebm);//$documents_boletim = $categories->where('name','BGBM')->where('name','BEBM')->first()->documents;?>
 
-                            @if ($document->boletim_document_id != 0)
+                            @if (count($document->hasboletim) != 0)
                             <li class="px-5" id="0">
                                 <input
                                     type="radio" name="boletim_document_id"
                                     value=" {{ $document->boletim_document_id }}" style="background: darkseagreen">
-                                    Atual: {{ App\Document::where('id', $document->boletim_document_id)->first()->name }} - {{ date('d/m/Y', strtotime($document->date)) }}
+
+                                    Atual: {{ $document->hasboletim->first()->name }} - {{ date('d/m/Y', strtotime($document->date)) }}
                             </li>
                             @endif
                             <li class="px-5" id="0">
@@ -189,13 +188,13 @@
                     <div class="form-row">
                         <div class="col-md-12 mb-4">
                             <div class="control" id="is_active">
-                                <label for="is_active"class="">O documento: <b>*</b></label>
+                                <label for="is_active">O documento: <b>*</b></label>
                                 <div class="form-check form-check-inline px-5" id="is_active">
-                                    <input class="form-check-input" type="radio" name="is_active" id="is_active" value="1" checked>
+                                    <input class="form-check-input" type="radio" name="is_active" id="is_active" value="1" @if ($document->is_active == 1) {{ 'checked' }} @endif>
                                     <label class="form-check-label" for="inlineRadio1">Está vigente</label>
                                 </div>
                                 <div class="form-check form-check-inline" id="is_active">
-                                    <input class="form-check-input" type="radio" name="is_active" id="is_active" value="0">
+                                    <input class="form-check-input" type="radio" name="is_active" id="is_active" value="0" @if ($document->is_active == 0) {{ 'checked' }} @endif>
                                     <label class="form-check-label" for="inlineRadio1">Não está vigente</label>
                                 </div>
                                 @error('is_active')<p class="help is-danger">{{ $errors->first('is_active') }}</p>@enderror
