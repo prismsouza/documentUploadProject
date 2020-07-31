@@ -67,6 +67,12 @@ class FilesController extends Controller
         return round($file_size, 2) . ' ' . $units[$i];
     }
 
+    public function destroy(File $file)
+    {
+        $file->delete();
+        return redirect(route('documents.index'))->with('successMsg', 'Documento deletado');
+    }
+
     public function dumpArray($array) {
         echo "<pre>";
         var_dump($array);

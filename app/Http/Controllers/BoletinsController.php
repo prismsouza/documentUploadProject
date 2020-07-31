@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Boletim;
-use App\Http\Requests\BoletimDocumentCreateRequest;
+use App\File;
+use App\Http\Requests\BoletimCreateRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Facades\Storage;
 
 class BoletinsController extends Controller
 {
@@ -29,7 +31,7 @@ class BoletinsController extends Controller
         return view('boletins.create');
     }
 
-    public function store(BoletimDocumentCreateRequest $request)
+    public function store(BoletimCreateRequest $request)
     {
         $request->validated();
         $boletim = new Boletim(request(['category_id', 'name', 'description', 'date']));
@@ -57,14 +59,23 @@ class BoletinsController extends Controller
     public function update(Request $request, Boletim $boletim)
     {
 
+        //dd($request->all());
         if (request('file_name_pdf') == NULL) {
             $boletim->update($this->validateBoletim("dont_update_path"));
         } else {
             $boletim->update($this->validateBoletim(''));
-
             $file_pdf = new FilesController();
             //$this->dumpArray(request('file_name_pdf'));
             $file_pdf->uploadFile($request, $boletim, 'pdf', 0);
+            $old_pdf = $boletim->files->whereNotNull('alias')->first();
+            File::destroy($old_pdf->id);
+        }
+
+        //dd(request()->all());
+        if (request()->has('files')) {
+            $files = new FilesController();
+            $files->uploadMultipleFiles($request, $boletim, 0);
+
         }
 
         return redirect($boletim->path())->with('status', 'Boletim atualizado com sucesso!');

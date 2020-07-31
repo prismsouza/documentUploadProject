@@ -31,44 +31,6 @@ $(document).ready(function(){
 });
 
 
-/*$(document).ready(function() {
-    var max_fields      = 6; //maximum input boxes allowed
-    var wrapper   		= $(".input_fields_wrap"); //Fields wrapper
-    var add_button      = $(".add_field_button"); //Add button ID
-    var input
-
-    var x = 1; //initial text box count
-    $(add_button).click(function(e){ //on add input button click
-        e.preventDefault();
-        if(x < max_fields){ //max input box allowed
-            x++; //text box increment
-            $(wrapper).append
-            ('<div class="form-inline px-2 border p-2">' +
-                '<a href="#" class="remove_field px-2">' +
-                '<i class="far fa-trash-alt" style="color: black" aria-hidden="true"></i>' +
-                '</a>' +
-                '<input class="input" type="file" name="files[]" id="file">' +
-                '</div>');
-            var input = document.getElementById('file' );
-            var infoArea = document.getElementById( 'files' );
-            }
-
-        input.addEventListener( 'change', showFileName2 );
-        function showFileName2( event ) {
-            var input = event.srcElement;
-            var fileName = input.files[0].name;
-            infoArea.textContent = fileName;
-            console.log(fileName);
-        }
-    });
-
-    $(wrapper).on("click",".remove_field", function(e){ //user click on remove text
-        e.preventDefault(); $(this).parent('div').remove(); x--;
-    })
-
-
-});*/
-
 $(".dropdown-menu li a").click(function(){
     console.log("dropdown-menu li a");
 
@@ -96,6 +58,42 @@ $("div#tags_ul .dropdown-menu li").click(function(){
 });
 
 
-$(document).ready(function() {
 
-});
+function new_file(i) {
+    console.log("new_file_text" + i);
+    $("#new_file_text" + i).css("display", "none");
+    var input = document.getElementById('new_file'+i);
+
+    var input = event.srcElement;
+    var fileName = input.files[0].name;
+    var infoArea = document.getElementById('new_file_text' + i);
+    $("#current_file" + i).removeClass('current_file_text');
+    $("#current_file" + i).addClass('remove_file_text');
+    $("#new_file_text" + i).removeClass('remove_file_text');
+    $("#new_file_text" + i).addClass('new_file_text');
+    $("#new_file_text" + i).css("display", "block");
+    $("#remove_field" + i).fadeIn();
+    infoArea.textContent = (fileName);
+}
+
+function remove_file(i) {
+    console.log("remove_file" + i);
+        $("#current_file" + i).removeClass('current_file_text');
+        $("#current_file" + i).addClass('remove_file_text');
+        $("#new_file_text" + i).removeClass('new_file_text');
+        $("#new_file_text" + i).fadeOut();
+        $("#new_file_text" + i).addClass('remove_file_text');
+        $("#remove_field" + i).fadeOut();
+        $("#undo_field" + i).css("visibility", "visible");
+        $("#undo_field" + i).fadeIn();
+}
+function undo_file(i) {
+    console.log("undo_file" + i);
+        $("#current_file"+i).removeClass('remove_file_text');
+        $("#current_file"+i).addClass('current_file_text');
+        $("#remove_field"+i).fadeIn();
+        $("#undo_field"+i).css("visibility", "hidden");
+        $("#undo_field"+i).fadeOut();
+        $("#new_file_text"+i).css("display", "none");
+}
+

@@ -1,6 +1,21 @@
 @extends ('layout_admin')
 @section('content')
 
+    <style>
+        .new_file_text {
+            color: darkolivegreen;
+            font-weight: bold;
+
+        }
+        .remove_file_text {
+            color: darkred;
+            text-decoration: line-through;
+        }
+        .current_file_text {
+            color: dimgrey;
+        }
+
+    </style>
     <?php
     $categories = App\Category::all();
     $boletins = App\Boletim::all();
@@ -65,13 +80,15 @@
 
 <!-- -------------- REPLACE PDF FILE -------------- -->
                 <div class="form-row py-2" ID="upload_file">
-                    <div class="col-md-12">
+                    <div class="col-md-4">
                             <label for="file_name_pdf">Substituir arquivo pdf:<b>*</b> </label>
                             <i class="fa fa-upload p-1"></i>
                             <i class="fa fa-file-pdf px-2" aria-hidden="true"></i>
 
                             <label for="file_name_pdf" class="btn btn-light border">Anexar novo</label>
                             <span class="px-3"></span>
+                    </div>
+                    <div class="col-md">
                             <span id="file_pdf_old" style="color: dimgrey">
                                 {{ $boletim->files->whereNotNull('alias')->first()->alias }}
                             </span>
@@ -82,20 +99,20 @@
                             name="file_name_pdf" id="file_name_pdf"
                             value="{{ $boletim->files->first()->name }}"
                             style="visibility: hidden">
-                        <span id="file_pdf_new" style="color: darkolivegreen; display:none">
+                        <span id="new_file_pdf" style="color: darkolivegreen; font-weight: bold; display:none">
                         </span>
 
                         <script>
                             $("#file_name_pdf").css("display", "none");
                             var input = document.getElementById('file_name_pdf');
                             var infoArea;
-                            input.addEventListener( 'change', showFileName);
-                            function showFileName( event ) {
+                            input.addEventListener( 'change', showPDFFileName);
+                            function showPDFFileName( event ) {
                                 var input = event.srcElement;
                                 var fileName = input.files[0].name;
-                                infoArea = document.getElementById('file_pdf_new');
-                                $("#file_pdf_old").css("color", "darkred");
-                                $("#file_pdf_new").css("display", "block");
+                                infoArea = document.getElementById('new_file_pdf');
+                                $("#file_pdf_old").css({"color": "darkred", "text-decoration": "line-through"});
+                                $("#new_file_pdf").css("display", "block");
                                 infoArea.textContent = (fileName);
                             }
                         </script>
@@ -105,100 +122,140 @@
                         @enderror
                     </div>
                 </div>
-<!-- -------------- REMOVE FILES -------------- -->
-                    <?php $count_anexos = 0; ?>
-                    <?php $files = $boletim->files->whereNull('alias')->all(); ?>
-                    @if (!empty($files))
-                        <p class="py-4"><b>Anexos:</b> (máximo 5)</p>
-                        <ul>
-                            <?php $count_anexos = count($files); ?>
-                            @foreach ($files as $file)
-                                <li class="px-2 py-1" id="options_{{$file->id}}">
-                                    {{ $file->name }} <span class="px-2"></span>
-                                    <a  data-toggle="tooltip" title="download {{ $file->name }}"
-                                        href="{{ route('boletins.download', [$boletim->id , $file->hash_id]) }}"
-                                        class="btn btn-light"
-                                        id="download{{$file->id}}">
-                                        <i class="fas fa-download" style="color:darkseagreen"></i>
-                                    </a>
-                                    @if ($file->type == "application/pdf")
-                                        <a  data-toggle="tooltip" title="visualizar {{ $file->name }}"
-                                            href="{{ route('boletins.viewfile', [$boletim->id , $file->id]) }}" target="_blank"
-                                            class="btn btn-light"
-                                            id="visualize{{$file->id}}">
-                                            <i class="fas fa-eye" style="color:cadetblue"></i>
-                                        </a>
-                                    @endif
-                                        <span data-toggle="tooltip" title="remover {{ $file->name }}"
-                                            href="#" target="_blank"
-                                            class="btn btn-light"
-                                            id="remove{{$file->id}}">
-                                            <i class="far fa-trash-alt" style="color: darkred" aria-hidden="true"></i>
-                                        </span>
-                                </li>
 
-                                    <script>
-                                        $("#remove{{$file->id}}").on("click", function(){
-                                            $("#options_{{$file->id}}").fadeToggle();
-                                        });
-                                    </script>
-                            @endforeach
-                        </ul>
+<!-- -------------- UPDATE FILES -------------- -->
+                <?php $files = $boletim->files->whereNull('alias')->all(); $i=0; ?>
+                <?php $count_anexos = count($files);?>
+                @if (!empty($files))
+                    <p class="py-4"><b>Anexos:</b> (máximo 5)</p>
+
+                    @foreach ($files as $file)
+                    <div class="form-row" ID="upload_files">
+                        <div class="col-md-1">
+                            <label for="new_file{{$i}}" class="btn btn-light border">Anexar</label><span class="px-3"></span>
+                        </div>
+                        <div class="col-md">
+                            <span id="current_file{{$i}}" class="current_file_text">
+                                Atual: {{ $file->name }}
+                            </span><span class="px-3"></span>
+                            <a  data-toggle="tooltip" title="download {{ $file->name }}"
+                                href="{{ route('boletins.download', [$boletim->id , $file->hash_id]) }}"
+                                class="btn btn-light"
+                                id="download{{$file->id}}">
+                                <i class="fas fa-download" style="color:darkseagreen"></i>
+                            </a>
+                            @if ($file->type == "application/pdf")
+                                <a  data-toggle="tooltip" title="visualizar {{ $file->name }}"
+                                    href="{{ route('boletins.viewfile', [$boletim->id , $file->id]) }}" target="_blank"
+                                    class="btn btn-light"
+                                    id="visualize{{$file->id}}">
+                                    <i class="fas fa-eye" style="color:cadetblue"></i>
+                                </a>
+                            @endif
+                            <span
+                                class="btn btn-light" id="remove_field{{$i}}"
+                                data-toggle="tooltip" title="remover {{ $file->name }}">
+                                <i class="far fa-trash-alt" style="color: darkred" aria-hidden="true"></i>
+                            </span>
+                            <span
+                                class="btn btn-light" id="undo_field{{$i}}" style="visibility: hidden"
+                                data-toggle="tooltip" title="desfazer">
+                                <i class="fa fa-undo" style="color: dimgrey" aria-hidden="true"></i>
+                            </span>
+
+                            <input
+                                class="input" type="file"
+                                name="files[]" id="new_file{{$i}}"
+                                value="{{ $file->name }}"
+                                style="display: none">
+                            <span id="new_file_text{{$i}}" class="new_file_text py-2"
+                                  style="display:none">
+                            </span>
+
+                            <script>
+                                $( "#new_file{{$i}}").click(function() {
+                                    $("input[value]").bind("change", function() {
+                                        new_file({{$i}});
+                                    });
+                                });
+                                $( "#remove_field{{$i}}" ).click(function() {
+                                    remove_file({{$i}});
+                                });
+                                 $( "#undo_field{{$i}}" ).click(function() {
+                                     undo_file({{$i}});
+                                 });
+                            </script>
+
+                            @error('new_file{{$i}}')
+                            <p class="help is-danger">{{ $errors->first('new_file'.$i) }}</p>
+                            @enderror
+                            </div>
+                    </div>
+                        <?php $i = $i+1; ?>
+                    @endforeach
                 @endif
+                @for ($i=$count_anexos; $i < 5; $i++)
+                    <div class="form-row">
+                        <div class="col-md-1">
+                            <label for="new_file{{$i}}" class="btn btn-light border">Anexar</label><span class="px-3"></span>
+                        </div>
+                        <div class="flex-column px-2">
+                            <input
+                                class="input" type="file"
+                                name="files[]" id="new_file{{$i}}"
+                                value="{{ $file->name }}"
+                                style="display: none">
+                            <span id="new_file_text{{$i}}" class="py-2"></span>
+                            <span class="px-3"></span>
+                        </div>
+                        <div class="flex-column">
+                                <span
+                                    class="btn btn-light " id="remove_field{{$i}}" style="display:none"
+                                    data-toggle="tooltip" title="remover {{ $file->name }}">
+                                    <i class="far fa-trash-alt" style="color: darkred" aria-hidden="true"></i>
+                                </span>
 
+                                <script>
+                                $( "#new_file{{$i}}").click(function() {
+                                    $("input[value]").bind("change", function() {
+                                        console.log($("#remove_field{{$i}}"));
+                                        new_file({{$i}});
+                                        $("#remove_field{{$i}}").css("visibility", "visible");
+                                    });
+                                });
+                                $( "#remove_field{{$i}}" ).click(function() {
+                                    remove_file({{$i}});
 
-<!-- -------------- UPLOAD FILES -------------- -->
-                    Anexar mais arquivos
-                    @for ($i = 0; $i< 5 - $count_anexos; $i++)
-                    <div class="form-inline px-2 p-2">
-                        <label for="file{{$i}}" class="btn btn-light border">Anexar...</label>
-                        <span class="px-4"></span>
-                        <input class="input" type="file" name="files[]" id="file{{$i}}" style="visibility: hidden">
+                                });
+                                $( "#undo_field{{$i}}" ).click(function() {
+                                    undo_file({{$i}});
+                                });
+                            </script>
 
-                        <div class="file{{$i}}" style="color: darkolivegreen"></div>
+                            <script>
+                                /*$("#new_file_text{{$i}}").css("display", "none");
+                                var input = document.getElementById('new_file{{$i}}');
+                                var infoArea;
+                                input.addEventListener( 'change', showFileName);
+                                function showFileName( event ) {
+                                    var input = event.srcElement;
+                                    var fileName = input.files[0].name;
+                                    infoArea = document.getElementById('new_file_text{{$i}}');
+                                    $("#current_file{{$i}}").css({"color": "darkred", "text-decoration": "line-through"});
+                                    $("#new_file_text{{$i}}").css("display", "block");
+                                    $("#remove_field{{$i}}").css("visibility", "visible");
+                                    $("#remove_field{{$i}}").fadeIn();
+                                    $("#undo_field{{$i}}").fadeOut();
+                                    infoArea.textContent = (fileName);
+                                }
 
-                        <span href="#" class="remove_field px-2" id="remove_field{{$i}}" style="display: none" class="btn btn-light">
-                            <i class="far fa-trash-alt" style="color: darkred" aria-hidden="true"></i>
-                        </span>
+                                $("#remove_field{{$i}}").on("click", function(){ //user click on remove text
+                                    $("#new_file_text{{$i}}").text();
+                                    $("#remove_field{{$i}}").fadeOut();
+                                });*/
 
-                        <script>
-                            var input = document.getElementById('file{{$i}}');
-                            var infoArea;// = document.getElementById('file_upload{{$i}}');
-                            input.addEventListener( 'change', showFileName);
-                            function showFileName( event ) {
-                                var input = event.srcElement;
-                                var fileName = input.files[0].name;
-                                infoArea = document.getElementsByClassName(event.srcElement.id)[0];
-                                infoArea.textContent = fileName;
-                            }
-                        </script>
-
-                        <script>
-                            $("#file{{$i}}").on('click', function() {
-                                document.body.onfocus = roar;
-                                console.log('chargin');
-                                $(this).css("display", "none");
-                                    function roar(file_input)
-                                    {
-                                        var file_input = document.getElementById("file{{$i}}");
-                                        console.log(file_input);
-                                        if(file_input.value.length) {
-                                            $("#remove_field{{$i}}").css("display", "block");
-                                            $(".file{{$i}}").css("display", "block");
-                                            console.log("remove icon displayed");
-                                        }
-                                        else {
-                                            $("#remove_field{{$i}}").css("display", "none");
-                                        }
-                                        document.body.onfocus = null
-                                    }
-                            });
-                            $("#remove_field{{$i}}").on("click", function(){ //user click on remove text
-                                $(".file{{$i}}").fadeToggle();
-                                $("#remove_field{{$i}}").fadeToggle();
-                            });
-                        </script>
-
+                            </script>
+                        </div>
                     </div>
                     @endfor
 
@@ -223,7 +280,9 @@
 
                     <!-- -------------- BTN Editar Boletim -------------- -->
                     <div class="field is-grouped" id="btn_create_document">
-                        <button class="btn btn-dark btn-outline-light border" type="submit">Salvar</button>
+                        <button class="btn btn-dark btn-outline-light border" type="submit" >
+                            Salvar
+                        </button>
                         <a href="{{ route('home') }}" class="btn btn-light border">
                             <i class="fas fa-home"></i>
                         </a>
@@ -239,4 +298,7 @@
             </form>
     <br><br>
     <script src="{{ asset('site/edit_document.js') }}"></script>
+    <php>
+
+    </php>
 @endsection

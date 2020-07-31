@@ -38,7 +38,7 @@ Route::delete('/boletins/delete/{boletim}', 'BoletinsController@destroy')->name(
 Route::get('/boletins/{boletim}/download/{type}', 'BoletinsController@download')->name('boletins.download');
 Route::get('/boletins/{boletim}/visualizar/{file_id}', 'BoletinsController@viewfile')->name('boletins.viewfile');
 
-
+Route::delete('/arquivos/delete/{file}', 'FilesController@destroy')->name('files.destroy');
 
 
 Route::get('/documentos/categorias/{category}', 'DocumentsController@showByCategory')->name('documents_category.index');
