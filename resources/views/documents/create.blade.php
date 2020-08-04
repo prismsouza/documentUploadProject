@@ -2,7 +2,9 @@
 @section ('content')
 
     <h1 class="heading has-text-weight-bold is-size-4 py-6">Novo Documento</h1>
-    <form method="POST" action="/documentos" enctype="multipart/form-data" class="p-5 border"> @csrf
+    <form method="POST" action="/documentos"
+          enctype="multipart/form-data" class="p-5 border">
+            @csrf
 
 <!-- -------------- CATEGORY -------------- -->
         <div class="form-row" id="category">
@@ -92,7 +94,8 @@
                     type="file" accept=".pdf, application/pdf"
                     name="file_name_pdf" id="file_name_pdf"
                     value="{{ old('file_name_pdf') }}"
-                    style="visibility: hidden">
+                    style="display: none"><br>
+                    <!--style="visibility: hidden">-->
 
                 <label for="file_name_pdf" class="btn border">Anexar...</label>
                 <div id="file_pdf_upload" style="color: darkolivegreen"></div>

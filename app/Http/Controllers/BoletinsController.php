@@ -58,7 +58,6 @@ class BoletinsController extends Controller
 
     public function update(Request $request, Boletim $boletim)
     {
-
         //dd($request->all());
         if (request('file_name_pdf') == NULL) {
             $boletim->update($this->validateBoletim("dont_update_path"));
@@ -69,6 +68,7 @@ class BoletinsController extends Controller
             $file_pdf->uploadFile($request, $boletim, 'pdf', 0);
             $old_pdf = $boletim->files->whereNotNull('alias')->first();
             File::destroy($old_pdf->id);
+            //$boletim->files->whereNotNull('alias')->first()->delete();
         }
 
         //dd(request()->all());

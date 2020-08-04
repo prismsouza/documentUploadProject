@@ -155,8 +155,12 @@ class DocumentsController extends Controller
     public function update(Request $request, Document $document)
     {
         if (!request('file_name')) {
+            echo('EXTRA FILES -NOT- EDITED');
+            die();
             $this->validateDocument("dont_update_path");
         } else {
+            echo('EXTRA FILES EDITED');
+            die();
             $this->validateDocument('');
         }
 
@@ -169,10 +173,18 @@ class DocumentsController extends Controller
             $document->tags()->attach(request('tags'));
         }
 
-        if (!request('file_name'))
+        if (!request('file_name_pdf')) {
             $document->update($this->validateDocument("dont_update_path"));
-        else
+            echo('FILE NAME PDF -NOT- EDITED');
+        } else {
             $document->update($this->validateDocument(''));
+            echo('FILE NAME PDF EDITED');
+            $document->files->whereNotNull('alias')->first()->delete();
+            $file_pdf = new FilesController();
+            $file_pdf->uploadFile($request, $document, 'pdf', 1);
+        }
+        //$file_pdf = new FilesController();
+        //$file_pdf->uploadFile($request, $document, 'pdf', 1);
 
         return redirect($document->path());
     }

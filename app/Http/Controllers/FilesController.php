@@ -31,6 +31,8 @@ class FilesController extends Controller
     {
         $file = new File(request(['name', 'extension', 'type', 'size', 'alias']));
         //$this->dumpArray($request->all());
+        //echo "----- NEXTTTT ----  ";
+        //$this->dumpArray($file);
 
             $file->name = $_FILES['file_name_' . $type]['name'];
 

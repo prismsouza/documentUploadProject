@@ -12,7 +12,7 @@
     </a>
 
     <h1 class="heading has-text-weight-bold is-size-4 py-6">Editar Documento</h1>
-    <form method="POST" action="/documentos/{{ $document->id }}" class="p-5 border">
+    <form method="POST" action="/documentos/{{ $document->id }}" enctype="multipart/form-data" class="p-5 border">
                 @csrf
                 @method('PUT')
 
@@ -41,7 +41,7 @@
 <!-- -------------- NAME -------------- -->
                     <div class="form-row py-4">
                         <div class="col-md-4 mb-3">
-                            <label>Nome <b>*</b> </label>
+                            <label for="name">Nome <b>*</b> </label>
                             <input
                                 class="form-control input @error('name') is-danger @enderror"
                                 type="text"
@@ -69,21 +69,39 @@
                         </div>
                     </div>
 
-<!-- -------------- UPLOAD PDF and DOC FILE -------------- -->
+<!-- -------------- REPLACE PDF FILE-------------- -->
                 <div class="form-row" ID="upload_file">
                     <div class="col-md-6 mb-3">
                         <label for="file_name_pdf">Substituir arquivo pdf:<b>*</b> </label>
                         <i class="fa fa-upload p-1"></i>
                         <i class="fa fa-file-pdf" aria-hidden="true"></i>
+
                         <input
                             class="input @error('file_name_pdf') is-danger @enderror"
                             type="file" accept=".pdf, application/pdf"
                             name="file_name_pdf" id="file_name_pdf"
-                            value="{{ $document->files->first()->name }}">
+                            value="{{ old('file_name_pdf') }}"
+                            style="display: none">
+                            <!--style="visibility: hidden">-->
 
                         <spam style="color: dimgrey">
                             {{ $document->files->whereNotNull('alias')->first()->alias }}
-                        </spam>
+                        </spam><br>
+
+                        <label for="file_name_pdf" class="btn border">Anexar...</label>
+                        <div id="file_pdf_upload" style="color: darkolivegreen"></div>
+
+                        <script>
+                            var input = document.getElementById('file_name_pdf' );
+                            var infoArea = document.getElementById( 'file_pdf_upload' );
+                            input.addEventListener( 'change', showFileName);
+                            function showFileName( event ) {
+                                var input = event.srcElement;
+                                var fileName = input.files[0].name;
+                                infoArea.textContent = fileName;
+                                console.log(fileName);
+                            }
+                        </script>
 
                         @error('file_name_pdf')
                         <p class="help is-danger">{{ $errors->first('file_name_pdf') }}</p>
@@ -94,7 +112,7 @@
 <!-- -------------- DOCUMENT_HAS_DOCUMENT -------------- -->
                     <div class="dropdown py-5" id="document_has_document">
                         <label>Documentos Relacionados:</label>
-                        <button id="dLabel" role="button" href="#" class="btn btn-light border"
+                        <button id="dLabel" role="button" class="btn btn-light border"
                                 data-toggle="dropdown" data-target="#" >
                             Selecione documentos... <span class="caret"></span>
                         </button>
@@ -104,7 +122,7 @@
                                 @if ($doc->category_id != 1 && $doc->category_id != 2)
                                     <div class="col-sm">
                                         <li class="p-1">
-                                            <label class="box px-5 checkbox-inline">
+                                            <label for="document_has_document[]" class="box px-5 checkbox-inline">
                                                 <input
                                                     type="checkbox" value="{{ $doc->id }}"
                                                     id="{{ $doc->id }}" name="document_has_document[]"

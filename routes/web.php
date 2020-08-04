@@ -53,6 +53,7 @@ Route::get('/documentos/{document}/download/{type}', 'DocumentsController@downlo
 Route::get('/documentos/{document}/visualizar/{file_id}', 'DocumentsController@viewfile')->name('documents.viewfile');
 Route::get('/documentos/{document}', 'DocumentsController@show')->name('documents.show');
 Route::get('/documentos/{document}/editar', 'DocumentsController@edit')->name('documents.edit');
+//Route::post('/documentos/{document}', 'DocumentsController@update')->name('documents.update');
 Route::put('/documentos/{document}', 'DocumentsController@update')->name('documents.update');
 //Route::get('/documentos/boletim/{document}/editar', 'DocumentsController@edit_boletim')->name('documents_boletim.edit');
 //Route::put('/documentos/boletim/{document}', 'DocumentsController@update_boletim')->name('documents_boletim.update');

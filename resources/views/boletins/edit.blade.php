@@ -176,13 +176,16 @@
                                 $( "#new_file{{$i}}").click(function() {
                                     $("input[value]").bind("change", function() {
                                         new_file({{$i}});
+                                        console.log("new_file");
                                     });
                                 });
                                 $( "#remove_field{{$i}}" ).click(function() {
                                     remove_file({{$i}});
+                                    console.log("remove_file");
                                 });
                                  $( "#undo_field{{$i}}" ).click(function() {
                                      undo_file({{$i}});
+                                     console.log("undo_file");
                                  });
                             </script>
 
