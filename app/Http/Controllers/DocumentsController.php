@@ -64,17 +64,19 @@ class DocumentsController extends Controller
         $document->user_id = 1;
         $document->save();
 
-        if (request()->has('boletim_document_id')) {
-            $document->hasboletim()->toggle(request('boletim_document_id'), $document->id);
-        }
-
-        if (request()->has('files')) {
+        if (request()->has('filesToUpload')) {
                 $files = new FilesController();
                 $files->uploadMultipleFiles($request, $document, 1);
         }
 
-        $file_pdf = new FilesController();
-        $file_pdf->uploadFile($request, $document, 'pdf', 1);
+        if (request()->has('file_name_pdf')) {
+            $file_pdf = new FilesController();
+            $file_pdf->uploadFile($request, $document, 'pdf', 1);
+        }
+
+        if (request()->has('boletim_document_id')) {
+            $document->hasboletim()->toggle(request('boletim_document_id'), $document->id);
+        }
 
         if (request()->has('document_has_document')) {
             $document->hasdocument()->toggle(request('document_has_document'));
@@ -154,23 +156,28 @@ class DocumentsController extends Controller
 
     public function update(Request $request, Document $document)
     {
+        //dd($request);
         if (!request('file_name')) {
             echo('EXTRA FILES -NOT- EDITED');
-            die();
+            //die();
             $this->validateDocument("dont_update_path");
         } else {
             echo('EXTRA FILES EDITED');
-            die();
+            //die();
             $this->validateDocument('');
         }
-
 
         if (request()->has('boletim_document_id')) {
             $document->boletim_document_id = request('boletim_document_id');
         }
 
+        //dd(request('document_has_document'));
+        if (request()->has('document_has_document')) {
+            $document->hasdocument()->sync(request('document_has_document'));
+        }
+
         if (request()->has('tags')) {
-            $document->tags()->attach(request('tags'));
+            $document->tags()->sync(request('tags'));
         }
 
         if (!request('file_name_pdf')) {

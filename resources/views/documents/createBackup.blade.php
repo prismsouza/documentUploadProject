@@ -82,12 +82,10 @@
                     @enderror
             </div>
         </div>
-
 <!-- -------------- UPLOAD PDF FILE -------------- -->
         <div class="form-row" ID="upload_file">
-            <div class="col-md-12 mb-3">
-                <label for="file_name_pdf" class="btn border">Anexar Arquivo Principal em PDF<b>*</b></label>
-
+            <div class="col-md-6 mb-3">
+                <label for="file_name_pdf">Anexar arquivo em formato pdf:<b>*</b> </label>
                 <i class="fa fa-upload p-1"></i>
                 <i class="fa fa-file-pdf" aria-hidden="true"></i>
 
@@ -99,6 +97,7 @@
                     style="display: none"><br>
                     <!--style="visibility: hidden">-->
 
+                <label for="file_name_pdf" class="btn border">Anexar...</label>
                 <div id="file_pdf_upload" style="color: darkolivegreen"></div>
 
                 <script>
@@ -116,79 +115,19 @@
                 @error('file_name_pdf')
                 <p style="color: darkred">{{ $errors->first('file_name_pdf') }}</p>
                 @enderror
-            </div>
-        </div>
-
 <!-- -------------- UPLOAD MORE FILES -------------- -->
-        <div class="form-group">
-            <span id="attach_more">
-                Anexar mais documentos
-            </span>
-            <label id="plus" for="files" class="btn border">+</label>
-
-            <input multiple
-                name="files[]" id="files" type="file"
-                style="display: none">
-            <input name="filesToUpload[]" id="filesToUpload" type="hidden" value="" >
-
-            <div class="list_files" style="color: forestgreen"></div>
-
-                <script>
-                    var names = [];
-
-                    //$('.list_files').text("");
-                    var generateList = function() {
-                        names.forEach((name, i) => {
-                            var line = "<button class='btn' style=\"color: forestgreen\">" + name + "  <i class=\"fas fa-trash-alt\"></i></button><br>";
-                            $('.list_files').append(line);
-                        });
-                        document.getElementById("filesToUpload").value = JSON.stringify(names);
-                    }
-
-                $(function() {
-                    $("#files").on('change', function() {
-                       names = [];
-                        $('.list_files').text("");
-                        var files = document.getElementById('files').files;
-
-                        for (var i = 0; i < files.length; i++) {
-                            names.push(files.item(i).name);
-                        }
-
-                        generateList();
-                        $("#attach_more").text("");
-                        $("#plus").text("Substituir arquivos");
-
-                        console.log(names);
-                    });
-
-
-
-                    $('.list_files').on("click","button", function() { //user click on remove text
-                        console.log(names);
-                        var name = $(this).text().trim();
-                        console.log(name);
-                        var position = names.indexOf(name);
-                        console.log(position);
-
-                        names.splice(position, 1);
-                        $('.list_files').text("");
-                        generateList();
-                        //console.log(names);
-                    })
-                });
-                </script>
-            </div>
+                Anexar mais arquivos (máximo 5)
+                <button class="add_field_button btn border"><i class="fas fa-plus"></i></button>
 
 <!-- -------------- DOCUMENT_HAS_DOCUMENT -------------- -->
-                <div class="dropdown py-2" id="document_has_document">
+                <div class="dropdown py-5" id="document_has_document">
                     <label>Documentos Relacionados:</label>
                     <button id="dLabel" role="button" href="#" class="btn btn-light border"
                             data-toggle="dropdown" data-target="#" >
                         Selecione documentos... <span class="caret"></span>
                     </button>
 
-                    <ul class="dropdown-menu" style="width: 50%">
+                    <ul class="dropdown-menu" style="width: 90%">
                         <input class="form-control" id="document_has_document_input" type="text" placeholder="Search..">
                         @foreach($documents as $document)
                                 <div class="col-sm">
@@ -207,28 +146,28 @@
                 </div>
 
 <!-- -------------- PUBLISHED AT BGBM X -------------- -->
-                <div class="dropdown py-3" id="published_at">
-                    <label>Publicado no BGBM/BEBM: </label>
-                    <button id="dropdownPublishedAt" role="button"
-                            class="btn border px-3 btn-light col-4"
+                <div class="dropdown " id="published_at">
+                    <label>Publicado no BGBM/BEBM:</label>
+                    <button id="dropdownPublishedAt" role="button" type="button"
+                            class="border p-3 btn-light form-control col-10"
                             data-toggle="dropdown" data-target="#"
                             aria-haspopup="true" aria-expanded="true">
-                            N/A <span class="caret"></span>
                         @if (old('boletim_document_id') != null)
                             {{ App\Boletim::where("id", old('boletim_document_id'))->first()->name }}
                             - {{ date('d/m/Y', strtotime(App\Boletim::where("id", old('boletim_document_id'))->first()->date)) }}
                         @endif
+                        <span class="caret float-md-right"></span>
                     </button>
 
 
-                    <ul class="dropdown-menu" style="width: 50%" aria-labelledby="dropdownPublishedAt">
+                    <ul class="dropdown-menu" style="width: 90%" aria-labelledby="dropdownPublishedAt">
 
                         <input class="form-control" id="boletim_document_input" type="text" placeholder="Search..">
                             <?php $boletins = App\Boletim::all(); ?>
                             <li class="px-5" id="0">
                                 <input
                                     type="radio" name="boletim_document_id"
-                                    id="0" value="0"> N/A
+                                    id="0" value="0"> vazio
                             </li>
 
                             @foreach($boletins as $doc_boletim)
@@ -244,7 +183,13 @@
                     </ul>
 
                 </div>
+            </div>
 
+<!-- -------------- UPLOAD MORE FILES -------------- -->
+            <div class="col-md-6 mb-3" rowspan="2">
+                <div class="input_fields_wrap" rowspan="2"></div>
+            </div>
+        </div> <!-- end row -->
 
 <!-- -------------- DATE -------------- -->
         <div class="form-row">
@@ -323,20 +268,13 @@
 
 <!-- -------------- BTN Criar Documento -------------- -->
         <div class="field is-grouped" id="btn_create_document">
-                <button class="btn btn-dark btn-outline-light border" type="submit" onclick="allFiles()">
-                    Criar Documento
-                </button>
+                <button class="btn btn-dark btn-outline-light border" type="submit">Criar Documento</button>
         <a href="{{ route('home') }}" class="btn btn-light border">
             <i class="fas fa-home"></i>
         </a>
         </div>
     </form>
 
-    <script>
-        function allFiles() {
-            document.getElementById('filesToUpload').value = names; //JSON.stringify(names);
-        }
-    </script>
 
     <br><br>
 
