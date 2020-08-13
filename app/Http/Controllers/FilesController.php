@@ -8,10 +8,19 @@ class FilesController extends Controller
 {
     public function uploadMultipleFiles($request, $document, $isDocument)
     {
+        $files = (request('files'));
+        $fileNamesToUpload = explode(',', request('filesToUpload')[0]);
 
-        $files = $request->file('files');
-        if ($request->hasFile('files')) {
-            foreach ($files as $file) {
+
+        $choosen_files = [];
+        foreach ($files as $f) {
+            if (in_array($f->getClientOriginalName(), $fileNamesToUpload)) {
+                //echo $f->getClientOriginalName();
+                array_push($choosen_files, $f);
+            }
+        }
+
+            foreach ($choosen_files as $file) {
                 $file_toUpload = new File(request(['name', 'extension', 'type', 'size', 'alias']));
                 if ($isDocument) $file_toUpload->document_id = $document->id;
                 else $file_toUpload->boletim_id = $document->id;
@@ -24,7 +33,6 @@ class FilesController extends Controller
                 $file->storeAs('documents', $file_toUpload->hash_id);
                 $file_toUpload->save();
             }
-        }
     }
 
     public function uploadFile($request, $document, $type , $isDocument)

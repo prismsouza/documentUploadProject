@@ -7,7 +7,7 @@ use App\File;
 use App\Http\Requests\BoletimCreateRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
-use Illuminate\Support\Facades\Storage;
+//use Illuminate\Support\Facades\Storage;
 
 class BoletinsController extends Controller
 {
@@ -19,7 +19,7 @@ class BoletinsController extends Controller
 
     public function show(Boletim $boletim)
     {
-        $boletim = \App\Boletim::find($boletim->id);
+        $boletim = Boletim::find($boletim->id);
 
         $pdf_file = $boletim->files->whereNotNull('alias')->last();
         $files = $boletim->files->whereNull('alias')->all();

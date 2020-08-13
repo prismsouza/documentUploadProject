@@ -116,13 +116,14 @@
                                 data-toggle="dropdown" data-target="#" >
                             Selecione documentos... <span class="caret"></span>
                         </button>
+
                         <ul class="dropdown-menu" style="width: 90%">
-                            <input class="form-control" id="tags_input" type="text" placeholder="Search..">
+                            <input class="form-control" id="document_has_document_input" type="text" placeholder="Search..">
                             @foreach($documents as $doc)
-                                @if ($doc->category_id != 1 && $doc->category_id != 2)
+                                @if ($doc->id == $document->id) @continue @endif
                                     <div class="col-sm">
                                         <li class="p-1">
-                                            <label for="document_has_document[]" class="box px-5 checkbox-inline">
+                                            <label class="box px-5 checkbox-inline">
                                                 <input
                                                     type="checkbox" value="{{ $doc->id }}"
                                                     id="{{ $doc->id }}" name="document_has_document[]"
@@ -132,7 +133,6 @@
                                             </label>
                                         </li>
                                     </div>
-                                @endif
                             @endforeach
                         </ul>
                     </div>
@@ -242,7 +242,9 @@
                                                 <label class="box px-5 checkbox-inline">
                                                     <input
                                                         type="checkbox" value="{{ $tag->id }}"
-                                                        id="{{ $tag->id }}" name="tags[]">
+                                                        id="{{ $tag->id }}" name="tags[]"
+                                                    <?php if ($document->tags()->find($tag->id)) echo "checked";?>>
+
                                                     {{ $tag->name }}
                                                     <span class="checkmark"></span>
                                                 </label>
