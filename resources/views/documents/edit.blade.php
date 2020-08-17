@@ -5,152 +5,241 @@
     $categories = App\Category::all();
     $documents = App\Document::all();
     ?>
-    <a href="{{ route('documents.index') }}">
-        <button class="btn btn-light btn-outline-dark float-md-right " type="submit">
-            Voltar
-        </button>
-    </a>
+
 
     <h1 class="heading has-text-weight-bold is-size-4 py-6">Editar Documento</h1>
-    <form method="POST" action="/documentos/{{ $document->id }}" enctype="multipart/form-data" class="p-5 border">
-                @csrf
-                @method('PUT')
+    <form method="POST" action="/documentos/{{ $document->id }}"
+          enctype="multipart/form-data" class="p-5 border">
+          @csrf
+          @method('PUT')
 
 <!-- -------------- CATEGORY -------------- -->
-                    <div class="form-row" id="category">
-                        <div class="col-md-12 mb-3">
-                            <label for="category_id">Categoria <b>*</b></label>
-                            <select
-                                id="category_id" name="category_id"
-                                class="selectpicker form-control col-4"
-                                value="category_id" data-live-search="true">
+        <div class="form-row" id="category">
+            <div class="col-md-12 mb-3">
+                <label for="category_id">Categoria <b>*</b></label>
+                <select
+                    id="category_id" name="category_id"
+                    class="selectpicker form-control col-4"
+                    value="category_id" data-live-search="true">
 
-                                <option value={{ $document->category->id }}>{{ $document->category->name }}</option>
-                                @foreach($categories as $category)
-                                    @if ($category->name != $document->category->name && $category->id != '1' && $category->id != '2') <!-- BGBM e BEBM -->) <!-- Boletim Geral -->
-                                        <option id="category_id" name="category_id"
-                                                value={{ $category->id }} >
-                                            {{ $category->name }}
-                                        </option>
+                    <option value={{ $document->category->id }}>{{ $document->category->name }}</option>
+                        @foreach($categories as $category)
+                            @if ($category->name != $document->category->name && $category->id != '1' && $category->id != '2') <!-- BGBM e BEBM -->) <!-- Boletim Geral -->
+
+                                @if (count($category->hassubcategory)>0)
+                                    <optgroup label="  {{ $category->name }}" class="px-2">
+                                        @foreach($category->hassubcategory as $sub_cat)<br>
+                                        @if ($sub_cat->id != old('category_id'))
+                                            <option id="category_id" name="category_id"
+                                                    class="collapsible list-group-item"
+                                                    value={{ $sub_cat->id }}> - {{ $sub_cat->name }}
+                                            </option>
                                         @endif
-                                    @endforeach
-                            </select>
-                        </div>
-                    </div>
+                                        @endforeach
+                                    </optgroup>
+                                @else
+                                    @if (count($category->hasparent)==0)
+                                        <option id="category_id" name="category_id"
+                                                value={{ $category->id }}>{{ $category->name }}
+                                        </option>
+                                    @endif
+                                @endif
+                            @endif
+                        @endforeach
+                </select>
+            </div>
+        </div>
 
 <!-- -------------- NAME -------------- -->
-                    <div class="form-row py-4">
-                        <div class="col-md-4 mb-3">
-                            <label for="name">Nome <b>*</b> </label>
-                            <input
-                                class="form-control input @error('name') is-danger @enderror"
-                                type="text"
-                                name="name"
-                                id="name"
-                                value="{{ $document->name }}">
+        <div class="form-row py-4">
+            <div class="col-md-4 mb-3">
+                <label for="name">Nome <b>*</b> </label>
+                <input
+                    class="form-control input @error('name') is-danger @enderror"
+                    type="text"
+                    name="name" id="name" value="{{ $document->name }}">
 
-                    @error('name')
-                    <p class="help is-danger">{{ $errors->first('name') }}</p>
-                    @enderror
-                </div>
+                @error('name')
+                <p class="help is-danger">{{ $errors->first('name') }}</p>
+                @enderror
+            </div>
 
 <!-- -------------- DESCRIPTION -------------- -->
-                        <div class="col-md-8 mb-3">
-                            <label for="description">Descrição<b> *</b></label>
-                            <input
-                                class="form-control input @error('description') is-danger @enderror"
-                                type="text"
-                                name="description" id="description"
-                        value="{{ $document->description }}">
+            <div class="col-md-8 mb-3">
+                <label for="description">Descrição<b> *</b></label>
+                <input
+                    class="form-control input @error('description') is-danger @enderror"
+                    type="text" name="description" id="description"
+                    value="{{ $document->description }}">
 
-                    @error('description')
+                @error('description')
                     <p class="help is-danger">{{ $errors->first('description') }}</p>
-                    @enderror
-                        </div>
-                    </div>
+                @enderror
+            </div>
+        </div>
 
 <!-- -------------- REPLACE PDF FILE-------------- -->
-                <div class="form-row" ID="upload_file">
-                    <div class="col-md-6 mb-3">
-                        <label for="file_name_pdf">Substituir arquivo pdf:<b>*</b> </label>
-                        <i class="fa fa-upload p-1"></i>
-                        <i class="fa fa-file-pdf" aria-hidden="true"></i>
+        <div class="form-row" ID="upload_file">
+            <div class="col-md-12 mb-3">
+                <label for="file_name_pdf" class="btn border">Substituir Arquivo Principal em PDF:<b>*</b> </label>
+                <i class="fa fa-upload p-1"></i>
+                <i class="fa fa-file-pdf" aria-hidden="true"></i>
 
-                        <input
-                            class="input @error('file_name_pdf') is-danger @enderror"
-                            type="file" accept=".pdf, application/pdf"
-                            name="file_name_pdf" id="file_name_pdf"
-                            value="{{ old('file_name_pdf') }}"
-                            style="display: none">
-                            <!--style="visibility: hidden">-->
+                <input
+                    class="input @error('file_name_pdf') is-danger @enderror"
+                    type="file" accept=".pdf, application/pdf"
+                    name="file_name_pdf" id="file_name_pdf"
+                    value="{{ old('file_name_pdf') }}"
+                    style="display: none">
+                    <!--style="visibility: hidden">-->
 
-                        <spam style="color: dimgrey">
-                            {{ $document->files->whereNotNull('alias')->first()->alias }}
-                        </spam><br>
+                <spam style="color: dimgrey">
+                    {{ $document->files->whereNotNull('alias')->first()->alias }}
+                </spam><br>
 
-                        <label for="file_name_pdf" class="btn border">Anexar...</label>
-                        <div id="file_pdf_upload" style="color: darkolivegreen"></div>
+                <div id="file_pdf_upload" style="color: darkolivegreen"></div>
 
-                        <script>
-                            var input = document.getElementById('file_name_pdf' );
-                            var infoArea = document.getElementById( 'file_pdf_upload' );
-                            input.addEventListener( 'change', showFileName);
-                            function showFileName( event ) {
-                                var input = event.srcElement;
-                                var fileName = input.files[0].name;
-                                infoArea.textContent = fileName;
-                                console.log(fileName);
-                            }
-                        </script>
+                <script>
+                    var input = document.getElementById('file_name_pdf' );
+                    var infoArea = document.getElementById( 'file_pdf_upload' );
+                    input.addEventListener( 'change', showFileName);
+                    function showFileName( event ) {
+                        var input = event.srcElement;
+                        var fileName = input.files[0].name;
+                        infoArea.textContent = fileName;
+                        console.log(fileName);
+                    }
+                </script>
 
-                        @error('file_name_pdf')
-                        <p class="help is-danger">{{ $errors->first('file_name_pdf') }}</p>
-                        @enderror
-                    </div>
-                </div>
+                @error('file_name_pdf')
+                    <p class="help is-danger">{{ $errors->first('file_name_pdf') }}</p>
+                @enderror
+            </div>
+        </div>
 
+<!-- -------------- UPLOAD MORE FILES -------------- -->
+        <div class="form-group">
+            <span id="attach_more">
+                Anexar mais documentos
+            </span>
+                <label id="plus" for="files" class="btn border">+</label>
+
+                <input multiple
+                         name="files[]" id="files" type="file"
+                         style="display: none">
+                <input name="filesToUpload[]" id="filesToUpload" type="hidden" value="" >
+
+            <div class="list_old_files" style="color: forestgreen">
+                <?php
+                foreach($document->files as $file) {
+                    if ($file->alias == NULL) {
+                        echo "<button class='btn' style=\"color: forestgreen\">" . $file->name
+                            . "  <i class=\"fas fa-trash-alt\"></i></button><br>";
+                    }
+                }
+                ?>
+            </div>
+
+            <div class="list_files" style="color: forestgreen"></div>
+
+                  <script>
+                      var names = [];
+
+                      var generateList = function() {
+                          names.forEach((name, i) => {
+                              var line = "<button class='btn' style=\"color: forestgreen\">" + name
+                                  + "  <i class=\"fas fa-trash-alt\"></i></button><br>";
+                              $('.list_files').append(line);
+                          });
+                          //document.getElementById("filesToUpload").value = JSON.stringify(names);
+                      }
+
+                      $(function() {
+                          $("#files").on('change', function() {
+                              names = [];
+                              $('.list_files').text("");
+                              var files = document.getElementById('files').files;
+
+                              for (var i = 0; i < files.length; i++) {
+                                  names.push(files.item(i).name);
+                              }
+
+                              generateList();
+                              $("#attach_more").text("");
+                              $("#plus").text("Substituir arquivos");
+
+                              console.log(names);
+                          });
+
+                          $('.list_files').on("click","button", function() { //user click on remove text
+                              console.log(names);
+                              var name = $(this).text().trim();
+                              console.log(name);
+                              var position = names.indexOf(name);
+                              console.log(position);
+
+                              names.splice(position, 1);
+                              $('.list_files').text("");
+                              generateList();
+                              //console.log(names);
+                          })
+
+                          $('.list_old_files').on("click","button", function() { //user click on remove text
+                              console.log(names);
+                              var name = $(this).text().trim();
+
+                              var position = names.indexOf(name);
+                              console.log(position);
+
+                              names.splice(position, 1);
+                              $('.list_files').text("");
+                              generateList();
+                              //console.log(names);
+                          })
+                      });
+                  </script>
+        </div>
 <!-- -------------- DOCUMENT_HAS_DOCUMENT -------------- -->
-                    <div class="dropdown py-5" id="document_has_document">
-                        <label>Documentos Relacionados:</label>
-                        <button id="dLabel" role="button" class="btn btn-light border"
-                                data-toggle="dropdown" data-target="#" >
-                            Selecione documentos... <span class="caret"></span>
-                        </button>
+        <div class="dropdown py-2" id="document_has_document">
+            <label>Documentos Relacionados:</label>
+            <button id="dLabel" role="button" class="btn btn-light border"
+                    data-toggle="dropdown" data-target="#" >
+                Selecione documentos... <span class="caret"></span>
+            </button>
 
-                        <ul class="dropdown-menu" style="width: 90%">
-                            <input class="form-control" id="document_has_document_input" type="text" placeholder="Search..">
-                            @foreach($documents as $doc)
-                                @if ($doc->id == $document->id) @continue @endif
-                                    <div class="col-sm">
-                                        <li class="p-1">
-                                            <label class="box px-5 checkbox-inline">
-                                                <input
-                                                    type="checkbox" value="{{ $doc->id }}"
-                                                    id="{{ $doc->id }}" name="document_has_document[]"
-                                                    <?php if ($document->hasDocument()->find($doc->id)) echo "checked";?>>
-                                                {{ $doc->name }}
-                                                <span class="checkmark"></span>
-                                            </label>
-                                        </li>
-                                    </div>
-                            @endforeach
-                        </ul>
+            <ul class="dropdown-menu" style="width: 90%">
+                <input class="form-control" id="document_has_document_input" type="text" placeholder="Search..">
+                @foreach($documents as $doc)
+                    @if ($doc->id == $document->id) @continue @endif
+                    <div class="col-sm">
+                        <li class="p-1">
+                            <label class="box px-5 checkbox-inline">
+                                <input
+                                    type="checkbox" value="{{ $doc->id }}"
+                                    id="{{ $doc->id }}" name="document_has_document[]"
+                                    <?php if ($document->hasDocument()->find($doc->id)) echo "checked";?>>
+                                {{ $doc->name }}
+                                <span class="checkmark"></span>
+                            </label>
+                        </li>
                     </div>
+                @endforeach
+            </ul>
+        </div>
 
 <!-- -------------- PUBLISHED AT BGBM X -------------- -->
-                    <div class="dropdown " id="published_at" style="width: 50%">
-                        <label>Publicado no BGBM/BEBM:</label>
-                        <button id="dropdownPublishedAt" role="button" type="button"
-                                class="btn btn-light border form-control col-10"
-                                data-toggle="dropdown" data-target="#"
-                                aria-haspopup="true" aria-expanded="true">
-                            @if (count($document->hasboletim) != 0)
-                                {{ $document->hasboletim->first()->id }} - {{  date('d/m/Y', strtotime($document->hasboletim->first()->date)) }}
-                            @endif
-                        </button>
+        <div class="dropdown py-3" id="published_at" style="width: 50%">
+            <label>Publicado no BGBM/BEBM:</label>
+            <button id="dropdownPublishedAt" role="button" type="button"
+                    class="btn btn-light border form-control col-10"
+                    data-toggle="dropdown" data-target="#"
+                    aria-haspopup="true" aria-expanded="true">
+                @if (count($document->hasboletim) != 0)
+                    {{ $document->hasboletim->first()->id }} - {{  date('d/m/Y', strtotime($document->hasboletim->first()->date)) }}
+                @endif
+            </button>
 
-
-                        <ul class="dropdown-menu" style="width: 90%" aria-labelledby="dropdownPublishedAt">
+            <ul class="dropdown-menu" style="width: 90%" aria-labelledby="dropdownPublishedAt">
                             <input class="form-control" id="boletim_document_input" type="text" placeholder="Search..">
                             <?php $documents_bgbm = $categories->where('name','BGBM')->first()->documents; ?>
                             <?php $documents_bebm = $categories->where('name','BEBM')->first()->documents; ?>
@@ -202,7 +291,7 @@
                         </div>
                     </div>
 
-                <!-- -------------- IS_ACTIVE -------------- -->
+<!-- -------------- IS_ACTIVE -------------- -->
                     <div class="form-row">
                         <div class="col-md-12 mb-4">
                             <div class="control" id="is_active">
@@ -220,7 +309,7 @@
                         </div>
                     </div>
 
-                <!-- -------------- TAGS -------------- -->
+<!-- -------------- TAGS -------------- -->
                     <div class="form-row py-2">
                         <div class="col-md-12">
                             <div class="dropdown" id="Tags">
@@ -260,14 +349,20 @@
                     </div>
                     <br><br><span class="small float-md-left">* campos obrigatorios</span><br>
 
-                    <!-- -------------- BTN Editar Documento -------------- -->
+<!-- -------------- BTN Editar Documento -------------- -->
                     <div class="field is-grouped" id="btn_create_document">
-                        <button class="btn btn-dark btn-outline-light border" type="submit">Editar Documento</button>
+                        <button class="btn btn-dark btn-outline-light border" type="submit" onclick="allFiles()">Editar Documento</button>
                         <a href="{{ route('home') }}" class="btn btn-light border">
                             <i class="fas fa-home"></i>
                         </a>
                     </div>
-            </form>
+    </form>
+    <script>
+        function allFiles() {
+            document.getElementById('filesToUpload').value = names; //JSON.stringify(names);
+        }
+    </script>
+
     <br><br>
     <script src="{{ asset('site/create_document.js') }}"></script>
 @endsection

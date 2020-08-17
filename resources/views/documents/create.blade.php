@@ -4,12 +4,12 @@
     <h1 class="heading has-text-weight-bold is-size-4 py-6">Novo Documento</h1>
     <form method="POST" action="/documentos"
           enctype="multipart/form-data" class="p-5 border">
-            @csrf
+          @csrf
 
 <!-- -------------- CATEGORY -------------- -->
         <div class="form-row" id="category">
             <div class="col-md-12 mb-3">
-            <label for="category_id">Categoria <b>*</b></label>
+                <label for="category_id">Categoria <b>*</b></label>
                 <select
                     id="category_id" name="category_id"
                     class="selectpicker form-control col-4"
@@ -18,11 +18,11 @@
                         @if (old('category_id') != null)
                             {{ App\Category::where("id", old('category_id'))->first()->name }}
                         @endif
-
                     </option>
 
                     @foreach($categories as $category)
                         @if ($category->id != '1' && $category->id != '2' && $category->id != old('category_id')) <!-- BGBM e BEBM -->
+
                             @if (count($category->hassubcategory)>0)
                                 <optgroup label="  {{ $category->name }}" class="px-2">
                                     @foreach($category->hassubcategory as $sub_cat)<br>
@@ -31,10 +31,9 @@
                                                 class="collapsible list-group-item"
                                                 value={{ $sub_cat->id }}> - {{ $sub_cat->name }}
                                         </option>
-                                    @endif
+                                        @endif
                                     @endforeach
                                 </optgroup>
-
                             @else
                                 @if (count($category->hasparent)==0)
                                     <option id="category_id" name="category_id"
@@ -42,6 +41,7 @@
                                     </option>
                                 @endif
                             @endif
+
                         @endif
                     @endforeach
 
@@ -55,17 +55,15 @@
 <!-- -------------- NAME -------------- -->
         <div class="form-row py-4">
             <div class="col-md-4 mb-3">
-                <label>Nome <b>*</b> </label>
+                <label for="name">Nome <b>*</b> </label>
                 <input
                     class="form-control input @error('name') is-danger @enderror"
                     type="text"
-                    name="name"
-                    id="name"
-                    value="{{ old('name') }}">
+                    name="name" id="name" value="{{ old('name') }}">
 
-            @error('name')
-            <p style="color: darkred">{{ $errors->first('name') }}</p>
-            @enderror
+                @error('name')
+                <p style="color: darkred">{{ $errors->first('name') }}</p>
+                @enderror
             </div>
 
 <!-- -------------- DESCRIPTION -------------- -->
@@ -77,9 +75,9 @@
                     name="description" id="description"
                     value="{{ old('description') }}">
 
-                    @error('description')
-                        <p style="color: darkred">{{ $errors->first('description') }}</p>
-                    @enderror
+                @error('description')
+                    <p style="color: darkred">{{ $errors->first('description') }}</p>
+                @enderror
             </div>
         </div>
 
@@ -87,7 +85,6 @@
         <div class="form-row" ID="upload_file">
             <div class="col-md-12 mb-3">
                 <label for="file_name_pdf" class="btn border">Anexar Arquivo Principal em PDF<b>*</b></label>
-
                 <i class="fa fa-upload p-1"></i>
                 <i class="fa fa-file-pdf" aria-hidden="true"></i>
 
@@ -136,7 +133,6 @@
                 <script>
                     var names = [];
 
-                    //$('.list_files').text("");
                     var generateList = function() {
                         names.forEach((name, i) => {
                             var line = "<button class='btn' style=\"color: forestgreen\">" + name + "  <i class=\"fas fa-trash-alt\"></i></button><br>";
@@ -161,8 +157,6 @@
 
                         console.log(names);
                     });
-
-
 
                     $('.list_files').on("click","button", function() { //user click on remove text
                         console.log(names);

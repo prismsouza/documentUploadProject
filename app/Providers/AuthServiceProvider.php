@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Http\Controllers\TokenController;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
 
@@ -23,6 +24,10 @@ class AuthServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        if(!TokenController::isAuthorized()) {
+            abort(403, "Militar não autorizado.");
+        }
+
         $this->registerPolicies();
 
         //
