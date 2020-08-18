@@ -22,6 +22,11 @@ class Category extends Model
         return $this->hasMany(Document::class);
     }
 
+    public function boletins()
+    {
+        return $this->hasMany(Boletim::class);
+    }
+
     public function path()
     {
         return route('documents_category.index', $this);

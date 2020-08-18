@@ -1,9 +1,7 @@
-@extends ('layout')
-
-<?php $user_id = 1; // admin ?>
+@extends(($admin) ? 'layout_admin' : 'layout')
 
 @section ('content')
-<style>p {font-size: 110%;}</style>
+
 <div class="border p-5">
     <div class="border-bottom border-top py-4">
     <div class="row">
@@ -112,15 +110,12 @@
         @endif
 </div>
 
-
-    @if ($user_id == 0)
-        @include('documents/message_report')
-    @else
+    @if ($admin)
         <br>
         <button type="button" class="btn btn-info">
-                <a href="{{ route('documents.edit', $document->id) }}" style="color:white">
-                    Editar documento  <i class="fas fa-edit" style="color: black"></i>
-                </a>
+            <a href="{{ route('documents.edit', $document->id) }}" style="color:white">
+                Editar documento  <i class="fas fa-edit" style="color: black"></i>
+            </a>
         </button>
         <form method="POST" id="delete-form-{{ $document->id }}"
               action="{{ route('documents.destroy', $document) }}"
@@ -136,11 +131,11 @@
                 event.preventDefault();
                 }"
                href=" {{ route ('documents.index') }}" style="color:white">
-               Excluir documento <i class="far fa-trash-alt" style="color:black" aria-hidden="true"></i>
+                Excluir documento <i class="far fa-trash-alt" style="color:black" aria-hidden="true"></i>
             </a>
         </button>
-
-
+    @else
+        @include('documents/message_report')
     @endif
 
 @endsection

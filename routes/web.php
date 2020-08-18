@@ -2,23 +2,13 @@
 
 use Illuminate\Support\Facades\Route;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
+
 
 Route::get('/upload', 'UploadController@uploadForm');
 Route::post('/upload', 'UploadController@uploadSubmit');
 
-Route::get('/admin', function () {
-    return view('admin_panel');
-})->name('admin_panel');
+Route::get('/admin', 'UsersController@getAdminUsers')->name('admin_panel');
+
 Route::get('/mensagens', 'MessagesController@index')->name('messages.index');
 Route::get('/mensagens/{message}', 'MessagesController@update')->name('messages.update');
 
@@ -53,10 +43,7 @@ Route::get('/documentos/{document}/download/{type}', 'DocumentsController@downlo
 Route::get('/documentos/{document}/visualizar/{file_id}', 'DocumentsController@viewfile')->name('documents.viewfile');
 Route::get('/documentos/{document}', 'DocumentsController@show')->name('documents.show');
 Route::get('/documentos/{document}/editar', 'DocumentsController@edit')->name('documents.edit');
-//Route::post('/documentos/{document}', 'DocumentsController@update')->name('documents.update');
 Route::put('/documentos/{document}', 'DocumentsController@update')->name('documents.update');
-//Route::get('/documentos/boletim/{document}/editar', 'DocumentsController@edit_boletim')->name('documents_boletim.edit');
-//Route::put('/documentos/boletim/{document}', 'DocumentsController@update_boletim')->name('documents_boletim.update');
 Route::delete('/documentos/delete/{document}', 'DocumentsController@destroy')->name('documents.destroy');
 Route::get('home', 'DocumentsController@restore')->name('documents.restore');
 
@@ -81,24 +68,3 @@ Route::any('/mensagens/pesquisa','MessagesController@filter')->name('messages.fi
 
 Route::post('/documentos/{document}','MessagesController@store')->name('message.store');
 Route::get('/documentos/mensagem', 'MessagesController@create')->name('message.create');
-
-
-
-/*
-Route::get('/versao2', function () {
-    return view('search.searchview');
-})->name('searchview');
-
-Route::get('/versao2/pesquisa', function () {
-    return view('search.search');
-})->name('search');
-
-Route::get('/versao2/pesquisa_tema', function () {
-    return view('search.search-theme');
-})->name('search-theme');
-
-Route::get('/versao2/pesquisa_avancada', function () {
-    return view('search.search-advanced');
-})->name('search-advanced');
-
-*/

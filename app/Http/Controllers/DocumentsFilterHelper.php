@@ -6,21 +6,21 @@ use App\Tag;
 use App\Category;
 use Illuminate\Support\Collection;
 
-
-function getFilteredDocuments($request) {
+function getFilteredDocuments($request, $user) {
     $documents = Document::all();
+    $boletins = Boletim::all();
     $query = [];
 
     if (request('word') != NULL) {
         $word = request('word');
         array_push($query, $word);
-        $documents = searchByWord($word, $documents);
+        $documents = searchByWord($word, $documents, $boletins);
     }
 
     if (request('categories') != NULL) {
         $categories = request('categories');
         array_push($query, $categories);
-        $documents = searchByCategories($categories, $documents);
+        $documents = searchByCategories($categories, $documents, $boletins);
     }
 
     if (request('first_date') || request('last_date') != NULL) {
@@ -30,7 +30,7 @@ function getFilteredDocuments($request) {
         if ($last_date == null) $last_date = date("Y-m-d");
         array_push($query, $first_date);
         array_push($query, $last_date);
-        $documents = searchByDate($first_date, $last_date, $documents);
+        $documents = searchByDate($first_date, $last_date, $documents, $boletins);
     }
 
     if (request('tags') != NULL) {
@@ -46,10 +46,10 @@ function getFilteredDocuments($request) {
     }
 
     //$documents = $documents->collapse();
-    return view('documents.index', ['documents' => $documents, 'category_option' => null])->withDetails($documents)->withQuery($query);
+    return view('documents.index', ['documents' => $documents, 'category_option' => null, 'admin' => $user])->withDetails($documents)->withQuery($query);
 }
 
-function searchByWord($word, $documents)
+function searchByWord($word, $documents, $boletins)
 {
     $docs = Document::where('name','LIKE','%'.$word.'%')
                         ->orWhere('description','LIKE','%'.$word.'%')
@@ -57,31 +57,46 @@ function searchByWord($word, $documents)
     $docs_boletins = Boletim::where('name','LIKE','%'.$word.'%')
         ->orWhere('description','LIKE','%'.$word.'%')
         ->get();
+
+    
     $all_docs = $docs->merge($docs_boletins);
     $documents = new Collection($all_docs);
 
     return $documents;
 }
 
-function searchByCategories($categories, $documents)
+function searchByCategories($categories, $documents, $boletins)
 {
     $docs_categories = new Collection();
     foreach($categories as $category_id) {
         $docs = Category::where('id', $category_id)->firstOrFail()->documents;
+        $bols = Category::where('id', $category_id)->firstOrFail()->boletins;
+
         foreach ($docs as $doc) {
             $doc = $documents->where('id', $doc->id)->first();
-            if ($doc != null and !$docs_categories->contains($doc)) $docs_categories->push($doc);
+            if ($doc != null and !$docs_categories->contains($doc)) {
+                $docs_categories->push($doc);
+            }
+        }
+        foreach ($bols as $bol) {
+            $bol = $boletins->where('id', $bol->id)->first();
+            if ($bol != null and !$docs_categories->contains($bol)) {
+                $docs_categories->push($bol);
+            }
         }
     }
-    //dd($docs_categories);
+
     return $docs_categories;//->collapse();
 }
 
-function searchByDate($first_date, $last_date, $documents)
+function searchByDate($first_date, $last_date, $documents, $boletins)
 {
     $docs = $documents->where('date','>=',$first_date)
                         ->where('date','<=',$last_date);
-    $documents = new Collection($docs);
+    $bols = $boletins->where('date','>=',$first_date)
+        ->where('date','<=',$last_date);
+    $all_docs = $docs->merge($bols);
+    $documents = new Collection($all_docs);
     return $documents;
 }
 

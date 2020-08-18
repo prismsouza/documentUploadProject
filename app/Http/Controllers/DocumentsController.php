@@ -14,25 +14,23 @@ include "DocumentsFilterHelper.php";
 
 class DocumentsController extends Controller
 {
-    public function index()
-    {
-        if (request('tag')) {
-            $documents = Tag::where('name', request('tag'))->firstOrFail()->documents;
-        } else {
-            $documents = Document::orderBy('date', 'desc')->paginate();
-        }
-        return view('documents.index', ['documents' => $documents, 'category_option' => null]);
 
+    public function isUserAdmin()
+    {
+        $masp = TokenController::$payload->number;
+        $user = app('App\User')->getUserByMasp($masp)['admin'];
+        return $user;
     }
 
-    public function index_user()
+    public function index()
     {
+
         if (request('tag')) {
             $documents = Tag::where('name', request('tag'))->firstOrFail()->documents;
         } else {
             $documents = Document::orderBy('date', 'desc')->paginate();
         }
-        return view('documents.index_user', ['documents' => $documents, 'category_option' => null]);
+        return view('documents.index', ['documents' => $documents, 'category_option' => null, 'admin' => $this->isUserAdmin()]);
 
     }
 
@@ -44,7 +42,8 @@ class DocumentsController extends Controller
 
         $pdf_file = $document->files->whereNotNull('alias')->first();
         $files = $document->files->whereNull('alias')->all();
-        return view('documents.show', ['document' => $document, 'related_documents' => $related_documents, 'files' => $files, 'pdf_file' => $pdf_file]);
+
+        return view('documents.show', ['document' => $document, 'related_documents' => $related_documents, 'files' => $files, 'pdf_file' => $pdf_file, 'admin' => $this->isUserAdmin()]);
     }
 
     public function home()
@@ -61,7 +60,6 @@ class DocumentsController extends Controller
     {
         $request->validated();
         $document = new Document(request(['category_id', 'name', 'description', 'date', 'is_active']));
-        $document->user_id = 1;
         $document->save();
 
         if (request()->has('filesToUpload') && request('filesToUpload')[0] != null) {
@@ -90,31 +88,6 @@ class DocumentsController extends Controller
         return redirect(route('documents.index'));
     }
 
-    /*public function create_boletim()
-    {
-        return view('documents.create_boletim');
-    }
-
-    public function store_boletim(BoletimDocumentCreateRequest $request)
-    {
-        $request->validated();
-        $document = new Document(request(['category_id', 'name', 'description', 'date']));
-        $document->user_id = 1;
-        $document->boletim_document_id = 0;
-        $document->save();
-
-        if (request()->has('files')) {
-            $files = new FilesController();
-            $files->uploadMultipleFiles($request, $document);
-        }
-
-        $file_pdf = new FilesController();
-        $file_pdf->uploadFile($request, $document, 'pdf');
-
-
-        return redirect(route('documents.boletim'));
-    }*/
-
     public function viewfile(Document $document, $file_id)
     {
         //$file_path = public_path('documents') . '/' . $document->files->whereNotNull('alias')->first()->hash_id;
@@ -139,12 +112,12 @@ class DocumentsController extends Controller
             $documents = Document::where('category_id', $category->id)->paginate();
         }
         $category_option = $category->name;
-        return view('documents.index', ['documents' => $documents, 'category_option' => $category_option]);
+
+        return view('documents.index', ['documents' => $documents, 'category_option' => $category_option, 'admin' => $this->isUserAdmin()]);
     }
 
     public function showDeletedDocuments()
     {
-
         $documents = Document::onlyTrashed()->get();
         return view('documents.deleted_documents', ['documents' => $documents]);
 
@@ -187,26 +160,6 @@ class DocumentsController extends Controller
 
         return redirect($document->path());
     }
-
-    public function edit_boletim(Document $document)
-    {
-        return view('documents.edit_boletim', compact('document'),['tags' => Tag::all()]);
-    }
-
-    /*public function update_boletim(Request $request, Document $document)
-    {
-        if (request('file_name_pdf') == NULL) {
-            $document->update($this->validateBoletim("dont_update_path"));
-        } else {
-            $document->update($this->validateBoletim(''));
-            $file_pdf = new FilesController();
-            $file_pdf->uploadFile($request, $document, 'pdf');
-        }
-
-        return redirect($document->path());
-        //$document->update($request->all());
-        //return redirect($document->path());
-    }*/
 
     public function download(Document $document, $hash_id)
     {
@@ -257,28 +210,9 @@ class DocumentsController extends Controller
         ]);
     }
 
-    public function validateBoletim($option)
-    {
-        if ($option == "dont_update_path"){
-            return request()->validate([
-                'category_id' => 'required',
-                'name' => 'required',
-                'description' => 'required',
-                'date' => 'required'
-            ]);
-        }
-        return request()->validate([
-            'category_id' => 'required',
-            'name' => 'required',
-            'description' => 'required',
-            'file_name_pdf' => 'required',
-            'date' => 'required'
-        ]);
-    }
-
     public function filter(Request $request)
     {
-        return getFilteredDocuments($request);
+        return getFilteredDocuments($request, $this->isUserAdmin());
     }
 
     public function dumpArray($array) {

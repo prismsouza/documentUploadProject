@@ -11,10 +11,17 @@ use Illuminate\Support\Facades\Response;
 
 class BoletinsController extends Controller
 {
+    public function isUserAdmin()
+    {
+        $masp = TokenController::$payload->number;
+        $user = app('App\User')->getUserByMasp($masp)['admin'];
+        return $user;
+    }
+
     public function index()
     {
         $boletins = Boletim::orderBy('date', 'desc')->paginate();
-        return view('boletins.index', ['boletins' => $boletins, 'category_option' => null]);
+        return view('boletins.index', ['boletins' => $boletins, 'category_option' => null, 'admin' => $this->isUserAdmin()]);
     }
 
     public function show(Boletim $boletim)
@@ -23,7 +30,7 @@ class BoletinsController extends Controller
 
         $pdf_file = $boletim->files->whereNotNull('alias')->last();
         $files = $boletim->files->whereNull('alias')->all();
-        return view('boletins.show', ['boletim' => $boletim, 'files' => $files, 'pdf_file' => $pdf_file]);
+        return view('boletins.show', ['boletim' => $boletim, 'files' => $files, 'pdf_file' => $pdf_file, 'admin' => $this->isUserAdmin()]);
     }
 
     public function create()
@@ -128,7 +135,7 @@ class BoletinsController extends Controller
 
     public function filter(Request $request)
     {
-        return getFilteredDocuments($request);
+        return getFilteredBoletins($request, $this->isUserAdmin());
     }
 
     public function dumpArray($array) {

@@ -1,5 +1,5 @@
-<?php $user = "admin"; // admin ?>
-@extends('layout_admin')
+@extends(($admin) ? 'layout_admin' : 'layout')
+
 @include('searchbar')
 
 @section('content')
@@ -8,7 +8,7 @@
                 Categoria: <b>{{ $category_option }}</b>
             </div>
     @else
-        @if ($user == "admin")
+        @if ($admin)
         <a href="{{ route('documents.create') }}">
             <button class="btn btn-dark btn-outline-light border" type="submit">
                Novo Documento
@@ -33,14 +33,20 @@
                 Categoria <i class="fas fa-sort"></i>
             </th>
             <th scope="col" style="width: 10%; text-align: center">Data</th>
-            <th scope="col" style="width: 5%; text-align: center">
-                <i class="fas fa-file-download"></i>
-            </th>
-            @if ($user == "admin")
-                <th scope="col" style="width: 10%; text-align: center" colspan="2">
+
+            @if ($admin)
+                <th scope="col" style="width: 10%; text-align: center">
+                    <i class="fas fa-file-download"></i>
+                </th>
+                <th scope="col" style="width: 8%; text-align: center" colspan="2">
                     <i class="far fa-eye-slash" data-toggle="tooltip" title="visível apenas para Perfil Administrador" style="color:black"></i>
                 </th>
+            @else
+                <th scope="col" colspan="2" style="width: 10%; text-align: center">
+                    <i class="fas fa-file-download"></i>
+                </th>
             @endif
+
         </thead>
         <tbody>
     @endif
@@ -68,9 +74,11 @@
                         <i class="far fa-check-circle" style="color: green"></i>
                     </a>
                 @else
-                    <a data-toggle="tooltip" title="revogado">
-                        <i class="far fa-times-circle" style="color: red"></i>
-                    </a>
+                    @if (isset($document->is_active))
+                        <a data-toggle="tooltip" title="revogado">
+                            <i class="far fa-times-circle" style="color: red"></i>
+                        </a>
+                    @endif
                 @endif
             </td>
             <td> {{ $document->description }}</td>
@@ -86,14 +94,19 @@
 
             <?php $file_pdf = $document->files->whereNotNull('alias')->first();?>
                 <td class="text-center px-0">
+                    <a class="btn border" data-toggle="tooltip" title="visualizar"
+                       href="{{ route('documents.viewfile', [$document->id, $file_pdf->id]) }}" target="_blank">
+                        <i class="fas fa-eye fa-lg" style="color: black" aria-hidden="true"></i>
+                    </a>
                     <a href="{{ route('documents.download', [$document->id , $file_pdf->hash_id]) }}"
                        data-toggle="tooltip" title="{{$file_pdf->size}}"
                        class="btn border">
                         <i class="fa fa-file-pdf fa-lg" style="color: black" aria-hidden="true"></i>
                     </a>
+
                 </td>
 
-            @if ($user == "admin")
+            @if ($admin)
                 <div id="admin_view">
                 <td class="text-center px-0">
                         <a href="{{ route('documents.edit', $document->id) }}"

@@ -10,15 +10,26 @@ class User extends Authenticatable
 {
     use Notifiable;
 
-    protected $fillable = ['name', 'masp'];
+    protected $fillable = ['name', 'masp', 'admin'];
 
     public function documents()
     {
         return $this->hasMany(Document::class);
     }
 
+    public function getUserByMasp($masp)
+    {
+        return User::where('masp', $masp)->first();
+    }
+
     public function unit()
     {
         return $this->belongsTo(Unit::class);
+    }
+
+    public function dumpArray($array) {
+        echo "<pre>";
+        var_dump($array);
+        echo "</pre>";
     }
 }

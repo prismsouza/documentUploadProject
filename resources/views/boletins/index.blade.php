@@ -1,5 +1,5 @@
-<?php $user = "admin"; // admin ?>
-@extends('layout_admin')
+@extends(($admin) ? 'layout_admin' : 'layout')
+
 @include('searchbar')
 
 @section('content')
@@ -10,7 +10,7 @@
         </div>
     @endif
 
-        @if($user == "admin")
+        @if($admin)
             <a href="{{ route('boletins.create') }}">
                 <button class="btn btn-dark border btn-outline-light" type="submit">
                     Novo BGBM / BEBM
@@ -43,7 +43,7 @@
             <th scope="col" style="width: 5%; text-align: center">
                 <i class="fas fa-file-download"></i>
             </th>
-            @if ($user == "admin")
+            @if ($admin)
                 <th scope="col" style="width: 10%; text-align: center" colspan="2">
                     <i class="far fa-eye-slash" data-toggle="tooltip" title="visível apenas para Perfil Administrador" style="color:black"></i>
                 </th>
@@ -91,7 +91,7 @@
                     </a>
                 </td>
 
-            @if ($user == "admin")
+            @if ($admin)
                 <div id="admin_view">
                 <td class="text-center px-0">
                         <a href="{{ route('boletins.edit', $boletim->id) }}"

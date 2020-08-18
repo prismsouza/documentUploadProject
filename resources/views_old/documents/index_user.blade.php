@@ -1,6 +1,5 @@
-<?php $user = "notadmin"; // admin ?>
-@extends('layout')
-@include('searchbar')
+@extends('views.layout')
+@include('views.searchbar')
 
 @section('content')
     @if($category_option)

@@ -2,17 +2,12 @@
 <?php
     $categories = App\Category::all();
     $tags = App\Tag::all();
-    $user = "admin";
 ?>
 
 @include('includes')
 <body>
     @include('header')
     <div class="container">
-    <!-- @ include('navbar') -->
-    @if ($user == "admin")
-        @include('navbar_admin')
-    @endif
 
     @yield('searchbar')
 

@@ -15,4 +15,9 @@ class File extends Model
     {
         return $this->belongsTo(Document::class);
     }
+
+    public function boletim()
+    {
+        return $this->belongsTo(Boletim::class);
+    }
 }

@@ -20,13 +20,22 @@ class MessagesController extends Controller
         return view('documents/message_report');
     }
 
-    public function store(Request $request, $document_id)
+    public function store(Request $request, $doc_id, $isdoc)
     {
         $message = new Message($this->validateMessage());
-        $message->document_id = $document_id;
+        if ($isdoc) {
+            $message->document_id = $doc_id;
+            $message->boletim_id = NULL;
+        } else {
+            $message->document_id = NULL;
+            $message->boletim_id = $doc_id;
+        }
         $message->is_checked = 0;
         $message->save();
-        return redirect(route('documents.show', $document_id));
+        if ($isdoc) {
+            return redirect(route('documents.show', $doc_id));
+        }
+        return redirect(route('boletins.show', $doc_id));
     }
 
     public function edit(Message $message)
