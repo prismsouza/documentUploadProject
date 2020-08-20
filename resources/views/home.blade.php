@@ -1,6 +1,4 @@
-<?php $user = "admin"; // admin ?>
-
-@extends($user=="admin" ? 'layout_admin' : 'layout_user')
+@extends($admin ? 'layout_admin' : 'layout_user')
 
 @include('searchbar')
 @section('content')

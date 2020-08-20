@@ -133,7 +133,9 @@
 
                 names = [];
                 @foreach($document->files as $file)
-                    names.push('{{$file->name}}');
+                    @if ($file->alias == NULL)
+                        names.push('{{$file->name}}');
+                    @endif
                 @endforeach
 
                 $(function() {

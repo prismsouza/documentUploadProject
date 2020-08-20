@@ -9,8 +9,6 @@ class FilesController extends Controller
     public function uploadMultipleFiles($request, $document, $isDocument)
     {
         $files = (request('files'));
-        //$this->dumpArray($files);
-        //die();
         $fileNamesToUpload = explode(',', request('filesToUpload')[0]);
         //$this->dumpArray($fileNamesToUpload);
         //die();

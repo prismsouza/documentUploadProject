@@ -53,7 +53,7 @@ class DocumentsController extends Controller
 
     public function home()
     {
-        return view('home');
+        return view('home', ['admin' => $this->isUserAdmin()]);
     }
 
     public function create()
@@ -70,9 +70,8 @@ class DocumentsController extends Controller
         $document->save();
 
         if (request()->has('filesToUpload') && request('filesToUpload')[0] != null) {
-            $this->dumpArray(request('filesToUpload'));
-                $files = new FilesController();
-                $files->uploadMultipleFiles($request, $document, 1);
+            $files = new FilesController();
+            $files->uploadMultipleFiles($request, $document, 1);
         }
 
         if (request()->has('file_name_pdf')) {
@@ -137,8 +136,9 @@ class DocumentsController extends Controller
 
     public function update(Request $request, Document $document)
     {
+        if (request()->has('filesToUpload') && request('files')) {
+            //request('filesToUpload')[0] != null) {
 
-        if (request()->has('filesToUpload') && request('filesToUpload')[0] != null) {
             $files = new FilesController();
             $files->uploadMultipleFiles($request, $document, 1);
         }
