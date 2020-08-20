@@ -1,5 +1,7 @@
 @extends(($admin) ? 'layout_admin' : 'layout')
 
+@include('searchbar')
+
 @section ('content')
 
 <div class="border p-5">
@@ -47,11 +49,12 @@
         </span>
     </p><br>
 
-
         @if (count($document->hasboletim) != 0)
         <p><b>Publicado no BGBM/BEBM:</b>
             <a style="color:navy" href= "/boletins/{{$document->hasboletim->first()->id}}" target="_blank">
-                {{ $document->hasboletim->first()->name }}</p>
+                {{ $document->hasboletim->first()->name }} -
+                {{ date('d/m/Y', strtotime( $document->hasboletim->first()->date)) }}
+        </p>
         </a><br>
         @endif
 
@@ -89,7 +92,7 @@
         @endif
         @if (!empty($files))
 
-            <p><b>Anexos:</b></p>
+            <p><b>Outros Anexos:</b></p>
             <ul>
                 @foreach ($files as $file)
                     <li class="px-2 py-1">
@@ -108,6 +111,14 @@
                 @endforeach
             </ul>
         @endif
+    <br>
+    <div class="border-bottom border-top py-3">
+        <p>Usuário que publicou o documento: {{ $document->user_masp }} </p>
+        <p>Data que o Usuário publicou o documento: {{ $document->created_at }} </p>
+        @if ($document->updated_at != null)
+            <p>Data da última edição do documento: {{  $document->updated_at }} </p>
+        @endif
+    </div>
 </div>
 
     @if ($admin)

@@ -219,11 +219,6 @@
 
                         <input class="form-control" id="boletim_document_input" type="text" placeholder="Search..">
                             <?php $boletins = App\Boletim::all(); ?>
-                            <li class="px-5" id="0">
-                                <input
-                                    type="radio" name="boletim_document_id"
-                                    id="0" value="0"> N/A
-                            </li>
 
                             @foreach($boletins as $doc_boletim)
                                 <li class="px-5">
@@ -231,7 +226,7 @@
                                         type="radio" name="boletim_document_id"
                                         id="{{ $doc_boletim->id }}"
                                         value="{{ $doc_boletim->id }}">
-                                    {{ $doc_boletim->name }} - {{ date('d/m/Y', strtotime($document->date)) }}
+                                    {{ $doc_boletim->name }} - {{ date('d/m/Y', strtotime($doc_boletim->date)) }}
                                 </li>
                             @endforeach
 

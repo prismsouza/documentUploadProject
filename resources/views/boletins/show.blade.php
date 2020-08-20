@@ -1,5 +1,7 @@
 @extends(($admin) ? 'layout_admin' : 'layout')
 
+@include('searchbar')
+
 @section ('content')
     @if (session('status'))
         <div class="alert alert-success">
@@ -7,7 +9,6 @@
         </div>
     @endif
 
-<style>p {font-size: 110%;}</style>
 <div class="border p-5">
     <div class="border-bottom border-top py-4">
         <div class="row">
@@ -44,7 +45,7 @@
         </p><br>
 
         @if (!empty($files))
-            <p><b>Anexos:</b></p>
+            <p><b>Outros Anexos:</b></p>
             <ul>
                 @foreach ($files as $file)
                     <li class="px-2 py-1">

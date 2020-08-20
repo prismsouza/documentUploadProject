@@ -1,4 +1,4 @@
-<b>Administrador - Acesso Rápido</b>
+<br>
 <table class="table-bordered text-center" style="width: 100%">
 
 <nav>

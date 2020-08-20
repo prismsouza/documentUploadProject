@@ -7,7 +7,7 @@
 @include('includes')
 <body>
     @include('header')
-    <div class="container">
+    <div class="container py-4">
 
     @yield('searchbar')
 

@@ -14,12 +14,17 @@ include "DocumentsFilterHelper.php";
 
 class DocumentsController extends Controller
 {
-
     public function isUserAdmin()
     {
         $masp = TokenController::$payload->number;
         $user = app('App\User')->getUserByMasp($masp)['admin'];
         return $user;
+    }
+
+    public function getMasp()
+    {
+        $masp = TokenController::$payload->number;
+        return $masp;
     }
 
     public function index()
@@ -60,6 +65,8 @@ class DocumentsController extends Controller
     {
         $request->validated();
         $document = new Document(request(['category_id', 'name', 'description', 'date', 'is_active']));
+        $document->user_masp = $this->getMasp();
+
         $document->save();
 
         if (request()->has('filesToUpload') && request('filesToUpload')[0] != null) {
@@ -130,9 +137,8 @@ class DocumentsController extends Controller
 
     public function update(Request $request, Document $document)
     {
+
         if (request()->has('filesToUpload') && request('filesToUpload')[0] != null) {
-            //$this->dumpArray(request('filesToUpload'));
-           // die();
             $files = new FilesController();
             $files->uploadMultipleFiles($request, $document, 1);
         }
@@ -146,17 +152,9 @@ class DocumentsController extends Controller
             $file_pdf->uploadFile($request, $document, 'pdf', 1);
         }
 
-        if (request()->has('boletim_document_id')) {
-            $document->boletim_document_id = request('boletim_document_id');
-        }
-
-        if (request()->has('document_has_document')) {
-            $document->hasdocument()->sync(request('document_has_document'));
-        }
-
-        if (request()->has('tags')) {
-            $document->tags()->sync(request('tags'));
-        }
+        $document->hasboletim()->sync(request('boletim_document_id'));
+        $document->hasdocument()->sync(request('document_has_document'));
+        $document->tags()->sync(request('tags'));
 
         return redirect($document->path());
     }

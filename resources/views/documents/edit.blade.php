@@ -6,7 +6,6 @@
     $documents = App\Document::all();
     ?>
 
-
     <h1 class="heading has-text-weight-bold is-size-4 py-6">Editar Documento</h1>
     <form method="POST" action="/documentos/{{ $document->id }}"
           enctype="multipart/form-data" class="p-5 border">
@@ -122,82 +121,55 @@
             <span id="attach_more">
                 Anexar mais documentos
             </span>
-                <label id="plus" for="files" class="btn border">+</label>
+            <label id="plus" for="files" class="btn border">+</label>
 
-                <input multiple
-                         name="files[]" id="files" type="file"
-                         style="display: none">
-                <input name="filesToUpload[]" id="filesToUpload" type="hidden" value="" >
-
-            <div class="list_old_files" style="color: forestgreen">
-                <?php
-                foreach($document->files as $file) {
-                    if ($file->alias == NULL) {
-                        echo "<button class='btn' style=\"color: forestgreen\">" . $file->name
-                            . "  <i class=\"fas fa-trash-alt\"></i></button><br>";
-                    }
-                }
-                ?>
-            </div>
+            <input multiple
+                   name="files[]" id="files" type="file"
+                   style="display: none">
+            <input name="filesToUpload[]" id="filesToUpload" type="hidden" value="" >
 
             <div class="list_files" style="color: forestgreen"></div>
+            <script>
 
-                  <script>
-                      var names = [];
+                names = [];
+                @foreach($document->files as $file)
+                    names.push('{{$file->name}}');
+                @endforeach
 
-                      var generateList = function() {
-                          names.forEach((name, i) => {
-                              var line = "<button class='btn' style=\"color: forestgreen\">" + name
-                                  + "  <i class=\"fas fa-trash-alt\"></i></button><br>";
-                              $('.list_files').append(line);
-                          });
-                          //document.getElementById("filesToUpload").value = JSON.stringify(names);
-                      }
+                $(function() {
+                    generateList();
+                    $("#files").on('change', function() {
+                        $('.list_files').text("");
+                        var files = document.getElementById('files').files;
 
-                      $(function() {
-                          $("#files").on('change', function() {
-                              names = [];
-                              $('.list_files').text("");
-                              var files = document.getElementById('files').files;
+                        for (var i = 0; i < files.length; i++) {
+                            names.push(files.item(i).name);
+                        }
+                        generateList();
+                    });
+                });
 
-                              for (var i = 0; i < files.length; i++) {
-                                  names.push(files.item(i).name);
-                              }
+                var generateList = function() {
+                    names.forEach((name, i) => {
+                        var line = "<button class='btn' style=\"color: forestgreen\">" + name + "  <i class=\"fas fa-trash-alt\"></i></button><br>";
+                        $('.list_files').append(line);
+                    });
+                    document.getElementById("filesToUpload").value = JSON.stringify(names);
+                }
 
-                              generateList();
-                              $("#attach_more").text("");
-                              $("#plus").text("Substituir arquivos");
+                $('.list_files').on("click","button", function() { //user click on remove text
+                    console.log(names);
+                    var name = $(this).text().trim();
+                    console.log(name);
+                    var position = names.indexOf(name);
+                    console.log(position);
 
-                              console.log(names);
-                          });
-
-                          $('.list_files').on("click","button", function() { //user click on remove text
-                              console.log(names);
-                              var name = $(this).text().trim();
-                              console.log(name);
-                              var position = names.indexOf(name);
-                              console.log(position);
-
-                              names.splice(position, 1);
-                              $('.list_files').text("");
-                              generateList();
-                              //console.log(names);
-                          })
-
-                          $('.list_old_files').on("click","button", function() { //user click on remove text
-                              console.log(names);
-                              var name = $(this).text().trim();
-
-                              var position = names.indexOf(name);
-                              console.log(position);
-
-                              names.splice(position, 1);
-                              $('.list_files').text("");
-                              generateList();
-                              //console.log(names);
-                          })
-                      });
-                  </script>
+                    names.splice(position, 1);
+                    $('.list_files').text("");
+                    generateList();
+                    //console.log(names);
+                })
+            </script>
         </div>
 <!-- -------------- DOCUMENT_HAS_DOCUMENT -------------- -->
         <div class="dropdown py-2" id="document_has_document">
@@ -235,45 +207,46 @@
                     data-toggle="dropdown" data-target="#"
                     aria-haspopup="true" aria-expanded="true">
                 @if (count($document->hasboletim) != 0)
-                    {{ $document->hasboletim->first()->id }} - {{  date('d/m/Y', strtotime($document->hasboletim->first()->date)) }}
+                    Atual:
+                    {{ $document->hasboletim->first()->name }} - {{  date('d/m/Y', strtotime($document->hasboletim->first()->date)) }}
+                    <span class="caret"></span>
+                @else N/A <span class="caret"></span>
                 @endif
             </button>
 
             <ul class="dropdown-menu" style="width: 90%" aria-labelledby="dropdownPublishedAt">
-                            <input class="form-control" id="boletim_document_input" type="text" placeholder="Search..">
-                            <?php $documents_bgbm = $categories->where('name','BGBM')->first()->documents; ?>
-                            <?php $documents_bebm = $categories->where('name','BEBM')->first()->documents; ?>
-                            <?php $documents_boletins = $documents_bgbm->merge($documents_bebm);//$documents_boletim = $categories->where('name','BGBM')->where('name','BEBM')->first()->documents;?>
+                <input class="form-control" id="boletim_document_input" type="text" placeholder="Search..">
+                    <?php $boletins = App\Boletim::all(); ?>
+                    @if (count($document->hasboletim) != 0)
+                        <li class="px-5" id="0">
+                            <input
+                                type="radio" name="boletim_document_id" checked
+                                value=" {{ $document->boletim_document_id }}" style="background: darkseagreen">
 
-                            @if (count($document->hasboletim) != 0)
-                            <li class="px-5" id="0">
-                                <input
-                                    type="radio" name="boletim_document_id"
-                                    value=" {{ $document->boletim_document_id }}" style="background: darkseagreen">
+                            Atual: {{ $document->hasboletim->first()->name }} - {{ date('d/m/Y', strtotime($document->hasboletim->first()->date)) }}
+                        </li>
+                    @endif
 
-                                    Atual: {{ $document->hasboletim->first()->name }} - {{ date('d/m/Y', strtotime($document->date)) }}
-                            </li>
-                            @endif
-                            <li class="px-5" id="0">
-                                <input
-                                    type="radio" name="boletim_document_id"
-                                    id="0" value="0">
-                                vazio
-                            </li>
-                            @foreach($documents_boletins as $doc_boletim)
-                                @if ($document->boletim_document_id != $doc_boletim->id)
-                                    <li class="px-5">
-                                        <input
-                                            type="radio" name="boletim_document_id"
-                                            id="{{ $doc_boletim->id }}"
-                                            value="{{ $doc_boletim->id }}">
-                                        {{ $doc_boletim->name }} - {{ date('d/m/Y', strtotime($document->date)) }}
-                                    </li>
-                                @endif
-                            @endforeach
-                        </ul>
-                    </div>
+                <li class="px-5" id="0">
+                    <input
+                        type="radio" name="boletim_document_id"
+                        id="0" value="0"> N/A
+                </li>
 
+                @foreach($boletins as $doc_boletim)
+
+                    @if (count ($document->hasboletim)>0 && $doc_boletim->id == $document->hasboletim->first()->id) @continue @endif
+                        <li class="px-5">
+                            <input
+                                type="radio" name="boletim_document_id"
+                                id="{{ $doc_boletim->id }}"
+                                value="{{ $doc_boletim->id }}">
+                            {{ $doc_boletim->name }} - {{ date('d/m/Y', strtotime($doc_boletim->date)) }}
+                        </li>
+
+                @endforeach
+            </ul>
+        </div>
 
 <!-- -------------- DATE -------------- -->
                     <div class="form-row">

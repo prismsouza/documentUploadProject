@@ -7,8 +7,8 @@
     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Contato</h5>
+                <div class="modal-header" >
+                    <h3 class="modal-title" id="exampleModalLabel">Contato</h3>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -16,19 +16,17 @@
                 <div class="modal-body">
                     <form>
                         <div class="form-group">
-                            <p class="text-center"><b>{{ $document->name }}</b></p>
-                            <label for="recipient-name" class="col-form-label">
-                                Deseja reportar algum erro na norma ou fazer alguma sugestao/alerta para correcao do conteudo?
-                            </label>
+                            <h4 class="text-center"><b>{{ $document->name }}</b></h4>
+                            <span class="col-form-label">
+                                Deseja reportar algum erro na página ou fazer alguma sugestão/alerta para correção do conteúdo?
+                            </span>
                         </div>
                         <div class="form-group">
-                                <textarea
-                                    class="form-control"
+                            <textarea class="form-control"
                                     id="message"
                                     name="message"
                                     value="{{ old('message') }}"
-                                    rows="5">
-                                </textarea>
+                                    rows="6"></textarea>
                         </div>
                     </form>
                 </div>
