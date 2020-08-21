@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Boletim;
 use App\Document;
 use App\Http\Requests\DocumentCreateRequest;
+use App\Http\Requests\DocumentUpdateRequest;
 use App\Tag;
 use App\File;
 use App\Category;
@@ -63,9 +64,9 @@ class DocumentsController extends Controller
         $request->validated();
         $document = new Document(request(['category_id', 'name', 'description', 'date', 'is_active']));
 
-
-        $document->save();
         $document->user_masp = $this->getMasp();
+        $document->save();
+
 
         if (request()->has('filesToUpload') && request('filesToUpload')[0] != null) {
             $files = new FilesController();
@@ -89,7 +90,7 @@ class DocumentsController extends Controller
             $document->tags()->attach(request('tags'));
         }
 
-        return redirect(route('documents.index'));
+        return redirect(route('documents.index'))->with('status', "Documento criado com sucesso!");
     }
 
     public function viewfile(Document $document, $file_id)
@@ -132,8 +133,9 @@ class DocumentsController extends Controller
         return view('documents.edit', compact('document'),['tags' => Tag::all()]);
     }
 
-    public function update(Request $request, Document $document)
+    public function update(DocumentUpdateRequest $request, Document $document)
     {
+        $document->update($request->validated());
         if (request()->has('filesToUpload') && request('files')) {
             //request('filesToUpload')[0] != null) {
 
@@ -141,10 +143,7 @@ class DocumentsController extends Controller
             $files->uploadMultipleFiles($request, $document, 1);
         }
 
-        if (!request('file_name_pdf')) {
-            $document->update($this->validateDocument("dont_update_path"));
-        } else {
-            $document->update($this->validateDocument(''));
+        if (request('file_name_pdf')) {
             $document->files->whereNotNull('alias')->first()->delete();
             $file_pdf = new FilesController();
             $file_pdf->uploadFile($request, $document, 'pdf', 1);
@@ -154,7 +153,7 @@ class DocumentsController extends Controller
         $document->hasdocument()->sync(request('document_has_document'));
         $document->tags()->sync(request('tags'));
 
-        return redirect($document->path());
+        return redirect($document->path())->with('status', 'Documento atualizado com sucesso!');
     }
 
     public function download(Document $document, $hash_id)
@@ -170,7 +169,7 @@ class DocumentsController extends Controller
     public function destroy(Document $document)
     {
         $document->delete();
-        return redirect(route('documents.index'))->with('successMsg', 'Document Successfully Deleted');
+        return redirect(route('documents.index'))->with('status', 'Documento deletado com sucesso!');
         //return view('documents.index');
     }
 
@@ -179,7 +178,7 @@ class DocumentsController extends Controller
         $document->restore();
         //$document->files()->restore();
         //$document->messages()->restore();
-        return redirect(route('documents.index'))->with('successMsg', 'Document Successfully Restored');
+        return redirect(route('documents.index'))->with('status', 'Documento restaurado com sucesso!');
         //return view('documents.index');
     }
 

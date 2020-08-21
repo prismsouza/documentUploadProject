@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Boletim;
 use App\File;
 use App\Http\Requests\BoletimRequest;
+use App\Http\Requests\BoletimUpdateRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
 
@@ -47,8 +48,8 @@ class BoletinsController extends Controller
         $request->validated();
         $boletim = new Boletim(request(['category_id', 'name', 'description', 'date']));
 
-        $boletim->save();
         $boletim->user_masp = $this->getMasp();
+        $boletim->save();
 
         $file_pdf = new FilesController();
         $file_pdf->uploadFile($request, $boletim, 'pdf', 0);
@@ -61,12 +62,10 @@ class BoletinsController extends Controller
         return view('boletins.edit', compact('boletim'));
     }
 
-    public function update(Request $request, Boletim $boletim)
+    public function update(BoletimUpdateRequest $request, Boletim $boletim)
     {
-        if (request('file_name_pdf') == NULL) {
-            $boletim->update($this->validateBoletim("dont_update_path"));
-        } else {
-            $boletim->update($this->validateBoletim(''));
+        $boletim->update($request->validated());
+        if (request('file_name_pdf')) {
             $file_pdf = new FilesController();
             $file_pdf->uploadFile($request, $boletim, 'pdf', 0);
             $old_pdf = $boletim->files->whereNotNull('alias')->first();
@@ -98,7 +97,7 @@ class BoletinsController extends Controller
     public function destroy(Boletim $boletim)
     {
         $boletim->delete();
-        return redirect(route('boletins.index'))->with('successMsg', 'Boletim Successfully Deleted');
+        return redirect(route('boletins.index'))->with('status', 'Boletim deletado com sucesso!');
 
     }
 

@@ -47,6 +47,9 @@
                             @endif
                         @endforeach
                 </select>
+                <?php if (old('category_id') == null) { ?>
+                <p style="color: darkred">{{ $errors->first('category_id') }}</p>
+                <?php } ?>
             </div>
         </div>
 
@@ -60,7 +63,7 @@
                     name="name" id="name" value="{{ $document->name }}">
 
                 @error('name')
-                <p class="help is-danger">{{ $errors->first('name') }}</p>
+                <p style="color: darkred">{{ $errors->first('name') }}</p>
                 @enderror
             </div>
 
@@ -73,7 +76,7 @@
                     value="{{ $document->description }}">
 
                 @error('description')
-                    <p class="help is-danger">{{ $errors->first('description') }}</p>
+                <p style="color: darkred">{{ $errors->first('description') }}</p>
                 @enderror
             </div>
         </div>
@@ -93,7 +96,7 @@
                     style="display: none">
                     <!--style="visibility: hidden">-->
 
-                <spam style="color: dimgrey">
+                <spam id="file_pdf_old" style="color: dimgrey">
                     {{ $document->files->whereNotNull('alias')->first()->alias }}
                 </spam><br>
 
@@ -107,12 +110,12 @@
                         var input = event.srcElement;
                         var fileName = input.files[0].name;
                         infoArea.textContent = fileName;
-                        console.log(fileName);
+                        $("#file_pdf_old").css({"color": "darkred", "text-decoration": "line-through"});
                     }
                 </script>
 
                 @error('file_name_pdf')
-                    <p class="help is-danger">{{ $errors->first('file_name_pdf') }}</p>
+                <p style="color: darkred">{{ $errors->first('file_name_pdf') }}</p>
                 @enderror
             </div>
         </div>
@@ -262,7 +265,7 @@
                                     type="date" data-display-mode="inline" data-is-range="true" data-close-on-select="false"
                                     value="{{ $document->date }}">
 
-                                @error('date')<p class="help is-danger">{{ $errors->first('date') }}</p>@enderror
+                                @error('date')<p style="color:darkred">{{ $errors->first('date') }}</p>@enderror
                             </div>
                         </div>
                     </div>
@@ -280,7 +283,7 @@
                                     <input class="form-check-input" type="radio" name="is_active" id="is_active" value="0" @if ($document->is_active == 0) {{ 'checked' }} @endif>
                                     <label class="form-check-label" for="inlineRadio1">Não está vigente</label>
                                 </div>
-                                @error('is_active')<p class="help is-danger">{{ $errors->first('is_active') }}</p>@enderror
+                                @error('is_active')<p style="color: darkred">{{ $errors->first('is_active') }}</p>@enderror
                             </div>
                         </div>
                     </div>

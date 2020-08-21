@@ -40,7 +40,7 @@ class Document extends Model
 
     public function setOtherCategory()
     {
-        $this->category_id = 23;
+        $this->category_id = 24;
         $this->save();
     }
 
@@ -48,8 +48,6 @@ class Document extends Model
     {
         return $this->belongsTo(Category::class);
     }
-
-
 
     public function tags()
     {

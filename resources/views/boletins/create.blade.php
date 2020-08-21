@@ -58,9 +58,9 @@
         </div>
 
 <!-- -------------- UPLOAD PDF FILE -------------- -->
-        <div class="form-row " ID="upload_file">
+        <div class="form-row" ID="upload_file">
             <div class="col-md-12 mb-3">
-                <label for="file_name_pdf">Anexar arquivo em formato pdf:<b>*</b> </label>
+                <label for="file_name_pdf" class="btn border">Anexar Arquivo em PDF<b>*</b></label>
                 <i class="fa fa-upload p-1"></i>
                 <i class="fa fa-file-pdf" aria-hidden="true"></i>
 
@@ -69,9 +69,8 @@
                     type="file" accept=".pdf, application/pdf"
                     name="file_name_pdf" id="file_name_pdf"
                     value="{{ old('file_name_pdf') }}"
-                    style="visibility: hidden">
+                    style="display: none">
 
-                <label for="file_name_pdf" class="btn border">Anexar...</label>
                 <div id="file_pdf_upload" style="color: darkolivegreen"></div>
 
                 <script>
@@ -91,7 +90,7 @@
                 @enderror
 
 <!-- -------------- DATE -------------- -->
-        <div class="control py-2 mb-4">
+        <div class="control py-4 mb-4">
             <label for="date">Data de Publicação: <b>*</b></label>
             <i class="fas fa-calendar-alt p-2"></i>
             <input
@@ -101,7 +100,7 @@
             @error('date')
             <p style="color: darkred">{{ $errors->first('date') }}</p>
             @enderror
-        </div><br>
+        </div>
 
         <span class="small float-md-left">* campos obrigatorios</span><br>
 

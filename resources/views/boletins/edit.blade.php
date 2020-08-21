@@ -85,15 +85,10 @@
 
 <!-- -------------- REPLACE PDF FILE -------------- -->
                 <div class="form-row py-2" ID="upload_file">
-                    <div class="col-md-4">
-                            <label for="file_name_pdf">Substituir arquivo pdf:<b>*</b> </label>
+                    <div class="col-md-12 mb-3">
+                        <label for="file_name_pdf" class="btn border">Substituir Arquivo Principal em PDF:<b>*</b> </label>
                             <i class="fa fa-upload p-1"></i>
                             <i class="fa fa-file-pdf px-2" aria-hidden="true"></i>
-
-                            <label for="file_name_pdf" class="btn btn-light border">Anexar novo</label>
-                            <span class="px-3"></span>
-                    </div>
-                    <div class="col-md">
                             <span id="file_pdf_old" style="color: dimgrey">
                                 {{ $boletim->files->whereNotNull('alias')->first()->alias }}
                             </span>
@@ -104,7 +99,7 @@
                             name="file_name_pdf" id="file_name_pdf"
                             value="{{ $boletim->files->first()->name }}"
                             style="visibility: hidden">
-                        <span id="new_file_pdf" style="color: darkolivegreen; font-weight: bold; display:none">
+                        <span id="new_file_pdf" style="color: darkolivegreen; display:none">
                         </span>
 
                         <script>

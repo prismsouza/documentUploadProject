@@ -12,7 +12,7 @@
     @yield('searchbar')
 
     <div id="wrapper">
-        <div id="page" class="row py-3">
+        <div id="page" class="row py-1">
 
             <div class="col-10">
                 @yield('content')

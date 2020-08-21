@@ -32,7 +32,7 @@ class Boletim extends Model
 
     public function setOtherCategory()
     {
-        $this->category_id = 23;
+        $this->category_id = 24;
         $this->save();
     }
 

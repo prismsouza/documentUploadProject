@@ -10,12 +10,12 @@
     </div>
 
     <table class="border table table-bordered table-striped">
-        <tr >
-            <th>#</th>
+        <tr>
+            <th  style="width: 4%" >#</th>
             <th>Documento</th>
-            <th>Mensagem</th>
-            <th class="text-center">Data</th>
-            <th>Verificada</th>
+            <th style="width: 50%" >Mensagem</th>
+            <th style="width: 10%" >Data</th>
+            <th style="width: 5%">Verificada</th>
         </tr>
 
         <?php $c = 0;
@@ -39,12 +39,11 @@
                     </a>
                 </td>
                 <td>{{ $message->message }}</td>
-                <td class="text-center">
+                <td>
                     <?php $date= date('d/m/Y', strtotime($message->created_at)); ?>
                     {{ $date }}
                 </td>
                 <td class="text-center">
-
                     <a href="{{ route('messages.update', $message->id) }}" id="a_click"
                        class="btn border" onclick="myFunction()">
                     <?php echo ($message->is_checked) ?

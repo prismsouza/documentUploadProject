@@ -4,6 +4,12 @@
 
 @section ('content')
 
+    @if (session('status'))
+        <div class="alert alert-success">
+            {{ session('status') }}
+        </div>
+    @endif
+
 <div class="border p-5">
     <div class="border-bottom border-top py-4">
     <div class="row">

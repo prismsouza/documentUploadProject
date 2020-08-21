@@ -1,10 +1,9 @@
-<?php $user="notadmin"; ?>
+<?php
+    $categories = App\Category::all()->sortBy('name');
+?>
 <ul class="nav nav-tabs flex-column lighten-4 list-group">
     <li style="text-align: center">
-        <h3>
-            @if ($user=="admin") <a href={{route('categories.index')}}> Categorias </a>
-            @else Categorias @endif
-        </h3>
+        <h3>Categorias</h3>
     </li>
     <li class="nav-item border">
         <a class="list-group-item {{ (Request::is('documentos') || Request::is('/')) ? 'active' : ''}}"
@@ -37,25 +36,29 @@
                     @endforeach
                 </div>
             @else
-                @if ($category->id == 1  || $category->id == 2)
-                    <a class="list-group-item {{ Request::is('boletins/categorias/'.$category->name) ? 'active' : ''}}"
-                       href={{ $category->path() }}>
-                        {{ $category->name }}
-                    </a>
-                @else
+
                     @if (count($category->hasparent)==0)
                         <a class="list-group-item {{ Request::is('documentos/categorias/'.$category->name) ? 'active' : ''}}"
                            href={{ $category->path() }}>
                             {{ $category->name }}
                         </a>
                     @endif
-                @endif
             @endif
-
-
-
         </li>
 
     @endforeach
+
+</ul>
+
+<ul class="nav nav-tabs flex-column lighten-4 list-group">
+    <li style="text-align: center">
+        <h3>Outros</h3>
+    </li>
+    <li class="nav-item border">
+        <a class="list-group-item {{ (Request::is('categorias/ementario')) ? 'active' : ''}}"
+           href="{{ route('categories.ementario') }}">
+            Ementário
+        </a>
+    </li>
 </ul>
 <script src="{{ asset('site/lateralmenu.js') }}"></script>

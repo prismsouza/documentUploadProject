@@ -54,6 +54,7 @@ class Category extends Model
         self::deleting(function (Category $category) {
 
             foreach ($category->documents as $document) $document->setOtherCategory();
+            foreach ($category->boletins as $boletim) $boletim->setOtherCategory();
 
         });
     }

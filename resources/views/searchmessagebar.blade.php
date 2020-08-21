@@ -1,6 +1,6 @@
 @section('searchmessagebar')
 
-    <?php $categories = App\Category::all();
+    <?php $categories = App\Category::all()->sortBy('name');
     $categories_array = request('categories') ? request('categories') : [];?>
 <div class="border p-2">
 <form method="POST" action="{{ route('messages.filter') }}" enctype="multipart/form-data" class="py-2"> @csrf

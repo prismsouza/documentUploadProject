@@ -42,6 +42,10 @@ Route::put('/documentos/{document}', 'DocumentsController@update')->name('docume
 Route::delete('/documentos/delete/{document}', 'DocumentsController@destroy')->name('documents.destroy');
 Route::get('home', 'DocumentsController@restore')->name('documents.restore');
 
+Route::get('/categorias/ementario', function(){
+    return view ('categories.ementario');
+})->name('categories.ementario');
+
 Route::get('/categorias', 'CategoriesController@index')->name('categories.index');
 Route::post('/categorias', 'CategoriesController@store')->name('categories.store');;
 Route::get('/categorias/novo', 'CategoriesController@create')->name('categories.create');
@@ -49,6 +53,7 @@ Route::get('/categorias/{category}', 'CategoriesController@show')->name('categor
 Route::get('/categorias/{category}/edit', 'CategoriesController@edit')->name('categories.edit');
 Route::put('/categorias/{category}', 'CategoriesController@update')->name('categories.update');
 Route::delete('/categorias/delete/{category}', 'CategoriesController@destroy')->name('categories.destroy');
+
 
 Route::get('/tags', 'TagsController@index')->name('tags.index');
 Route::post('/tags', 'TagsController@store')->name('tags.store');

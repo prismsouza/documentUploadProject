@@ -3,6 +3,13 @@
 @include('searchbar')
 
 @section('content')
+
+    @if (session('status'))
+        <div class="alert alert-success">
+            {{ session('status') }}
+        </div>
+    @endif
+
     @if($category_option)
             <div class="border p-2">
                 Categoria: <b>{{ $category_option }}</b>
