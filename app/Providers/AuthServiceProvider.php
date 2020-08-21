@@ -25,7 +25,7 @@ class AuthServiceProvider extends ServiceProvider
     public function boot()
     {
         if(!TokenController::isAuthorized()) {
-            abort(403, "Militar não autorizado.");
+            abort(403, "Acesso não autorizado.");
         }
 
         $this->registerPolicies();

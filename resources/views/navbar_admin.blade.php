@@ -13,7 +13,7 @@
             </td>
             <td class="nav-item" style="width: 20%">
                 <a class="nav-link {{ Request::is('boletins') ? 'bg-light' : ''}}"
-                   href="{{ route('boletins.index') }}"><b>BGBM e BEBM</b>
+                   href="{{ route('boletins.index') }}"><b>Boletins / Separata</b>
                 </a>
             </td>
             <td class="nav-item" style="width: 20%">

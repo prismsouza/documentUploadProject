@@ -2,11 +2,6 @@
 
 use Illuminate\Support\Facades\Route;
 
-
-
-Route::get('/upload', 'UploadController@uploadForm');
-Route::post('/upload', 'UploadController@uploadSubmit');
-
 Route::get('/admin', 'UsersController@getAdminUsers')->name('admin_panel');
 
 Route::get('/mensagens', 'MessagesController@index')->name('messages.index');
@@ -19,8 +14,8 @@ Route::get('/admin/deletados', 'DocumentsController@showDeletedDocuments')->name
 
 Route::get('/boletins/categorias/{category}', 'DocumentsController@showByCategory')->name('documents_category.index');
 Route::get('/boletins', 'BoletinsController@index')->name('boletins.index');
-Route::get('/boletins/novo', 'BoletinsController@create')->name('boletins.create');
 Route::post('/boletins', 'BoletinsController@store')->name('boletins.store');
+Route::get('/boletins/novo', 'BoletinsController@create')->name('boletins.create');
 Route::get('/boletins/{boletim}', 'BoletinsController@show')->name('boletins.show');
 Route::get('/boletins/{boletim}/editar', 'BoletinsController@edit')->name('boletins.edit');
 Route::put('/boletins/{boletim}', 'BoletinsController@update')->name('boletins.update');

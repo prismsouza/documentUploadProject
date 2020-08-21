@@ -14,22 +14,19 @@ include "DocumentsFilterHelper.php";
 
 class DocumentsController extends Controller
 {
-    public function isUserAdmin()
-    {
-        $masp = TokenController::$payload->number;
-        $user = app('App\User')->getUserByMasp($masp)['admin'];
-        return $user;
-    }
-
     public function getMasp()
     {
-        $masp = TokenController::$payload->number;
-        return $masp;
+        return TokenController::$payload->number; // $masp
+    }
+
+    public function isUserAdmin()
+    {
+        $masp = $this->getMasp();
+        return app('App\User')->getUserByMasp($masp)['admin']; //isuseradmin
     }
 
     public function index()
     {
-
         if (request('tag')) {
             $documents = Tag::where('name', request('tag'))->firstOrFail()->documents;
         } else {
@@ -65,9 +62,10 @@ class DocumentsController extends Controller
     {
         $request->validated();
         $document = new Document(request(['category_id', 'name', 'description', 'date', 'is_active']));
-        $document->user_masp = $this->getMasp();
+
 
         $document->save();
+        $document->user_masp = $this->getMasp();
 
         if (request()->has('filesToUpload') && request('filesToUpload')[0] != null) {
             $files = new FilesController();

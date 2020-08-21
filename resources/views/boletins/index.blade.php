@@ -13,7 +13,7 @@
         @if($admin)
             <a href="{{ route('boletins.create') }}">
                 <button class="btn btn-dark border btn-outline-light" type="submit">
-                    Novo BGBM / BEBM
+                    Novo Boletim / Separata
                 </button>
             </a><p></p>
         @endif
@@ -27,27 +27,32 @@
     @if ($boletins->isNotEmpty())
     <table class="table table-bordered bg-white table-striped" id="myTable">
         <thead class="text-center">
-            <th scope="col" style="cursor: pointer; width: 3%">
-                #
-            </th>
-            <th  scope="col" style="cursor: pointer; width: 22%">
-                Nome <i class="fas fa-sort"></i>
-            </th>
-            <th style="cursor: pointer; width: 33%">
-                Descricao <i class="fas fa-sort"></i>
-            </th>
-            <th scope="col" style="cursor: pointer; width: 14%">
-                Categoria <i class="fas fa-sort"></i>
-            </th>
-            <th scope="col" style="width: 10%; text-align: center">Data</th>
-            <th scope="col" style="width: 5%; text-align: center">
+        <th scope="col" style="cursor: pointer; width: 3%">
+            #
+        </th>
+        <th  scope="col" style="cursor: pointer; width: 22%">
+            Nome <i class="fas fa-sort"></i>
+        </th>
+        <th scope="col" style="cursor: pointer; width: 33%">
+            Descricao <i class="fas fa-sort"></i>
+        </th>
+        <th scope="col" style="cursor: pointer; width: 14%">
+            Categoria <i class="fas fa-sort"></i>
+        </th>
+        <th scope="col" style="width: 10%; text-align: center">Data</th>
+
+        @if ($admin)
+            <th scope="col" style="width: 10%; text-align: center">
                 <i class="fas fa-file-download"></i>
             </th>
-            @if ($admin)
-                <th scope="col" style="width: 10%; text-align: center" colspan="2">
-                    <i class="far fa-eye-slash" data-toggle="tooltip" title="visível apenas para Perfil Administrador" style="color:black"></i>
-                </th>
-            @endif
+            <th scope="col" style="width: 8%; text-align: center" colspan="2">
+                <i class="far fa-eye-slash" data-toggle="tooltip" title="visível apenas para Perfil Administrador" style="color:black"></i>
+            </th>
+        @else
+            <th scope="col" colspan="2" style="width: 10%; text-align: center">
+                <i class="fas fa-file-download"></i>
+            </th>
+        @endif
         </thead>
         <tbody>
     @endif
@@ -83,13 +88,17 @@
             </td>
 
             <?php $file_pdf = $boletim->files->whereNotNull('alias')->first();?>
-                <td class="text-center px-0">
-                    <a href="{{ route('boletins.download', [$boletim->id , $file_pdf->hash_id]) }}"
-                       data-toggle="tooltip" title="{{$file_pdf->size}}"
-                       class="btn border">
-                        <i class="fa fa-file-pdf fa-lg" style="color: black" aria-hidden="true"></i>
-                    </a>
-                </td>
+            <td class="text-center px-0">
+                <a class="btn border" data-toggle="tooltip" title="visualizar"
+                   href="{{ route('boletins.viewfile', [$boletim->id, $file_pdf->id]) }}" target="_blank">
+                    <i class="fas fa-eye fa-lg" style="color: black" aria-hidden="true"></i>
+                </a>
+                <a href="{{ route('boletins.download', [$boletim->id , $file_pdf->hash_id]) }}"
+                   data-toggle="tooltip" title="{{$file_pdf->size}}"
+                   class="btn border">
+                    <i class="fa fa-file-pdf fa-lg" style="color: black" aria-hidden="true"></i>
+                </a>
+            </td>
 
             @if ($admin)
                 <div id="admin_view">

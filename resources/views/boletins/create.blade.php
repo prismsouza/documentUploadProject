@@ -16,9 +16,13 @@
                             value={{ $category->id }}>{{ $category->name }}
                     </option>
                     <?php $category = App\Category::where('id', 2)->first();?>
-                        <option id="category_id" name="category_id"
-                                value={{ $category->id }}>{{ $category->name }}
-                        </option>
+                    <option id="category_id" name="category_id"
+                        value={{ $category->id }}>{{ $category->name }}
+                    </option>
+                    <?php $category = App\Category::where('id', 3)->first();?>
+                    <option id="category_id" name="category_id"
+                        value={{ $category->id }}>{{ $category->name }}
+                    </option>
                 </select>
             </div>
         </div>
@@ -85,12 +89,6 @@
                 @error('file_name_pdf')
                 <p style="color: darkred">{{ $errors->first('file_name_pdf') }}</p>
                 @enderror
-
-<!-- -------------- UPLOAD MORE FILES -------------- -->
-        Anexar mais arquivos (máximo 5)
-        <button class="add_field_button btn border"><i class="fas fa-plus"></i></button>
-        <div class="input_fields_wrap mb-4" style="width: 50%"></div>
-
 
 <!-- -------------- DATE -------------- -->
         <div class="control py-2 mb-4">

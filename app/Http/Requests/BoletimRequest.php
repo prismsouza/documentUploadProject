@@ -4,13 +4,8 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class BoletimCreateRequest extends FormRequest
+class BoletimRequest extends FormRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     *
-     * @return bool
-     */
     public function authorize()
     {
         return true;
@@ -19,6 +14,7 @@ class BoletimCreateRequest extends FormRequest
     public function messages()
     {
         return [
+            'category_id.required' => "O campo 'categoria' é obrigatório",
             'name.required' => "O campo 'nome' é obrigatório",
             'description.required' => "O campo 'descrição' é obrigatório",
             'date.required' => "O campo 'data de publicação' é obrigatório",

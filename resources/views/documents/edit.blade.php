@@ -23,7 +23,8 @@
 
                     <option value={{ $document->category->id }}>{{ $document->category->name }}</option>
                         @foreach($categories as $category)
-                            @if ($category->name != $document->category->name && $category->id != '1' && $category->id != '2') <!-- BGBM e BEBM -->) <!-- Boletim Geral -->
+                            @if ($category->name != $document->category->name &&
+                                $category->id != '1' && $category->id != '2' && $category->id != '3') <!-- BGBM, BEBM e Separata -->) <!-- Boletim Geral -->
 
                                 @if (count($category->hassubcategory)>0)
                                     <optgroup label="  {{ $category->name }}" class="px-2">
