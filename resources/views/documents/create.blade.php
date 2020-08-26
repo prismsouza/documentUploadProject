@@ -21,7 +21,7 @@
                     </option>
 
                     @foreach($categories as $category)
-                        @if ($category->id != '1' && $category->id != '2' && $category->id != old('category_id')) <!-- BGBM e BEBM -->
+                        @if ($category->id != old('category_id'))
 
                             @if (count($category->hassubcategory)>0)
                                 <optgroup label="  {{ $category->name }}" class="px-2">

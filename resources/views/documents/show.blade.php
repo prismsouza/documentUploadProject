@@ -117,18 +117,18 @@
                 @endforeach
             </ul>
         @endif
-    <br>
-    <div class="border-bottom border-top py-3">
-        <p>Usuário que publicou o documento: {{ $document->user_masp }} </p>
-        <p>Data que o Usuário publicou o documento: {{ $document->created_at }} </p>
-        @if ($document->updated_at != null)
-            <p>Data da última edição do documento: {{  $document->updated_at }} </p>
-        @endif
-    </div>
 </div>
 
     @if ($admin)
+        <div class="border-bottom border-top py-3">
+            <p>Usuário que publicou o documento: {{ $document->user_masp }} </p>
+            <p>Data que o Usuário publicou o documento: {{ $document->created_at }} </p>
+            @if ($document->updated_at != null)
+                <p>Data da última edição do documento: {{  $document->updated_at }} </p>
+            @endif
+        </div>
         <br>
+
         <button type="button" class="btn btn-info">
             <a href="{{ route('documents.edit', $document->id) }}" style="color:white">
                 Editar documento  <i class="fas fa-edit" style="color: black"></i>

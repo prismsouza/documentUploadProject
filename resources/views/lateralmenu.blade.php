@@ -55,10 +55,33 @@
         <h3>Outros</h3>
     </li>
     <li class="nav-item border">
-        <a class="list-group-item {{ (Request::is('categorias/ementario')) ? 'active' : ''}}"
-           href="{{ route('categories.ementario') }}">
-            Ementário
-        </a>
+        @if ($admin)
+            <span>
+                <a class="btn btn-sm" data-toggle="tooltip" title="visualizar"
+                   href="{{ route('files.view')}}" target="_blank">
+                    Ementário
+                </a>
+                <a href="{{ route('categories.ementario_edit') }}" class="btn border float-md-right">
+                    <i class="fas fa-download small" style="color: black"></i>
+                </a>
+                <a href="{{ route('files.download') }}" class="btn border float-md-right">
+                    <i class="fas fa-download small" style="color: black" aria-hidden="true"></i>
+                </a>
+
+            </span>
+        @else
+            <span>
+                <a class="btn" data-toggle="tooltip" title="visualizar"
+                      href="{{ route('files.view')}}" target="_blank">
+                    Ementário <i class="fas fa-eye"></i>
+                </a>
+            <a data-toggle="tooltip" title="download"
+               href="{{ route('files.download') }}" class="btn border float-md-right">
+                <i class="fas fa-download" style="color: black" aria-hidden="true"></i>
+            </a>
+            </span>
+        @endif
+
     </li>
 </ul>
 <script src="{{ asset('site/lateralmenu.js') }}"></script>

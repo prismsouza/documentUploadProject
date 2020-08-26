@@ -1,6 +1,7 @@
 @extends(($admin) ? 'layout_admin' : 'layout')
 
 @include('searchbar')
+@include('sortbar')
 
 @section('content')
 
@@ -27,18 +28,10 @@
     @if ($documents->isNotEmpty())
     <table class="table table-bordered bg-white table-striped" id="myTable">
         <thead class="text-center">
-            <th scope="col" style="cursor: pointer; width: 3%">
-                #
-            </th>
-            <th  scope="col" style="cursor: pointer; width: 22%">
-                Nome <i class="fas fa-sort"></i>
-            </th>
-            <th scope="col" style="cursor: pointer; width: 33%">
-                Descricao <i class="fas fa-sort"></i>
-            </th>
-            <th scope="col" style="cursor: pointer; width: 14%">
-                Categoria <i class="fas fa-sort"></i>
-            </th>
+            <th scope="col" style="cursor: pointer; width: 3%"> #</th>
+            <th scope="col" style="cursor: pointer; width: 22%"> Nome</th>
+            <th scope="col" style="cursor: pointer; width: 33%"> Descrição </th>
+            <th scope="col" style="cursor: pointer; width: 14%"> Categoria</th>
             <th scope="col" style="width: 10%; text-align: center">Data</th>
 
             @if ($admin)
@@ -145,7 +138,7 @@
         </tr>
 
     @empty
-        <p><h4>Não há resultados para esta pesquisa</h4></p>
+        <br><p><h4>Não há resultados para esta pesquisa</h4></p>
     @endforelse
 
         </tbody>

@@ -45,6 +45,8 @@ function getFilteredDocuments($request, $user) {
         $documents = searchByStatus($is_active, $documents);
     }
 
+    $documents = $documents->sortByDesc('date');
+
     //$documents = $documents->collapse();
     return view('documents.index', ['documents' => $documents, 'category_option' => null, 'admin' => $user])->withDetails($documents)->withQuery($query);
 }
@@ -58,7 +60,7 @@ function searchByWord($word, $documents, $boletins)
         ->orWhere('description','LIKE','%'.$word.'%')
         ->get();
 
-    
+
     $all_docs = $docs->merge($docs_boletins);
     $documents = new Collection($all_docs);
 

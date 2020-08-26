@@ -10,10 +10,10 @@
     <div class="container py-4">
 
     @yield('searchbar')
+    @yield('sortbar')
 
     <div id="wrapper">
         <div id="page" class="row py-1">
-
             <div class="col-10">
                 @yield('content')
             </div>

@@ -42,9 +42,14 @@ Route::put('/documentos/{document}', 'DocumentsController@update')->name('docume
 Route::delete('/documentos/delete/{document}', 'DocumentsController@destroy')->name('documents.destroy');
 Route::get('home', 'DocumentsController@restore')->name('documents.restore');
 
-Route::get('/categorias/ementario', function(){
-    return view ('categories.ementario');
-})->name('categories.ementario');
+Route::get('/categorias/ementario/editar', function(){
+    return view ('categories.ementario_edit');
+})->name('categories.ementario_edit');
+Route::put('/', 'FilesController@uploadDetachedFile')->name('categories.ementario_update');
+Route::get('/categorias/download/ementario', 'FilesController@download')->name('files.download');
+Route::get('/categorias/visualizar/ementario', 'FilesController@viewfile')->name('files.view');
+
+
 
 Route::get('/categorias', 'CategoriesController@index')->name('categories.index');
 Route::post('/categorias', 'CategoriesController@store')->name('categories.store');;
@@ -63,6 +68,7 @@ Route::get('/tags/{tag}/edit', 'TagsController@edit')->name('tags.edit');
 Route::put('/tags/{tag}', 'TagsController@update')->name('tags.update');
 Route::delete('/tags/delete/{tag}', 'TagsController@destroy')->name('tags.destroy');
 
+Route::any('/documentos/ordena','DocumentsController@sort')->name('documents.sort');
 Route::any('/documentos/pesquisa','DocumentsController@filter')->name('documents.filter');
 Route::any('/mensagens/pesquisa','MessagesController@filter')->name('messages.filter');
 

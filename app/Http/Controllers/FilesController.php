@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\File;
+use Illuminate\Support\Facades\Response;
 
 class FilesController extends Controller
 {
@@ -82,6 +83,47 @@ class FilesController extends Controller
     {
         $file->delete();
         return redirect(route('documents.index'))->with('successMsg', 'Documento deletado');
+    }
+
+    public function uploadDetachedFile() {
+        File::all()->where('alias', 'ementario')->first()->delete();
+
+        $file = request('file_name_pdf');
+        $file_toUpload = new File(request(['name', 'extension', 'type', 'size', 'alias']));
+        //dd($file_toUpload);
+
+        $file_toUpload->name = $_FILES['file_name_pdf']['name'];
+        $file_toUpload->extension = 'pdf';
+        $file_toUpload->type = 'application/pdf';
+        $file_toUpload->size = $this->convertSize($_FILES['file_name_pdf']['size']);
+        $file_toUpload->alias = 'ementario';
+        $file_toUpload->hash_id = sha1_file($file);
+
+        $file->storeAs('documents', $file_toUpload->hash_id);
+        $file_toUpload->save();
+    }
+
+    public function download()
+    {
+        $files = File::all();
+        $file = $files->where('alias', 'ementario')->first();
+
+        $file_path = public_path('documents') . '/' . $file->hash_id;
+        $file_name = "Ementario " . $file->created_at;
+        return response()->download($file_path, $file_name);
+    }
+
+    public function viewfile()
+    {
+        $files = File::all();
+        $file = $files->where('alias', 'ementario')->first();
+
+        $file_path = public_path('documents') . '/' . $file->hash_id;
+
+        return  Response::make(file_get_contents($file_path), 200, [
+            'Content-Type' => 'application/pdf',
+            'Content-Disposition' => 'inline'
+        ]);
     }
 
     public function dumpArray($array) {

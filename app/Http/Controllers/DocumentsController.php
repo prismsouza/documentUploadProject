@@ -56,7 +56,9 @@ class DocumentsController extends Controller
 
     public function create()
     {
-        return view('documents.create', ['tags' => Tag::all(), 'categories' => Category::all(), 'documents' => Document::all()]);
+        $categories = Category::orderBy('name', 'asc')->get()
+            ->whereNotIn('id', [1, 2, 3]); // BGBM / BEBM / Separata
+        return view('documents.create', ['tags' => Tag::all(), 'categories' => $categories, 'documents' => Document::all()]);
     }
 
     public function store(DocumentCreateRequest $request)
@@ -106,15 +108,10 @@ class DocumentsController extends Controller
 
     public function showByCategory(Category $category)
     {
-
-        if ($category->id == 1) {
-            $documents = Boletim::where('category_id', 1)->paginate();
-        }
-        else if ($category->id == 2) {
-            $documents = Boletim::where('category_id', 2)->paginate();
-        }
-        else {
-            $documents = Document::where('category_id', $category->id)->paginate();
+        if ($category->id == 1 || $category->id == 2 || $category->id == 3) {
+            $documents = Boletim::orderBy('date', 'desc')->where('category_id', $category->id)->paginate();
+        } else {
+            $documents = Document::orderBy('date', 'desc')->where('category_id', $category->id)->paginate();
         }
         $category_option = $category->name;
 
@@ -125,7 +122,6 @@ class DocumentsController extends Controller
     {
         $documents = Document::onlyTrashed()->get();
         return view('documents.deleted_documents', ['documents' => $documents]);
-
     }
 
     public function edit(Document $document)
@@ -170,7 +166,6 @@ class DocumentsController extends Controller
     {
         $document->delete();
         return redirect(route('documents.index'))->with('status', 'Documento deletado com sucesso!');
-        //return view('documents.index');
     }
 
     public function restore(Document $document)
@@ -182,7 +177,7 @@ class DocumentsController extends Controller
         //return view('documents.index');
     }
 
-    public function validateDocument($option)
+    /*public function validateDocument($option)
     {
         if ($option == "dont_update_path"){
             return request()->validate([
@@ -203,11 +198,30 @@ class DocumentsController extends Controller
             'file_name_pdf' => 'required',
             'tags' => 'exists:tags,id'
         ]);
-    }
+    }*/
 
     public function filter(Request $request)
     {
         return getFilteredDocuments($request, $this->isUserAdmin());
+    }
+
+    public function sort()
+    {
+        $documents = Document::all();
+        if (request('option') == 'nomeAsc') {
+            $documents = Document::orderBy('name', 'asc')->get();;
+            //$documents = $sorted->values()->all();
+        } elseif (request('option') == 'nomeDesc') {
+            $documents = Document::orderBy('name', 'DESC')->get();//->paginate();
+        } elseif (request('option') == 'dataAsc') {
+            $documents = Document::orderBy('date', 'ASC')->get();//->paginate();
+
+        } elseif (request('option') == 'dataDesc') {
+            $documents = Document::orderBy('date', 'DESC')->get();//->paginate();
+        } else {
+            $documents = Document::all();//->paginate();
+        }
+        return view('documents.index', ['documents' => $documents, 'category_option' => null, 'admin' => $this->isUserAdmin()]);
     }
 
     public function dumpArray($array) {

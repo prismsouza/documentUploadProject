@@ -8,6 +8,7 @@
         <!-- @ include('navbar') -->
         @include('navbar_admin')
         @yield('searchbar')
+        @yield('sortbar')
         @yield('searchmessagebar')
         <div id="wrapper">
             <div id="page" class="py-3">
