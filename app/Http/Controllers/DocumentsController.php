@@ -131,18 +131,20 @@ class DocumentsController extends Controller
 
     public function update(DocumentUpdateRequest $request, Document $document)
     {
+        $files = new FilesController();
         $document->update($request->validated());
+        if (request()->has('to_delete') && (request('to_delete')[0] != null)) {
+            $files->deleteFile(request('to_delete'));
+        }
+
         if (request()->has('filesToUpload') && request('files')) {
             //request('filesToUpload')[0] != null) {
-
-            $files = new FilesController();
             $files->uploadMultipleFiles($request, $document, 1);
         }
 
         if (request('file_name_pdf')) {
             $document->files->whereNotNull('alias')->first()->delete();
-            $file_pdf = new FilesController();
-            $file_pdf->uploadFile($request, $document, 'pdf', 1);
+            $files->uploadFile($request, $document, 'pdf', 1);
         }
 
         $document->hasboletim()->sync(request('boletim_document_id'));

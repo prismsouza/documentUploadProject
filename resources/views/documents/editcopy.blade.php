@@ -133,21 +133,17 @@
             <input name="filesToUpload[]" id="filesToUpload" type="hidden" value="" >
 
             <div class="list_files" style="color: forestgreen"></div>
-
-            <input name="to_delete[]" id="to_delete" type="text" style="display: none">
-
             <script>
-
                 to_delete = [];
                 names = [];
                 items = [];
                 @foreach($document->files as $file)
                     @if ($file->alias == NULL)
                         names.push('{{$file->name}}');
-                        items.push({ id:{{$file->id}} , name:'{{$file->name}}'});
+                        items.push({'{{$file->name}}': {{$file->id}}});
                     @endif
                 @endforeach
-                console.log(items);
+                        console.log(items);
 
                 $(function() {
                     generateList();
@@ -157,6 +153,7 @@
 
                         for (var i = 0; i < files.length; i++) {
                             names.push(files.item(i).name);
+                            ids.push(files.item(i).id);
                         }
                         generateList();
                     });
@@ -171,16 +168,18 @@
                 }
 
                 $('.list_files').on("click","button", function() { //user click on remove text
+                    //console.log(names);
                     var name = $(this).text().trim();
-                    var position = names.indexOf(name);
-
-                    var item = items.find(item => item.name === name);
-                    if (item) to_delete.push(item.id);
+                    var id = items.find(item =>item[0] == name);
+                    console.log(id);
+                    //console.log(name);
+                    to_delete.push(id);
                     //console.log(to_delete);
 
                     names.splice(position, 1);
                     $('.list_files').text("");
                     generateList();
+                    //console.log(names);
                 })
             </script>
         </div>
@@ -234,7 +233,7 @@
                         <li class="px-5" id="0">
                             <input
                                 type="radio" name="boletim_document_id" checked
-                                value="{{ $document->hasboletim->first()->id }}" style="background: darkseagreen">
+                                value=" {{ $document->hasboletim->first()->id }}" style="background: darkseagreen">
 
                             Atual: {{ $document->hasboletim->first()->name }} - {{ date('d/m/Y', strtotime($document->hasboletim->first()->date)) }}
                         </li>
@@ -346,7 +345,6 @@
     <script>
         function allFiles() {
             document.getElementById('filesToUpload').value = names; //JSON.stringify(names);
-            document.getElementById('to_delete').value = to_delete; //JSON.stringify(names);
         }
     </script>
 

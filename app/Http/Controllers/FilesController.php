@@ -79,6 +79,14 @@ class FilesController extends Controller
         return round($file_size, 2) . ' ' . $units[$i];
     }
 
+    public function deleteFile($files_id)
+    {
+        foreach ($files_id as $file_id) {
+            $file = File::where('id', $file_id);
+            $file->delete();
+        }
+    }
+
     public function destroy(File $file)
     {
         $file->delete();
