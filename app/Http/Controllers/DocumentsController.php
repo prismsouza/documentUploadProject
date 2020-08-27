@@ -28,6 +28,9 @@ class DocumentsController extends Controller
 
     public function index()
     {
+        $d = Document::where('id', 371)->first()->logs;
+        dd ($d);
+
         if (request('tag')) {
             $documents = Tag::where('name', request('tag'))->firstOrFail()->documents;
         } else {

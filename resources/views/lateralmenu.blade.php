@@ -62,7 +62,7 @@
                     Ementário
                 </a>
                 <a href="{{ route('categories.ementario_edit') }}" class="btn border float-md-right">
-                    <i class="fas fa-download small" style="color: black"></i>
+                    <i class="fas fa-edit small" style="color: black"></i>
                 </a>
                 <a href="{{ route('files.download') }}" class="btn border float-md-right">
                     <i class="fas fa-download small" style="color: black" aria-hidden="true"></i>

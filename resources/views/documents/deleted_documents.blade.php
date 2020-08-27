@@ -7,21 +7,19 @@
     @if ($documents->isNotEmpty())
         <table class="table table-bordered bg-white table-striped" id="myTable">
             <thead class="text-center">
-            <th onclick="sortTable(1)" scope="col" style="cursor: pointer;">
-                #
+            <th scope="col" style="width: 5%; text-align: center"> #</th>
+            <th cope="col">
+                Nome
             </th>
-            <th onclick="sortTable(2)" scope="col" style="cursor: pointer;">
-                Nome <i class="fas fa-sort"></i>
+            <th scope="col" style="width: 25%">
+                Descrição
             </th>
-            <th onclick="sortTable(2)" scope="col" style="cursor: pointer; width: 25%">
-                Descricao <i class="fas fa-sort"></i>
+            <th scope="col" style="width: 15%">
+                Categoria
             </th>
-            <th onclick="sortTable(3)" scope="col" style="cursor: pointer;width: 15%">
-                Categoria <i class="fas fa-sort"></i>
-            </th>
-            <th scope="col" style="width: 8%; text-align: center">Data Publicação</th>
-            <th scope="col" style="width: 8%; text-align: center">Excluído por</th>
-            <th scope="col" style="width: 8%; text-align: center">Data Exclusão</th>
+            <th scope="col" style="width: 10%; text-align: center">Data Publicação</th>
+            <th scope="col" style="width: 10%; text-align: center">Excluído por</th>
+            <th scope="col" style="width: 10%; text-align: center">Data Exclusão</th>
 
             </thead>
             <tbody>
@@ -64,7 +62,7 @@
                         {{ date('d/m/Y', strtotime($document->date)) }}
                     </td>
                     <td class="text-center">
-                        {{ $document->user->masp }}
+                        {{ $document->user_masp }}
                     </td>
                     <td class="text-center">
                         {{ date('d/m/Y', strtotime($document->deleted_at)) }}
@@ -82,53 +80,4 @@
                 {{ $documents->links() }}
             @endif
         @endif
-
-
-        <script>
-            function sortTable(n) {
-                var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
-                table = document.getElementById("myTable");
-                switching = true;
-                //Set the sorting direction to ascending:
-                dir = "asc";
-                while (switching) {
-                    switching = false;
-                    rows = table.rows;
-                    for (i = 1; i < (rows.length - 1); i++) {
-                        shouldSwitch = false;
-                        x = rows[i].getElementsByTagName("TD")[n];
-                        y = rows[i + 1].getElementsByTagName("TD")[n];
-
-                        if (dir == "asc") {
-                            if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
-                                //if so, mark as a switch and break the loop:
-                                shouldSwitch= true;
-                                break;
-                            }
-                        } else if (dir == "desc") {
-                            if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
-                                //if so, mark as a switch and break the loop:
-                                shouldSwitch = true;
-                                break;
-                            }
-                        }
-                    }
-                    if (shouldSwitch) {
-                        /*If a switch has been marked, make the switch
-                        and mark that a switch has been done:*/
-                        rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
-                        switching = true;
-                        //Each time a switch is done, increase this count by 1:
-                        switchcount ++;
-                    } else {
-                        /*If no switching has been done AND the direction is "asc",
-                        set the direction to "desc" and run the while loop again.*/
-                        if (switchcount == 0 && dir == "asc") {
-                            dir = "desc";
-                            switching = true;
-                        }
-                    }
-                }
-            }
-        </script>
 @endsection

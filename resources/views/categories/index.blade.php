@@ -6,6 +6,27 @@
     <p></p>
 
     <table width="100%">
+        <tr class="d-flex py-4">
+            <td class="col-sm-4 border py-2">
+                <b>Ementário</b>
+                <a href="{{ route('files.view')}}" class="btn border btn-light float-md-right"
+                   data-toggle="tooltip" title="visualizar" style="color:white" target="_blank">
+                    <i class="fas fa-eye" style="color:cadetblue"></i>
+                </a>
+                <a data-toggle="tooltip" title="download"
+                   href="{{ route('files.download') }}" class="btn border btn-light float-md-right">
+                    <i class="fas fa-download" style="color:darkseagreen" aria-hidden="true"></i>
+                </a>
+                <a data-toggle="tooltip" title="editar"
+                   href="{{ route('categories.ementario_edit') }}" class="btn border btn-light float-md-right">
+                    <i class="fas fa-edit small" style="color: black"></i>
+                </a>
+
+            </td>
+        </tr>
+    </table>
+
+    <table width="100%">
     @foreach($categories->chunk(3) as $chunked_category)
         <tr class="d-flex">
         @foreach( $chunked_category as $category )
@@ -46,13 +67,11 @@
     <p class="small">
         {{ $category->description }}
     </p>
-
-
-
             </td>
         @endforeach
         </tr>
 @endforeach
-    </table>
+    </table><br>
+
 </div>
 @endsection

@@ -73,4 +73,10 @@ class Document extends Model
     {
         return $this->hasMany(Message::class);
     }
+
+    public function logs()
+    {
+        return $this->belongsToMany(Log::class);
+    }
+
 }
