@@ -176,7 +176,7 @@
 
                     var item = items.find(item => item.name === name);
                     if (item) to_delete.push(item.id);
-                    //console.log(to_delete);
+                    console.log(to_delete);
 
                     names.splice(position, 1);
                     $('.list_files').text("");
