@@ -133,8 +133,10 @@ class DocumentsController extends Controller
     {
         $files = new FilesController();
         $document->update($request->validated());
+
         if (request()->has('to_delete') && (request('to_delete')[0] != null)) {
-            $files->deleteFile(request('to_delete'));
+            $files_id = explode(',', request('to_delete')[0]);
+            $files->deleteFile($files_id);
         }
 
         if (request()->has('filesToUpload') && request('files')) {

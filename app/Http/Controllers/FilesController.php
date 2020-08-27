@@ -82,7 +82,7 @@ class FilesController extends Controller
     public function deleteFile($files_id)
     {
         foreach ($files_id as $file_id) {
-            $file = File::where('id', $file_id);
+            $file = File::where('id', $file_id)->first();
             $file->delete();
         }
     }
