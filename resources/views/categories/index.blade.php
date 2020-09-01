@@ -1,6 +1,12 @@
 @extends('layout_admin')
 @section('content')
 
+    @if (session('status'))
+        <div class="alert alert-success">
+            {{ session('status') }}
+        </div>
+    @endif
+
 <div id="content">
     @include('categories.create')
     <p></p>
@@ -40,7 +46,9 @@
                             @endif
                             {{ $category->name }}
                         </a>
+
                 <div class="btn-group float-md-right" role="group" aria-label="Basic example">
+                    @if ($category->id != 1 && $category->id != 2 && $category->id != 3 && $category->id != 24)
                     <form method="POST" id="delete-form-{{ $category->id }}"
                           action="{{ route('categories.destroy', $category) }}"
                           style="display: none;">
@@ -58,6 +66,7 @@
                             <i class="far fa-trash-alt" style="color: black" aria-hidden="true" data-toggle="tooltip" title="excluir"></i>
                         </a>
                     </button>
+                    @endif
                     @include('categories.edit')
 
                 </div>

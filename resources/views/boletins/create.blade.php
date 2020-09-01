@@ -1,6 +1,12 @@
 @extends ('layout_admin')
 @section ('content')
 
+    @if (session('status'))
+        <div class="alert alert-success">
+            {{ session('status') }}
+        </div>
+    @endif
+
     <h1 class="heading has-text-weight-bold is-size-4 py-6">Novo Boletim</h1>
     <form method="POST" action="/boletins" enctype="multipart/form-data" class="p-5 border"> @csrf
     <!-- -------------- CATEGORY -------------- -->

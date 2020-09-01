@@ -27,6 +27,11 @@ class User extends Authenticatable
         return $this->belongsTo(Unit::class);
     }
 
+    public function logs()
+    {
+        return $this->hasMany(Log::class, 'user_masp', 'masp');
+    }
+
     public function dumpArray($array) {
         echo "<pre>";
         var_dump($array);
