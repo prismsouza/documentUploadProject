@@ -122,7 +122,7 @@
     @if ($admin)
         <div class="border-bottom border-top py-3">
             <p>Publicado por {{ $document->user_masp }} em {{ $document->created_at }} </p>
-            @if ($document->logs != null)
+            @if (count($document->logs) != 0)
                 <p>Última edição por {{ $document->logs->where('action', 'update')->last()->user_masp }}
                 em {{  $document->logs->where('action', 'update')->last()->created_at }} </p>
             @endif
