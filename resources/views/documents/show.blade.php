@@ -123,7 +123,7 @@
         <div class="border-bottom border-top py-3">
             <p>Publicado por {{ $document->user_masp }} em {{ $document->created_at }} </p>
             @if (count($document->logs) != 0)
-                @if ($document->logs->where('action', 'update')->last() != 0)
+                @if ($document->logs->where('action', 'update')->last())
                 <p>Última edição por {{ $document->logs->where('action', 'update')->last()->user_masp }}
                 em {{  $document->logs->where('action', 'update')->last()->created_at }} </p>
             @endif @endif
