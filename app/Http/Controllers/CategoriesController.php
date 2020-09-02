@@ -49,8 +49,11 @@ class CategoriesController extends Controller
 
     public function destroy(Category $category)
     {
-        $category->delete();
-        return redirect(route('categories.index'))->with('successMsg', 'Category Successfully Deleted');
+        if ($category->id != 1 && $category->id != 2 && $category->id != 3 && $category->id != 24) {
+            $category->delete();
+            return redirect(route('categories.index'))->with('successMsg', 'Categoria apagada com sucesso');
+        }
+        return redirect(route('categories.index'))->with('successMsg', 'Essa categoria não pode ser apagada');
     }
 
     public function validateCategory()

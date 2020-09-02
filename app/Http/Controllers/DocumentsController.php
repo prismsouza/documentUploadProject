@@ -12,6 +12,7 @@ use App\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
 include "DocumentsFilterHelper.php";
+include "LogsHelper.php";
 
 class DocumentsController extends Controller
 {
@@ -95,6 +96,11 @@ class DocumentsController extends Controller
             $document->tags()->attach(request('tags'));
         }
 
+        storeLog($document->user_masp, $document->id, "create");
+
+        //', 'created_at'];
+
+
         return redirect(route('documents.index'))->with('status', "Documento criado com sucesso!");
     }
 
@@ -156,6 +162,8 @@ class DocumentsController extends Controller
         $document->hasdocument()->sync(request('document_has_document'));
         $document->tags()->sync(request('tags'));
 
+        storeLog($this->getMasp(), $document->id, "update");
+
         return redirect($document->path())->with('status', 'Documento atualizado com sucesso!');
     }
 
@@ -172,6 +180,7 @@ class DocumentsController extends Controller
     public function destroy(Document $document)
     {
         $document->delete();
+        storeLog($this->getMasp(), $document->id, "delete");
         return redirect(route('documents.index'))->with('status', 'Documento deletado com sucesso!');
     }
 

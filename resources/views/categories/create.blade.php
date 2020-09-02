@@ -1,3 +1,8 @@
+@if (session('status'))
+    <div class="alert alert-success">
+        {{ session('status') }}
+    </div>
+@endif
 
 <button class="btn btn-dark btn-outline-light border" type="button" data-toggle="collapse"
         data-target="#collapseCreate" aria-expanded="false" aria-controls="collapseCreate">
