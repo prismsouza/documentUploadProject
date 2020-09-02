@@ -7,10 +7,11 @@ Route::get('/admin', 'UsersController@getAdminUsers')->name('admin_panel');
 Route::get('/mensagens', 'MessagesController@index')->name('messages.index');
 Route::get('/mensagens/{message}', 'MessagesController@update')->name('messages.update');
 
-Route::get('/usuario/documentos', 'DocumentsController@index_user')->name('documents_user.index');
-Route::get('/usuario/documentos/{document}', 'DocumentsController@showUser')->name('documents_user.show');
+//Route::get('/usuario/documentos', 'DocumentsController@index_user')->name('documents_user.index');
+//Route::get('/usuario/documentos/{document}', 'DocumentsController@showUser')->name('documents_user.show');
 Route::get('/admin/deletados', 'DocumentsController@showDeletedDocuments')->name('documents.deleted_documents');
-
+Route::post('/admin/deletados/{document}', 'DocumentsController@restore')->name('documents.restore');
+Route::get('/admin/logs', 'DocumentsController@logs')->name('documents.logs');
 
 Route::get('/boletins/categorias/{category}', 'DocumentsController@showByCategory')->name('documents_category.index');
 Route::get('/boletins', 'BoletinsController@index')->name('boletins.index');
@@ -32,15 +33,13 @@ Route::get('/usuario', 'DocumentsController@home_user')->name('home_user');
 Route::get('/documentos', 'DocumentsController@index')->name('documents.index');
 Route::post('/documentos', 'DocumentsController@store')->name('documents.store');
 Route::get('/documentos/novo', 'DocumentsController@create')->name('documents.create');
-//Route::post('/documentos/categorias/BGBM', 'DocumentsController@store_boletim')->name('documents.boletim');
-//Route::get('/documentos/novo/BGBM', 'DocumentsController@create_boletim')->name('documents.create_boletim');
 Route::get('/documentos/{document}/download/{type}', 'DocumentsController@download')->name('documents.download');
 Route::get('/documentos/{document}/visualizar/{file_id}', 'DocumentsController@viewfile')->name('documents.viewfile');
 Route::get('/documentos/{document}', 'DocumentsController@show')->name('documents.show');
 Route::get('/documentos/{document}/editar', 'DocumentsController@edit')->name('documents.edit');
 Route::put('/documentos/{document}', 'DocumentsController@update')->name('documents.update');
 Route::delete('/documentos/delete/{document}', 'DocumentsController@destroy')->name('documents.destroy');
-Route::get('home', 'DocumentsController@restore')->name('documents.restore');
+
 
 Route::get('/categorias/ementario/editar', function(){
     return view ('categories.ementario_edit');

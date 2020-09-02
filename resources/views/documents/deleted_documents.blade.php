@@ -8,18 +8,19 @@
         <table class="table table-bordered bg-white table-striped" id="myTable">
             <thead class="text-center">
             <th scope="col" style="width: 5%; text-align: center"> #</th>
-            <th cope="col">
+            <th cope="col" style="width: 15%; text-align: center">
                 Nome
             </th>
-            <th scope="col" style="width: 25%">
+            <th scope="col" style="width: 20%; text-align: center">
                 Descrição
             </th>
-            <th scope="col" style="width: 15%">
+            <th scope="col" style="width: 12%; text-align: center">
                 Categoria
             </th>
-            <th scope="col" style="width: 10%; text-align: center">Data Publicação</th>
-            <th scope="col" style="width: 10%; text-align: center">Excluído por</th>
-            <th scope="col" style="width: 10%; text-align: center">Data Exclusão</th>
+            <th scope="col" style="width: 10%; text-align: center">Data Documento</th>
+            <th scope="col" style="width: 15%; text-align: center">Data Criação</th>
+            <th scope="col" style="width: 8%; text-align: center">Excluído por</th>
+            <th scope="col" style="width: 15%; text-align: center">Data Exclusão</th>
 
             </thead>
             <tbody>
@@ -49,23 +50,39 @@
                                 <i class="far fa-times-circle" style="color: red"></i>
                             </a>
                         @endif
-                        <a href="{{ route('documents.index') }}"
-                           class="float-md-right btn border" data-toggle="tooltip" title="restaurar documento">
-                            <i class="fas fa-trash-restore"style="color: green"></i>
-                        </a>
+                        <form method="POST" id="restore-form-{{ $document->id }}"
+                              action="{{ route('documents.restore', $document) }}"
+                              style="display: none;">
+                            {{ csrf_field() }}
+                        </form>
+
+                            <a onclick="if (confirm('Tem certeza que deseja RESTAURAR esse documento?')){
+                                event.preventDefault();
+                                document.getElementById('restore-form-{{ $document->id }}').submit();
+                                } else {
+                                event.preventDefault();
+                                }"
+                               href=" {{ route ('documents.index') }}" style="color:white"
+                               class="float-md-right btn border" data-toggle="tooltip" title="restaurar documento">
+                                <i class="fas fa-trash-restore"style="color: green"></i>
+                            </a>
+
                     </td>
                     <td> {{ $document->description }}</td>
-                    <td>
+                    <td style="text-align: center">
                         {{ $document->category->name }}
                     </td>
                     <td class="text-center">
                         {{ date('d/m/Y', strtotime($document->date)) }}
                     </td>
                     <td class="text-center">
+                        {{ date('d/m/Y - h:m:s', strtotime($document->created_at)) }}
+                    </td>
+                    <td class="text-center">
                         {{ $document->user_masp }}
                     </td>
                     <td class="text-center">
-                        {{ date('d/m/Y', strtotime($document->deleted_at)) }}
+                        {{ date('d/m/Y - h:m:s', strtotime($document->deleted_at)) }}
                     </td>
                 </tr>
 

@@ -121,10 +121,10 @@
 
     @if ($admin)
         <div class="border-bottom border-top py-3">
-            <p>Usuário que publicou o documento: {{ $document->user_masp }} </p>
-            <p>Data que o Usuário publicou o documento: {{ $document->created_at }} </p>
-            @if ($document->updated_at != null)
-                <p>Data da última edição do documento: {{  $document->updated_at }} </p>
+            <p>Publicado por {{ $document->user_masp }} em {{ $document->created_at }} </p>
+            @if ($document->logs != null)
+                <p>Última edição por {{ $document->logs->where('action', 'update')->last()->user_masp }}
+                em {{  $document->logs->where('action', 'update')->last()->created_at }} </p>
             @endif
         </div>
         <br>

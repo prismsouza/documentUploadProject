@@ -129,7 +129,7 @@ class DocumentsController extends Controller
 
     public function showDeletedDocuments()
     {
-        $documents = Document::onlyTrashed()->get();
+        $documents = Document::onlyTrashed()->get()->sortBy('deleted_at');
         return view('documents.deleted_documents', ['documents' => $documents]);
     }
 
@@ -186,35 +186,13 @@ class DocumentsController extends Controller
 
     public function restore(Document $document)
     {
+        dd($document);die();
         $document->restore();
+        storeLog($document->user_masp, $document->id, "restore");
         //$document->files()->restore();
         //$document->messages()->restore();
         return redirect(route('documents.index'))->with('status', 'Documento restaurado com sucesso!');
-        //return view('documents.index');
     }
-
-    /*public function validateDocument($option)
-    {
-        if ($option == "dont_update_path"){
-            return request()->validate([
-                'category_id' => 'required',
-                'name' => 'required',
-                'description' => 'required',
-                'date' => 'required',
-                'is_active' => 'required',
-                'tags' => 'exists:tags,id'
-            ]);
-        }
-        return request()->validate([
-            'category_id' => 'required',
-            'name' => 'required',
-            'description' => 'required',
-            'date' => 'required',
-            'is_active' => 'required',
-            'file_name_pdf' => 'required',
-            'tags' => 'exists:tags,id'
-        ]);
-    }*/
 
     public function filter(Request $request)
     {
@@ -238,6 +216,12 @@ class DocumentsController extends Controller
             $documents = Document::all();//->paginate();
         }
         return view('documents.index', ['documents' => $documents, 'category_option' => null, 'admin' => $this->isUserAdmin()]);
+    }
+
+    public function logs()
+    {
+        $logs = \App\Log::orderBy('id', 'DESC')->get();
+        return view('documents.logs', ['logs' => $logs]);
     }
 
     public function dumpArray($array) {

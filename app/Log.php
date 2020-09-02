@@ -21,6 +21,6 @@ class Log extends Model
 
     public function path()
     {
-        //return route('logs.index', $this);
+        return route('documents.logs', $this);
     }
 }

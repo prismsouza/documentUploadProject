@@ -32,10 +32,10 @@ class AuthServiceProvider extends ServiceProvider
 
         //
     }
-    /*public function boot()
+    public function boot2()
     {
         $this->registerPolicies();
 
         //
-    }*/
+    }
 }
