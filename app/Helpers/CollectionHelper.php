@@ -12,7 +12,7 @@ class CollectionHelper
 
     public static function perPage()
     {
-        return 5;
+        return 20;
     }
 
     public static function paginate(Collection $results, $total, $pageSize)
