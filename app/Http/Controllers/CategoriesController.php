@@ -60,7 +60,8 @@ class CategoriesController extends Controller
     {
         return request()->validate([
             'name' => 'required',
-            'description' => 'required'
+            'description' => 'required',
+            'hint' => 'nullable'
         ]);
     }
 

@@ -9,6 +9,12 @@ use Illuminate\Support\Collection;
 
 class CollectionHelper
 {
+
+    public static function perPage()
+    {
+        return 5;
+    }
+
     public static function paginate(Collection $results, $total, $pageSize)
     {
         $page = Paginator::resolveCurrentPage('page');

@@ -11,6 +11,8 @@ use App\File;
 use App\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
+use PhpParser\Node\Stmt\Else_;
+
 include "DocumentsFilterHelper.php";
 include "LogsHelper.php";
 
@@ -29,9 +31,6 @@ class DocumentsController extends Controller
 
     public function index()
     {
-        //$d = Document::where('id', 371)->first()->logs;
-        //dd ($d);
-
         if (request('tag')) {
             $documents = Tag::where('name', request('tag'))->firstOrFail()->documents;
         } else {
@@ -199,19 +198,22 @@ class DocumentsController extends Controller
         return getFilteredDocuments($request, $this->isUserAdmin());
     }
 
-    public function sort()
+    public function sort($documents)
     {
         $documents = Document::all();
         if (request('option') == 'nomeAsc') {
-            $documents = Document::orderBy('name', 'asc')->get();;
+            $documents = Document::orderBy('name', 'ASC')->get();;
             //$documents = $sorted->values()->all();
         } elseif (request('option') == 'nomeDesc') {
             $documents = Document::orderBy('name', 'DESC')->get();//->paginate();
         } elseif (request('option') == 'dataAsc') {
             $documents = Document::orderBy('date', 'ASC')->get();//->paginate();
-
         } elseif (request('option') == 'dataDesc') {
             $documents = Document::orderBy('date', 'DESC')->get();//->paginate();
+        } elseif (request('option') == 'dataCreatedAtAsc') {
+            $documents = Document::orderBy('created_at', 'ASC')->get();//->paginate();
+        } elseif (request('option') == 'dataCreatedAtDesc') {
+            $documents = Document::orderBy('created_at', 'DESC')->get();//->paginate();} else {
         } else {
             $documents = Document::all();//->paginate();
         }

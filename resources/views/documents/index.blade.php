@@ -51,18 +51,19 @@
         <tbody>
     @endif
 
-    <?php $c = 0;
-    if(!$documents instanceof Illuminate\Support\Collection)
-        $page = $documents->currentPage();
+    <?php use App\Helpers\CollectionHelper;
+    $c = 0;
+    if($documents instanceof Illuminate\Support\Collection) {
+        $documents = CollectionHelper::paginate($documents , count($documents), CollectionHelper::perPage());
+    }
+    $page = $documents ->currentPage();
     ?>
 
     @forelse($documents as $document)
-
-        <?php   if(!$documents instanceof Illuminate\Support\Collection)
-                    $count = ($c + 1) + $page*10 - 10;
-                else
-                    $count = $c+1;
-            $c = $c + 1; ?>
+        <?php
+            $count = ($c + 1) + $page*10 - 10;
+            $c = $c + 1;
+        ?>
         <tr class="small">
             <td class="text-center">{{$count}}</td>
             <td>
@@ -103,7 +104,6 @@
                        class="btn border">
                         <i class="fa fa-file-pdf fa-lg" style="color: black" aria-hidden="true"></i>
                     </a>
-
                 </td>
 
             @if ($admin)
@@ -143,9 +143,7 @@
 
         </tbody>
     </table>
-    @if(!$documents instanceof Illuminate\Support\Collection)
         @if ($documents->total()>0)
             {{ $documents->links() }}
         @endif
-    @endif
 @endsection

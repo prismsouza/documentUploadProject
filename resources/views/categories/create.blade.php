@@ -33,7 +33,17 @@
                     value="{{ old('description') }}">
                     @error('description')<p class="help is-danger">{{ $errors->first('description') }}</p>@enderror
             </div>
-            <div class="col-2"><br>
+            <div class="col-10 py-4 field">
+                <label for="hint">Seguir padrão:</label>
+                <input
+                    class="input @error('hint') is-danger @enderror col-12"
+                    type="text"
+                    name="hint"
+                    id="hint"
+                    value="{{ old('hint') }}">
+                @error('hint')<p class="help is-danger">{{ $errors->first('hint') }}</p>@enderror
+            </div>
+            <div class="col-2 py-4 "><br>
                 <div class="field is-grouped float-md-right" id="btn_create_document">
                     <button class="btn btn-dark btn-outline-light border" type="submit">Criar</button>
                     <a href="{{ route('home') }}" class="btn btn-light border">
@@ -42,5 +52,5 @@
                 </div>
             </div>
         </div>
-    </form><br>
+    </form>
 </div>

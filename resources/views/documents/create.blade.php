@@ -49,6 +49,13 @@
                             @endif
 
                         @endif
+                        <div id="category{{$category->id}}" style="display: none"> textttttttttt{{ $category->hint }} </div>
+                            <div id="category{{$category->id}}"> textttttttttt{{ $category->hint }} </div>
+                            <span id="category{{$category->id}}" style="display: none"> textttttttttt{{ $category->hint }} </span>
+                            <span id="category{{$category->id}}"> textttttttttt{{ $category->hint }} </span>
+
+
+
                     @endforeach
 
                 </select>
@@ -57,7 +64,20 @@
                 <?php } ?>
             </div>
         </div>
+        <div id="hint"></div>
+        <script>
 
+
+        $('#category_id').change(function() {
+            $('#hint').value = $('#category_id').val();
+            var category_id = $('#category_id').val();
+            console.log(category_id);
+
+            var category_hint = $('#category'+category_id).text();
+            console.log(category_hint);
+
+        })
+        </script>
 <!-- -------------- NAME -------------- -->
         <div class="form-row py-4">
             <div class="col-md-4 mb-3">
