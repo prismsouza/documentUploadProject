@@ -78,7 +78,7 @@ class BoletinsController extends Controller
     public function download(Boletim $boletim, $hash_id)
     {
         if ($hash_id != null) {
-            $file_path = public_path('documents') . '/' . $hash_id;
+            $file_path = public_path('documents') . '/' . $hash_id  . '.pdf';
             $file_name = $boletim->files->where('hash_id', $hash_id)->first()->name;
             return response()->download($file_path, $file_name);
         }
@@ -87,7 +87,7 @@ class BoletinsController extends Controller
 
     public function viewfile(Boletim $boletim, $file_id)
     {
-        $file_path = public_path('documents') . '/' . $boletim->files->where('id', $file_id)->first()->hash_id;
+        $file_path = public_path('documents') . '/' . $boletim->files->where('id', $file_id)->first()->hash_id . '.pdf';
         return  Response::make(file_get_contents($file_path), 200, [
             'Content-Type' => 'application/pdf',
             'Content-Disposition' => 'inline'
