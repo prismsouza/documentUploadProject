@@ -94,14 +94,24 @@
             </td>
 
             <?php $file_pdf = $document->files->whereNotNull('alias')->first();?>
-                <td class="text-center px-0">
-                    <a class="btn border" data-toggle="tooltip" title="visualizar"
-                       href="{{ route('documents.viewfile', [$document->id, $file_pdf->id]) }}" target="_blank">
-                        <i class="fas fa-eye fa-lg" style="color: black" aria-hidden="true"></i>
+
+            <td class="text-center px-0">
+                    <a class="btn border" data-toggle="tooltip" title="visualizar" target="_blank"
+                       @if ($document->category->id == 1 || $document->category->id == 2 || $document->category->id == 3)
+                        href="{{ route('boletins.viewfile', [$document->id, $file_pdf->id]) }}"
+                       @else
+                       href="{{ route('documents.viewfile', [$document->id, $file_pdf->id]) }}"
+                       @endif
+                       >
+                       <i class="fas fa-eye fa-lg" style="color: black" aria-hidden="true"></i>
                     </a>
-                    <a href="{{ route('documents.download', [$document->id , $file_pdf->hash_id]) }}"
-                       data-toggle="tooltip" title="{{$file_pdf->size}}"
-                       class="btn border">
+                    <a class="btn border" data-toggle="tooltip" title="{{$file_pdf->size}}"
+                        @if ($document->category->id == 1 || $document->category->id == 2 || $document->category->id == 3)
+                        href="{{ route('boletins.download', [$document->id , $file_pdf->hash_id]) }}"
+                        @else
+                        href="{{ route('documents.download', [$document->id, $file_pdf->id]) }}"
+                        @endif
+                        >
                         <i class="fa fa-file-pdf fa-lg" style="color: black" aria-hidden="true"></i>
                     </a>
                 </td>
