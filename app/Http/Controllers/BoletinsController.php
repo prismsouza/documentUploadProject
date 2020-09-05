@@ -29,13 +29,28 @@ class BoletinsController extends Controller
         return view('boletins.index', ['boletins' => $boletins, 'category_option' => null, 'admin' => $this->isUserAdmin()]);
     }
 
+    public function index_admin()
+    {
+        $boletins = Boletim::orderBy('date', 'desc')->paginate();
+        return view('boletins.index', ['boletins' => $boletins, 'category_option' => null, 'admin' => $this->isUserAdmin()]);
+    }
+
     public function show(Boletim $boletim)
     {
         $boletim = Boletim::find($boletim->id);
 
         $pdf_file = $boletim->files->whereNotNull('alias')->last();
         $files = $boletim->files->whereNull('alias')->all();
-        return view('boletins.show', ['boletim' => $boletim, 'files' => $files, 'pdf_file' => $pdf_file, 'admin' => $this->isUserAdmin()]);
+        return view('boletins.show', ['boletim' => $boletim, 'files' => $files, 'pdf_file' => $pdf_file, 'admin' => 0]);
+    }
+
+    public function show_admin(Boletim $boletim)
+    {
+        $boletim = Boletim::find($boletim->id);
+
+        $pdf_file = $boletim->files->whereNotNull('alias')->last();
+        $files = $boletim->files->whereNull('alias')->all();
+        return view('boletins_admin.show', ['boletim' => $boletim, 'files' => $files, 'pdf_file' => $pdf_file, 'admin' => $this->isUserAdmin()]);
     }
 
     public function create()

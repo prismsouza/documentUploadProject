@@ -56,7 +56,7 @@
                 <i class="fas fa-home"></i>
             </a>
         </div>
-
     </div>
+
 </div>
 <br>

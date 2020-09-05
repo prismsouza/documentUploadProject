@@ -12,12 +12,16 @@ Route::get('/mensagens/{message}', 'MessagesController@update')->name('messages.
 Route::get('/admin/deletados', 'DocumentsController@showDeletedDocuments')->name('documents.deleted_documents');
 Route::post('/admin/deletados/{document}', 'DocumentsController@restore')->name('documents.restore');
 Route::get('/admin/logs', 'DocumentsController@logs')->name('documents.logs');
+Route::get('/admin/documentos', 'DocumentsController@index_admin')->name('documents_admin.index');
 
 Route::get('/boletins/categorias/{category}', 'DocumentsController@showByCategory')->name('documents_category.index');
 Route::get('/boletins', 'BoletinsController@index')->name('boletins.index');
+Route::get('/admin/boletins', 'BoletinsController@index_admin')->name('boletins_admin.index');
 Route::post('/boletins', 'BoletinsController@store')->name('boletins.store');
 Route::get('/boletins/novo', 'BoletinsController@create')->name('boletins.create');
 Route::get('/boletins/{boletim}', 'BoletinsController@show')->name('boletins.show');
+Route::get('/admin/boletins/{boletim}', 'BoletinsController@show_admin')->name('boletins_admin.show');
+
 Route::get('/boletins/{boletim}/editar', 'BoletinsController@edit')->name('boletins.edit');
 Route::put('/boletins/{boletim}', 'BoletinsController@update')->name('boletins.update');
 Route::delete('/boletins/delete/{boletim}', 'BoletinsController@destroy')->name('boletins.destroy');
@@ -28,7 +32,10 @@ Route::delete('/arquivos/delete/{file}', 'FilesController@destroy')->name('files
 
 
 Route::get('/documentos/categorias/{category}', 'DocumentsController@showByCategory')->name('documents_category.index');
-Route::get('/', 'DocumentsController@home')->name('home');
+Route::get('/admin/documentos/categorias/{category}', 'DocumentsController@showByCategoryAdmin')->name('documents_category_admin.index');
+
+Route::get('/', 'DocumentsController@index')->name('documents.index');
+Route::get('/home', 'DocumentsController@home')->name('home');
 Route::get('/usuario', 'DocumentsController@home_user')->name('home_user');
 Route::get('/documentos', 'DocumentsController@index')->name('documents.index');
 Route::post('/documentos', 'DocumentsController@store')->name('documents.store');
@@ -36,6 +43,7 @@ Route::get('/documentos/novo', 'DocumentsController@create')->name('documents.cr
 Route::get('/documentos/{document}/download/{type}', 'DocumentsController@download')->name('documents.download');
 Route::get('/documentos/{document}/visualizar/{file_id}', 'DocumentsController@viewfile')->name('documents.viewfile');
 Route::get('/documentos/{document}', 'DocumentsController@show')->name('documents.show');
+Route::get('/admin/documentos/{document}', 'DocumentsController@show_admin')->name('documents_admin.show');
 Route::get('/documentos/{document}/editar', 'DocumentsController@edit')->name('documents.edit');
 Route::put('/documentos/{document}', 'DocumentsController@update')->name('documents.update');
 Route::delete('/documentos/delete/{document}', 'DocumentsController@destroy')->name('documents.destroy');
@@ -68,7 +76,9 @@ Route::put('/tags/{tag}', 'TagsController@update')->name('tags.update');
 Route::delete('/tags/delete/{tag}', 'TagsController@destroy')->name('tags.destroy');
 
 Route::any('/documentos/ordena','DocumentsController@sort')->name('documents.sort');
+Route::any('/admin/documentos/ordena','DocumentsController@sort_admin')->name('documents_admin.sort');
 Route::any('/documentos/pesquisa','DocumentsController@filter')->name('documents.filter');
+Route::any('/admin/documentos/pesquisa','DocumentsController@filter_admin')->name('documents_admin.filter');
 Route::any('/mensagens/pesquisa','MessagesController@filter')->name('messages.filter');
 
 Route::post('/documentos/{document}','MessagesController@store')->name('message.store');

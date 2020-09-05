@@ -4,6 +4,7 @@
 @include('includes')
 <body>
     @include('header')
+
     <div class="container">
         <!-- @ include('navbar') -->
         @include('navbar_admin')

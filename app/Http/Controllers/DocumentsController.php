@@ -36,11 +36,34 @@ class DocumentsController extends Controller
         } else {
             $documents = Document::orderBy('date', 'desc')->paginate();
         }
+        return view('documents.index', ['documents' => $documents, 'category_option' => null, 'admin' => 0]);
+
+    }
+
+    public function index_admin()
+    {
+        if (request('tag')) {
+            $documents = Tag::where('name', request('tag'))->firstOrFail()->documents;
+        } else {
+            $documents = Document::orderBy('date', 'desc')->paginate();
+        }
         return view('documents.index', ['documents' => $documents, 'category_option' => null, 'admin' => $this->isUserAdmin()]);
 
     }
 
     public function show(Document $document)
+    {
+        $doc = \App\Document::find($document->id);
+
+        $related_documents = $doc->hasdocument;
+
+        $pdf_file = $document->files->whereNotNull('alias')->first();
+        $files = $document->files->whereNull('alias')->all();
+
+        return view('documents.show', ['document' => $document, 'related_documents' => $related_documents, 'files' => $files, 'pdf_file' => $pdf_file, 'admin' => 0]);
+    }
+
+    public function show_admin(Document $document)
     {
         $doc = \App\Document::find($document->id);
 
@@ -123,6 +146,18 @@ class DocumentsController extends Controller
         }
         $category_option = $category->name;
 
+        return view('documents.index', ['documents' => $documents, 'category_option' => $category_option, 'admin' => 0]);
+    }
+
+    public function showByCategoryAdmin(Category $category)
+    {
+        if ($category->id == 1 || $category->id == 2 || $category->id == 3) {
+            $documents = Boletim::orderBy('date', 'desc')->where('category_id', $category->id)->paginate();
+        } else {
+            $documents = Document::orderBy('date', 'desc')->where('category_id', $category->id)->paginate();
+        }
+        $category_option = $category->name;
+
         return view('documents.index', ['documents' => $documents, 'category_option' => $category_option, 'admin' => $this->isUserAdmin()]);
     }
 
@@ -195,12 +230,15 @@ class DocumentsController extends Controller
 
     public function filter(Request $request)
     {
+        return getFilteredDocuments($request, 0);
+    }
+
+    public function filter_admin(Request $request, $admin_view)
+    {
         return getFilteredDocuments($request, $this->isUserAdmin());
     }
 
-    public function sort($documents)
-    {
-        $documents = Document::all();
+    public function sortDocuments() {
         if (request('option') == 'nomeAsc') {
             $documents = Document::orderBy('name', 'ASC')->get();;
             //$documents = $sorted->values()->all();
@@ -217,6 +255,17 @@ class DocumentsController extends Controller
         } else {
             $documents = Document::all();//->paginate();
         }
+        return $documents;
+    }
+    public function sort()
+    {
+        $documents = $this->sortDocuments();
+        return view('documents.index', ['documents' => $documents, 'category_option' => null, 'admin' => 0]);
+    }
+
+    public function sort_admin()
+    {
+        $documents = $this->sortDocuments();
         return view('documents.index', ['documents' => $documents, 'category_option' => null, 'admin' => $this->isUserAdmin()]);
     }
 

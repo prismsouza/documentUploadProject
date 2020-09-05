@@ -1,21 +1,16 @@
-@extends($admin ? 'layout_admin' : 'layout_user')
+@extends('layout')
 
 @include('searchbar')
-@section('content')
-    <div id="wrapper">
-        @if($admin)
-        <div id="page" class="row py-1">
 
-            <div class="col-10">
-                <p><img src="images/banner2.jpg" class="img-fluid" style="opacity: 0.6"></p>
-            </div>
-            <div class="menu col-2 text-left light lighten-1 ">
-                @include('lateralmenu')
-            </div>
-        </div>
-        @else
-            <p><img src="images/banner2.jpg" class="img-fluid" style="opacity: 0.6"></p>
-        @endif
+@section('content')
+    @if($admin)
+        <a href="{{ route('documents_admin.index') }}" class="btn btn-light border">
+            Administrador   <i class="fas fa-user-cog"></i>
+        </a>
+        <br><br>
+    @endif
+    <div id="wrapper">
+        <p><img src="images/banner2.jpg" class="img-fluid" style="opacity: 0.6"></p>
     </div>
 @endsection
 

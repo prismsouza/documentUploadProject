@@ -11,6 +11,14 @@
         </div>
     @endif
 
+    @if($admin)
+        <div class="float-md-right">
+            <a href="{{ route('documents.index') }}" class="btn btn-light border">
+                <i class="fa fa-user"></i>Visão do usuário
+            </a>
+        </div><br><br>
+    @endif
+
     @if($category_option)
             <div class="border p-2">
                 Categoria: <b>{{ $category_option }}</b>
@@ -67,7 +75,7 @@
         <tr class="small">
             <td class="text-center">{{$count}}</td>
             <td>
-                <a href="{{ $document->path()  }}" data-toggle="tooltip" title="acessar documento">
+                <a @if ($admin) href="{{ $document->path_admin()  }}" @else href="{{ $document->path()  }}" @endif data-toggle="tooltip" title="acessar documento">
                     {{ $document->name }}
                 </a>
                 @if ($document->is_active )

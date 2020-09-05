@@ -8,7 +8,7 @@
 
             <td class="nav-item" style="width: 20%">
                 <a class="nav-link {{ (Request::is('documentos') || Request::is('/'))  ? 'bg-light' : ''}}"
-                   href={{ route('documents.index') }}><b>Documentos</b>
+                   href={{ route('documents_admin.index') }}><b>Documentos</b>
                 </a>
             </td>
             <td class="nav-item" style="width: 20%">

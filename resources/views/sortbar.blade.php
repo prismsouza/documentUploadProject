@@ -1,7 +1,7 @@
 @section('sortbar')
 
 <div class="border p-2">
-    <form method="POST" id="sortForm" action="{{ route('documents.sort') }}" enctype="multipart/form-data" class="py-2"> @csrf
+    <form method="POST" id="sortForm" action= @if ($admin) "{{ route('documents_admin.sort') }}" @else "{{ route('documents.sort') }}" @endif enctype="multipart/form-data" class="py-2"> @csrf
             <div id="option">
                 <div class="row px-4 py-2">Ordenar resultados por:</div>
                 <div class="row px-4">
@@ -35,7 +35,7 @@
                 </div>
             </div>
     </form>
-</div>
+</div><br>
 
 <script>
     $(function(){
