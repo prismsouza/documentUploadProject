@@ -88,6 +88,7 @@
                                 class="btn btn-light"
                                 href="{{ route('documents.viewfile', [$d->document_id , $d->id]) }}" target="_blank">
                                  <i class="fas fa-eye" style="color:cadetblue"></i>
+                                 
                              </a>
                         </li>
                     @endforeach
