@@ -192,7 +192,7 @@
                 Selecione documentos... <span class="caret"></span>
             </button>
 
-            <ul class="dropdown-menu" style="width: 90%">
+            <ul class="dropdown-menu scrollable-menu" role="menu" style="width: 90%">
                 <input class="form-control" id="document_has_document_input" type="text" placeholder="Search..">
                 @foreach($documents as $doc)
                     @if ($doc->id == $document->id) @continue @endif
@@ -227,7 +227,7 @@
                 @endif
             </button>
 
-            <ul class="dropdown-menu" style="width: 90%" aria-labelledby="dropdownPublishedAt">
+            <ul class="dropdown-menu scrollable-menu" role="menu" style="width: 90%" aria-labelledby="dropdownPublishedAt">
                 <input class="form-control" id="boletim_document_input" type="text" placeholder="Search..">
                     <?php $boletins = App\Boletim::all(); ?>
                     @if (count($document->hasboletim) != 0)
@@ -309,7 +309,7 @@
                                 </button>
 
 
-                                <ul class="dropdown-menu" style="width: 90%">
+                                <ul class="dropdown-menu scrollable-menu" role="menu" style="width: 90%">
                                     <input class="form-control" id="tags_input" type="text" placeholder="Search..">
                                     @forelse($tags as $tag)
                                         <div class="col-sm">

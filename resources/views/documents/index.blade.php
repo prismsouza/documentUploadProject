@@ -1,7 +1,7 @@
 @extends(($admin) ? 'layout_admin' : 'layout')
 
 @include('searchbar')
-@include('sortbar')
+@include('sortbar', ['documents' => $documents])
 
 @section('content')
 
@@ -75,6 +75,17 @@
         <tr class="small">
             <td class="text-center">{{$count}}</td>
             <td>
+                @if ($document->first()->files->whereNull('document_id')->first())
+                    @if (count($document->files->whereNull('alias')) > 0)
+                        <a @if ($admin) href="{{ $document->path_admin()  }}" @else href="{{ $document->path()  }}" @endif data-toggle="tooltip" title="acessar documento">
+                            {{ $document->name }}
+                        </a>
+                    @else
+                        {{ $document->name }}
+                    @endif
+                @else
+
+
                 <a @if ($admin) href="{{ $document->path_admin()  }}" @else href="{{ $document->path()  }}" @endif data-toggle="tooltip" title="acessar documento">
                     {{ $document->name }}
                 </a>
@@ -88,6 +99,7 @@
                             <i class="far fa-times-circle" style="color: red"></i>
                         </a>
                     @endif
+                @endif
                 @endif
             </td>
             <td> {{ $document->description }}</td>

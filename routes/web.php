@@ -36,7 +36,6 @@ Route::get('/admin/documentos/categorias/{category}', 'DocumentsController@showB
 
 Route::get('/', 'DocumentsController@index')->name('documents.index');
 Route::get('/home', 'DocumentsController@home')->name('home');
-Route::get('/usuario', 'DocumentsController@home_user')->name('home_user');
 Route::get('/documentos', 'DocumentsController@index')->name('documents.index');
 Route::post('/documentos', 'DocumentsController@store')->name('documents.store');
 Route::get('/documentos/novo', 'DocumentsController@create')->name('documents.create');

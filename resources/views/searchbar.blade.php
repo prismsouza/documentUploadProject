@@ -30,7 +30,7 @@
                 Selecione... <span class="caret"></span>
             </button>
 
-            <ul class="dropdown-menu" style="width: 130%">
+            <ul class="dropdown-menu scrollable-menu" role="menu" style="width: 130%">
                 <input class="form-control " id="categories_input" type="text" placeholder="Search..">
 
                 <li class="px-4 p-1">
@@ -91,7 +91,7 @@
                 Selecione... <span class="caret"></span>
             </button>
 
-            <ul class="dropdown-menu" style="width: 110%">
+            <ul class="dropdown-menu scrollable-menu" role="menu" style="width: 110%">
                 <input class="form-control" id="tags_input" type="text" placeholder="Search..">
 
                 <li class="px-4 p-1">
@@ -147,22 +147,22 @@
         </div>
     </div>
 <br>
+
     <div class="field is-grouped">
         <div class="control py-2">
             <button class="btn btn-dark border btn-outline-light float-md-right" type="submit" >
                 Pesquisar <i class="fas fa-search px-2"></i>
             </button>
 
-            <button class="btn btn-light border float-md-right" type="submit"  action="{{ route('documents.index') }}">
-                <a href="{{ route('documents.index') }}">
-                    Limpar <i class="fas fa-eraser px-2"></i>
-                </a>
-            </button>
-            <button class="btn btn-light border float-md-right" type="submit"  action="{{ route('home') }}">
-                <a href="{{ route('home') }}">
-                    <i class="fas fa-home"></i>
-                </a>
-            </button>
+            <a class="btn btn-light border float-md-right"
+                href="{{ route('documents.index') }}">
+                Limpar <i class="fas fa-eraser px-2"></i>
+            </a>
+
+            <a class="btn btn-light border float-md-right"
+               href="{{ route('home') }}">
+                <i class="fas fa-home"></i>
+            </a>
 
             <button class="btn btn-light border px-4" type="button" data-toggle="collapse"
                     data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">

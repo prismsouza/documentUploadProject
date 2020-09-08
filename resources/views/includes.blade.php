@@ -32,5 +32,10 @@
         i {
             color: dimgrey;
         }
+         .scrollable-menu {
+             height: auto;
+             max-height: 200px;
+             overflow-x: hidden;
+         }
     </style>
 </head>

@@ -233,7 +233,7 @@ class DocumentsController extends Controller
         return getFilteredDocuments($request, 0);
     }
 
-    public function filter_admin(Request $request, $admin_view)
+    public function filter_admin(Request $request)
     {
         return getFilteredDocuments($request, $this->isUserAdmin());
     }
@@ -257,8 +257,9 @@ class DocumentsController extends Controller
         }
         return $documents;
     }
-    public function sort()
+    public function sort(Request $request)
     {
+        //dd($request);
         $documents = $this->sortDocuments();
         return view('documents.index', ['documents' => $documents, 'category_option' => null, 'admin' => 0]);
     }

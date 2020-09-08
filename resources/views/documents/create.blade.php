@@ -208,7 +208,7 @@
                         Selecione documentos... <span class="caret"></span>
                     </button>
 
-                    <ul class="dropdown-menu" style="width: 50%">
+                    <ul class="dropdown-menu scrollable-menu" role="menu" style="width: 50%">
                         <input class="form-control" id="document_has_document_input" type="text" placeholder="Search..">
                         @foreach($documents as $document)
                                 <div class="col-sm">
@@ -226,9 +226,12 @@
                     </ul>
                 </div>
 
+
 <!-- -------------- PUBLISHED AT BGBM X -------------- -->
+
                 <div class="dropdown py-3" id="published_at">
                     <label>Publicado no BGBM/BEBM: </label>
+
                     <button id="dropdownPublishedAt" role="button"
                             class="btn border px-3 btn-light col-4"
                             data-toggle="dropdown" data-target="#"
@@ -240,10 +243,8 @@
                         @endif
                     </button>
 
-
-                    <ul class="dropdown-menu" style="width: 50%" aria-labelledby="dropdownPublishedAt">
-
-                        <input class="form-control" id="boletim_document_input" type="text" placeholder="Search..">
+                    <ul class="dropdown-menu scrollable-menu" role="menu" style="width: 50%" aria-labelledby="dropdownPublishedAt" >
+                        <input class="form-control" id="boletim_document_input" type="text" placeholder="Search.." >
                             <?php $boletins = App\Boletim::all(); ?>
 
                             @foreach($boletins as $doc_boletim)
@@ -255,9 +256,7 @@
                                     {{ $doc_boletim->name }} - {{ date('d/m/Y', strtotime($doc_boletim->date)) }}
                                 </li>
                             @endforeach
-
                     </ul>
-
                 </div>
 
 
@@ -310,8 +309,7 @@
                         Selecione tags... <span class="caret"></span>
                     </button>
 
-
-                    <ul class="dropdown-menu" style="width: 90%" id="tags_ul">
+                    <ul class="dropdown-menu scrollable-menu" role="menu" style="width: 90%" id="tags_ul">
                         <input class="form-control" id="tags_input" type="text" placeholder="Search..">
                         @forelse($tags as $tag)
                             <div class="col-sm">
