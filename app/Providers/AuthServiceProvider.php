@@ -22,7 +22,7 @@ class AuthServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function boot2()
+    public function boot()
     {
         if(!TokenController::isAuthorized()) {
             abort(403, "Acesso não autorizado.");
@@ -32,7 +32,7 @@ class AuthServiceProvider extends ServiceProvider
 
         //
     }
-    public function boot()
+    public function boot2()
     {
         $this->registerPolicies();
 
