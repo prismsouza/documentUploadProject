@@ -17,16 +17,16 @@
     <table class="table table-bordered table-striped">
         <tr><td colspan="4"><b>Painel do Administrador</b></td></tr>
         <tr>
-            <td class="col-3">
+            <td class="col-md-3">
                 <b>MASP</b>
             </td>
-            <td class="col-3">
+            <td class="col-md-3">
                 <b>Nome</b>
             </td>
-            <td class="col-3">
+            <td class="col-md-3">
                 <b>Unidade</b>
             </td>
-            <td class="col-3">
+            <td class="col-md-3">
                 <b>Nível de Acesso</b>
             </td>
         </tr>
