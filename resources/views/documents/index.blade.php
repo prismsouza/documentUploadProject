@@ -129,7 +129,7 @@
                         @if ($document->category->id == 1 || $document->category->id == 2 || $document->category->id == 3)
                         href="{{ route('boletins.download', [$document->id , $file_pdf->hash_id]) }}"
                         @else
-                        href="{{ route('documents.download', [$document->id, $file_pdf->id]) }}"
+                        href="{{ route('documents.download', [$document->id, $file_pdf->hash_id]) }}"
                         @endif
                         >
                         <i class="fa fa-file-pdf fa-lg" style="color: black" aria-hidden="true"></i>
