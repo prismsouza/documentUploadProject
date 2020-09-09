@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Boletim;
+use App\Document;
 use App\File;
 use App\Http\Requests\BoletimRequest;
 use App\Http\Requests\BoletimUpdateRequest;
@@ -37,6 +38,8 @@ class BoletinsController extends Controller
 
     public function show(Boletim $boletim)
     {
+        if (count($boletim->files->where('alias')->all()) == 0)
+            return $this->index();
         $boletim = Boletim::find($boletim->id);
 
         $pdf_file = $boletim->files->whereNotNull('alias')->last();
@@ -46,11 +49,14 @@ class BoletinsController extends Controller
 
     public function show_admin(Boletim $boletim)
     {
+        if (count($boletim->files->where('alias')->all()) == 0)
+            return view('boletins.edit', compact('document'));
         $boletim = Boletim::find($boletim->id);
 
         $pdf_file = $boletim->files->whereNotNull('alias')->last();
         $files = $boletim->files->whereNull('alias')->all();
-        return view('boletins_admin.show', ['boletim' => $boletim, 'files' => $files, 'pdf_file' => $pdf_file, 'admin' => $this->isUserAdmin()]);
+
+        return view('boletins.show', ['boletim' => $boletim, 'files' => $files, 'pdf_file' => $pdf_file, 'admin' => $this->isUserAdmin()]);
     }
 
     public function create()
@@ -69,7 +75,9 @@ class BoletinsController extends Controller
         $file_pdf = new FilesController();
         $file_pdf->uploadFile($request, $boletim, 'pdf', 0);
 
-        return redirect(route('boletins.index'))->with('status', "Boletim criado com sucesso!");
+        //return redirect(route('boletins.index'))->with('status', "Boletim criado com sucesso!");
+        return redirect($boletim->path_admin())->with('status', 'Boletim criado com sucesso!');
+
     }
 
     public function edit(Boletim $boletim)
@@ -80,14 +88,20 @@ class BoletinsController extends Controller
     public function update(BoletimUpdateRequest $request, Boletim $boletim)
     {
         $boletim->update($request->validated());
+        if (request('file_name_pdf') == null) {
+            return $this->edit($boletim);
+        }
+
         if (request('file_name_pdf')) {
             $file_pdf = new FilesController();
             $file_pdf->uploadFile($request, $boletim, 'pdf', 0);
-            $old_pdf = $boletim->files->whereNotNull('alias')->first();
-            File::destroy($old_pdf->id);
+            if (count($boletim->files->where('alias')->all()) != 0)
+                $boletim->files->whereNotNull('alias')->first()->delete();
+            //$old_pdf = $boletim->files->whereNotNull('alias')->first();
+            //File::destroy($old_pdf->id);
         }
 
-        return redirect($boletim->path())->with('status', 'Boletim atualizado com sucesso!');
+        return redirect($boletim->path_admin())->with('status', 'Boletim atualizado com sucesso!');
     }
 
     public function download(Boletim $boletim, $hash_id)
@@ -114,6 +128,12 @@ class BoletinsController extends Controller
         $boletim->delete();
         return redirect(route('boletins.index'))->with('status', 'Boletim deletado com sucesso!');
 
+    }
+
+    public function showFailedBoletins()
+    {
+        $boletins = Boletim::all();
+        return view('boletins.failed_boletins', ['boletins' => $boletins]);
     }
 
     public function validateBoletim($option)

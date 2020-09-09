@@ -185,7 +185,6 @@ class DocumentsController extends Controller
 
     public function update(DocumentUpdateRequest $request, Document $document)
     {
-        //dd(request('file_name_pdf'));
         $files = new FilesController();
         $document->update($request->validated());
 

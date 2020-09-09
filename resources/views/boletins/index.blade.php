@@ -56,6 +56,8 @@
 
     @forelse($boletins as $boletim)
 
+        @if (count($boletim->files->where('alias')->all()) == 0)  @continue; @endif
+
         <?php   if(!$boletins instanceof Illuminate\Support\Collection)
                     $count = ($c + 1) + $page*10 - 10;
                 else

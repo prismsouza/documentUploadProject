@@ -90,14 +90,24 @@
                             <i class="fa fa-upload p-1"></i>
                             <i class="fa fa-file-pdf px-2" aria-hidden="true"></i>
                             <span id="file_pdf_old" style="color: dimgrey">
-                                {{ $boletim->files->whereNotNull('alias')->first()->alias }}
-                            </span>
+
+                            @if (count($boletim->files->where('alias')->all()) != 0)
+                                    {{ $boletim->files->whereNotNull('alias')->first()->alias }}
+                            @else
+                                <span id="missing_file" style="color: darkred"> Não há nenhum arquivo principal em PDF cadastrado</span>
+                            @endif
+                            </span><br>
+                            <script>
+                                $( "#missing_file" ).fadeOut( 5000, function() {
+                                    $( this ).remove();
+                                });
+                            </script>
 
                         <input
                             class="input"
                             type="file" accept=".pdf, application/pdf"
                             name="file_name_pdf" id="file_name_pdf"
-                            value="{{ $boletim->files->first()->name }}"
+                            value="{{ old('file_name_pdf') }}"
                             style="visibility: hidden">
                         <span id="new_file_pdf" style="color: darkolivegreen; display:none">
                         </span>
@@ -116,6 +126,8 @@
                                 infoArea.textContent = (fileName);
                             }
                         </script>
+
+
 
                         @error('file_name_pdf')
                         <p class="help is-danger">{{ $errors->first('file_name_pdf') }}</p>
