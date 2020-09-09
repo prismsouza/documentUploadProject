@@ -53,6 +53,10 @@ class DocumentsController extends Controller
 
     public function show(Document $document)
     {
+
+        if (count($document->files->where('alias')->all()) == 0)
+            return $this->index();
+
         $doc = \App\Document::find($document->id);
 
         $related_documents = $doc->hasdocument;
@@ -65,6 +69,9 @@ class DocumentsController extends Controller
 
     public function show_admin(Document $document)
     {
+        if (count($document->files->where('alias')->all()) == 0)
+            return view('documents.edit', compact('document'),['tags' => Tag::all()]);
+
         $doc = \App\Document::find($document->id);
 
         $related_documents = $doc->hasdocument;
@@ -120,10 +127,8 @@ class DocumentsController extends Controller
 
         storeLog($document->user_masp, $document->id, "create");
 
-        //', 'created_at'];
-
-
-        return redirect(route('documents.index'))->with('status', "Documento criado com sucesso!");
+        //return redirect(route('documents_admin.index'))->with('status', "Documento criado com sucesso!");
+        return redirect($document->path_admin())->with('status', 'Documento criado com sucesso!');
     }
 
     public function viewfile(Document $document, $file_id)
@@ -167,6 +172,12 @@ class DocumentsController extends Controller
         return view('documents.deleted_documents', ['documents' => $documents]);
     }
 
+    public function showFailedDocuments()
+    {
+        $documents = Document::all();
+        return view('documents.failed_documents', ['documents' => $documents]);
+    }
+
     public function edit(Document $document)
     {
         return view('documents.edit', compact('document'),['tags' => Tag::all()]);
@@ -174,6 +185,7 @@ class DocumentsController extends Controller
 
     public function update(DocumentUpdateRequest $request, Document $document)
     {
+        //dd(request('file_name_pdf'));
         $files = new FilesController();
         $document->update($request->validated());
 
@@ -188,7 +200,8 @@ class DocumentsController extends Controller
         }
 
         if (request('file_name_pdf')) {
-            $document->files->whereNotNull('alias')->first()->delete();
+            if (count($document->files->where('alias')->all()) != 0)
+                $document->files->whereNotNull('alias')->first()->delete();
             $files->uploadFile($request, $document, 'pdf', 1);
         }
 
@@ -198,7 +211,7 @@ class DocumentsController extends Controller
 
         storeLog($this->getMasp(), $document->id, "update");
 
-        return redirect($document->path())->with('status', 'Documento atualizado com sucesso!');
+        return redirect($document->path_admin())->with('status', 'Documento atualizado com sucesso!');
     }
 
     public function download(Document $document, $hash_id)
@@ -215,7 +228,7 @@ class DocumentsController extends Controller
     {
         $document->delete();
         storeLog($this->getMasp(), $document->id, "delete");
-        return redirect(route('documents.index'))->with('status', 'Documento deletado com sucesso!');
+        return redirect(route('documents_admin.index'))->with('status', 'Documento deletado com sucesso!');
     }
 
     public function restore(Document $document)

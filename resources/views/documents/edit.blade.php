@@ -96,9 +96,18 @@
                     style="display: none">
                     <!--style="visibility: hidden">-->
 
-                <spam id="file_pdf_old" style="color: dimgrey">
-                    {{ $document->files->whereNotNull('alias')->first()->alias }}
-                </spam><br>
+                <span id="file_pdf_old" style="color: dimgrey">
+                    @if (count($document->files->where('alias')->all()) != 0)
+                        {{ $document->files->whereNotNull('alias')->first()->alias }}
+                    @else
+                        <span id="missing_file" style="color: darkred"> Não há nenhum arquivo principal em PDF cadastrado</span>
+                    @endif
+                </span><br>
+                <script>
+                    $( "#missing_file" ).fadeOut( 5000, function() {
+                        $( this ).remove();
+                    });
+                </script>
 
                 <div id="file_pdf_upload" style="color: darkolivegreen"></div>
 

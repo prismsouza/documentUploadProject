@@ -68,6 +68,8 @@
     ?>
 
     @forelse($documents as $document)
+
+        @if (count($document->files->where('alias')->all()) == 0)  @continue; @endif
         <?php
             $count = ($c + 1) + $page*10 - 10;
             $c = $c + 1;

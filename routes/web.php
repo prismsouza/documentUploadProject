@@ -13,6 +13,8 @@ Route::get('/admin/deletados', 'DocumentsController@showDeletedDocuments')->name
 Route::post('/admin/deletados/{document}', 'DocumentsController@restore')->name('documents.restore');
 Route::get('/admin/logs', 'DocumentsController@logs')->name('documents.logs');
 Route::get('/admin/documentos', 'DocumentsController@index_admin')->name('documents_admin.index');
+Route::get('/admin/falhas', 'DocumentsController@showFailedDocuments')->name('documents.failed_documents');
+
 
 Route::get('/boletins/categorias/{category}', 'DocumentsController@showByCategory')->name('documents_category.index');
 Route::get('/boletins', 'BoletinsController@index')->name('boletins.index');
