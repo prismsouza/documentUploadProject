@@ -127,8 +127,7 @@ class DocumentsController extends Controller
 
         storeLog($document->user_masp, $document->id, "create");
 
-        //return redirect(route('documents_admin.index'))->with('status', "Documento criado com sucesso!");
-        return redirect($document->path_admin())->with('status', 'Documento criado com sucesso!');
+        return redirect($document->path_admin())->with('status', 'Documento ' . $document->name . ' criado com sucesso!');
     }
 
     public function viewfile(Document $document, $file_id)

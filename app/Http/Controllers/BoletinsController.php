@@ -76,7 +76,7 @@ class BoletinsController extends Controller
         $file_pdf->uploadFile($request, $boletim, 'pdf', 0);
 
         //return redirect(route('boletins.index'))->with('status', "Boletim criado com sucesso!");
-        return redirect($boletim->path_admin())->with('status', 'Boletim criado com sucesso!');
+        return redirect($boletim->path_admin())->with('status', 'Boletim ' . $boletim->name . ' criado com sucesso!');
 
     }
 
@@ -101,7 +101,7 @@ class BoletinsController extends Controller
             //File::destroy($old_pdf->id);
         }
 
-        return redirect($boletim->path_admin())->with('status', 'Boletim atualizado com sucesso!');
+        return redirect($boletim->path_admin())->with('status', 'Documento ' . $boletim->name . ' atualizado com sucesso!');
     }
 
     public function download(Boletim $boletim, $hash_id)
@@ -111,7 +111,7 @@ class BoletinsController extends Controller
             if (!file_exists($file_path)) {
                 $file_path = $file_path . '.pdf';
                 if (!file_exists($file_path)) {
-                    return redirect('/boletins')->with('status', 'Erro ao tentar fazer download');
+                    return redirect('/boletins')->with('status', 'Erro ao tentar fazer download da(o) ' . $boletim->name);
 
                 }
             }
@@ -127,7 +127,7 @@ class BoletinsController extends Controller
         if (!file_exists($file_path)) {
             $file_path = $file_path . '.pdf';
             if (!file_exists($file_path)) {
-                return redirect('/boletins')->with('status', 'Erro ao tentar visualizar o documento');
+                return redirect('/boletins')->with('status', 'Erro ao tentar visualizar o documento ' . $boletim->name);
             }
         }
 
@@ -139,8 +139,9 @@ class BoletinsController extends Controller
 
     public function destroy(Boletim $boletim)
     {
+        $boletim_name = $boletim->name;
         $boletim->delete();
-        return redirect(route('boletins.index'))->with('status', 'Boletim deletado com sucesso!');
+        return redirect(route('boletins.index'))->with('status', 'Boletim ' . $boletim_name . ' deletado com sucesso!');
 
     }
 
