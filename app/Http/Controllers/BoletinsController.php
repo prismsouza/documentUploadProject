@@ -107,7 +107,10 @@ class BoletinsController extends Controller
     public function download(Boletim $boletim, $hash_id)
     {
         if ($hash_id != null) {
-            $file_path = public_path('documents') . '/' . $hash_id  . '.pdf';
+            $file_path = public_path('documents') . '/' . $hash_id;
+            if (!file_exists($file_path)) {
+                $file_path = $file_path . '.pdf';
+            }
             $file_name = $boletim->files->where('hash_id', $hash_id)->first()->name;
             return response()->download($file_path, $file_name);
         }
