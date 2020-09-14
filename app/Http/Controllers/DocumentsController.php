@@ -133,9 +133,14 @@ class DocumentsController extends Controller
 
     public function viewfile(Document $document, $file_id)
     {
-        //$file_path = public_path('documents') . '/' . $document->files->whereNotNull('alias')->first()->hash_id;
         $file_path = public_path('documents') . '/' . $document->files->where('id', $file_id)->first()->hash_id;
 
+        if (!file_exists($file_path)) {
+            $file_path = $file_path . '.pdf';
+            if (!file_exists($file_path)) {
+                return redirect('/documentos')->with('status', 'Erro ao tentar visualizar o documento ' . $document->name);
+            }
+        }
         return  Response::make(file_get_contents($file_path), 200, [
             'Content-Type' => 'application/pdf',
             'Content-Disposition' => 'inline'
@@ -210,13 +215,20 @@ class DocumentsController extends Controller
 
         storeLog($this->getMasp(), $document->id, "update");
 
-        return redirect($document->path_admin())->with('status', 'Documento atualizado com sucesso!');
+        return redirect($document->path_admin())->with('status', 'Documento ' . $document->name . ' atualizado com sucesso!');
     }
 
     public function download(Document $document, $hash_id)
     {
         if ($hash_id != null) {
             $file_path = public_path('documents') . '/' . $hash_id;
+            if (!file_exists($file_path)) {
+                $file_path = $file_path . '.pdf';
+                if (!file_exists($file_path)) {
+                    return redirect('/documentos')->with('status', 'Erro ao tentar fazer download do documento ' . $document->name);
+                }
+            }
+
             $file_name = $document->files->where('hash_id', $hash_id)->first()->name;
             return response()->download($file_path, $file_name);
         }
@@ -225,9 +237,10 @@ class DocumentsController extends Controller
 
     public function destroy(Document $document)
     {
+        $document_name = $document->name;
         $document->delete();
         storeLog($this->getMasp(), $document->id, "delete");
-        return redirect(route('documents_admin.index'))->with('status', 'Documento deletado com sucesso!');
+        return redirect(route('documents_admin.index'))->with('status', 'Documento ' . $document_name . ' deletado com sucesso!');
     }
 
     public function restore(Document $document)
