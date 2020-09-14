@@ -66,7 +66,7 @@
         <tr class="small">
             <td class="text-center">{{$count}}</td>
             <td>
-                @if ($boletim->first()->files->whereNull('alias')->first()) != null
+                @if (count($boletim->files->whereNull('alias')->all()) > 0)
                 <a href="{{ $boletim->path()  }}" data-toggle="tooltip" title="acessar documento">
                     {{ $boletim->name }}
                 </a>

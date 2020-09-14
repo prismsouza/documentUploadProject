@@ -60,6 +60,10 @@ class UsersController extends Controller
 
     public function destroy(User $user)
     {
+
+        if ($user->masp == '1729862' || $user->masp == '1292598')
+            return redirect(route('admins.index'))->with('status', 'Não é possível excluir o ' . $user->masp);
+
         $user_masp = $user->masp;
         $user->delete();
         return redirect(route('admins.index'))->with('status', 'Administrador ' . $user_masp . ' apagado com sucesso');

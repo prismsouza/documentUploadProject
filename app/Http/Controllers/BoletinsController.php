@@ -116,7 +116,11 @@ class BoletinsController extends Controller
 
     public function viewfile(Boletim $boletim, $file_id)
     {
-        $file_path = public_path('documents') . '/' . $boletim->files->where('id', $file_id)->first()->hash_id . '.pdf';
+        $file_path = public_path('documents') . '/' . $boletim->files->where('id', $file_id)->first()->hash_id;
+        if (!file_exists($file_path)) {
+            $file_path = $file_path . '.pdf';
+        }
+
         return  Response::make(file_get_contents($file_path), 200, [
             'Content-Type' => 'application/pdf',
             'Content-Disposition' => 'inline'
