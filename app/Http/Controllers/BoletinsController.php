@@ -110,6 +110,10 @@ class BoletinsController extends Controller
             $file_path = public_path('documents') . '/' . $hash_id;
             if (!file_exists($file_path)) {
                 $file_path = $file_path . '.pdf';
+                if (!file_exists($file_path)) {
+                    return redirect('/boletins')->with('status', 'Erro ao tentar fazer download');
+
+                }
             }
             $file_name = $boletim->files->where('hash_id', $hash_id)->first()->name;
             return response()->download($file_path, $file_name);
@@ -122,6 +126,9 @@ class BoletinsController extends Controller
         $file_path = public_path('documents') . '/' . $boletim->files->where('id', $file_id)->first()->hash_id;
         if (!file_exists($file_path)) {
             $file_path = $file_path . '.pdf';
+            if (!file_exists($file_path)) {
+                return redirect('/boletins')->with('status', 'Erro ao tentar visualizar o documento');
+            }
         }
 
         return  Response::make(file_get_contents($file_path), 200, [
