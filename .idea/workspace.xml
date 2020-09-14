@@ -20,28 +20,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="70466de6-f2ca-45e6-9a16-4aac838e9201" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/3c1154d1-629b-4a6b-b9d7-a4c289f63e41.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/3c1154d1-629b-4a6b-b9d7-a4c289f63e41/storage_v2/_src_/schema/information_schema.FNRwLQ.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/608d3cae-6617-4374-b51e-d05fa83d812d.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/608d3cae-6617-4374-b51e-d05fa83d812d.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/608d3cae-6617-4374-b51e-d05fa83d812d/storage_v2/_src_/schema/information_schema.FNRwLQ.meta" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/608d3cae-6617-4374-b51e-d05fa83d812d/storage_v2/_src_/schema/information_schema.FNRwLQ.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/phpunit.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/phpunit.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Boletim.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Boletim.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Document.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Document.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/BoletinsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/BoletinsController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/DocumentsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/DocumentsController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/LogsHelper.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/LogsHelper.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dumps/logs.sql" beforeDir="false" afterPath="$PROJECT_DIR$/dumps/logs.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dumps/users.sql" beforeDir="false" afterPath="$PROJECT_DIR$/dumps/users.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/documents/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/documents/index.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/documents/logs.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/documents/logs.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/header.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/header.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/home.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/home.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/layout_admin.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layout_admin.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/navbar_admin.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/navbar_admin.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/sortbar.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/sortbar.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/UsersController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/UsersController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/User.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/admin_panel.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin_panel.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/includes.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/includes.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -225,12 +208,14 @@
     <property name="DatabaseDriversLRU" value="mysql" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/resources/views/documents" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/app/Http/Requests" />
     <property name="settings.editor.selected.configurable" value="preferences.sourceCode.PHP" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/app/Http/Requests" />
+      <recent name="$PROJECT_DIR$/resources/views" />
       <recent name="$PROJECT_DIR$/resources/views/documents" />
     </key>
   </component>
@@ -255,7 +240,11 @@
       <workItem from="1598960283005" duration="280000" />
       <workItem from="1598961187935" duration="12000" />
       <workItem from="1598966249970" duration="12880000" />
-      <workItem from="1599320185846" duration="9913000" />
+      <workItem from="1599320185846" duration="10528000" />
+      <workItem from="1599736778618" duration="11513000" />
+      <workItem from="1599780862162" duration="4000" />
+      <workItem from="1599822439886" duration="16868000" />
+      <workItem from="1600081880300" duration="3887000" />
     </task>
     <servers />
   </component>
@@ -272,6 +261,7 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="WindowStateProjectService">
     <state x="555" y="201" width="800" height="684" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1598974337305">
@@ -282,10 +272,12 @@
       <screen x="0" y="383" width="1920" height="697" />
     </state>
     <state x="297" y="195" width="1306" height="704" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/1920.356.1920.1080/0.383.1920.697@0.383.1920.697" timestamp="1598996044768" />
-    <state x="693" y="298" width="524" height="491" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1598995989505">
-      <screen x="0" y="383" width="1920" height="697" />
+    <state x="2613" y="363" width="524" height="491" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1600084228711">
+      <screen x="1920" y="342" width="1920" height="1080" />
     </state>
+    <state x="2613" y="363" width="524" height="491" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/1920.342.1920.1080/0.363.1920.717@1920.342.1920.1080" timestamp="1600084228711" />
     <state x="693" y="298" width="524" height="491" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/1920.356.1920.1080/0.383.1920.697@0.383.1920.697" timestamp="1598995989505" />
+    <state x="2613" y="410" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/1920.389.1920.1080/0.410.1920.670@1920.389.1920.1080" timestamp="1599743495515" />
     <state width="263" height="500" key="HiddenNamespacesPopup" timestamp="1598974263004">
       <screen x="0" y="383" width="1920" height="697" />
     </state>
@@ -310,5 +302,9 @@
       <screen x="0" y="383" width="1920" height="697" />
     </state>
     <state x="549" y="304" width="652" height="495" key="com.intellij.database.view.ui.AbstractDbRefactoringDialog/1920.356.1920.1080/0.383.1920.697@0.383.1920.697" timestamp="1598992452511" />
+    <state x="2580" y="445" key="run.anything.popup" timestamp="1599860127456">
+      <screen x="1920" y="389" width="1920" height="1080" />
+    </state>
+    <state x="2580" y="445" key="run.anything.popup/1920.389.1920.1080/0.410.1920.670@1920.389.1920.1080" timestamp="1599860127456" />
   </component>
 </project>

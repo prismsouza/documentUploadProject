@@ -68,6 +68,11 @@ Route::get('/categorias/{category}/edit', 'CategoriesController@edit')->name('ca
 Route::put('/categorias/{category}', 'CategoriesController@update')->name('categories.update');
 Route::delete('/categorias/delete/{category}', 'CategoriesController@destroy')->name('categories.destroy');
 
+Route::get('/admin', 'UsersController@index')->name('admins.index');
+Route::post('/admin', 'UsersController@store')->name('admins.store');;
+Route::get('/admin/novo', 'UsersController@create')->name('admins.create');
+Route::delete('/admin/delete/{user}', 'UsersController@destroy')->name('admins.destroy');
+
 
 Route::get('/tags', 'TagsController@index')->name('tags.index');
 Route::post('/tags', 'TagsController@store')->name('tags.store');

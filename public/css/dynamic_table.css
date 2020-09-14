@@ -1,0 +1,68 @@
+table, tr, td {
+    text-align: center;
+}
+.table-wrapper {
+    width: 700px;
+    margin: 30px auto;
+    background: #fff;
+    padding: 20px;
+    box-shadow: 0 1px 1px rgba(0,0,0,.05);
+}
+
+.table-title .add-new {
+    float: right;
+    height: 30px;
+    font-weight: bold;
+    text-shadow: none;
+    min-width: 100px;
+    border-radius: 50px;
+    line-height: 13px;
+}
+
+.table-title .add-new i {
+    margin-right: 4px;
+}
+
+#table_admin {
+    table-layout: fixed;
+}
+
+#table_admin th i {
+      margin: 0 5px;
+      cursor: pointer;
+  }
+#table_admin th:last-child {
+    width: 100px;
+}
+#table_admin td a {
+    cursor: pointer;
+    display: inline-block;
+    margin: 0 5px;
+}
+#table_admin td a.add {
+    color: #27C46B;
+}
+#table_admin td a.edit {
+    color: #FFC107;
+}
+#table_admin td a.delete {
+    color: #E34724;
+}
+
+#table_admin td a.add i {
+    margin-right: -1px;
+    position: relative;
+    top: 3px;
+}
+#table_admin .form-control {
+    height: 32px;
+    line-height: 32px;
+    box-shadow: none;
+    border-radius: 2px;
+}
+#table_admin .form-control.error {
+    border-color: #f50000;
+}
+#table_admin td .add {
+    display: none;
+}
