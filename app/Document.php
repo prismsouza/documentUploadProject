@@ -85,6 +85,6 @@ class Document extends Model
 
     public function logs()
     {
-        return $this->hasMany(Log::class);
+        return $this->hasMany(Logtrash::class);
     }
 }

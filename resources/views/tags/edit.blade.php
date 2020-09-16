@@ -11,7 +11,7 @@
         @method('PUT')
         <div class="field row py-2">
             <div class="control">
-                <input class="input" type="text" name="name" id="name" value="{{ $tag->name }}">
+                <input class="input" type="text" name="name" id="name" value="{{ $tag->name }}" minlength="2" maxlength="24">
             </div>
             <button class="btn btn-light float-md-right border btn-sm" style="color: black" type="submit">
                 <i class="fas fa-save" data-toggle="tooltip" title="salvar" style="color: black"></i>

@@ -12,7 +12,7 @@
                 <label for="name">Nome *</label>
                 <input
                     class="input @error('name') is-danger @enderror col-5"
-                    type="text"
+                    type="text" minlength="2" maxlength="24"
                     name="name"
                     id="name"
                     value="{{ old('name') }}">

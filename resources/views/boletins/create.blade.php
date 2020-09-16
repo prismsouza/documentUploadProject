@@ -39,7 +39,7 @@
                 <label>Nome <b>*</b> </label>
             <input
                 class="form-control input @error('name') is-danger @enderror"
-                type="text"
+                type="text" minlength="7" maxlength="40"
                 name="name"
                 id="name"
                 value="{{ old('name') }}">
@@ -53,7 +53,7 @@
                 <label for="description">Descrição<b> *</b></label>
                     <input
                     class="form-control input @error('description') is-danger @enderror"
-                    type="text"
+                    type="text" maxlength="138"
                     name="description" id="description"
                     value="{{ old('description') }}">
 

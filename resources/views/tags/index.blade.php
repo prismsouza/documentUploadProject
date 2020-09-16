@@ -21,8 +21,9 @@
                         {{ csrf_field() }}
                         {{ method_field('delete') }}
                     </form>
-                    <button type="button" class="btn btn-danger btn-outline-secondary btn-sm float-md-right">
-                        <a onclick="if (confirm('Tem certeza que deseja DELETAR essa tag?')){
+
+                        <a type="button" class="btn btn-danger btn-outline-secondary btn-sm float-md-right"
+                           onclick="if (confirm('Tem certeza que deseja DELETAR essa tag?')){
                             event.preventDefault();
                             document.getElementById('delete-form-{{ $tag->id }}').submit();
                             } else {
@@ -31,7 +32,7 @@
                            href=" {{ route ('tags.index') }}" style="color:white">
                             <i class="far fa-trash-alt" style="color: black" aria-hidden="true"></i>
                         </a>
-                    </button>
+
                     @include('tags.edit')
                     </div>
                 </a>

@@ -54,4 +54,9 @@ class Boletim extends Model
     {
         return $this->hasMany(Message::class);
     }
+
+    public function logs()
+    {
+        return $this->hasMany(Logtrash::class);
+    }
 }

@@ -12,6 +12,7 @@ Route::get('/mensagens/{message}', 'MessagesController@update')->name('messages.
 Route::get('/admin/deletados', 'DocumentsController@showDeletedDocuments')->name('documents.deleted_documents');
 Route::post('/admin/deletados/{document}', 'DocumentsController@restore')->name('documents.restore');
 Route::get('/admin/logs', 'DocumentsController@logs')->name('documents.logs');
+Route::get('/admin/logs_boletim', 'BoletinsController@logs')->name('boletins.logs');
 Route::get('/admin/documentos', 'DocumentsController@index_admin')->name('documents_admin.index');
 Route::get('/admin/falhas', 'DocumentsController@showFailedDocuments')->name('documents.failed_documents');
 Route::get('/admin/boletins/falhas', 'BoletinsController@showFailedBoletins')->name('boletins.failed_boletins');

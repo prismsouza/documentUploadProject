@@ -55,8 +55,8 @@
                         {{ csrf_field() }}
                         {{ method_field('delete') }}
                     </form>
-                    <button type="button" class="btn btn-danger float-md-right btn-outline-secondary btn-sm">
-                        <a onclick="if (confirm('Tem certeza que deseja DELETAR essa categoria?')){
+                        <a type="button" class="btn btn-danger float-md-right btn-outline-secondary btn-sm"
+                           onclick="if (confirm('Tem certeza que deseja DELETAR essa categoria?')){
                             event.preventDefault();
                             document.getElementById('delete-form-{{ $category->id }}').submit();
                             } else {
@@ -65,7 +65,6 @@
                            href=" {{ route ('categories.index') }}" style="color:white">
                             <i class="far fa-trash-alt" style="color: black" aria-hidden="true" data-toggle="tooltip" title="excluir"></i>
                         </a>
-                    </button>
                     @endif
                     @include('categories.edit')
 

@@ -59,7 +59,7 @@
                 <label for="name">Nome <b>*</b> </label>
                 <input
                     class="form-control input @error('name') is-danger @enderror"
-                    type="text"
+                    type="text" minlength="3" maxlength="84"
                     name="name" id="name" value="{{ $document->name }}">
 
                 @error('name')
@@ -72,7 +72,7 @@
                 <label for="description">Descrição<b> *</b></label>
                 <input
                     class="form-control input @error('description') is-danger @enderror"
-                    type="text" name="description" id="description"
+                    type="text" name="description" id="description" maxlength="138"
                     value="{{ $document->description }}">
 
                 @error('description')

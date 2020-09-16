@@ -13,21 +13,21 @@
                 <div class="field">
                     <label for="name" style="font-size: 80%; color: dimgrey">Nome</label>
                     <div class="control">
-                        <input class="input" type="text" name="name" id="name" value="{{ $category->name }}">
+                        <input class="input" type="text" name="name" id="name" value="{{ $category->name }}" minlength="2" maxlength="35">
                     </div>
                 </div>
 
                 <div class="field">
                     <label for="description" style="font-size: 80%; color: dimgrey" >Descrição</label>
                     <div class="control">
-                        <textarea class="textarea" name="description" id="description">{{ $category->description }}</textarea>
+                        <textarea class="textarea" name="description" id="description" maxlength="100">{{ $category->description }}</textarea>
                     </div>
                 </div>
 
                 <div class="field">
                     <label for="hint" style="font-size: 80%; color: dimgrey" >Seguir padrão...</label>
                     <div class="control">
-                        <textarea class="textarea" name="hint" id="hint">{{ $category->hint}}</textarea>
+                        <textarea class="textarea" name="hint" id="hint" maxlength="200">{{ $category->hint}}</textarea>
                     </div>
                 </div>
 

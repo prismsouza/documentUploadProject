@@ -32,7 +32,7 @@ class User extends Authenticatable
 
     public function logs()
     {
-        return $this->hasMany(Log::class, 'user_masp', 'masp');
+        return $this->hasMany(Logtrash::class, 'user_masp', 'masp');
     }
 
     public function dumpArray($array) {

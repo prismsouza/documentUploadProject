@@ -105,7 +105,12 @@
                     </li>
                     <li class="nav-item border">
                         <a class="btn btn-link" href="/admin/logs" target="_blank">
-                            Ver logs de criação, edição, atualização e restauração
+                            Ver logs de documentos
+                        </a>
+                    </li>
+                    <li class="nav-item border">
+                        <a class="btn btn-link" href="/admin/logs_boletim" target="_blank">
+                            Ver logs de boletins/separatas
                         </a>
                     </li>
                     <li class="nav-item border">

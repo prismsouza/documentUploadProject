@@ -3,12 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Boletim;
-use App\Document;
-use App\File;
 use App\Http\Requests\BoletimRequest;
 use App\Http\Requests\BoletimUpdateRequest;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
+
+include "LogsHelper.php";
 
 class BoletinsController extends Controller
 {
@@ -21,7 +22,8 @@ class BoletinsController extends Controller
     public function isUserAdmin()
     {
         $masp = $this->getMasp();
-        return app('App\User')->getUserByMasp($masp)['admin']; //isuseradmin
+        if (User::where('masp', $masp)->first()) return 1;
+        return 0;
     }
 
     public function index()
@@ -75,6 +77,8 @@ class BoletinsController extends Controller
         $file_pdf = new FilesController();
         $file_pdf->uploadFile($request, $boletim, 'pdf', 0);
 
+        storeLog($boletim->user_masp, $boletim->id, "create", 0);
+
         //return redirect(route('boletins.index'))->with('status', "Boletim criado com sucesso!");
         return redirect($boletim->path_admin())->with('status', 'Boletim ' . $boletim->name . ' criado com sucesso!');
 
@@ -87,19 +91,26 @@ class BoletinsController extends Controller
 
     public function update(BoletimUpdateRequest $request, Boletim $boletim)
     {
+       // dd(request('file_name_pdf'));die();
+        $files = new FilesController();
         $boletim->update($request->validated());
-        if (request('file_name_pdf') == null) {
-            return $this->edit($boletim);
-        }
 
+        /*if (request('file_name_pdf') == null) {
+            return $this->edit($boletim);
+        }*/
         if (request('file_name_pdf')) {
+            //dd(request('file_name_pdf'));
             $file_pdf = new FilesController();
             $file_pdf->uploadFile($request, $boletim, 'pdf', 0);
             if (count($boletim->files->where('alias')->all()) != 0)
                 $boletim->files->whereNotNull('alias')->first()->delete();
+            $files->uploadFile($request, $boletim, 'pdf', 0);
+
             //$old_pdf = $boletim->files->whereNotNull('alias')->first();
             //File::destroy($old_pdf->id);
         }
+
+        storeLog($this->getMasp(), $boletim->id, "update", 0);
 
         return redirect($boletim->path_admin())->with('status', 'Documento ' . $boletim->name . ' atualizado com sucesso!');
     }
@@ -141,6 +152,8 @@ class BoletinsController extends Controller
     {
         $boletim_name = $boletim->name;
         $boletim->delete();
+        storeLog($this->getMasp(), $boletim->id, "delete", 0);
+
         return redirect(route('boletins.index'))->with('status', 'Boletim ' . $boletim_name . ' deletado com sucesso!');
 
     }
@@ -173,6 +186,13 @@ class BoletinsController extends Controller
     public function filter(Request $request)
     {
         return getFilteredBoletins($request, $this->isUserAdmin());
+    }
+
+    public function logs()
+    {
+        //$logs = \App\Log2::orderBy('id', 'DESC')->get();
+        $logs = \App\Log::orderBy('id', 'DESC')->whereNULL('document_id')->get();
+        return view('boletins.logs', ['logs' => $logs]);
     }
 
     public function dumpArray($array) {

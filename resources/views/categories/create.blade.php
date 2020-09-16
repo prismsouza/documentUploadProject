@@ -17,7 +17,7 @@
                 <label for="name">Nome *</label>
                 <input
                     class="input @error('name') is-danger @enderror col-12"
-                    type="text"
+                    type="text" minlength="2" maxlength="35"
                     name="name"
                     id="name"
                     value="{{ old('name') }}">
@@ -27,7 +27,7 @@
                 <label for="description">Descrição *</label>
                 <input
                     class="input @error('description') is-danger @enderror col-12"
-                    type="text"
+                    type="text" maxlength="100"
                     name="description"
                     id="description"
                     value="{{ old('description') }}">
@@ -37,7 +37,7 @@
                 <label for="hint">Seguir padrão:</label>
                 <input
                     class="input @error('hint') is-danger @enderror col-12"
-                    type="text"
+                    type="text" maxlength="200"
                     name="hint"
                     id="hint"
                     value="{{ old('hint') }}">

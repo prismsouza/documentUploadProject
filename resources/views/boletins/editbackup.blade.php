@@ -89,16 +89,8 @@
                         <label for="file_name_pdf" class="btn border">Substituir Arquivo Principal em PDF:<b>*</b> </label>
                             <i class="fa fa-upload p-1"></i>
                             <i class="fa fa-file-pdf px-2" aria-hidden="true"></i>
+                            <span id="file_pdf_old" style="color: dimgrey">
 
-                        <input
-                            class="input @error('file_name_pdf') is-danger @enderror"
-                            type="file" accept=".pdf, application/pdf"
-                            name="file_name_pdf" id="file_name_pdf"
-                            value="{{ old('file_name_pdf') }}"
-                            style="display: none">
-                        <!--style="visibility: hidden">-->
-
-                        <span id="file_pdf_old" style="color: dimgrey">
                             @if (count($boletim->files->where('alias')->all()) != 0)
                                     {{ $boletim->files->whereNotNull('alias')->first()->alias }}
                             @else
@@ -111,19 +103,31 @@
                                 });
                             </script>
 
-                        <div id="file_pdf_upload" style="color: darkolivegreen"></div>
+                        <input
+                            class="input"
+                            type="file" accept=".pdf, application/pdf"
+                            name="file_name_pdf" id="file_name_pdf"
+                            value="{{ old('file_name_pdf') }}"
+                            style="visibility: hidden">
+                        <span id="new_file_pdf" style="color: darkolivegreen; display:none">
+                        </span>
 
                         <script>
-                            var input = document.getElementById('file_name_pdf' );
-                            var infoArea = document.getElementById( 'file_pdf_upload' );
-                            input.addEventListener( 'change', showFileName);
-                            function showFileName( event ) {
+                            $("#file_name_pdf").css("display", "none");
+                            var input = document.getElementById('file_name_pdf');
+                            var infoArea;
+                            input.addEventListener( 'change', showPDFFileName);
+                            function showPDFFileName( event ) {
                                 var input = event.srcElement;
                                 var fileName = input.files[0].name;
-                                infoArea.textContent = fileName;
+                                infoArea = document.getElementById('new_file_pdf');
                                 $("#file_pdf_old").css({"color": "darkred", "text-decoration": "line-through"});
+                                $("#new_file_pdf").css("display", "block");
+                                infoArea.textContent = (fileName);
                             }
                         </script>
+
+
 
                         @error('file_name_pdf')
                         <p class="help is-danger">{{ $errors->first('file_name_pdf') }}</p>

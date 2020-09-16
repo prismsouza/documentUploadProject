@@ -7,15 +7,11 @@ use App\Document;
 use App\Http\Requests\DocumentCreateRequest;
 use App\Http\Requests\DocumentUpdateRequest;
 use App\Tag;
-use App\File;
 use App\Category;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Session;
-use PhpParser\Node\Stmt\Else_;
-use App\Helpers\Collection;
-use App\Helpers\CollectionHelper;
 
 include "DocumentsFilterHelper.php";
 include "LogsHelper.php";
@@ -36,9 +32,7 @@ class DocumentsController extends Controller
 
     public function index()
     {
-
         $documents = Session::get('documents');
-//dd($documents);
 
         if ($documents == NULL) {// || count($documents) == 0) {
             $documents = Document::orderBy('date', 'desc')->paginate();
@@ -48,7 +42,7 @@ class DocumentsController extends Controller
            $documents = Tag::where('name', request('tag'))->firstOrFail()->documents;
        }
 
-        //Session::put('documents',  $documents);
+        Session::put('documents',  $documents);
         return view('documents.index', ['documents' => $documents, 'category_option' => null, 'admin' => 0]);
     }
 
@@ -66,7 +60,6 @@ class DocumentsController extends Controller
 
     public function show(Document $document)
     {
-
         if (count($document->files->where('alias')->all()) == 0)
             return $this->index();
 
@@ -138,7 +131,7 @@ class DocumentsController extends Controller
             $document->tags()->attach(request('tags'));
         }
 
-        storeLog($document->user_masp, $document->id, "create");
+        storeLog($document->user_masp, $document->id, "create", 1);
 
         return redirect($document->path_admin())->with('status', 'Documento ' . $document->name . ' criado com sucesso!');
     }
@@ -146,7 +139,6 @@ class DocumentsController extends Controller
     public function viewfile(Document $document, $file_id)
     {
         $file_path = public_path('documents') . '/' . $document->files->where('id', $file_id)->first()->hash_id;
-
         if (!file_exists($file_path)) {
             $file_path = $file_path . '.pdf';
             if (!file_exists($file_path)) {
@@ -231,7 +223,7 @@ class DocumentsController extends Controller
         $document->hasdocument()->sync(request('document_has_document'));
         $document->tags()->sync(request('tags'));
 
-        storeLog($this->getMasp(), $document->id, "update");
+        storeLog($this->getMasp(), $document->id, "update", 1);
 
         return redirect($document->path_admin())->with('status', 'Documento ' . $document->name . ' atualizado com sucesso!');
     }
@@ -257,7 +249,7 @@ class DocumentsController extends Controller
     {
         $document_name = $document->name;
         $document->delete();
-        storeLog($this->getMasp(), $document->id, "delete");
+        storeLog($this->getMasp(), $document->id, "delete", 1);
         return redirect(route('documents_admin.index'))->with('status', 'Documento ' . $document_name . ' deletado com sucesso!');
     }
 
@@ -265,7 +257,7 @@ class DocumentsController extends Controller
     {
         dd($document);die();
         $document->restore();
-        storeLog($document->user_masp, $document->id, "restore");
+        storeLog($document->user_masp, $document->id, "restore", 1);
         //$document->files()->restore();
         //$document->messages()->restore();
         return redirect(route('documents.index'))->with('status', 'Documento restaurado com sucesso!');
@@ -360,7 +352,7 @@ class DocumentsController extends Controller
 
     public function logs()
     {
-        $logs = \App\Log::orderBy('id', 'DESC')->get();
+        $logs = \App\Log::orderBy('id', 'DESC')->whereNULL('boletim_id')->get();;
         return view('documents.logs', ['logs' => $logs]);
     }
 
