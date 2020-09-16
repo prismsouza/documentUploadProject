@@ -9,6 +9,8 @@
         </div>
     @endif
 
+    <a onclick="goBack()" class="btn btn-light border float-md-right">Voltar</a>
+
 <div class="border p-5">
     <div class="border-bottom border-top py-4">
         <div class="row">

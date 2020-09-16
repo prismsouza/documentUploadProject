@@ -304,20 +304,20 @@ class DocumentsController extends Controller
         } elseif (request('option') == 'nomeDesc') {
             //$documents = Document::orderBy('name', 'DESC')->get();//->paginate();
             $documents = $documents->sortByDesc('name');//>paginate(20);
-        } elseif (request('option') == 'dataAsc') {
+        }
+        elseif (request('option') == 'dataAsc') {
             //$documents = Document::orderBy('date', 'ASC')->get();//->paginate();
             $documents = $documents->sortBy('date');
         } elseif (request('option') == 'dataDesc') {
             //$documents = Document::orderBy('date', 'DESC')->get();//->paginate();
             $documents = $documents->sortByDesc('date');
-        } elseif (request('option') == 'dataCreatedAtAsc') {
-            //$documents = Document::orderBy('created_at', 'ASC')->get();//->paginate();
-            $documents = $documents->sortBy('dateCreatedAtAsc');
+        }
+        elseif (request('option') == 'dataCreatedAtAsc') {
+            $documents = $documents->sortBy('created_at');
         } elseif (request('option') == 'dataCreatedAtDesc') {
-            //$documents = Document::orderBy('created_at', 'DESC')->get();//->paginate();
-            $documents = $documents->sortByDesc('dateCreatedAtAsc');
-        } else {
-            //$documents = Document::all();//->paginate();
+            $documents = $documents->sortByDesc('created_at');
+        }
+        else {
             $documents = $documents->sortBy('date');
         }
 

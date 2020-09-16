@@ -20,11 +20,7 @@
     $categories = App\Category::all();
     $boletins = App\Boletim::all();
     ?>
-    <a href="{{ route('boletins.index') }}">
-        <button class="btn btn-light border float-md-right" type="submit">
-            Voltar
-        </button>
-    </a>
+    <a onclick="goBack()" class="btn btn-light border float-md-right">Voltar</a>
 
     <h1 class="heading has-text-weight-bold is-size-4 py-6">Editar BGBM/BEBM</h1>
     <form method="POST" action="/boletins/{{ $boletim->id }}" enctype="multipart/form-data" class="p-5 border">
@@ -159,11 +155,6 @@
                             <a onclick="goBack()" class="btn btn-light border">
                                 Voltar
                             </a>
-                        <script>
-                            function goBack() {
-                                window.history.back();
-                            }
-                        </script>
                     </div>
             </form>
     <br><br>

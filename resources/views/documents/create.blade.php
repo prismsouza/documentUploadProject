@@ -7,6 +7,8 @@
         </div>
     @endif
 
+    <a onclick="goBack()" class="btn btn-light border float-md-right">Voltar</a>
+
     <h1 class="heading has-text-weight-bold is-size-4 py-6">Novo Documento</h1>
     <form method="POST" action="/documentos"
           enctype="multipart/form-data" class="p-5 border">

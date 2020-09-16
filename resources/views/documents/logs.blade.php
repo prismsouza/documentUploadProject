@@ -4,6 +4,7 @@
         $documents = App\Document::all(); ?>
 
 @section('content')
+    <a onclick="goBack()" class="btn btn-light border float-md-right">Voltar</a>
     <h3>Logs</h3>
     @if ($logs->isNotEmpty())
         <table class="table table-bordered bg-white table-striped" id="myTable">

@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
     <script src="{{ asset('site/jquery.js') }}"></script>
     <script src="{{ asset('site/bootstrap.js') }}"></script>
+    <script src="{{ asset('site/common_js.js') }}"></script>
 
 
     <meta charset="UTF-8">
@@ -35,7 +36,7 @@
         }
          .scrollable-menu {
              height: auto;
-             max-height: 200px;
+             max-height: 400px;
              overflow-x: hidden;
          }
     </style>

@@ -3,7 +3,10 @@
 @include('searchmessagebar')
 @section('content')
 
+<a onclick="goBack()" class="btn btn-light border float-md-right">Voltar</a>
+
 <div id="content">
+
     @if ($messages->isNotEmpty())
     <div class=" border p-2 text-center">
         <b>Mensagens Recebidas</b>
