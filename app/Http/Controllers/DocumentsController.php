@@ -9,9 +9,13 @@ use App\Http\Requests\DocumentUpdateRequest;
 use App\Tag;
 use App\File;
 use App\Category;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Facades\Session;
 use PhpParser\Node\Stmt\Else_;
+use App\Helpers\Collection;
+use App\Helpers\CollectionHelper;
 
 include "DocumentsFilterHelper.php";
 include "LogsHelper.php";
@@ -26,18 +30,26 @@ class DocumentsController extends Controller
     public function isUserAdmin()
     {
         $masp = $this->getMasp();
-        return app('App\User')->getUserByMasp($masp)['admin']; //isuseradmin
+        if (User::where('masp', $masp)->first()) return 1;
+        return 0;
     }
 
     public function index()
     {
-        if (request('tag')) {
-            $documents = Tag::where('name', request('tag'))->firstOrFail()->documents;
-        } else {
-            $documents = Document::orderBy('date', 'desc')->paginate();
-        }
-        return view('documents.index', ['documents' => $documents, 'category_option' => null, 'admin' => 0]);
 
+        $documents = Session::get('documents');
+//dd($documents);
+
+        /*if ($documents == NULL) {// || count($documents) == 0) {
+            $documents = Document::orderBy('date', 'desc')->paginate();
+
+        }*/
+       if (request('tag')) {
+           $documents = Tag::where('name', request('tag'))->firstOrFail()->documents;
+       }
+
+        //Session::put('documents',  $documents);
+        return view('documents.index', ['documents' => $documents, 'category_option' => null, 'admin' => 0]);
     }
 
     public function index_admin()
@@ -47,6 +59,7 @@ class DocumentsController extends Controller
         } else {
             $documents = Document::orderBy('date', 'desc')->paginate();
         }
+        //dd($documents); die();
         return view('documents.index', ['documents' => $documents, 'category_option' => null, 'admin' => $this->isUserAdmin()]);
 
     }
@@ -152,9 +165,14 @@ class DocumentsController extends Controller
             $documents = Boletim::orderBy('date', 'desc')->where('category_id', $category->id)->paginate();
         } else {
             $documents = Document::orderBy('date', 'desc')->where('category_id', $category->id)->paginate();
+            //$documents = $documents->sortByDesc('date')->where('category_id', $category->id);//->paginate();
         }
+        //dd($documents);
         $category_option = $category->name;
 
+        Session::put('documents',  $documents);
+       // dd(Session::get('documents'));
+        //return redirect(route('documents_category.index', $category_option));
         return view('documents.index', ['documents' => $documents, 'category_option' => $category_option, 'admin' => 0]);
     }
 
@@ -167,6 +185,7 @@ class DocumentsController extends Controller
         }
         $category_option = $category->name;
 
+        Session::put('documents',  $documents);
         return view('documents.index', ['documents' => $documents, 'category_option' => $category_option, 'admin' => $this->isUserAdmin()]);
     }
 
@@ -254,43 +273,88 @@ class DocumentsController extends Controller
 
     public function filter(Request $request)
     {
-        return getFilteredDocuments($request, 0);
+        $documents = getFilteredDocuments($request, 0);
+        Session::put('request',  $request->all());
+        Session::put('documents',  $documents);
+       // dd(Session::get('documents'));
+        //dd(Session::all());
+        //dd($documents);
+        return redirect(route('documents.index'));
+        return view('documents.index', ['documents' => $documents, 'category_option' => null, 'admin' => 0]);
     }
 
     public function filter_admin(Request $request)
     {
-        return getFilteredDocuments($request, $this->isUserAdmin());
+        $documents = getFilteredDocuments($request, $this->isUserAdmin());
+        // dd($documents);
+        Session::put('request',  $request->all());
+        return view('documents.index', ['documents' => $documents, 'category_option' => null, 'admin' => $this->isUserAdmin()]);
     }
 
     public function sortDocuments() {
-        if (request('option') == 'nomeAsc') {
-            $documents = Document::orderBy('name', 'ASC')->get();;
-            //$documents = $sorted->values()->all();
-        } elseif (request('option') == 'nomeDesc') {
-            $documents = Document::orderBy('name', 'DESC')->get();//->paginate();
-        } elseif (request('option') == 'dataAsc') {
-            $documents = Document::orderBy('date', 'ASC')->get();//->paginate();
-        } elseif (request('option') == 'dataDesc') {
-            $documents = Document::orderBy('date', 'DESC')->get();//->paginate();
-        } elseif (request('option') == 'dataCreatedAtAsc') {
-            $documents = Document::orderBy('created_at', 'ASC')->get();//->paginate();
-        } elseif (request('option') == 'dataCreatedAtDesc') {
-            $documents = Document::orderBy('created_at', 'DESC')->get();//->paginate();} else {
+
+        //dd(Session::get('documents'));
+        $documents = Session::get('documents');
+
+        //dd($documents->only(['data']));
+        //$documents = collect($documents);
+
+
+        if (count($documents) == 0) {
+            $documents = Document::orderBy('date', 'desc')->paginate();
         } else {
-            $documents = Document::all();//->paginate();
+            //$documents = collect($documents);
         }
+
+        if (request('option') == 'nomeAsc') {
+            //$documents = Document::orderBy('name', 'ASC')->get();;
+            $documents = $documents->sortBy('name');
+        } elseif (request('option') == 'nomeDesc') {
+            //$documents = Document::orderBy('name', 'DESC')->get();//->paginate();
+            $documents = $documents->sortByDesc('name');//>paginate(20);
+        } elseif (request('option') == 'dataAsc') {
+            //$documents = Document::orderBy('date', 'ASC')->get();//->paginate();
+            $documents = $documents->sortBy('date');
+        } elseif (request('option') == 'dataDesc') {
+            //$documents = Document::orderBy('date', 'DESC')->get();//->paginate();
+            $documents = $documents->sortByDesc('date');
+        } elseif (request('option') == 'dataCreatedAtAsc') {
+            //$documents = Document::orderBy('created_at', 'ASC')->get();//->paginate();
+            $documents = $documents->sortBy('dateCreatedAtAsc');
+        } elseif (request('option') == 'dataCreatedAtDesc') {
+            //$documents = Document::orderBy('created_at', 'DESC')->get();//->paginate();
+            $documents = $documents->sortByDesc('dateCreatedAtAsc');
+        } else {
+            //$documents = Document::all();//->paginate();
+            $documents = $documents->sortBy('date');
+        }
+
+        //$documents = CollectionHelper::paginate($documents , count($documents), CollectionHelper::perPage());
+
         return $documents;
     }
+
     public function sort(Request $request)
     {
         //dd($request);
         $documents = $this->sortDocuments();
+        //dd($documents);
+
+        Session::put('request',  $request->all());
+        Session::put('documents',  $documents);
+        $documents = Session::get('documents');
+        //dd($documents);
+
+        //return redirect()->action('DocumentsController@index', ['documents' => $documents]);
+        //return view('documents.index', ['documents' => $documents, 'category_option' => null, 'admin' => 0]);
+        return redirect(route('documents.index'));
         return view('documents.index', ['documents' => $documents, 'category_option' => null, 'admin' => 0]);
     }
 
     public function sort_admin()
     {
         $documents = $this->sortDocuments();
+        Session::put('documents',  $documents);
         return view('documents.index', ['documents' => $documents, 'category_option' => null, 'admin' => $this->isUserAdmin()]);
     }
 

@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::get('/admin', 'UsersController@getAdminUsers')->name('admin_panel');
+Route::get('/admin', 'UsersController@getAdminUsers')->middleware('AuthenticateAdminUser')->name('admin_panel');
 
 Route::get('/mensagens', 'MessagesController@index')->name('messages.index');
 Route::get('/mensagens/{message}', 'MessagesController@update')->name('messages.update');
@@ -82,6 +82,7 @@ Route::get('/tags/{tag}/edit', 'TagsController@edit')->name('tags.edit');
 Route::put('/tags/{tag}', 'TagsController@update')->name('tags.update');
 Route::delete('/tags/delete/{tag}', 'TagsController@destroy')->name('tags.destroy');
 
+//Route::any('/documentos','DocumentsController@sort')->name('documents.sort');
 Route::any('/documentos/ordena','DocumentsController@sort')->name('documents.sort');
 Route::any('/admin/documentos/ordena','DocumentsController@sort_admin')->name('documents_admin.sort');
 Route::any('/documentos/pesquisa','DocumentsController@filter')->name('documents.filter');

@@ -70,8 +70,7 @@ class UsersController extends Controller
     }
 
     public function getAdminUsers() {
-        $users = User::where('admin', '!=', 0)->get();
-        return view('admin_panel', ['users' => $users]);
+        return view('admin_panel');
     }
 
     public function dumpArray($array) {

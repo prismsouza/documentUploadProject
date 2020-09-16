@@ -6,6 +6,7 @@ use Illuminate\Container\Container;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Session;
 
 class CollectionHelper
 {
@@ -18,6 +19,8 @@ class CollectionHelper
     public static function paginate(Collection $results, $total, $pageSize)
     {
         $page = Paginator::resolveCurrentPage('page');
+
+        //$results = Session::get('documents');
 
         return self::paginator($results->forPage($page, $pageSize), $total, $pageSize, $page, [
             'path' => Paginator::resolveCurrentPath(),

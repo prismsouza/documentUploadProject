@@ -3,11 +3,6 @@
     $tags = App\Tag::all();
     $tags_array = request('tags') ? request('tags') : [];
     $categories = App\Category::all()->sortBy('name');
-    /*$key = $categories->search(function($item) {
-        return $item->id == 26;
-    });
-    $categories->pull($key); // remove Ementário category from search*/
-
     $categories_array = request('categories') ? request('categories') : [];
 ?>
 

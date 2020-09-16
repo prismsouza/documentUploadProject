@@ -1,13 +1,17 @@
 <?php
+    use App\Document;
     $categories = App\Category::all()->sortBy('name');
+    $documents = Document::all();
+    Session::put('documents',  $documents);
 ?>
+
 <ul class="nav nav-tabs flex-column lighten-4 list-group">
     <li style="text-align: center">
         <h3>Categorias</h3>
     </li>
     <li class="nav-item border">
         <a class="list-group-item {{ (Request::is('documentos') || Request::is('/')) ? 'active' : ''}}"
-           href="{{ route('documents.index') }}">
+           href="{{ route('documents.index')}}">
             <b>Todos</b>
         </a>
     </li>
@@ -48,6 +52,12 @@
 
     @endforeach
 
+    <li class="nav-item border">
+        <a class="list-group-item {{ Request::is('boletins') ? 'active' : ''}}"
+            href="/boletins">
+            BGBM + BEBM + Separata
+        </a>
+    </li>
 </ul>
 
 <ul class="nav nav-tabs flex-column lighten-4 list-group">

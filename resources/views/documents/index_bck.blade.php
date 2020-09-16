@@ -1,10 +1,10 @@
 @extends(($admin) ? 'layout_admin' : 'layout')
 
 @include('searchbar')
-@include('sortbar')
+@include('sortbar', ['documents' => $documents])
 
 @section('content')
-    <?php $documents = Session::get('documents');?>
+
     @if (session('status'))
         <div class="alert alert-success">
             {{ session('status') }}
@@ -18,7 +18,6 @@
             </a>
         </div><br><br>
     @endif
-
 
     @if($category_option)
             <div class="border p-2">
@@ -41,7 +40,7 @@
             <th scope="col" style="cursor: pointer; width: 22%"> Nome</th>
             <th scope="col" style="cursor: pointer; width: 33%"> Descrição </th>
             <th scope="col" style="cursor: pointer; width: 14%"> Categoria</th>
-            <th scope="col" style="width: 10%; text-align: center"> Data</th>
+            <th scope="col" style="width: 10%; text-align: center">Data</th>
 
             @if ($admin)
                 <th scope="col" style="width: 10%; text-align: center">
@@ -61,22 +60,23 @@
     @endif
 
     <?php use App\Helpers\CollectionHelper;
-        $c = 0;
-        if($documents instanceof Illuminate\Support\Collection) {
-            $documents = CollectionHelper::paginate($documents, count($documents), CollectionHelper::perPage());
-        }
-        $page = $documents->currentPage();
+    $c = 0;
+    if($documents instanceof Illuminate\Support\Collection) {
+        $documents = CollectionHelper::paginate($documents , count($documents), CollectionHelper::perPage());
+    }
+    $page = $documents->currentPage();
     ?>
 
     @forelse($documents as $document)
+
+        @if (count($document->files->where('alias')->all()) == 0)  @continue; @endif
         <?php
-            $count = ($page*20 - 19) + $c;
-            $c = $c + 1;
+        $count = ($page*20 - 19) + $c;
+        $c = $c + 1;
         ?>
         <tr class="small">
             <td class="text-center">{{$count}}</td>
             <td>
-
                 @if ($document->first()->files->whereNull('document_id')->first())
                     @if (count($document->files->whereNull('alias')) > 0)
                         <a @if ($admin) href="{{ $document->path_admin()  }}" @else href="{{ $document->path()  }}" @endif data-toggle="tooltip" title="acessar documento">
@@ -118,25 +118,26 @@
             <?php $file_pdf = $document->files->whereNotNull('alias')->first();?>
 
             <td class="text-center px-0">
-                <a class="btn border" data-toggle="tooltip" title="visualizar" target="_blank"
-                   @if ($document->category->id == 1 || $document->category->id == 2 || $document->category->id == 3)
-                   href="{{ route('boletins.viewfile', [$document->id, $file_pdf->id]) }}"
-                   @else
-                   href="{{ route('documents.viewfile', [$document->id, $file_pdf->id]) }}"
-                    @endif
-                >
-                    <i class="fas fa-eye fa-lg" style="color: black" aria-hidden="true"></i>
-                </a>
-                <a class="btn border" data-toggle="tooltip" title="{{$file_pdf->size}}"
-                   @if ($document->category->id == 1 || $document->category->id == 2 || $document->category->id == 3)
-                   href="{{ route('boletins.download', [$document->id , $file_pdf->hash_id]) }}"
-                   @else
-                   href="{{ route('documents.download', [$document->id, $file_pdf->hash_id]) }}"
-                    @endif
-                >
-                    <i class="fa fa-file-pdf fa-lg" style="color: black" aria-hidden="true"></i>
-                </a>
-            </td>
+                    <a class="btn border" data-toggle="tooltip" title="visualizar" target="_blank"
+                       @if ($document->category->id == 1 || $document->category->id == 2 || $document->category->id == 3)
+                        href="{{ route('boletins.viewfile', [$document->id, $file_pdf->id]) }}"
+                       @else
+                       href="{{ route('documents.viewfile', [$document->id, $file_pdf->id]) }}"
+                       @endif
+                       >
+                       <i class="fas fa-eye fa-lg" style="color: black" aria-hidden="true"></i>
+                    </a>
+                    <a class="btn border" data-toggle="tooltip" title="{{$file_pdf->size}}"
+                        @if ($document->category->id == 1 || $document->category->id == 2 || $document->category->id == 3)
+                        href="{{ route('boletins.download', [$document->id , $file_pdf->hash_id]) }}"
+                        @else
+                        href="{{ route('documents.download', [$document->id, $file_pdf->hash_id]) }}"
+                        @endif
+                        >
+                        <i class="fa fa-file-pdf fa-lg" style="color: black" aria-hidden="true"></i>
+                    </a>
+                </td>
+
             @if ($admin)
                 <div id="admin_view">
                 <td class="text-center px-0">

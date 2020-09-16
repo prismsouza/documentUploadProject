@@ -76,7 +76,7 @@ function getFilteredDocuments($request) {
     $order_by = request('order_by') ? request('order_by') : 'created_at';
     $documents = $documents->sortByDesc($order_by);
 
-    $documents = CollectionHelper::paginate($documents, $total, $perPage);
+    $documents = CollectionHelper::paginate($documents, $total, 5);
 
     return view('documents.index', ['documents' => $documents, 'total' => $total]);
 }

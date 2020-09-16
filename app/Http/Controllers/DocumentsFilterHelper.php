@@ -5,6 +5,7 @@ use App\Document;
 use App\Tag;
 use App\Category;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Session;
 
 function getFilteredDocuments($request, $user) {
     $documents = Document::all();
@@ -46,9 +47,10 @@ function getFilteredDocuments($request, $user) {
     }
 
     $documents = $documents->sortByDesc('date');
-
-    //$documents = $documents->collapse();
-    return view('documents.index', ['documents' => $documents, 'category_option' => null, 'admin' => $user])->withDetails($documents)->withQuery($query);
+    //dd($documents);
+    return $documents;
+    //return redirect(route('documents.index'))->with('documents', $documents);
+    //return view('documents.index', ['documents' => $documents, 'category_option' => null, 'admin' => $user])->withDetails($documents)->withQuery($query);
 }
 
 function searchByWord($word, $documents, $boletins)
