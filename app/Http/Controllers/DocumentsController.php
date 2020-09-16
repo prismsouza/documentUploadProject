@@ -40,10 +40,10 @@ class DocumentsController extends Controller
         $documents = Session::get('documents');
 //dd($documents);
 
-        /*if ($documents == NULL) {// || count($documents) == 0) {
+        if ($documents == NULL) {// || count($documents) == 0) {
             $documents = Document::orderBy('date', 'desc')->paginate();
 
-        }*/
+        }
        if (request('tag')) {
            $documents = Tag::where('name', request('tag'))->firstOrFail()->documents;
        }
