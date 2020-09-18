@@ -1,6 +1,7 @@
 @extends(($admin) ? 'layout_admin' : 'layout')
 
-@include('searchbar')
+@include('searchbar_boletim')
+@include('sortbar_boletim')
 
 @section('content')
 
@@ -16,12 +17,6 @@
                     Novo Boletim / Separata
                 </button>
             </a><p></p>
-        @endif
-
-        @if($category_option)
-            <div class="border p-2">
-                Categoria: <b>{{ $category_option }}</b>
-            </div>
         @endif
 
     @if ($boletins->isNotEmpty())

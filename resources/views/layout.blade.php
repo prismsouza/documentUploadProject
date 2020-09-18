@@ -11,6 +11,7 @@
 
     @yield('searchbar')
     @yield('sortbar')
+    @yield('sortbar_boletim')
 
     <div id="wrapper">
         <div id="page" class="row py-1">

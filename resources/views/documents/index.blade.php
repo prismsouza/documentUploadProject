@@ -4,7 +4,6 @@
 @include('sortbar')
 
 @section('content')
-    <?php $documents = Session::get('documents');?>
     @if (session('status'))
         <div class="alert alert-success">
             {{ session('status') }}

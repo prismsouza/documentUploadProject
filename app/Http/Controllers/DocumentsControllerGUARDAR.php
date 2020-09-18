@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Boletim;
 use App\Document;
 use App\Helpers\Collection;
-use App\Helpers\CollectionHelper;
 use App\Http\Requests\DocumentCreateRequest;
 use App\Http\Requests\DocumentUpdateRequest;
 use App\Tag;
@@ -16,7 +15,6 @@ use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Session;
 
 include "DocumentsFilterHelper.php";
-include "SortHelper.php";
 include "LogsHelper.php";
 
 class DocumentsController extends Controller
@@ -36,8 +34,6 @@ class DocumentsController extends Controller
     public function index(Request $request)
     {
         $documents = getFilteredDocuments($request);
-        $documents = getOrderedDocuments($request, $documents);
-        $documents = CollectionHelper::paginate($documents , count($documents), CollectionHelper::perPage());
         return view('documents.index', ['documents' => $documents, 'category_option' => null, 'admin' => 0]);
     }
 
@@ -320,6 +316,50 @@ class DocumentsController extends Controller
     {
         $documents = getFilteredDocuments($request, $this->isUserAdmin());
         Session::put('request',  $request->all());
+        return view('documents.index', ['documents' => $documents, 'category_option' => null, 'admin' => $this->isUserAdmin()]);
+    }
+
+    public function sortDocuments() {
+        if (request('option') == 'nomeAsc') {
+            //$documents = Document::orderBy('name', 'ASC')->get();;
+            $documents = $documents->sortBy('name', SORT_NATURAL|SORT_FLAG_CASE);
+        } elseif (request('option') == 'nomeDesc') {
+            //$documents = Document::orderBy('name', 'DESC')->get();//->paginate();
+            $documents = $documents->sortByDesc('name', SORT_NATURAL|SORT_FLAG_CASE);//>paginate(20);
+        }
+        elseif (request('option') == 'dataAsc') {
+            $documents = $documents->sortBy('date');
+        } elseif (request('option') == 'dataDesc') {
+            $documents = $documents->sortByDesc('date');
+        }
+        elseif (request('option') == 'dataCreatedAtAsc') {
+            $documents = $documents->sortBy('created_at');
+        } elseif (request('option') == 'dataCreatedAtDesc') {
+            $documents = $documents->sortByDesc('created_at');
+        }
+        else {
+            $documents = $documents->sortBy('date');
+        }
+        //$documents = CollectionHelper::paginate($documents , count($documents), CollectionHelper::perPage());
+
+        return $documents;
+    }
+
+    public function sort(Request $request)
+    {
+        $documents = $this->sortDocuments();
+        Session::put('request',  $request->all());
+        //Session::put('documents',  $documents);
+        $documents = Session::get('documents');
+       // dd($documents);
+
+        return redirect(route('documents.index'));
+    }
+
+    public function sort_admin()
+    {
+        $documents = $this->sortDocuments();
+        Session::put('documents',  $documents);
         return view('documents.index', ['documents' => $documents, 'category_option' => null, 'admin' => $this->isUserAdmin()]);
     }
 

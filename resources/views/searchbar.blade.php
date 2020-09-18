@@ -8,7 +8,7 @@
 
 <div class="border p-2">
 
-<form method="POST" action="{{ route('documents.filter') }}" enctype="multipart/form-data" class="py-2"> @csrf
+<form method="POST" action="{{ route('documents.index') }}" enctype="multipart/form-data" class="py-2"> @csrf
     <div class="row">
         <div class="col-sm-3" id="name_description">
             Nome/Descrição:
@@ -150,7 +150,7 @@
             </button>
 
             <a class="btn btn-light border float-md-right"
-                href="{{ route('documents.index') }}">
+                href="/refresh">
                 Limpar <i class="fas fa-eraser px-2"></i>
             </a>
 
@@ -158,14 +158,6 @@
                href="{{ route('home') }}">
                 <i class="fas fa-home"></i>
             </a>
-
-            <button class="btn btn-light border px-4" type="button" data-toggle="collapse"
-                    data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-                +
-            </button><br>
-
-
-                <div class="collapse" id="collapseExample"><br>
                     <div id="is_active">
                         <div class="row px-4">Documento:
                             <div class="form-check form-check-inline px-4">
@@ -176,12 +168,34 @@
                                 <input class="form-check-input" type="radio" name="is_active" id="is_active" value="-1">
                                 Não está vigente
                             </div>
+                            <div class="form-check form-check-inline px-3">
+                                <input class="form-check-input" type="radio" name="is_active" id="is_active" value="0">
+                                Ambos
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-    </div>
 
+<script>
+    var grd = function(){
+        $("input[type='radio']").click(function() {
+            var previousValue = $(this).attr('previousValue');
+            var name = $(this).attr('value');
+            console.log(name);
+
+            if (previousValue == 'checked') {
+                $(this).removeAttr('checked');
+                $(this).attr('previousValue', false);
+            } else {
+                $("input[name="+name+"]:radio").attr('previousValue', false);
+                $(this).attr('previousValue', 'checked');
+            }
+        });
+    };
+
+    grd('1');
+</script>
 </form>
 </div>
 <br>

@@ -1,17 +1,19 @@
 <?php
 
-use App\Document;
+use App\Boletim;
 use App\Tag;
 use App\Category;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Session;
 
-function getFilteredDocuments($request) {
+function getFilteredBoletins($request) {
 
+   // dd($request->all());
     foreach ($request->all() as $key => $value) {
         Session::put($key, $value);
     }
-    $documents = Document::all();
+
+    $documents = Boletim::all();
     $query = [];
 
     if (Session::has('word')) {
@@ -21,12 +23,12 @@ function getFilteredDocuments($request) {
     }
 
     if (Session::has('categories')) {
-        $categories = Session::get('categories');
+        $categories = request('categories');
         array_push($query, $categories);
         $documents = searchByCategories($categories, $documents);
     }
 
-    if (Session::has('first_date') || request('last_date')) {
+    if (Session::has('first_date') || Session::has('last_date')) {
         $first_date = Session::get('first_date');
         $last_date = Session::get('last_date');
         if ($first_date == null) $first_date = "0000-00-00";
@@ -34,18 +36,6 @@ function getFilteredDocuments($request) {
         array_push($query, $first_date);
         array_push($query, $last_date);
         $documents = searchByDate($first_date, $last_date, $documents);
-    }
-
-    if (Session::has('tags')) {
-        $tags = Session::get('tags');
-        array_push($query, $tags);
-        $documents = searchByTags($tags, $documents);
-    }
-
-    if (Session::has('is_active')) {
-        $is_active = Session::get('is_active');
-        array_push($query, $is_active);
-        $documents = searchByStatus($is_active, $documents);
     }
 
     $documents = $documents->sortByDesc('date');
@@ -57,7 +47,7 @@ function getFilteredDocuments($request) {
 
 function searchByWord($word, $documents)
 {
-    $docs = Document::where('name','LIKE','%'.$word.'%')
+    $docs = Boletim::where('name','LIKE','%'.$word.'%')
                         ->orWhere('description','LIKE','%'.$word.'%')
                         ->get();
     return $docs;

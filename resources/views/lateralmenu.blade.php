@@ -5,18 +5,28 @@
     Session::put('documents',  $documents);
 ?>
 
+
+<span>
+    <a class="list-group-item {{ Request::is('boletins') ? 'active' : ''}}"
+       href="/boletins">
+        BGBM + BEBM + Separata
+    </a>
+</span>
+
+
 <ul class="nav nav-tabs flex-column lighten-4 list-group">
     <li style="text-align: center">
         <h3>Categorias</h3>
     </li>
     <li class="nav-item border">
         <a class="list-group-item {{ (Request::is('documentos') || Request::is('/')) ? 'active' : ''}}"
-           href="{{ route('documents.index')}}">
+           href="/refresh">
             <b>Todos</b>
         </a>
     </li>
 
     @foreach($categories as $category)
+        @if ($category->id == 1 ||  $category->id == 2|| $category->id == 3) @continue @endif
         <li class="nav-item border">
 
             @if (count($category->hassubcategory)>0)
@@ -52,12 +62,6 @@
 
     @endforeach
 
-    <li class="nav-item border">
-        <a class="list-group-item {{ Request::is('boletins') ? 'active' : ''}}"
-            href="/boletins">
-            BGBM + BEBM + Separata
-        </a>
-    </li>
 </ul>
 
 <ul class="nav nav-tabs flex-column lighten-4 list-group">

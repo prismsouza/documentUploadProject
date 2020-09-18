@@ -3,16 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Boletim;
-use App\Helpers\CollectionHelper;
 use App\Http\Requests\BoletimRequest;
 use App\Http\Requests\BoletimUpdateRequest;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
-use Illuminate\Support\Facades\Session;
 
-include "BoletinsFilterHelper.php";
-include "SortHelper.php";
 include "LogsHelper.php";
 
 class BoletinsController extends Controller
@@ -30,13 +26,10 @@ class BoletinsController extends Controller
         return 0;
     }
 
-    public function index(Request $request)
+    public function index()
     {
-      //  dd($request->all());
-        $boletins = getFilteredBoletins($request);
-        $boletins = getOrderedDocuments($request, $boletins);
-        $boletins = CollectionHelper::paginate($boletins , count($boletins), CollectionHelper::perPage());
-        return view('boletins.index', ['boletins' => $boletins, 'admin' => 0]);
+        $boletins = Boletim::orderBy('date', 'desc')->paginate();
+        return view('boletins.index', ['boletins' => $boletins, 'category_option' => null, 'admin' => 0]);
     }
 
     public function index_admin()
@@ -44,7 +37,7 @@ class BoletinsController extends Controller
         $boletins = Boletim::orderBy('date', 'desc')->paginate();
         return view('boletins.index', ['boletins' => $boletins, 'category_option' => null, 'admin' => $this->isUserAdmin()]);
     }
-
+    
     public function show(Boletim $boletim)
     {
         if (count($boletim->files->where('alias')->all()) == 0)
@@ -190,10 +183,9 @@ class BoletinsController extends Controller
         ]);
     }
 
-    public function refresh()
+    public function filter(Request $request)
     {
-        Session::flush();
-        return redirect(route('boletins.index'));
+        return getFilteredBoletins($request, $this->isUserAdmin());
     }
 
     public function logs()

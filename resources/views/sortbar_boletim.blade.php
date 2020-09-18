@@ -1,7 +1,7 @@
-@section('sortbar')
+@section('sortbar_boletim')
 
 <div class="border p-2">
-    <form method="POST" id="sortForm" action="{{ route('documents.index') }}" enctype="multipart/form-data" class="py-2"> @csrf
+    <form method="POST" id="sortForm" action="{{ route('boletins.index') }}" enctype="multipart/form-data" class="py-2"> @csrf
             <div id="option">
                 <div class="row px-4 py-2">Ordenar resultados por:</div>
                 <div class="row px-4">

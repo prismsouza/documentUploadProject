@@ -19,9 +19,10 @@ Route::get('/admin/boletins/falhas', 'BoletinsController@showFailedBoletins')->n
 
 
 Route::get('/boletins/categorias/{category}', 'DocumentsController@showByCategory')->name('documents_category.index');
-Route::get('/boletins', 'BoletinsController@index')->name('boletins.index');
+//Route::get('/boletins', 'BoletinsController@index')->name('boletins.index');
+Route::match(['post', 'get'], '/boletins', 'BoletinsController@index')->name('boletins.index');
 Route::get('/admin/boletins', 'BoletinsController@index_admin')->name('boletins_admin.index');
-Route::post('/boletins', 'BoletinsController@store')->name('boletins.store');
+Route::post('/boletins/save', 'BoletinsController@store')->name('boletins.store');
 Route::get('/boletins/novo', 'BoletinsController@create')->name('boletins.create');
 Route::get('/boletins/{boletim}', 'BoletinsController@show')->name('boletins.show');
 Route::get('/admin/boletins/{boletim}', 'BoletinsController@show_admin')->name('boletins_admin.show');
@@ -38,10 +39,10 @@ Route::delete('/arquivos/delete/{file}', 'FilesController@destroy')->name('files
 Route::get('/documentos/categorias/{category}', 'DocumentsController@showByCategory')->name('documents_category.index');
 Route::get('/admin/documentos/categorias/{category}', 'DocumentsController@showByCategoryAdmin')->name('documents_category_admin.index');
 
-Route::get('/', 'DocumentsController@index')->name('documents.index');
+//Route::get('/', 'DocumentsController@index')->name('documents.index');
 Route::get('/home', 'DocumentsController@home')->name('home');
-Route::get('/documentos', 'DocumentsController@index')->name('documents.index');
-Route::post('/documentos', 'DocumentsController@store')->name('documents.store');
+Route::match(['post', 'get'], '/documentos', 'DocumentsController@index')->name('documents.index');
+Route::post('/documentos/save', 'DocumentsController@store')->name('documents.store');
 Route::get('/documentos/novo', 'DocumentsController@create')->name('documents.create');
 Route::get('/documentos/{document}/download/{type}', 'DocumentsController@download')->name('documents.download');
 Route::get('/documentos/{document}/visualizar/{file_id}', 'DocumentsController@viewfile')->name('documents.viewfile');
@@ -50,6 +51,8 @@ Route::get('/admin/documentos/{document}', 'DocumentsController@show_admin')->na
 Route::get('/documentos/{document}/editar', 'DocumentsController@edit')->name('documents.edit');
 Route::put('/documentos/{document}', 'DocumentsController@update')->name('documents.update');
 Route::delete('/documentos/delete/{document}', 'DocumentsController@destroy')->name('documents.destroy');
+Route::get('refresh', 'DocumentsController@refresh');
+Route::get('refresh_boletim', 'BoletinsController@refresh');
 
 
 Route::get('/categorias/ementario/editar', function(){
@@ -86,8 +89,6 @@ Route::delete('/tags/delete/{tag}', 'TagsController@destroy')->name('tags.destro
 //Route::any('/documentos','DocumentsController@sort')->name('documents.sort');
 Route::any('/documentos/ordena','DocumentsController@sort')->name('documents.sort');
 Route::any('/admin/documentos/ordena','DocumentsController@sort_admin')->name('documents_admin.sort');
-Route::any('/documentos/pesquisa','DocumentsController@filter')->name('documents.filter');
-Route::any('/admin/documentos/pesquisa','DocumentsController@filter_admin')->name('documents_admin.filter');
 Route::any('/mensagens/pesquisa','MessagesController@filter')->name('messages.filter');
 
 Route::post('/documentos/{document}','MessagesController@store')->name('message.store');
