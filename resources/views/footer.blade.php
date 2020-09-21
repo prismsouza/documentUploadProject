@@ -15,7 +15,7 @@
 
             <!-- PORTAL -->
             <div class="col-sm-3">
-                <a target="__blank" href="https://bombeiros.mg.gov.br">
+                <a target="__blank" href="http://bombeiros.mg.gov.br">
                     <img class="ui centered small image" src="http://intranet.bombeiros.mg.gov.br/assets/images/bombeiros.png" alt="Portal CBMMG" />
                 </a>
             </div><!-- end column PORTAL -->

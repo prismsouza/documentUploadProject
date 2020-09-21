@@ -116,8 +116,6 @@
 
             <?php $file_pdf = $document->files->whereNotNull('alias')->first();?>
 
-
-
                 <td class="text-center px-0">
                     @if ($file_pdf != NULL)
                     <a class="btn border" data-toggle="tooltip" title="visualizar" target="_blank"

@@ -22,8 +22,8 @@ function getFilteredBoletins($request) {
         $documents = searchByWord($word, $documents);
     }
 
-    if (Session::has('categories')) {
-        $categories = request('categories');
+    if (Session::has('categories') && $request->categories != null) {
+        $categories = Session::get('categories');
         array_push($query, $categories);
         $documents = searchByCategories($categories, $documents);
     }
@@ -39,13 +39,10 @@ function getFilteredBoletins($request) {
     }
 
     $documents = $documents->sortByDesc('date');
-    //dd($documents);
     return $documents;
-    //return redirect(route('documents.index'))->with('documents', $documents);
-    //return view('documents.index', ['documents' => $documents, 'category_option' => null, 'admin' => $user])->withDetails($documents)->withQuery($query);
 }
 
-function searchByWord($word, $documents)
+function searchByWord($word)
 {
     $docs = Boletim::where('name','LIKE','%'.$word.'%')
                         ->orWhere('description','LIKE','%'.$word.'%')
@@ -57,8 +54,7 @@ function searchByCategories($categories, $documents)
 {
     $docs_categories = new Collection();
     foreach($categories as $category_id) {
-        $docs = Category::where('id', $category_id)->firstOrFail()->documents;
-
+        $docs = Category::where('id', $category_id)->firstOrFail()->boletins;
         foreach ($docs as $doc) {
             $doc = $documents->where('id', $doc->id)->first();
             if ($doc != null and !$docs_categories->contains($doc)) {

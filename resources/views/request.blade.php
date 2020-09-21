@@ -5,10 +5,10 @@
         <b>Filtro aplicado:</b>
         @if (Session::get('word'))
             <br>Nome Documento / Descrição:
-            <b class="px-2"> {{ request()->input('word') }} </b>
+            <b class="px-2"> {{ Session::get('word') }} </b>
         @endif
 
-        @if (Session::get('categories'))
+        @if (Session::get('categories') && (request('categories') != NULL))
             <br>Categorias:
             @foreach (Session::get('categories')  as $cat)
                 <b class="p-1">{{ $category = $categories->where('id', $cat)->first()->name }}</b>
@@ -31,6 +31,18 @@
                     {{ $first_date }}</b>
                 ate a data de hoje.
             @endif
+        @endif
+
+        @if (Session::get('tags') && (request('tags') != NULL))
+            <br>Tags:
+            @foreach (Session::get('tags')  as $t)
+                <b class="p-1">{{ $tag = $tags->where('id', $t)->first()->name }} </b>
+            @endforeach
+        @endif
+
+        @if (Session::get('is_active'))
+            <br>Vigencia:
+            <b class="p-1">{{ Session::get('is_active') == "1" ? "Vigente" : "Revogado" }}</b>
         @endif
     </div>
     <br>

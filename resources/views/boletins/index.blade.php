@@ -11,6 +11,14 @@
         </div>
     @endif
 
+    @if($admin)
+        <div class="float-md-right">
+            <a href="{{ route('boletins.index') }}" class="btn btn-light border">
+                <i class="fa fa-user"></i>Visão do usuário
+            </a>
+        </div><br><br>
+    @endif
+
         @if($admin)
             <a href="{{ route('boletins.create') }}">
                 <button class="btn btn-dark border btn-outline-light" type="submit">
@@ -24,7 +32,7 @@
         <thead class="text-center">
         <th scope="col" style="cursor: pointer; width: 3%">#</th>
         <th  scope="col" style="cursor: pointer; width: 22%"> Nome</th>
-        <th scope="col" style="cursor: pointer; width: 33%"> Descricao</th>
+        <th scope="col" style="cursor: pointer; width: 33%"> Descrição</th>
         <th scope="col" style="cursor: pointer; width: 14%"> Categoria</th>
         <th scope="col" style="width: 10%; text-align: center">Data</th>
 
@@ -44,8 +52,11 @@
         <tbody>
     @endif
 
-    <?php $c = 0;
-    if(!$boletins instanceof Illuminate\Support\Collection)
+    <?php use App\Helpers\CollectionHelper;
+        $c = 0;
+        if($boletins instanceof Illuminate\Support\Collection) {
+            $boletins = CollectionHelper::paginate($boletins, count($boletins), CollectionHelper::perPage());
+        }
         $page = $boletins->currentPage();
     ?>
 
@@ -53,11 +64,10 @@
 
         @if (count($boletim->files->where('alias')->all()) == 0)  @continue; @endif
 
-        <?php   if(!$boletins instanceof Illuminate\Support\Collection)
-                    $count = ($c + 1) + $page*10 - 10;
-                else
-                    $count = $c+1;
-            $c = $c + 1; ?>
+        <?php
+            $count = ($page*20 - 19) + $c;
+            $c = $c + 1;
+        ?>
         <tr class="small">
             <td class="text-center">{{$count}}</td>
             <td>
@@ -129,10 +139,8 @@
 
         </tbody>
     </table>
-    @if(!$boletins instanceof Illuminate\Support\Collection)
         @if ($boletins->total()>0)
             {{ $boletins->links() }}
         @endif
-    @endif
 
 @endsection

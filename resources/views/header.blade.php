@@ -11,17 +11,6 @@
     <li class="nav-item">
         <a class="nav-link text-secondary" href="http://www.sei.mg.gov.br">SEI/BM</a>
     </li>
-    <li class="nav-item dropdown">
-        <a class="nav-link text-secondary dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Links externos
-        </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <a class="dropdown-item" href="#">Action</a>
-            <a class="dropdown-item" href="#">Another action</a>
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="#">Something else here</a>
-        </div>
-    </li>
 </ul>
 
 <div class="container mt-1">

@@ -25,38 +25,30 @@
                 Selecione... <span class="caret"></span>
             </button>
 
-            <ul class="dropdown-menu scrollable-menu" role="menu" style="width: 130%">
+            <ul class="dropdown-menu" role="menu" style="width: 130%">
                 <input class="form-control " id="categories_input" type="text" placeholder="Search..">
 
-                <li class="px-4 p-1">
-                    <label class="box px-5 checkbox-inline">
-                        <input
-                            type="checkbox" value="all"
-                            id="check_all_categories"
-                            placeholder="Selecionado"
-                            <?php if (3 == count($categories_array)) echo "checked"; ?>>
-                        Todas
-                        <span class="checkmark"></span>
-                    </label>
-                </li>
+
+
                 <script>
                     $("#check_all_categories").click(function(){
                         $('#categories input:checkbox').not(this).prop('checked', this.checked);
                     });
                 </script>
 
+
                 @for($id=1; $id<=3; $id++)
-                                    <li class="px-4 p-1">
-                                    <label class="box px-5 checkbox-inline">
-                                        <input
-                                            type="checkbox" value="{{ $id }}"
-                                            id="{{ $id }}" name="categories[]"
-                                            placeholder="Selecionado"
-                                            <?php echo (in_array($id,$categories_array)) ?'checked':'' ?>>
-                                        {{ App\Category::where('id', $id)->first()->name }}
-                                        <span class="checkmark"></span>
-                                    </label>
-                                    </li>
+                    <li class="px-4 p-1">
+                        <label class="box px-5 checkbox-inline">
+                            <input
+                                type="checkbox" value="{{ $id }}"
+                                id="{{ $id }}" name="categories[]"
+                                placeholder="Selecionado"
+                            <?php echo (in_array($id,$categories_array)) ?'checked':'' ?>>
+                            {{ App\Category::where('id', $id)->first()->name }}
+                            <span class="checkmark"></span>
+                        </label>
+                    </li>
                 @endfor
 
             </ul>
@@ -99,6 +91,5 @@
 <br>
 
 @include('request')
-
     <script src="{{ asset('site/searchbar.js') }}"></script>
 @endsection

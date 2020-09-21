@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Boletim;
 use App\Document;
-use App\Helpers\Collection;
 use App\Helpers\CollectionHelper;
 use App\Http\Requests\DocumentCreateRequest;
 use App\Http\Requests\DocumentUpdateRequest;
@@ -39,45 +38,6 @@ class DocumentsController extends Controller
         $documents = getOrderedDocuments($request, $documents);
         $documents = CollectionHelper::paginate($documents , count($documents), CollectionHelper::perPage());
         return view('documents.index', ['documents' => $documents, 'category_option' => null, 'admin' => 0]);
-    }
-
-    public function getFilteredDocuments(Request $request)
-    {
-
-        foreach ($request->all() as $key => $value) {
-            Session::put($key, $value);
-        }
-
-        $filter_word_name = [];
-        $filter_word_description = [];
-        $filtered_by_categories = new Collection();
-        $filtered_by_tags = new Collection();
-        $files = new Collection();
-       // dd(Session::all());
-        if (Session::has('word')) {
-            array_push($filter_word_name, ['name', 'like', "%" . Session::get('word') . "%"]);
-            array_push($filter_word_description, ['description', 'like', "%" . Session::get('word') . "%"]);
-            $filter_word = new Collection(Document::where($filter_word_name)->orWhere($filter_word_description)->get());
-        }
-
-        if (Session::has('categories')) {
-            $filtered_by_categories = searchByCategories(Session::get('categories'));
-            foreach ($filtered_by_categories as $f) {
-                dd($f);
-                $files->merge($f);
-            }
-            dd($files);
-        }
-
-        if (Session::has('tags')) {
-            $filtered_by_tags = searchByTags(Session::get('tags'));
-        }
-
-        //dd(Session::all());
-        //$filtered_documents =  array_intersect($filter_word, $filter_category);
-        dd([Session::all(), $filter_word, $filtered_by_categories, $filtered_by_tags]);
-        //dd([$filter_query, $filtered_documents]);
-        return $filtered_documents;//->paginate();
     }
 
     public function refresh()
@@ -303,25 +263,6 @@ class DocumentsController extends Controller
         return redirect(route('documents.index'))->with('status', 'Documento restaurado com sucesso!');
     }
 
-    public function filter(Request $request)
-    {
-      //
-        Session::put('word',  $request->word);
-        $documents = getFilteredDocuments($request, 0);
-        //Session::put('documents',  $documents);
-       // dd(Session::get('documents'));
-        //dd(Session::all());
-        //dd($documents);
-        //return redirect(route('documents.index'));
-        return view('documents.index', ['documents' => $documents, 'category_option' => null, 'admin' => 0]);
-    }
-
-    public function filter_admin(Request $request)
-    {
-        $documents = getFilteredDocuments($request, $this->isUserAdmin());
-        Session::put('request',  $request->all());
-        return view('documents.index', ['documents' => $documents, 'category_option' => null, 'admin' => $this->isUserAdmin()]);
-    }
 
     public function logs()
     {

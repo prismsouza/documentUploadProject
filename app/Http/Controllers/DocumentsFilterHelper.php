@@ -7,7 +7,7 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Session;
 
 function getFilteredDocuments($request) {
-
+    //dd($request->all());
     foreach ($request->all() as $key => $value) {
         Session::put($key, $value);
     }
@@ -20,13 +20,13 @@ function getFilteredDocuments($request) {
         $documents = searchByWord($word, $documents);
     }
 
-    if (Session::has('categories')) {
+    if (request('categories') != NULL) {
         $categories = Session::get('categories');
         array_push($query, $categories);
         $documents = searchByCategories($categories, $documents);
     }
 
-    if (Session::has('first_date') || request('last_date')) {
+    if (Session::has('first_date') || Session::has('last_date')) {
         $first_date = Session::get('first_date');
         $last_date = Session::get('last_date');
         if ($first_date == null) $first_date = "0000-00-00";
@@ -36,7 +36,7 @@ function getFilteredDocuments($request) {
         $documents = searchByDate($first_date, $last_date, $documents);
     }
 
-    if (Session::has('tags')) {
+    if (request('tags') != NULL) {
         $tags = Session::get('tags');
         array_push($query, $tags);
         $documents = searchByTags($tags, $documents);
@@ -55,7 +55,7 @@ function getFilteredDocuments($request) {
     //return view('documents.index', ['documents' => $documents, 'category_option' => null, 'admin' => $user])->withDetails($documents)->withQuery($query);
 }
 
-function searchByWord($word, $documents)
+function searchByWord($word)
 {
     $docs = Document::where('name','LIKE','%'.$word.'%')
                         ->orWhere('description','LIKE','%'.$word.'%')
@@ -93,8 +93,9 @@ function searchByTags($tags, $documents)
         $docs = Tag::where('id', $tag_id)->firstOrFail()->documents;
         foreach ($docs as $doc) {
             $doc = $documents->where('id', $doc->id)->first();
-            if ($doc != null and !$docs_tags->contains($doc))
+            if ($doc != null and !$docs_tags->contains($doc)) {
                 $docs_tags->push($doc);
+            }
         }
     }
     return $docs_tags;
@@ -103,7 +104,7 @@ function searchByTags($tags, $documents)
 function searchByStatus($is_active, $documents)
 {
     if ($is_active == -1) $is_active = 0;
-    $docs = $documents->where('is_active',$is_active);
+        $docs = $documents->where('is_active',$is_active);
     return $docs;
 }
 

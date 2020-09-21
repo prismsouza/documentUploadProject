@@ -17,7 +17,6 @@ include "LogsHelper.php";
 
 class BoletinsController extends Controller
 {
-
     public function getMasp()
     {
         return TokenController::$payload->number; // $masp

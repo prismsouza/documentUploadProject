@@ -2,7 +2,6 @@
 
 function getOrderedDocuments($request, $documents)
 {
-
     foreach ($request->all() as $key => $value) {
         Session::put($key, $value);
     }

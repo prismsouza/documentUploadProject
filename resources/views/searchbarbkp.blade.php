@@ -1,10 +1,9 @@
 @section('searchbar')
 <?php
-    $tags = App\Tag::all()->sortBy('name');
-    $tags_array = (Session::has('tags') && request('tags') != NULL) ? Session::get('tags') : [];
-    $categories = App\Category::orderBy('name', 'asc')->get()
-            ->whereNotIn('id', [1, 2, 3]);
-    $categories_array = (Session::has('categories') && request('categories') != NULL) ? Session::get('categories') : [];
+    $tags = App\Tag::all();
+    $tags_array = request('tags') ? request('tags') : [];
+    $categories = App\Category::all()->sortBy('name');
+    $categories_array = request('categories') ? request('categories') : [];
 ?>
 
 <div class="border p-2">
@@ -16,24 +15,24 @@
             <input
                 class="form-control col-sm-12"
                 type="text" name="word" id="word"
-                value="{{ Session::get('word') }}">
+                value="{{ request()->input('word') }}">
         </div>
 
         <div class="col-sm" id="categories">
             Pesquisar por Categoria:<br>
-            <button id="categories_btn" href="#" class="btn btn-light border px-5"
+            <button id="categories_btn" role="button" href="#" class="btn btn-light border px-5"
                     data-toggle="dropdown" data-target="#" >
                 Selecione... <span class="caret"></span>
             </button>
 
             <ul class="dropdown-menu scrollable-menu" role="menu" style="width: 130%">
-                <input class="form-control" id="categories_input" type="text" placeholder="Search..">
+                <input class="form-control " id="categories_input" type="text" placeholder="Search..">
 
                 <li class="px-4 p-1">
                     <label class="box px-5 checkbox-inline">
                         <input
-                            type="checkbox" value="0"
-                            id="check_all_categories" name="all"
+                            type="checkbox" value="all"
+                            id="check_all_categories"
                             placeholder="Selecionado"
                             <?php if (count($categories) == count($categories_array)) echo "checked"; ?>>
                         Todas
@@ -46,7 +45,7 @@
                     });
                 </script>
                 @forelse($categories as $category)
-                    @if($category->id == 1 || $category->id == 2 || $category->id == 3) @continue @endif
+
                                 @if (count($category->hasparent)==0)
                                     <li class="px-4 p-1">
                                     <label class="box px-5 checkbox-inline">
@@ -133,12 +132,12 @@
                 <input
                     name="first_date" id="first_date" type="date"
                     data-display-mode="inline" data-is-range="true" data-close-on-select="false"
-                    value="{{ Session::get('first_date') }}">
+                    value="{{ request()->input('first_date') }}">
                 <label class="px-1 small">a</label>
                 <input
                     name="last_date" id="last_date" type="date"
                     data-display-mode="inline" data-is-range="true" data-close-on-select="false"
-                    value="{{ Session::get('last_date') }}">
+                    value="{{ request()->input('last_date') }}">
             </div>
         </div>
     </div><br>
@@ -146,13 +145,11 @@
         <div id="is_active" class="col">
             <div class="row px-4">Documento:
                 <div class="form-check form-check-inline px-4">
-                    <input class="form-check-input" type="radio" name="is_active" id="is_active" value="1"
-                    <?php if(Session::get('is_active') == 1)  echo ' checked="checked"';?>>
+                    <input class="form-check-input" type="radio" name="is_active" id="is_active" value="1">
                     Está vigente
                 </div>
                 <div class="form-check form-check-inline px-3">
-                    <input class="form-check-input" type="radio" name="is_active" id="is_active" value="-1"
-                    <?php if(Session::get('is_active') == -1)  echo ' checked="checked"';?>>
+                    <input class="form-check-input" type="radio" name="is_active" id="is_active" value="-1">
                     Não está vigente
                 </div>
             </div>
@@ -183,10 +180,9 @@
     var grd = function(){
         $("input[type='radio']").click(function() {
             var previousValue = $(this).attr('previousValue');
-           // console.log(previousValue);
+            console.log(previousValue);
             var name = $(this).attr('value');
-            //console.log(name);
-            <?php Session::put('is_active', 0); ?>
+            console.log(name);
 
             if (previousValue == 'checked') {
                 $(this).prop("checked", false);
@@ -195,16 +191,68 @@
                 $("input[name="+name+"]:radio").attr('previousValue', false);
                 $(this).prop("checked", true);
                 $(this).attr('previousValue', 'checked');
-                <?php Session::put('is_active', request('is_active')); ?>
             }
-
         });
     };
+
     grd('1');
 </script>
 </form>
 </div>
 <br>
-@include('request')
-<script src="{{ asset('site/searchbar.js') }}"></script>
+
+@if (request()->input('word') || request()->input('categories') || request()->input('first_date') || request()->input('last_date') || request()->input('tags') || request()->input('is_active'))
+    <div class="border p-2">
+        <b>Filtro aplicado:</b>
+    @if (request()->input('word'))
+        <br>Nome Documento / Descrição:
+        <b class="px-2"> {{ request()->input('word') }} </b>
+    @endif
+
+    @if (request()->input('categories'))
+        <br>Categorias:
+        @foreach ( request()->input('categories')  as $cat)
+            <b class="p-1">{{ $category = $categories->where('id', $cat)->first()->name }}</b>
+        @endforeach
+    @endif
+
+    @if (request()->input('first_date') || request()->input('last_date'))
+        <?php
+        $first_date = date('d/m/Y', strtotime(request()->input('first_date')));
+        $last_date = date('d/m/Y', strtotime(request()->input('last_date')));
+        ?>
+
+        @if (request()->input('first_date') && request()->input('last_date'))
+            <br>Data de publicação:
+            <b class="px-2">de {{ $first_date }}
+            ate {{ $last_date }} </b>
+        @elseif (request()->input('first_date'))
+             <br>Documentos publicados:
+             <b class="px-2">a partir de
+             {{ $first_date }}</b>
+             ate a data de hoje.
+        @elseif (request()->input('last_date'))
+              <br>Documentos publicados:
+              <b class="px-2">ate {{ $last_date }}</b>
+        @endif
+    @endif
+
+    @if (request()->input('tags'))
+        <br>Tags:
+        @foreach (request()->input('tags')  as $t)
+            <b class="p-1">{{ $tag = $tags->where('id', $t)->first()->name }} </b>
+        @endforeach
+    @endif
+
+    @if (request()->input('is_active'))
+        <br>Vigencia:
+        <b class="p-1">{{ request()->input('is_active') == "1" ? "Vigente" : "Revogado" }}</b>
+    @endif
+
+    </div>
+    <br>
+@endif
+
+
+    <script src="{{ asset('site/searchbar.js') }}"></script>
 @endsection
