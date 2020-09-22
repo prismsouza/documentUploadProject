@@ -4,8 +4,8 @@
 
 @section('content')
     @if($admin)
-        <a href="{{ route('documents_admin.index') }}" class="btn btn-light border">
-            Administrador   <i class="fas fa-user-cog"></i>
+        <a href="{{ route('admin.view') }}" class="btn btn-light border">
+            Administrador  <i class="fas fa-user-cog"></i>
         </a>
         <br><br>
     @endif

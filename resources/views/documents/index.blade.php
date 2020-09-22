@@ -1,5 +1,4 @@
 @extends(($admin) ? 'layout_admin' : 'layout')
-
 @include('searchbar')
 @include('sortbar')
 
@@ -10,13 +9,21 @@
         </div>
     @endif
 
-    @if($admin)
+
         <div class="float-md-right">
-            <a href="{{ route('documents.index') }}" class="btn btn-light border">
+            @if (Session::get('admin') == 1)
+            <a href="{{ route('user.view') }}" class="btn btn-light border">
                 <i class="fa fa-user"></i>Visão do usuário
             </a>
+            @endif
+            @if (Session::get('admin') == 0)
+            <a href="{{ route('admin.view') }}" class="btn btn-light border">
+                 <i class="fas fa-user-cog"></i>Visão do Administrador
+            </a>
+            @endif
         </div><br><br>
-    @endif
+
+
 
 
     @if($category_option)
@@ -78,7 +85,7 @@
 
                 @if ($document->first()->files->whereNull('document_id')->first())
                     @if (count($document->files->whereNull('alias')) > 0)
-                        <a @if ($admin) href="{{ $document->path_admin()  }}" @else href="{{ $document->path()  }}" @endif data-toggle="tooltip" title="acessar documento">
+                        <a href="{{ $document->path() }}" data-toggle="tooltip" title="acessar documento">
                             {{ $document->name }}
                         </a>
                     @else
@@ -87,7 +94,7 @@
                 @else
 
 
-                <a @if ($admin) href="{{ $document->path_admin()  }}" @else href="{{ $document->path()  }}" @endif data-toggle="tooltip" title="acessar documento">
+                <a href="{{ $document->path() }}" data-toggle="tooltip" title="acessar documento">
                     {{ $document->name }}
                 </a>
                 @if ($document->is_active )

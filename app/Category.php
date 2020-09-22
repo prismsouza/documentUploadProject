@@ -17,6 +17,17 @@ class Category extends Model
         return 'name';
     }
 
+    public static function getCategoriesExceptBoletim()
+    {
+        return Category::orderBy('name', 'asc')->get()
+            ->whereNotIn('id', [1, 2, 3]);
+    }
+
+    public static function isCategoryBoletim($category)
+    {
+        return ($category == 1 || $category == 2 || $category == 3);
+    }
+
     public function documents()
     {
         return $this->hasMany(Document::class);

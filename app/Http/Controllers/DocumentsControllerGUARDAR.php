@@ -168,7 +168,7 @@ class DocumentsController extends Controller
 
         storeLog($document->user_masp, $document->id, "create", 1);
 
-        return redirect($document->path_admin())->with('status', 'Documento ' . $document->name . ' criado com sucesso!');
+        return redirect($document->path())->with('status', 'Documento ' . $document->name . ' criado com sucesso!');
     }
 
     public function viewfile(Document $document, $file_id)
@@ -261,7 +261,7 @@ class DocumentsController extends Controller
 
         storeLog($this->getMasp(), $document->id, "update", 1);
 
-        return redirect($document->path_admin())->with('status', 'Documento ' . $document->name . ' atualizado com sucesso!');
+        return redirect($document->path())->with('status', 'Documento ' . $document->name . ' atualizado com sucesso!');
     }
 
     public function download(Document $document, $hash_id)

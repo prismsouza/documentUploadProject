@@ -1,5 +1,4 @@
 @extends(($admin) ? 'layout_admin' : 'layout')
-
 @include('searchbar')
 
 @section ('content')

@@ -20,13 +20,11 @@ class Boletim extends Model
         return 'id';
     }
 
+
+
     public function path()
     {
         return route('boletins.show', $this);
-    }
-    public function path_admin()
-    {
-        return route('boletins_admin.show', $this);
     }
 
     public function user()

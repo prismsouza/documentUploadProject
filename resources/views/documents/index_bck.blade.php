@@ -79,7 +79,7 @@
             <td>
                 @if ($document->first()->files->whereNull('document_id')->first())
                     @if (count($document->files->whereNull('alias')) > 0)
-                        <a @if ($admin) href="{{ $document->path_admin()  }}" @else href="{{ $document->path()  }}" @endif data-toggle="tooltip" title="acessar documento">
+                        <a @if ($admin) href="{{ $document->path()  }}" @else href="{{ $document->path()  }}" @endif data-toggle="tooltip" title="acessar documento">
                             {{ $document->name }}
                         </a>
                     @else
@@ -88,7 +88,7 @@
                 @else
 
 
-                <a @if ($admin) href="{{ $document->path_admin()  }}" @else href="{{ $document->path()  }}" @endif data-toggle="tooltip" title="acessar documento">
+                <a @if ($admin) href="{{ $document->path()  }}" @else href="{{ $document->path()  }}" @endif data-toggle="tooltip" title="acessar documento">
                     {{ $document->name }}
                 </a>
                 @if ($document->is_active )

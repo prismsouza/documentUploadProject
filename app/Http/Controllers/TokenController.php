@@ -70,7 +70,7 @@ class TokenController extends Controller
     public function isAdminLocal()
     {
         $number =  self::$payload->number;
-        $user = User::find('numer', $number)->get();
+        $user = User::find('number', $number)->get();
 
         if($user->count()) {
             return true;

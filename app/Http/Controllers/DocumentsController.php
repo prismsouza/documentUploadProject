@@ -7,6 +7,7 @@ use App\Document;
 use App\Helpers\CollectionHelper;
 use App\Http\Requests\DocumentCreateRequest;
 use App\Http\Requests\DocumentUpdateRequest;
+use App\Log;
 use App\Tag;
 use App\Category;
 use App\User;
@@ -20,84 +21,52 @@ include "LogsHelper.php";
 
 class DocumentsController extends Controller
 {
-    public function getMasp()
-    {
-        return TokenController::$payload->number; // $masp
-    }
-
-    public function isUserAdmin()
-    {
-        $masp = $this->getMasp();
-        if (User::where('masp', $masp)->first()) return 1;
-        return 0;
-    }
-
     public function index(Request $request)
     {
+        if (Session::has('admin')) {
+            User::setViewAsUser();
+        }
         $documents = getFilteredDocuments($request);
         $documents = getOrderedDocuments($request, $documents);
         $documents = CollectionHelper::paginate($documents , count($documents), CollectionHelper::perPage());
-        return view('documents.index', ['documents' => $documents, 'category_option' => null, 'admin' => 0]);
+        return view('documents.index', ['documents' => $documents, 'category_option' => null, 'admin' => Session::get('admin')]);
     }
 
-    public function refresh()
+    public function sessionRefresh()
     {
+        $session_admin = Session::get('admin');
         Session::flush();
+        Session::put('admin', $session_admin);
         return redirect(route('documents.index'));
-    }
-
-    public function index_admin()
-    {
-        if (request('tag')) {
-            $documents = Tag::where('name', request('tag'))->firstOrFail()->documents;
-        } else {
-            $documents = Document::orderBy('date', 'desc')->paginate();
-        }
-        //dd($documents); die();
-        return view('documents.index', ['documents' => $documents, 'category_option' => null, 'admin' => $this->isUserAdmin()]);
-
     }
 
     public function show(Document $document)
     {
-        if (count($document->files->where('alias')->all()) == 0)
+        if (count($document->files->where('alias')->all()) == 0) {
+            if (User::isAdminView())
+                return view('documents.edit', compact('document'), ['tags' => Tag::all()]);
             return $this->index();
+        }
 
-        $doc = \App\Document::find($document->id);
-
-        $related_documents = $doc->hasdocument;
-
-        $pdf_file = $document->files->whereNotNull('alias')->first();
-        $files = $document->files->whereNull('alias')->all();
-
-        return view('documents.show', ['document' => $document, 'related_documents' => $related_documents, 'files' => $files, 'pdf_file' => $pdf_file, 'admin' => 0]);
-    }
-
-    public function show_admin(Document $document)
-    {
-        if (count($document->files->where('alias')->all()) == 0)
-            return view('documents.edit', compact('document'),['tags' => Tag::all()]);
-
-        $doc = \App\Document::find($document->id);
+        $doc = Document::find($document->id);
 
         $related_documents = $doc->hasdocument;
 
         $pdf_file = $document->files->whereNotNull('alias')->first();
         $files = $document->files->whereNull('alias')->all();
 
-        return view('documents.show', ['document' => $document, 'related_documents' => $related_documents, 'files' => $files, 'pdf_file' => $pdf_file, 'admin' => $this->isUserAdmin()]);
+        return view('documents.show', ['document' => $document, 'related_documents' => $related_documents, 'files' => $files, 'pdf_file' => $pdf_file, 'admin' => Session::get('admin')]);
     }
 
     public function home()
     {
-        return view('home', ['admin' => $this->isUserAdmin()]);
+        return view('home', ['admin' => User::isUserAdmin()]);
     }
 
     public function create()
     {
-        $categories = Category::orderBy('name', 'asc')->get()
-            ->whereNotIn('id', [1, 2, 3]); // BGBM / BEBM / Separata
-        return view('documents.create', ['tags' => Tag::all(), 'categories' => $categories, 'documents' => Document::all()]);
+        $categories = Category::getCategoriesExceptBoletim();
+        return view('documents.create', ['categories' => $categories]);
     }
 
     public function store(DocumentCreateRequest $request)
@@ -132,7 +101,7 @@ class DocumentsController extends Controller
 
         storeLog($document->user_masp, $document->id, "create", 1);
 
-        return redirect($document->path_admin())->with('status', 'Documento ' . $document->name . ' criado com sucesso!');
+        return redirect($document->path())->with('status', 'Documento ' . $document->name . ' criado com sucesso!');
     }
 
     public function viewfile(Document $document, $file_id)
@@ -152,50 +121,35 @@ class DocumentsController extends Controller
 
     public function showByCategory(Category $category)
     {
-        Session::flush();
-        if ($category->id == 1 || $category->id == 2 || $category->id == 3) {
-            $documents = Boletim::orderBy('date', 'desc')->where('category_id', $category->id)->paginate();
-        } else {
-            $documents = Document::orderBy('date', 'desc')->where('category_id', $category->id)->paginate();
-            //$documents = $documents->sortByDesc('date')->where('category_id', $category->id);//->paginate();
-        }
-        //dd($documents);
-        $category_option = $category->name;
-
-        Session::put('documents',  $documents);
-       // dd(Session::get('documents'));
-        //return redirect(route('documents_category.index', $category_option));
-        return view('documents.index', ['documents' => $documents, 'category_option' => $category_option, 'admin' => 0]);
-    }
-
-    public function showByCategoryAdmin(Category $category)
-    {
-        if ($category->id == 1 || $category->id == 2 || $category->id == 3) {
+        $this->sessionRefresh();
+        if (Category::isCategoryBoletim($category->id)) {
             $documents = Boletim::orderBy('date', 'desc')->where('category_id', $category->id)->paginate();
         } else {
             $documents = Document::orderBy('date', 'desc')->where('category_id', $category->id)->paginate();
         }
         $category_option = $category->name;
 
-        Session::put('documents',  $documents);
-        return view('documents.index', ['documents' => $documents, 'category_option' => $category_option, 'admin' => $this->isUserAdmin()]);
+        return view('documents.index', ['documents' => $documents, 'category_option' => $category_option, 'admin' => Session::get('admin')]);
     }
 
     public function showDeletedDocuments()
     {
         $documents = Document::onlyTrashed()->get()->sortBy('deleted_at');
+        $documents = CollectionHelper::paginate($documents , count($documents), CollectionHelper::perPage());
+
         return view('documents.deleted_documents', ['documents' => $documents]);
     }
 
     public function showFailedDocuments()
     {
         $documents = Document::all();
+        $documents = CollectionHelper::paginate($documents , count($documents), CollectionHelper::perPage());
         return view('documents.failed_documents', ['documents' => $documents]);
     }
 
     public function edit(Document $document)
     {
-        return view('documents.edit', compact('document'),['tags' => Tag::all()]);
+        return view('documents.edit', compact('document'));
     }
 
     public function update(DocumentUpdateRequest $request, Document $document)
@@ -225,7 +179,7 @@ class DocumentsController extends Controller
 
         storeLog($this->getMasp(), $document->id, "update", 1);
 
-        return redirect($document->path_admin())->with('status', 'Documento ' . $document->name . ' atualizado com sucesso!');
+        return redirect($document->path())->with('status', 'Documento ' . $document->name . ' atualizado com sucesso!');
     }
 
     public function download(Document $document, $hash_id)
@@ -263,10 +217,10 @@ class DocumentsController extends Controller
         return redirect(route('documents.index'))->with('status', 'Documento restaurado com sucesso!');
     }
 
-
     public function logs()
     {
-        $logs = \App\Log::orderBy('id', 'DESC')->whereNULL('boletim_id')->get();;
+        $logs = Log::orderBy('id', 'DESC')->whereNULL('boletim_id')->get();
+        $logs = CollectionHelper::paginate($logs , count($logs), CollectionHelper::perPage());
         return view('documents.logs', ['logs' => $logs]);
     }
 

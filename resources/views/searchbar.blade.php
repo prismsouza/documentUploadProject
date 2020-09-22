@@ -2,8 +2,7 @@
 <?php
     $tags = App\Tag::all()->sortBy('name');
     $tags_array = (Session::has('tags') && request('tags') != NULL) ? Session::get('tags') : [];
-    $categories = App\Category::orderBy('name', 'asc')->get()
-            ->whereNotIn('id', [1, 2, 3]);
+    $categories = App\Category::getCategoriesExceptBoletim();
     $categories_array = (Session::has('categories') && request('categories') != NULL) ? Session::get('categories') : [];
 ?>
 

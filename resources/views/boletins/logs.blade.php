@@ -1,18 +1,17 @@
 @extends('layout_admin')
 
-<?php $user = "admin_master"; // admin
-        $boletins = App\Boletim::all(); ?>
+<?php $user = "admin_master"; // admin ?>
 
 @section('content')
+    <a onclick="goBack()" class="btn btn-light border float-md-right">Voltar</a>
     <h3>Logs</h3>
     @if ($logs->isNotEmpty())
         <table class="table table-bordered bg-white table-striped" id="myTable">
             <thead class="text-center">
             <th scope="col" style="width: 5%; text-align: center"> #</th>
-            <th scope="col" style="width: 8%; text-align: center"> ID Log</th>
             <th scope="col" style="width: 12%; text-align: center"> Usuário</th>
-            <th scope="col" style="width: 15%; text-align: center"> ID Boletim/Separata</th>
-            <th scope="col" style="width: 32%; text-align: center"> Documento</th>
+            <th scope="col" style="width: 10%; text-align: center"> ID Boletim/Separata</th>
+            <th scope="col" style="width: 37%; text-align: center"> Nome Documento</th>
             <th scope="col" style="width: 10%; text-align: center"> Ação</th>
             <th scope="col" style="width: 18%; text-align: center"> Data</th>
 
@@ -20,17 +19,13 @@
             <tbody>
             @endif
 
-            <?php $c = 0;
-            if(!$logs instanceof Illuminate\Support\Collection)
-                $page = $logs>currentPage();
-            ?>
+            <?php $c = 0; $page = $logs->currentPage(); ?>
 
             @forelse($logs as $log)
-                <?php   if(!$logs instanceof Illuminate\Support\Collection)
-                    $count = ($c + 1) + $page*10 - 10;
-                else
-                    $count = $c+1;
-                $c = $c + 1; ?>
+                <?php
+                    $count = ($page*20 - 19) + $c;
+                    $c = $c + 1;
+                ?>
                 <tr class="small">
                     <td class="text-center">{{$count}}</td>
                     <td class="text-center">{{ $log->id }}</td>
@@ -38,7 +33,7 @@
                         {{ $log->user_masp }}
                     </td>
                     <td class="text-center">
-                        @if ($boletins->where('id', $log->boletim_id)->first() != null)
+                        @if (App\Boletim::where('id', $log->boletim_id)->first() != null)
                             <a href="{{ route ('boletins.show', [ $log->boletim_id ]) }}">
                                 {{ $log->boletim_id }}
                             </a>
@@ -48,8 +43,8 @@
 
                     </td>
                     <td class="text-center">
-                        @if ($boletins->where('id', $log->boletim_id)->first() != null)
-                            {{ $boletins->where('id', $log->boletim_id)->first()->name }}
+                        @if (App\Boletim::where('id', $log->boletim_id)->first() != null)
+                            {{ App\Boletim::where('id', $log->boletim_id)->first()->name }}
                         @else
                             {{ App\Boletim::onlyTrashed()->where('id', $log->boletim_id)->first()->name }}
                         @endif
@@ -72,9 +67,7 @@
 
             </tbody>
         </table>
-        @if(!$logs instanceof Illuminate\Support\Collection)
             @if ($logs->total()>0)
                 {{ $logs->links() }}
             @endif
-        @endif
 @endsection

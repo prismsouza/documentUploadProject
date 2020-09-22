@@ -37,7 +37,7 @@ class BoletinsController extends Controller
         $boletins = Boletim::orderBy('date', 'desc')->paginate();
         return view('boletins.index', ['boletins' => $boletins, 'category_option' => null, 'admin' => $this->isUserAdmin()]);
     }
-    
+
     public function show(Boletim $boletim)
     {
         if (count($boletim->files->where('alias')->all()) == 0)
@@ -112,7 +112,7 @@ class BoletinsController extends Controller
 
         storeLog($this->getMasp(), $boletim->id, "update", 0);
 
-        return redirect($boletim->path_admin())->with('status', 'Documento ' . $boletim->name . ' atualizado com sucesso!');
+        return redirect($boletim->path())->with('status', 'Documento ' . $boletim->name . ' atualizado com sucesso!');
     }
 
     public function download(Boletim $boletim, $hash_id)

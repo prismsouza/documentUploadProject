@@ -11,6 +11,7 @@ function getFilteredDocuments($request) {
     foreach ($request->all() as $key => $value) {
         Session::put($key, $value);
     }
+   // dd(Session::all());
     $documents = Document::all();
     $query = [];
 

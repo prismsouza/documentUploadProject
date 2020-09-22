@@ -5,6 +5,7 @@ namespace App\Providers;
 use App\Http\Controllers\TokenController;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Session;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -23,18 +24,16 @@ class AuthServiceProvider extends ServiceProvider
      *
      * @return void
      */
+    public function boot2()
+    {
+        $this->registerPolicies();
+    }
+
     public function boot()
     {
         if(!TokenController::isAuthorized()) {
             abort(403, "Acesso não autorizado.");
         }
-
         $this->registerPolicies();
-    }
-    public function boot2()
-    {
-        $this->registerPolicies();
-
-        //
     }
 }

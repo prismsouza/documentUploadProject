@@ -2,7 +2,6 @@
 @section('content')
 
     <?php
-    $categories = App\Category::all();
     $documents = App\Document::all();
     ?>
 
@@ -24,7 +23,7 @@
                     value="category_id" data-live-search="true">
 
                     <option value={{ $document->category->id }}>{{ $document->category->name }}</option>
-                        @foreach($categories as $category)
+                        @foreach(App\Category::all() as $category)
                             @if ($category->name != $document->category->name &&
                                 $category->id != '1' && $category->id != '2' && $category->id != '3') <!-- BGBM, BEBM e Separata -->) <!-- Boletim Geral -->
 
@@ -322,7 +321,7 @@
 
                                 <ul class="dropdown-menu scrollable-menu" role="menu" style="width: 90%">
                                     <input class="form-control" id="tags_input" type="text" placeholder="Search..">
-                                    @forelse($tags as $tag)
+                                    @forelse(App\Tag::all() as $tag)
                                         <div class="col-sm">
                                             <li class="p-1">
                                                 <label class="box px-5 checkbox-inline">

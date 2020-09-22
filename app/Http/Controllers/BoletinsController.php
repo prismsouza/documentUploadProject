@@ -25,8 +25,15 @@ class BoletinsController extends Controller
     public function isUserAdmin()
     {
         $masp = $this->getMasp();
-        if (User::where('masp', $masp)->first()) return 1;
+        Session::put('user', $masp);
+        if (User::where('masp', $masp)->first()) {
+            Session::put('is_admin', 1);
+            return 1;
+        } else
+            Session::put('is_admin', 0);
         return 0;
+        //if (User::where('masp', $masp)->first()) return 1;
+        //return 0;
     }
 
     public function index(Request $request)
@@ -36,12 +43,6 @@ class BoletinsController extends Controller
         $boletins = getOrderedDocuments($request, $boletins);
         $boletins = CollectionHelper::paginate($boletins , count($boletins), CollectionHelper::perPage());
         return view('boletins.index', ['boletins' => $boletins, 'admin' => 0]);
-    }
-
-    public function index_admin()
-    {
-        $boletins = Boletim::orderBy('date', 'desc')->paginate();
-        return view('boletins.index', ['boletins' => $boletins, 'category_option' => null, 'admin' => $this->isUserAdmin()]);
     }
 
     public function show(Boletim $boletim)
@@ -86,7 +87,7 @@ class BoletinsController extends Controller
         storeLog($boletim->user_masp, $boletim->id, "create", 0);
 
         //return redirect(route('boletins.index'))->with('status', "Boletim criado com sucesso!");
-        return redirect($boletim->path_admin())->with('status', 'Boletim ' . $boletim->name . ' criado com sucesso!');
+        return redirect($boletim->path())->with('status', 'Boletim ' . $boletim->name . ' criado com sucesso!');
 
     }
 
@@ -118,7 +119,7 @@ class BoletinsController extends Controller
 
         storeLog($this->getMasp(), $boletim->id, "update", 0);
 
-        return redirect($boletim->path_admin())->with('status', 'Documento ' . $boletim->name . ' atualizado com sucesso!');
+        return redirect($boletim->path())->with('status', 'Documento ' . $boletim->name . ' atualizado com sucesso!');
     }
 
     public function download(Boletim $boletim, $hash_id)

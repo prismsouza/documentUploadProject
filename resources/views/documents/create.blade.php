@@ -212,7 +212,7 @@
 
                     <ul class="dropdown-menu scrollable-menu" role="menu" style="width: 50%">
                         <input class="form-control" id="document_has_document_input" type="text" placeholder="Search..">
-                        @foreach($documents as $document)
+                        @foreach(App\Document::all() as $document)
                                 <div class="col-sm">
                                     <li class="p-1">
                                         <label class="box px-5 checkbox-inline">
@@ -313,7 +313,7 @@
 
                     <ul class="dropdown-menu scrollable-menu" role="menu" style="width: 90%" id="tags_ul">
                         <input class="form-control" id="tags_input" type="text" placeholder="Search..">
-                        @forelse($tags as $tag)
+                        @forelse(App\Tag::all() as $tag)
                             <div class="col-sm">
                                 <li class="p-1">
                                     <label class="box px-5 checkbox-inline">

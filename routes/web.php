@@ -13,7 +13,6 @@ Route::get('/admin/deletados', 'DocumentsController@showDeletedDocuments')->name
 Route::post('/admin/deletados/{document}', 'DocumentsController@restore')->name('documents.restore');
 Route::get('/admin/logs', 'DocumentsController@logs')->name('documents.logs');
 Route::get('/admin/logs_boletim', 'BoletinsController@logs')->name('boletins.logs');
-Route::get('/admin/documentos', 'DocumentsController@index_admin')->name('documents_admin.index');
 Route::get('/admin/falhas', 'DocumentsController@showFailedDocuments')->name('documents.failed_documents');
 Route::get('/admin/boletins/falhas', 'BoletinsController@showFailedBoletins')->name('boletins.failed_boletins');
 
@@ -35,7 +34,6 @@ Route::get('/boletins/{boletim}/visualizar/{file_id}', 'BoletinsController@viewf
 Route::delete('/arquivos/delete/{file}', 'FilesController@destroy')->name('files.destroy');
 
 Route::get('/documentos/categorias/{category}', 'DocumentsController@showByCategory')->name('documents_category.index');
-Route::get('/admin/documentos/categorias/{category}', 'DocumentsController@showByCategoryAdmin')->name('documents_category_admin.index');
 
 //Route::get('/', 'DocumentsController@index')->name('documents.index');
 Route::get('/home', 'DocumentsController@home')->name('home');
@@ -45,12 +43,14 @@ Route::get('/documentos/novo', 'DocumentsController@create')->name('documents.cr
 Route::get('/documentos/{document}/download/{type}', 'DocumentsController@download')->name('documents.download');
 Route::get('/documentos/{document}/visualizar/{file_id}', 'DocumentsController@viewfile')->name('documents.viewfile');
 Route::get('/documentos/{document}', 'DocumentsController@show')->name('documents.show');
-Route::get('/admin/documentos/{document}', 'DocumentsController@show_admin')->name('documents_admin.show');
 Route::get('/documentos/{document}/editar', 'DocumentsController@edit')->name('documents.edit');
 Route::put('/documentos/{document}', 'DocumentsController@update')->name('documents.update');
 Route::delete('/documentos/delete/{document}', 'DocumentsController@destroy')->name('documents.destroy');
-Route::get('refresh', 'DocumentsController@refresh');
-Route::get('refresh_boletim', 'BoletinsController@refresh');
+Route::get('refresh', 'DocumentsController@sessionRefresh');
+Route::get('refresh_boletim', 'BoletinsController@sessionRefresh');
+Route::get('/setViewAsAdmin', 'DocumentsController@setViewAsAdmin')->name('admin.view');
+Route::get('/setViewAsUser', 'DocumentsController@setViewAsUser')->name('user.view');
+
 
 Route::get('/categorias/ementario/editar', function(){
     return view ('categories.ementario_edit');
