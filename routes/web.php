@@ -1,5 +1,12 @@
 <?php
-
+/*
+ * WHAT TO DO
+ * Not accept duplicated tag names
+ * Improve filter by word/description
+ * Allow user to send a message to the system
+ * Filter documents when click in a tag
+ * Super admin access
+ */
 use Illuminate\Support\Facades\Route;
 Route::get('/', 'DocumentsController@index');
 
