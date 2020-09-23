@@ -41,7 +41,7 @@
             </div>
         </div>
         <div class="col-md-1 py-5">
-            <a href="{{ route('home') }}" class="btn btn-light border float-md-right">
+            <a href="{{ route('documents.refresh_session') }}" class="btn btn-light border float-md-right">
                 <i class="fas fa-home"></i>
             </a>
         </div>

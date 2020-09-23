@@ -348,9 +348,6 @@
 <!-- -------------- BTN Editar Documento -------------- -->
                     <div class="field is-grouped" id="btn_create_document">
                         <button class="btn btn-dark btn-outline-light border" type="submit" onclick="allFiles()">Editar Documento</button>
-                        <a href="{{ route('home') }}" class="btn btn-light border">
-                            <i class="fas fa-home"></i>
-                        </a>
                     </div>
     </form>
     <script>

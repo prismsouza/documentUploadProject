@@ -5,10 +5,49 @@ namespace App\Http\Controllers;
 use App\Http\Requests\UserCreateRequest;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 class UsersController extends Controller
 {
     public $user = 0;
+
+    public static function setViewAsAdmin()
+    {
+        Session::put('user', TokenController::$payload->number);
+        Session::put('admin', 1);
+        return redirect()->back();
+    }
+
+    public static function setViewAsUser()
+    {
+        Session::put('user', TokenController::$payload->number);
+        Session::put('admin', 0);
+        return redirect()->back();
+    }
+
+    public static function isUserAdmin()
+    {
+        if (User::where('masp', TokenController::$payload->number)->first()) {
+            return 1;
+        }
+        return 0;
+    }
+
+    public static function isAdminView()
+    {
+        return Session::get('admin');
+    }
+
+    public static function getMasp()
+    {
+        return TokenController::$payload->number;
+    }
+
+    public function getUserByMasp($masp)
+    {
+        return User::where('masp', $masp)->first();
+    }
+
     public function index()
     {
         $users = User::orderBy('created_at', 'desc')->get();

@@ -22,37 +22,7 @@ class User extends Authenticatable
         return $this->hasMany(Document::class);
     }
 
-    public static function isUserAdmin()
-    {
-        if (User::where('masp', TokenController::$payload->number)->first()) {
-            return 1;
-        }
-        return 0;
-    }
 
-    public static function isAdminView()
-    {
-        return Session::get('admin_view');
-    }
-
-    public static function setViewAsAdmin()
-    {
-        Session::put('user', TokenController::$payload->number);
-        Session::put('admin', 1);
-        return redirect(route('documents.index'));
-    }
-
-    public static function setViewAsUser()
-    {
-        Session::put('user', TokenController::$payload->number);
-        Session::put('admin', 0);
-        return redirect(route('documents.index'));
-    }
-
-    public function getUserByMasp($masp)
-    {
-        return User::where('masp', $masp)->first();
-    }
 
     public function unit()
     {

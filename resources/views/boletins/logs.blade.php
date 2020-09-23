@@ -28,7 +28,6 @@
                 ?>
                 <tr class="small">
                     <td class="text-center">{{$count}}</td>
-                    <td class="text-center">{{ $log->id }}</td>
                     <td class="text-center">
                         {{ $log->user_masp }}
                     </td>

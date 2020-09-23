@@ -36,7 +36,6 @@ Route::delete('/arquivos/delete/{file}', 'FilesController@destroy')->name('files
 Route::get('/documentos/categorias/{category}', 'DocumentsController@showByCategory')->name('documents_category.index');
 
 //Route::get('/', 'DocumentsController@index')->name('documents.index');
-Route::get('/home', 'DocumentsController@home')->name('home');
 Route::match(['post', 'get'], '/documentos', 'DocumentsController@index')->name('documents.index');
 Route::post('/documentos/save', 'DocumentsController@store')->name('documents.store');
 Route::get('/documentos/novo', 'DocumentsController@create')->name('documents.create');
@@ -46,10 +45,10 @@ Route::get('/documentos/{document}', 'DocumentsController@show')->name('document
 Route::get('/documentos/{document}/editar', 'DocumentsController@edit')->name('documents.edit');
 Route::put('/documentos/{document}', 'DocumentsController@update')->name('documents.update');
 Route::delete('/documentos/delete/{document}', 'DocumentsController@destroy')->name('documents.destroy');
-Route::get('refresh', 'DocumentsController@sessionRefresh');
-Route::get('refresh_boletim', 'BoletinsController@sessionRefresh');
-Route::get('/setViewAsAdmin', 'DocumentsController@setViewAsAdmin')->name('admin.view');
-Route::get('/setViewAsUser', 'DocumentsController@setViewAsUser')->name('user.view');
+Route::get('refresh', 'DocumentsController@refreshSession')->name('documents.refresh_session');
+Route::get('refresh_boletim', 'BoletinsController@refreshSession')->name('boletins.refresh_session');
+Route::get('/setViewAsAdmin', 'UsersController@setViewAsAdmin')->name('admin.view');
+Route::get('/setViewAsUser', 'UsersController@setViewAsUser')->name('user.view');
 
 
 Route::get('/categorias/ementario/editar', function(){

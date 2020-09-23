@@ -46,9 +46,6 @@
             <div class="col-2 py-4 "><br>
                 <div class="field is-grouped float-md-right" id="btn_create_document">
                     <button class="btn btn-dark btn-outline-light border" type="submit">Criar</button>
-                    <a href="{{ route('home') }}" class="btn btn-light border">
-                        <i class="fas fa-home"></i>
-                    </a>
                 </div>
             </div>
         </div>

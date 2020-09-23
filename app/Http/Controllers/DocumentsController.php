@@ -18,32 +18,30 @@ use Illuminate\Support\Facades\Session;
 include "DocumentsFilterHelper.php";
 include "SortHelper.php";
 include "LogsHelper.php";
+include "Session.php";
 
 class DocumentsController extends Controller
 {
+
+    public function refreshSession() {
+        sessionRefresh();
+        return redirect(route('documents.index'));
+    }
     public function index(Request $request)
     {
-        if (Session::has('admin')) {
-            User::setViewAsUser();
+        if (!Session::has('admin')) {
+            UsersController::setViewAsUser();
         }
         $documents = getFilteredDocuments($request);
         $documents = getOrderedDocuments($request, $documents);
         $documents = CollectionHelper::paginate($documents , count($documents), CollectionHelper::perPage());
-        return view('documents.index', ['documents' => $documents, 'category_option' => null, 'admin' => Session::get('admin')]);
-    }
-
-    public function sessionRefresh()
-    {
-        $session_admin = Session::get('admin');
-        Session::flush();
-        Session::put('admin', $session_admin);
-        return redirect(route('documents.index'));
+        return view('documents.index', ['documents' => $documents, 'category_option' => null, 'admin' => UsersController::isAdminView()]);
     }
 
     public function show(Document $document)
     {
         if (count($document->files->where('alias')->all()) == 0) {
-            if (User::isAdminView())
+            if (UsersController::isAdminView())
                 return view('documents.edit', compact('document'), ['tags' => Tag::all()]);
             return $this->index();
         }
@@ -55,12 +53,7 @@ class DocumentsController extends Controller
         $pdf_file = $document->files->whereNotNull('alias')->first();
         $files = $document->files->whereNull('alias')->all();
 
-        return view('documents.show', ['document' => $document, 'related_documents' => $related_documents, 'files' => $files, 'pdf_file' => $pdf_file, 'admin' => Session::get('admin')]);
-    }
-
-    public function home()
-    {
-        return view('home', ['admin' => User::isUserAdmin()]);
+        return view('documents.show', ['document' => $document, 'related_documents' => $related_documents, 'files' => $files, 'pdf_file' => $pdf_file, 'admin' => UsersController::isAdminView()]);
     }
 
     public function create()
@@ -74,7 +67,7 @@ class DocumentsController extends Controller
         $request->validated();
         $document = new Document(request(['category_id', 'name', 'description', 'date', 'is_active']));
 
-        $document->user_masp = $this->getMasp();
+        $document->user_masp = UsersController::getMasp();
         $document->save();
 
         if (request()->has('filesToUpload') && request('filesToUpload')[0] != null) {
@@ -99,7 +92,7 @@ class DocumentsController extends Controller
             $document->tags()->attach(request('tags'));
         }
 
-        storeLog($document->user_masp, $document->id, "create", 1);
+        storeLog(UsersController::getMasp(), $document->id, "create", 1);
 
         return redirect($document->path())->with('status', 'Documento ' . $document->name . ' criado com sucesso!');
     }
@@ -110,7 +103,7 @@ class DocumentsController extends Controller
         if (!file_exists($file_path)) {
             $file_path = $file_path . '.pdf';
             if (!file_exists($file_path)) {
-                return redirect('/documentos')->with('status', 'Erro ao tentar visualizar o documento ' . $document->name);
+                return redirect(route('documents.index'))->with('status', 'Erro ao tentar visualizar o documento ' . $document->name);
             }
         }
         return  Response::make(file_get_contents($file_path), 200, [
@@ -121,16 +114,21 @@ class DocumentsController extends Controller
 
     public function showByCategory(Category $category)
     {
-        $this->sessionRefresh();
-        if (Category::isCategoryBoletim($category->id)) {
+        $this->refreshSession();
+        $request = new Request();
+        $request['categories'] = [$category->id];
+        Session::put('categories', $category->id);
+
+       if (Category::isCategoryBoletim($category->id)) {
             $documents = Boletim::orderBy('date', 'desc')->where('category_id', $category->id)->paginate();
         } else {
             $documents = Document::orderBy('date', 'desc')->where('category_id', $category->id)->paginate();
         }
         $category_option = $category->name;
 
-        return view('documents.index', ['documents' => $documents, 'category_option' => $category_option, 'admin' => Session::get('admin')]);
-    }
+        return view('documents.index', ['documents' => $documents, 'category_option' => $category_option, 'admin' => UsersController::isAdminView()]);
+
+       }
 
     public function showDeletedDocuments()
     {
@@ -177,7 +175,7 @@ class DocumentsController extends Controller
         $document->hasdocument()->sync(request('document_has_document'));
         $document->tags()->sync(request('tags'));
 
-        storeLog($this->getMasp(), $document->id, "update", 1);
+        storeLog(UsersController::getMasp(), $document->id, "update", 1);
 
         return redirect($document->path())->with('status', 'Documento ' . $document->name . ' atualizado com sucesso!');
     }
@@ -203,15 +201,15 @@ class DocumentsController extends Controller
     {
         $document_name = $document->name;
         $document->delete();
-        storeLog($this->getMasp(), $document->id, "delete", 1);
-        return redirect(route('documents_admin.index'))->with('status', 'Documento ' . $document_name . ' deletado com sucesso!');
+        storeLog(UsersController::getMasp(), $document->id, "delete", 1);
+        return redirect(route('documents.index'))->with('status', 'Documento ' . $document_name . ' deletado com sucesso!');
     }
 
     public function restore(Document $document)
     {
         dd($document);die();
         $document->restore();
-        storeLog($document->user_masp, $document->id, "restore", 1);
+        storeLog(UsersController::getMasp(), $document->id, "restore", 1);
         //$document->files()->restore();
         //$document->messages()->restore();
         return redirect(route('documents.index'))->with('status', 'Documento restaurado com sucesso!');

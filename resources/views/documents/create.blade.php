@@ -341,9 +341,6 @@
                 <button class="btn btn-dark btn-outline-light border" type="submit" onclick="allFiles()">
                     Criar Documento
                 </button>
-        <a href="{{ route('home') }}" class="btn btn-light border">
-            <i class="fas fa-home"></i>
-        </a>
         </div>
     </form>
 

@@ -6,7 +6,7 @@ use App\Boletim;
 use App\Helpers\CollectionHelper;
 use App\Http\Requests\BoletimRequest;
 use App\Http\Requests\BoletimUpdateRequest;
-use App\User;
+use App\Log;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Session;
@@ -14,58 +14,38 @@ use Illuminate\Support\Facades\Session;
 include "BoletinsFilterHelper.php";
 include "SortHelper.php";
 include "LogsHelper.php";
+include "Session.php";
 
 class BoletinsController extends Controller
 {
-    public function getMasp()
-    {
-        return TokenController::$payload->number; // $masp
-    }
-
-    public function isUserAdmin()
-    {
-        $masp = $this->getMasp();
-        Session::put('user', $masp);
-        if (User::where('masp', $masp)->first()) {
-            Session::put('is_admin', 1);
-            return 1;
-        } else
-            Session::put('is_admin', 0);
-        return 0;
-        //if (User::where('masp', $masp)->first()) return 1;
-        //return 0;
+    public function refreshSession() {
+        sessionRefresh();
+        return redirect(route('boletins.index'));
     }
 
     public function index(Request $request)
     {
-      //  dd($request->all());
+        if (!Session::has('admin')) {
+            UsersController::setViewAsUser();
+        }
         $boletins = getFilteredBoletins($request);
         $boletins = getOrderedDocuments($request, $boletins);
         $boletins = CollectionHelper::paginate($boletins , count($boletins), CollectionHelper::perPage());
-        return view('boletins.index', ['boletins' => $boletins, 'admin' => 0]);
+        return view('boletins.index', ['boletins' => $boletins, 'admin' => UsersController::isAdminView()]);
     }
 
     public function show(Boletim $boletim)
     {
-        if (count($boletim->files->where('alias')->all()) == 0)
+        if (count($boletim->files->where('alias')->all()) == 0) {
+            if (UsersController::isAdminView())
+                return view('boletins.edit', compact('document'));
             return $this->index();
+        }
         $boletim = Boletim::find($boletim->id);
 
         $pdf_file = $boletim->files->whereNotNull('alias')->last();
         $files = $boletim->files->whereNull('alias')->all();
-        return view('boletins.show', ['boletim' => $boletim, 'files' => $files, 'pdf_file' => $pdf_file, 'admin' => 0]);
-    }
-
-    public function show_admin(Boletim $boletim)
-    {
-        if (count($boletim->files->where('alias')->all()) == 0)
-            return view('boletins.edit', compact('document'));
-        $boletim = Boletim::find($boletim->id);
-
-        $pdf_file = $boletim->files->whereNotNull('alias')->last();
-        $files = $boletim->files->whereNull('alias')->all();
-
-        return view('boletins.show', ['boletim' => $boletim, 'files' => $files, 'pdf_file' => $pdf_file, 'admin' => $this->isUserAdmin()]);
+        return view('boletins.show', ['boletim' => $boletim, 'files' => $files, 'pdf_file' => $pdf_file, 'admin' => UsersController::isAdminView()]);
     }
 
     public function create()
@@ -78,13 +58,13 @@ class BoletinsController extends Controller
         $request->validated();
         $boletim = new Boletim(request(['category_id', 'name', 'description', 'date']));
 
-        $boletim->user_masp = $this->getMasp();
+        $boletim->user_masp = UsersController::getMasp();
         $boletim->save();
 
         $file_pdf = new FilesController();
         $file_pdf->uploadFile($request, $boletim, 'pdf', 0);
 
-        storeLog($boletim->user_masp, $boletim->id, "create", 0);
+        storeLog(UsersController::getMasp(), $boletim->id, "create", 0);
 
         //return redirect(route('boletins.index'))->with('status', "Boletim criado com sucesso!");
         return redirect($boletim->path())->with('status', 'Boletim ' . $boletim->name . ' criado com sucesso!');
@@ -98,15 +78,10 @@ class BoletinsController extends Controller
 
     public function update(BoletimUpdateRequest $request, Boletim $boletim)
     {
-       // dd(request('file_name_pdf'));die();
         $files = new FilesController();
         $boletim->update($request->validated());
 
-        /*if (request('file_name_pdf') == null) {
-            return $this->edit($boletim);
-        }*/
         if (request('file_name_pdf')) {
-            //dd(request('file_name_pdf'));
             $file_pdf = new FilesController();
             $file_pdf->uploadFile($request, $boletim, 'pdf', 0);
             if (count($boletim->files->where('alias')->all()) != 0)
@@ -117,7 +92,7 @@ class BoletinsController extends Controller
             //File::destroy($old_pdf->id);
         }
 
-        storeLog($this->getMasp(), $boletim->id, "update", 0);
+        storeLog(UsersController::getMasp(), $boletim->id, "update", 0);
 
         return redirect($boletim->path())->with('status', 'Documento ' . $boletim->name . ' atualizado com sucesso!');
     }
@@ -129,7 +104,7 @@ class BoletinsController extends Controller
             if (!file_exists($file_path)) {
                 $file_path = $file_path . '.pdf';
                 if (!file_exists($file_path)) {
-                    return redirect('/boletins')->with('status', 'Erro ao tentar fazer download da(o) ' . $boletim->name);
+                    return redirect(route('boletins.index'))->with('status', 'Erro ao tentar fazer download da(o) ' . $boletim->name);
 
                 }
             }
@@ -159,7 +134,7 @@ class BoletinsController extends Controller
     {
         $boletim_name = $boletim->name;
         $boletim->delete();
-        storeLog($this->getMasp(), $boletim->id, "delete", 0);
+        storeLog(UsersController::getMasp(), $boletim->id, "delete", 0);
 
         return redirect(route('boletins.index'))->with('status', 'Boletim ' . $boletim_name . ' deletado com sucesso!');
 
@@ -190,16 +165,11 @@ class BoletinsController extends Controller
         ]);
     }
 
-    public function refresh()
-    {
-        Session::flush();
-        return redirect(route('boletins.index'));
-    }
-
     public function logs()
     {
-        //$logs = \App\Log2::orderBy('id', 'DESC')->get();
-        $logs = \App\Log::orderBy('id', 'DESC')->whereNULL('document_id')->get();
+        $logs = Log::orderBy('id', 'DESC')->whereNULL('document_id')->get();
+        $logs = CollectionHelper::paginate($logs , count($logs), CollectionHelper::perPage());
+
         return view('boletins.logs', ['logs' => $logs]);
     }
 

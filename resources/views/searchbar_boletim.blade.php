@@ -78,7 +78,7 @@
                     </button>
 
                     <a class="btn btn-light border float-md-right"
-                        href="/refresh_boletim" onclick="window.location.reload(true)">
+                        href="{{ route('boletins.refresh_session') }}">
                         <i class="fas fa-eraser px-2"></i>
                     </a>
 

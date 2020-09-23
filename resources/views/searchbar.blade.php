@@ -165,15 +165,9 @@
                     </button>
 
                     <a class="btn btn-light border float-md-right"
-                        href="/refresh">
+                        href="{{ route('documents.refresh_session') }}">
                         Limpar <i class="fas fa-eraser px-2"></i>
                     </a>
-
-                    <a class="btn btn-light border float-md-right"
-                       href="{{ route('home') }}">
-                        <i class="fas fa-home"></i>
-                    </a>
-
                 </div>
             </div>
         </div>

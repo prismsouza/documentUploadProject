@@ -9,7 +9,6 @@
         </div>
     @endif
 
-
         <div class="float-md-right">
             @if (Session::get('admin') == 1)
             <a href="{{ route('user.view') }}" class="btn btn-light border">
@@ -22,8 +21,6 @@
             </a>
             @endif
         </div><br><br>
-
-
 
 
     @if($category_option)

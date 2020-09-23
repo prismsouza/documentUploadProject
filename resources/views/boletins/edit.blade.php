@@ -149,9 +149,6 @@
                         <button class="btn btn-dark btn-outline-light border" type="submit" >
                             Salvar
                         </button>
-                        <a href="{{ route('home') }}" class="btn btn-light border">
-                            <i class="fas fa-home"></i>
-                        </a>
                             <a onclick="goBack()" class="btn btn-light border">
                                 Voltar
                             </a>

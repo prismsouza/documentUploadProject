@@ -10,7 +10,7 @@
     <a onclick="goBack()" class="btn btn-light border float-md-right">Voltar</a>
 
     <h1 class="heading has-text-weight-bold is-size-4 py-6">Novo Boletim</h1>
-    <form method="POST" action="/boletins" enctype="multipart/form-data" class="p-5 border"> @csrf
+    <form method="POST" action="{{ route ('boletins.store') }}" enctype="multipart/form-data" class="p-5 border"> @csrf
     <!-- -------------- CATEGORY -------------- -->
         <div class="form-row" id="category">
             <div class="col-md-12 mb-3">
@@ -116,9 +116,6 @@
         <!-- -------------- BTN Criar BGBM -------------- -->
         <div class="field is-grouped" id="btn_create_document">
             <button class="btn btn-dark btn-outline-light border" type="submit">Salvar</button>
-            <a href="{{ route('home') }}" class="btn btn-light border">
-                <i class="fas fa-home"></i>
-            </a>
             <a onclick="goBack()" class="btn btn-light border">
                 Voltar
             </a>

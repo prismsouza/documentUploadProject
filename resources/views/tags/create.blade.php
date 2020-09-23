@@ -19,10 +19,6 @@
                 @error('name')<p class="help is-danger">{{ $errors->first('name') }}</p>@enderror
 
                 <button class="btn btn-dark btn-outline-light border" type="submit">Criar</button>
-                <span class="px-2"></span>
-                <a href="{{ route('home') }}" class="btn btn-light border">
-                    <i class="fas fa-home"></i>
-                </a>
             </div>
         </div>
     </form><br>

@@ -20,7 +20,7 @@
     </li>
     <li class="nav-item border">
         <a class="list-group-item {{ (Request::is('documentos') || Request::is('/')) ? 'active' : ''}}"
-           href="/refresh">
+           href="/documentos">
             <b>Todos</b>
         </a>
     </li>
@@ -38,7 +38,7 @@
                 <div class="content">
                     <i class="fas fa-chevron-right fa-xs"></i>
                     <a class="border-bottom {{ Request::is('documentos/categorias/'.$category->name) ? 'active' : ''}}"
-                       href="{{ $category->path() }}" style="color: #6c757d">
+                       href="{{ route('documents.index') }}" style="color: #6c757d">
                         Todos
                     </a>
                     @foreach($category->hassubcategory as $sub_cat)<br>

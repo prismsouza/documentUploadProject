@@ -1,23 +1,26 @@
 @extends(($admin) ? 'layout_admin' : 'layout')
-
 @include('searchbar_boletim')
 @include('sortbar_boletim')
 
 @section('content')
-
     @if (session('status'))
         <div class="alert alert-success">
             {{ session('status') }}
         </div>
     @endif
 
-    @if($admin)
-        <div class="float-md-right">
-            <a href="{{ route('boletins.index') }}" class="btn btn-light border">
+    <div class="float-md-right">
+        @if (Session::get('admin') == 1)
+            <a href="{{ route('user.view') }}" class="btn btn-light border">
                 <i class="fa fa-user"></i>Visão do usuário
             </a>
-        </div><br><br>
-    @endif
+        @endif
+        @if (Session::get('admin') == 0)
+            <a href="{{ route('admin.view') }}" class="btn btn-light border">
+                <i class="fas fa-user-cog"></i>Visão do Administrador
+            </a>
+        @endif
+    </div><br><br>
 
         @if($admin)
             <a href="{{ route('boletins.create') }}">

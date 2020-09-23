@@ -10,6 +10,7 @@
         @include('navbar_admin')
         @yield('searchbar')
         @yield('sortbar')
+        @yield('sortbar_boletim')
         @yield('searchmessagebar')
         <div id="wrapper">
             <div id="page" class="py-3">
