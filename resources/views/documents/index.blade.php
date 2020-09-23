@@ -11,7 +11,7 @@
             {{ session('status') }}
         </div>
     @endif
-    Número de resultados: {{ $documents->total() }}
+    Número de resultados: <b>{{ $documents->total() }} </b>
         <div class="float-md-right">
             @if (UsersController::isUserAdmin() && Session::get('admin') == 1)
             <a href="{{ route('user.view') }}" class="btn btn-light border">

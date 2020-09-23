@@ -8,6 +8,7 @@
             {{ session('status') }}
         </div>
     @endif
+    Número de resultados: <b>{{ $boletins->total() }} </b>
 
     <div class="float-md-right">
         @if (Session::get('admin') == 1)

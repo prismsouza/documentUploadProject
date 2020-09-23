@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+Route::get('/', 'DocumentsController@index');
 
 Route::get('/admin', 'UsersController@getAdminUsers')->middleware('AuthenticateAdminUser')->name('admin_panel');
 
@@ -15,6 +16,10 @@ Route::get('/admin/logs', 'DocumentsController@logs')->name('documents.logs');
 Route::get('/admin/logs_boletim', 'BoletinsController@logs')->name('boletins.logs');
 Route::get('/admin/falhas', 'DocumentsController@showFailedDocuments')->name('documents.failed_documents');
 Route::get('/admin/boletins/falhas', 'BoletinsController@showFailedBoletins')->name('boletins.failed_boletins');
+
+Route::get('/fale_conosco', 'ContactController@index')->name('contacts.index');
+Route::get('/fale_conosco/save', 'ContactController@store')->name('contacts.store');
+Route::get('/fale_conosco/novo', 'ContactController@create')->name('contacts.create');
 
 Route::get('/boletins/categorias/{category}', 'DocumentsController@showByCategory')->name('documents_category.index');
 //Route::get('/boletins', 'BoletinsController@index')->name('boletins.index');

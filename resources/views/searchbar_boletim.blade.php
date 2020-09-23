@@ -18,7 +18,7 @@
                 value="{{ request()->input('word') }}">
         </div>
 
-        <div class="col-sm-3" id="categories">
+        <div class="col-sm-2" id="categories">
             Pesquisar por Categoria:<br>
             <button id="categories_btn" role="button" href="#" class="btn btn-light border px-5"
                     data-toggle="dropdown" data-target="#" >
@@ -69,22 +69,21 @@
                     value="{{ request()->input('last_date') }}">
             </div>
         </div>
-        <div class="col">
-
+        <div class="col"><br>
             <div class="field is-grouped">
-                <div class="control py-2">
+                <div class="control">
                     <button class="btn btn-dark border btn-outline-light float-md-right" type="submit" >
-                        <i class="fas fa-search px-2"></i>
+                        Pesquisar <i class="fas fa-search px-2"></i>
                     </button>
 
                     <a class="btn btn-light border float-md-right"
-                        href="{{ route('boletins.refresh_session') }}">
-                        <i class="fas fa-eraser px-2"></i>
+                       href="{{ route('boletins.refresh_session') }}">
+                        Limpar <i class="fas fa-eraser px-2"></i>
                     </a>
-
                 </div>
             </div>
         </div>
+
     </div>
 </form>
 </div>

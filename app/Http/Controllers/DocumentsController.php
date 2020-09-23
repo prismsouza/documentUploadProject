@@ -22,7 +22,6 @@ require_once  ('../app/Helpers/'. 'Session.php');
 
 class DocumentsController extends Controller
 {
-
     public function refreshSession() {
         sessionRefresh();
         return redirect(route('documents.index'));

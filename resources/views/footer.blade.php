@@ -3,9 +3,17 @@
         margin-top:auto;
     }
 </style>
+<div class="container">
+    <!--<a class="btn-link" href="{{ route('contacts.create') }}">
+        <span style="color: black"> Para Sugestões ou Comentários, clique aqui e mande uma mensagem.</span>
+        <i class="fa fa-envelope" aria-hidden="true"></i>
+    </a>-->
+</div>
 <footer id="copyright">
     <div class="container">
+
         <div class="row">
+
             <!-- HPM -->
             <div class="col-sm-3">
   					<span class="ui simple dropdown button centered small image" style="background:none; padding: 0;">
