@@ -19,11 +19,9 @@ Route::get('/admin/boletins/falhas', 'BoletinsController@showFailedBoletins')->n
 Route::get('/boletins/categorias/{category}', 'DocumentsController@showByCategory')->name('documents_category.index');
 //Route::get('/boletins', 'BoletinsController@index')->name('boletins.index');
 Route::match(['post', 'get'], '/boletins', 'BoletinsController@index')->name('boletins.index');
-Route::get('/admin/boletins', 'BoletinsController@index_admin')->name('boletins_admin.index');
 Route::post('/boletins/save', 'BoletinsController@store')->name('boletins.store');
 Route::get('/boletins/novo', 'BoletinsController@create')->name('boletins.create');
 Route::get('/boletins/{boletim}', 'BoletinsController@show')->name('boletins.show');
-Route::get('/admin/boletins/{boletim}', 'BoletinsController@show_admin')->name('boletins_admin.show');
 
 Route::get('/boletins/{boletim}/editar', 'BoletinsController@edit')->name('boletins.edit');
 Route::put('/boletins/{boletim}', 'BoletinsController@update')->name('boletins.update');

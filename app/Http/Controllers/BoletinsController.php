@@ -11,14 +11,15 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Session;
 
-include "BoletinsFilterHelper.php";
-include "SortHelper.php";
-include "LogsHelper.php";
-include "Session.php";
+require_once  ('../app/Helpers/'. 'BoletinsFilterHelper.php');
+require_once  ('../app/Helpers/'. 'SortHelper.php');
+require_once  ('../app/Helpers/'. 'LogsHelper.php');
+require_once  ('../app/Helpers/'. 'Session.php');
 
 class BoletinsController extends Controller
 {
-    public function refreshSession() {
+    public function refreshSession()
+    {
         sessionRefresh();
         return redirect(route('boletins.index'));
     }

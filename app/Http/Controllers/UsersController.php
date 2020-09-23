@@ -52,12 +52,12 @@ class UsersController extends Controller
     {
         $users = User::orderBy('created_at', 'desc')->get();
         //dd($users);
-        return view('admin_panel', ['users' => $users]);
+        return view('admin.admin_panel', ['users' => $users]);
     }
 
     public function create()
     {
-        return view('admins_create');
+        return view('admin.admins_create');
     }
 
     public function store(UserCreateRequest $request)

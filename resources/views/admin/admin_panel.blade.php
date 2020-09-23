@@ -2,7 +2,7 @@
 <?php $categories = App\Category::all();?>
 
 @section ('content')
-    <a href="{{ route('documents_admin.index') }}">
+    <a href="{{ route('documents.index') }}">
         <button class="btn btn-light btn-outline-dark float-md-right" type="submit">
             Voltar
         </button>
@@ -12,7 +12,7 @@
         <div class="row">
             <div class="col-7">
                 <h2 style="display: inline-block;">Administradores</h2>
-                @include('admins_create')
+                @include('admin.admins_create')
 
                 <table class="table table-striped" id="table_admin">
                     <thead>
@@ -84,37 +84,37 @@
                     </li>
                     <span class="py-2"></span>
                     <li class="nav-item border">
-                        <a class="btn btn-link" href="/admin/documentos">
+                        <a class="btn btn-link" href="{{route('documents.index')}}">
                             Listar documentos
                         </a>
                     </li>
                     <li class="nav-item border">
-                        <a class="btn btn-link" href="/admin/falhas" target="_blank">
+                        <a class="btn btn-link" href="{{route('documents.failed_documents')}}" target="_blank">
                             Listar documentos com falha no PDF
                         </a>
                     </li>
                     <li class="nav-item border">
-                        <a class="btn btn-link" href="/admin/boletins/falhas" target="_blank">
+                        <a class="btn btn-link" href="{{route('boletins.failed_boletins')}}" target="_blank">
                             Listar boletins com falha no PDF
                         </a>
                     </li>
                     <li class="nav-item border">
-                        <a class="btn btn-link" href="/admin/deletados" target="_blank">
+                        <a class="btn btn-link" href="{{route('documents.deleted_documents')}}" target="_blank">
                             Listar documentos deletados
                         </a>
                     </li>
                     <li class="nav-item border">
-                        <a class="btn btn-link" href="/admin/logs" target="_blank">
+                        <a class="btn btn-link" href="{{route('documents.logs')}}" target="_blank">
                             Ver logs de documentos
                         </a>
                     </li>
                     <li class="nav-item border">
-                        <a class="btn btn-link" href="/admin/logs_boletim" target="_blank">
+                        <a class="btn btn-link" href="{{route('boletins.logs')}}" target="_blank">
                             Ver logs de boletins/separatas
                         </a>
                     </li>
                     <li class="nav-item border">
-                        <a class="btn btn-link" href="/boletins" target="_blank">
+                        <a class="btn btn-link" href="{{route('boletins.index')}}" target="_blank">
                             Listar todos boletins e separatas
                         </a>
                     </li>

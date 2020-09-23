@@ -22,26 +22,43 @@
     <list default="true" id="70466de6-f2ca-45e6-9a16-4aac838e9201" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/BoletinsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/BoletinsController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/BoletinsController_bkp.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/trash/BoletinsController_bkp.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/BoletinsFilterHelper.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Helpers/BoletinsFilterHelper.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/DocumentsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/DocumentsController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/DocumentsControllerGUARDAR.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/trash/DocumentsControllerGUARDAR.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/DocumentsFilterHelper.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Helpers/DocumentsFilterHelper.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/DocumentsFilterHelperGUARDAR.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/trash/DocumentsFilterHelperGUARDAR.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/DocumentsFilterHelper_bkp.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/trash/DocumentsFilterHelper_bkp.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/LogsHelper.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Helpers/LogsHelper.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/MessagesController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/MessagesController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/MessagesFilterHelper.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Helpers/MessagesFilterHelper.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Session.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Helpers/Session.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/SortHelper.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Helpers/SortHelper.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/UsersController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/UsersController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/User.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/boletins/create.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/boletins/create.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/boletins/edit.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/boletins/edit.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/boletins/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/boletins/index.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/boletins/logs.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/boletins/logs.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/categories/create.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/categories/create.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/categories/ementario_edit.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/categories/ementario_edit.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/documents/create.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/documents/create.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/documents/edit.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/documents/edit.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/admin_panel.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/admin_panel.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/admins_create.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/admins_create.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/boletins/edit_copy.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/trash/edit_copy.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/boletins/editbackup.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/trash/editbackup.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/boletins/show.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/boletins/show.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/categories/show.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/categories/show.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/documents/createBackup.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/trash/createBackup.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/documents/editcopy.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/trash/editcopy.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/documents/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/documents/index.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/header.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/header.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/home.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/home_old.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/lateralmenu.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/lateralmenu.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/documents/index_bck.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/trash/index_bck.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/home_old.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/trash/home_old.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/layout_admin.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layout_admin.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/searchbar.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/searchbar.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/searchbar_boletim.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/searchbar_boletim.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/tags/create.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/tags/create.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/navbar_admin.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/navbar_admin.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/request.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/request.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/searchbarbkp.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/trash/searchbarbkp.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/sortbar.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/sortbar.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/tags/show.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/tags/show.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/version2/index_versao2.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/trash/version2/index_versao2.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/version2/layout_versao2.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/trash/version2/layout_versao2.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/version2/search/search-advanced.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/trash/version2/search/search-advanced.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/version2/search/search-theme.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/trash/version2/search/search-theme.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/version2/search/search.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/trash/version2/search/search.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/version2/search/search_menu1_copy.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/trash/version2/search/search_menu1_copy.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/version2/search/searchview.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/trash/version2/search/searchview.blade.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -224,11 +241,17 @@
     <property name="DatabaseDriversLRU" value="mysql" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/app" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/app/Helpers" />
     <property name="settings.editor.selected.configurable" value="preferences.sourceCode.PHP" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/app/Helpers" />
+      <recent name="$PROJECT_DIR$/resources/views/admin" />
+      <recent name="$PROJECT_DIR$/resources/views/trash" />
+      <recent name="$PROJECT_DIR$/app/Http/trash" />
+    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/app" />
       <recent name="$PROJECT_DIR$/resources/views/boletins" />
@@ -273,7 +296,8 @@
       <workItem from="1600081880300" duration="18507000" />
       <workItem from="1600169120549" duration="29933000" />
       <workItem from="1600253730733" duration="11518000" />
-      <workItem from="1600853495703" duration="12286000" />
+      <workItem from="1600853495703" duration="15955000" />
+      <workItem from="1600894693086" duration="1651000" />
     </task>
     <servers />
   </component>
@@ -309,6 +333,10 @@
     <state x="2613" y="363" width="524" height="491" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/1920.342.1920.1080/0.363.1920.717@1920.342.1920.1080" timestamp="1600854260212" />
     <state x="693" y="298" width="524" height="491" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/1920.356.1920.1080/0.383.1920.697@0.383.1920.697" timestamp="1598995989505" />
     <state x="2613" y="410" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/1920.389.1920.1080/0.410.1920.670@1920.389.1920.1080" timestamp="1599743495515" />
+    <state x="738" y="287" width="424" height="520" key="FileChooserDialogImpl" timestamp="1600871899100">
+      <screen x="0" y="363" width="1920" height="717" />
+    </state>
+    <state x="738" y="287" width="424" height="520" key="FileChooserDialogImpl/1920.342.1920.1080/0.363.1920.717@0.363.1920.717" timestamp="1600871899100" />
     <state width="263" height="500" key="HiddenNamespacesPopup" timestamp="1598974263004">
       <screen x="0" y="383" width="1920" height="697" />
     </state>

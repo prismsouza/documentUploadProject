@@ -1,6 +1,6 @@
 
 
-@if (Session::has('word') || request()->input('categories') || request()->input('first_date') || request()->input('last_date') || request()->input('tags') || request()->input('is_active'))
+@if (Session::has('word') || Session::has('categories') || Session::has('first_date') || Session::has('last_date') || Session::has('tags') || Session::has('is_active'))
     <div class="border p-2">
         <b>Filtro aplicado:</b>
         @if (Session::get('word'))
@@ -17,8 +17,8 @@
 
         @if (Session::get('first_date') || Session::get('last_date'))
             <?php
-            $first_date = date('d/m/Y', strtotime(request()->input('first_date')));
-            $last_date = date('d/m/Y', strtotime(request()->input('last_date')));
+            $first_date = date('d/m/Y', strtotime(Session::get('first_date')));
+            $last_date = date('d/m/Y', strtotime(Session::get('last_date')));
             ?>
 
             @if (Session::get('first_date') && Session::get('last_date'))
@@ -30,6 +30,10 @@
                 <b class="px-2">a partir de
                     {{ $first_date }}</b>
                 ate a data de hoje.
+            @elseif (Session::get('last_date'))
+                <br>Documentos publicados até
+                <b class="px-2">
+                    {{ $last_date }}</b>
             @endif
         @endif
 

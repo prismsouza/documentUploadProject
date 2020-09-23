@@ -7,7 +7,7 @@
 
     <div class="container">
         <!-- @ include('navbar') -->
-        @include('navbar_admin')
+        @include('admin.navbar_admin')
         @yield('searchbar')
         @yield('sortbar')
         @yield('sortbar_boletim')

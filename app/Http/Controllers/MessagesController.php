@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Message;
-include "MessagesFilterHelper.php";
+require_once  ('../app/Helpers/'. 'MessagesFilterHelper.php');
+
 
 class MessagesController extends Controller
 {

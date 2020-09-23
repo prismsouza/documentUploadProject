@@ -1,4 +1,4 @@
-@extends ('version2.layout_versao2')
+@extends ('trash.version2.layout_versao2')
 
 @section ('content')
 <div id="content">

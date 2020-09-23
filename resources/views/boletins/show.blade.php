@@ -72,7 +72,16 @@
 </div>
 
     @if ($admin)
+        <div class="border-bottom border-top py-3">
+            <p>Publicado por {{ $boletim->user_masp }} em {{ $boletim->created_at }} </p>
+            @if (count($boletim->logs) != 0)
+                @if ($boletim->logs->where('action', 'update')->last())
+                    <p>Última edição por {{ $boletim->logs->where('action', 'update')->last()->user_masp }}
+                        em {{  $boletim->logs->where('action', 'update')->last()->created_at }} </p>
+                @endif @endif
+        </div>
         <br>
+
         <button type="button" class="btn btn-info">
             <a href="{{ route('boletins.edit', $boletim->id) }}" style="color:white">
                 Editar Documento  <i class="fas fa-edit" style="color: black"></i>
