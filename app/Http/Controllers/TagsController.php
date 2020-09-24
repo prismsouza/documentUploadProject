@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\TagRequest;
 use App\Tag;
 use Illuminate\Http\Request;
 
@@ -19,9 +20,11 @@ class TagsController extends Controller
         return view('tags.create', ['tags' => Tag::all()]);
     }
 
-    public function store(Request $request)
+    public function store(TagRequest $request)
     {
-        Tag::create($this->validateTag());
+        $request->validated();
+
+        Tag::create($request->all());
         return redirect(route('tags.index'));
     }
 
@@ -30,9 +33,10 @@ class TagsController extends Controller
         return view('tags.edit', compact('tag'));
     }
 
-    public function update(Request $request, Tag $tag)
+    public function update(TagRequest $request, Tag $tag)
     {
-        $tag->update($this->validateTag());
+        $request->validated();
+        $tag->update($request->all());
         return redirect($tag->path());
     }
 
@@ -45,7 +49,7 @@ class TagsController extends Controller
     public function validateTag()
     {
         return request()->validate([
-            'name' => 'required'
+            'name' => 'required|unique:tags'
         ]);
     }
 }

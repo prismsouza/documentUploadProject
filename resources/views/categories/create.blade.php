@@ -4,50 +4,45 @@
     </div>
 @endif
 
-<button class="btn btn-dark btn-outline-light border" type="button" data-toggle="collapse"
-        data-target="#collapseCreate" aria-expanded="false" aria-controls="collapseCreate">
-    Nova categoria
-</button><br>
-
-<div class="collapse" id="collapseCreate"><br>
     <form method="POST" action="/categorias">
         @csrf
         <div class="row">
             <div class="col-4 field">
                 <label for="name">Nome *</label>
                 <input
-                    class="input @error('name') is-danger @enderror col-12"
+                    class="input @error('name') is-danger @enderror col-8"
                     type="text" minlength="2" maxlength="35"
                     name="name"
                     id="name"
                     value="{{ old('name') }}">
-                    @error('name')<p class="help is-danger">{{ $errors->first('name') }}</p>@enderror
+                    @error('name')<p style="color: darkred">{{ $errors->first('name') }}</p>@enderror
             </div>
             <div class="col-6 field">
                 <label for="description">Descrição *</label>
                 <input
-                    class="input @error('description') is-danger @enderror col-12"
+                    class="input @error('description') is-danger @enderror col-8"
                     type="text" maxlength="100"
                     name="description"
                     id="description"
                     value="{{ old('description') }}">
-                    @error('description')<p class="help is-danger">{{ $errors->first('description') }}</p>@enderror
+                    @error('description')<p style="color: darkred">{{ $errors->first('description') }}</p>@enderror
             </div>
-            <div class="col-10 py-4 field">
+        </div>
+        <div class="row">
+            <div class="col-9 py-3 field">
                 <label for="hint">Seguir padrão:</label>
                 <input
-                    class="input @error('hint') is-danger @enderror col-12"
+                    class="input @error('hint') is-danger @enderror col-10"
                     type="text" maxlength="200"
                     name="hint"
                     id="hint"
                     value="{{ old('hint') }}">
-                @error('hint')<p class="help is-danger">{{ $errors->first('hint') }}</p>@enderror
+                @error('hint')<p style="color: darkred">{{ $errors->first('hint') }}</p>@enderror
             </div>
-            <div class="col-2 py-4 "><br>
-                <div class="field is-grouped float-md-right" id="btn_create_document">
-                    <button class="btn btn-dark btn-outline-light border" type="submit">Criar</button>
+            <div class="col">
+                <div class="field is-grouped" id="btn_create_document">
+                    <button class="btn btn-dark btn-outline-light border" type="submit">Criar Categoria</button>
                 </div>
             </div>
         </div>
     </form>
-</div>

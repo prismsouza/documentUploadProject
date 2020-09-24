@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Category;
 use App\Document;
+use App\Http\Requests\CategoryRequest;
 use Illuminate\Http\Request;
 
 class CategoriesController extends Controller
@@ -11,12 +12,6 @@ class CategoriesController extends Controller
     public function index()
     {
         $categories = Category::orderBy('name', 'asc')->get();
-        /*foreach ($categories as $category) {
-            if (count($category->hasparent)!=0) {
-                $categories = $categories->except([$category->id]);
-            }
-        }*/
-
         return view('categories.index', ['categories' => $categories]);
     }
 
@@ -25,9 +20,11 @@ class CategoriesController extends Controller
         return view('categories.create', ['categories' => Category::all()]);
     }
 
-    public function store(Request $request)
+    public function store(CategoryRequest $request)
     {
-        Category::create($this->validateCategory());
+        $request->validated();
+
+        Category::create($request->all());
         return redirect(route('categories.index'));
     }
 
@@ -41,9 +38,11 @@ class CategoriesController extends Controller
         return view('categories.edit', compact('category'));
     }
 
-    public function update(Request $request, Category $category)
+    public function update(CategoryRequest $request, Category $category)
     {
-        $category->update($this->validateCategory());
+        $request->validated();
+
+        $category->update($request->all());
         return redirect(route('categories.index'));
     }
 
@@ -56,14 +55,6 @@ class CategoriesController extends Controller
         return redirect(route('categories.index'))->with('successMsg', 'Essa categoria não pode ser apagada');
     }
 
-    public function validateCategory()
-    {
-        return request()->validate([
-            'name' => 'required',
-            'description' => 'required',
-            'hint' => 'nullable'
-        ]);
-    }
 
     public function dumpArray($array) {
         echo "<pre>";

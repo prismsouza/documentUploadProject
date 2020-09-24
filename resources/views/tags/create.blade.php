@@ -1,25 +1,19 @@
-<button class="btn btn-dark btn-outline-light border" type="button" data-toggle="collapse"
-        data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-    Nova tag
-</button><br>
-
-
-<div class="collapse" id="collapseExample"><br>
-    <form method="POST" action="/tags">
+    <form method="POST" action="{{ route('tags.index') }}">
         @csrf
         <div class="row">
-            <div class="col-10 field">
+            <div class="col-4 field">
                 <label for="name">Nome *</label>
                 <input
-                    class="input @error('name') is-danger @enderror col-5"
+                    class="input @error('name') is-danger @enderror col-10"
                     type="text" minlength="2" maxlength="24"
                     name="name"
                     id="name"
                     value="{{ old('name') }}">
-                @error('name')<p class="help is-danger">{{ $errors->first('name') }}</p>@enderror
-
-                <button class="btn btn-dark btn-outline-light border" type="submit">Criar</button>
+                @error('name')<p style="color: darkred">{{ $errors->first('name') }}</p>@enderror
+            </div>
+            <div class="col field">
+                <button class="btn btn-dark btn-outline-light border" type="submit">Criar Tag</button>
             </div>
         </div>
-    </form><br>
+    </form>
 </div>
