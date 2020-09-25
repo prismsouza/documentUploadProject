@@ -157,7 +157,6 @@
             <input name="filesToUpload[]" id="filesToUpload" type="hidden" value="" >
 
             <div class="list_files" style="color: forestgreen"></div>
-
                 <script>
                     var names = [];
                     var file_name = '';
@@ -288,12 +287,14 @@
                     <label for="is_active">O documento: <b>*</b></label>
                     <div class="form-check form-check-inline px-5" id="is_active">
                         <input class="form-check-input" type="radio" name="is_active" id="is_active" value="1"
-                        @if ( old('is_active')  == 1) {{"checked"}} @endif >
+                        @if ( old('is_active')  == 1) {{"checked"}} @endif
+                        onclick="hide();">
                         <label class="form-check-label">Está vigente</label>
                     </div>
                     <div class="form-check form-check-inline" id="is_active">
                         <input class="form-check-input" type="radio" name="is_active" id="is_active" value="0"
-                        @if ( old('is_active')  == 0 && old('is_active')  != null) {{"checked"}} @endif >
+                        @if ( old('is_active')  == 0 && old('is_active')  != null) {{"checked"}} @endif
+                        onclick="show();">
                         <label class="form-check-label">Não está vigente</label>
                     </div>
                 @error('is_active')<p style="color: darkred">{{ $errors->first('is_active') }}</p>@enderror
@@ -301,8 +302,49 @@
             </div>
         </div>
 
+<!-- -------------- DOCUMENT REVOKED BY -------------- -->
+           <div id="divRevokedDoc" style="display: none">
+              <div class="dropdown py-1" id="revoked_by">
+                  <label>Foi revogado pelo documento: </label>
+
+                  <button id="dropdownRevokedBy" role="button"
+                          class="btn border px-3 btn-light col-4"
+                          data-toggle="dropdown" data-target="#"
+                          aria-haspopup="true" aria-expanded="true">
+                      N/A <span class="caret"></span>
+                      @if (old('document_successor_id') != null)
+                          {{ App\Document::where("id", old('document_successor_id'))->first()->name }}
+                          - {{ date('d/m/Y', strtotime(App\Document::where("id", old('document_successor_id'))->first()->date)) }}
+                      @endif
+                  </button>
+
+                  <ul class="dropdown-menu scrollable-menu" role="menu" style="width: 50%" aria-labelledby="dropdownRevokedBy" >
+                      <input class="form-control" id="document_successor_input" type="text" placeholder="Search.." >
+
+                      @foreach(App\Document::all() as $document)
+                          <li class="px-5">
+                              <input
+                                  type="radio" name="document_successor_id"
+                                  id="{{ $document->id }}"
+                                  value="{{ $document->id }}">
+                              {{ $document->name }} - {{ date('d/m/Y', strtotime($document->date)) }}
+                          </li>
+                      @endforeach
+                  </ul>
+              </div>
+           </div>
+
+              <script>
+                  function hide(){
+                      document.getElementById('divRevokedDoc').style.display ='none';
+                  }
+                  function show(){
+                      document.getElementById('divRevokedDoc').style.display = 'block';
+                  }
+              </script>
+
 <!-- -------------- TAGS -------------- -->
-        <div class="form-row py-2">
+        <div class="form-row py-3">
             <div class="col-md-12">
                 <div class="dropdown" id="tags">
                     <label>Tags:</label>

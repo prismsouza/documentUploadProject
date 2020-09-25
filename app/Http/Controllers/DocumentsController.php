@@ -63,6 +63,7 @@ class DocumentsController extends Controller
 
     public function store(DocumentCreateRequest $request)
     {
+        //dd($request->all());
         $request->validated();
         $document = new Document(request(['category_id', 'name', 'description', 'date', 'is_active']));
 
@@ -85,6 +86,10 @@ class DocumentsController extends Controller
 
         if (request()->has('document_has_document')) {
             $document->hasdocument()->toggle(request('document_has_document'));
+        }
+
+        if (request()->has('document_successor_id')) {
+            $document->hasbeenrevoked()->toggle(request('document_successor_id'));
         }
 
         if (request()->has('tags')) {
@@ -172,6 +177,7 @@ class DocumentsController extends Controller
 
         $document->hasboletim()->sync(request('boletim_document_id'));
         $document->hasdocument()->sync(request('document_has_document'));
+        $document->hasbeenrevoked()->sync(request('document_successor_id'));
         $document->tags()->sync(request('tags'));
 
         storeLog(UsersController::getMasp(), $document->id, "update", 1);

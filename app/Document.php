@@ -63,6 +63,11 @@ class Document extends Model
         return $this->belongsToMany(Boletim::class, 'document_has_boletim', 'document_id', 'boletim_id');
     }
 
+    public function hasbeenrevoked()
+    {
+        return $this->belongsToMany('App\Document', 'document_revoked_by','document_id', 'document_successor_id');
+    }
+
     public function files()
     {
         return $this->hasMany(File::class);

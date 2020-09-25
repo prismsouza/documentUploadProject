@@ -55,7 +55,7 @@
                          @endif
                     </td>
                     <td class="text-center">
-                        {{ date('d/m/Y - h:m:s', strtotime($log->created_at)) }}
+                        {{ date('d/m/Y - H:i:s', strtotime($log->created_at)) }}
                     </td>
                 </tr>
 

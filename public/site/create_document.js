@@ -28,45 +28,14 @@ $(document).ready(function(){
         });
         console.log("boletim_document_input");
     });
-});
 
-
-$(document).ready(function() {
-    var max_fields      = 6; //maximum input boxes allowed
-    var wrapper   		= $(".input_fields_wrap"); //Fields wrapper
-    var add_button      = $(".add_field_button"); //Add button ID
-    var input
-
-    var x = 1; //initlal text box count
-    $(add_button).click(function(e){ //on add input button click
-        e.preventDefault();
-        if(x < max_fields){ //max input box allowed
-            x++; //text box increment
-            $(wrapper).append
-            ('<div class="form-inline px-2 border p-2">' +
-                '<a href="#" class="remove_field px-2">' +
-                '<i class="far fa-trash-alt" style="color: black" aria-hidden="true"></i>' +
-                '</a>' +
-                '<input class="input" type="file" name="files[]" id="file">' +
-                '</div>');
-            var input = document.getElementById('file' );
-            var infoArea = document.getElementById( 'files' );
-            }
-
-        input.addEventListener( 'change', showFileName2 );
-        function showFileName2( event ) {
-            var input = event.srcElement;
-            var fileName = input.files[0].name;
-            infoArea.textContent = fileName;
-            console.log(fileName);
-        }
+    $("#document_successor_input").on("keyup", function() {
+        var value = $(this).val().toLowerCase();
+        $("div#revoked_by .dropdown-menu li").filter(function() {
+            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+        });
+        console.log("document_successor_input");
     });
-
-    $(wrapper).on("click",".remove_field", function(e){ //user click on remove text
-        e.preventDefault(); $(this).parent('div').remove(); x--;
-    })
-
-
 });
 
 $(".dropdown-menu li a").click(function(){
@@ -86,6 +55,13 @@ $("div#published_at .dropdown-menu li").click(function(){
     console.log("dropdown-menu published_at");
     $(this).parents(".dropdown ").find('#dropdownPublishedAt').html($(this).text() + ' <span class="caret"></span>');
     $(this).parents(".dropdown ").find('#dropdownPublishedAt').val($(this).data('value'));
+
+});
+
+$("div#revoked_by .dropdown-menu li").click(function(){
+    console.log("dropdown-menu revoked_by");
+    $(this).parents(".dropdown ").find('#dropdownRevokedBy').html($(this).text() + ' <span class="caret"></span>');
+    $(this).parents(".dropdown ").find('#dropdownRevokedBy').val($(this).data('value'));
 
 });
 

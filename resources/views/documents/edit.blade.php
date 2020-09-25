@@ -296,20 +296,84 @@
                             <div class="control" id="is_active">
                                 <label for="is_active">O documento: <b>*</b></label>
                                 <div class="form-check form-check-inline px-5" id="is_active">
-                                    <input class="form-check-input" type="radio" name="is_active" id="is_active" value="1" @if ($document->is_active == 1) {{ 'checked' }} @endif>
+                                    <input class="form-check-input" type="radio" name="is_active" id="is_active"
+                                           value="1" @if ($document->is_active == 1) {{ 'checked' }} @endif
+                                            onclick="hide();">
                                     <label class="form-check-label" for="inlineRadio1">Está vigente</label>
                                 </div>
                                 <div class="form-check form-check-inline" id="is_active">
-                                    <input class="form-check-input" type="radio" name="is_active" id="is_active" value="0" @if ($document->is_active == 0) {{ 'checked' }} @endif>
+                                    <input class="form-check-input" type="radio" name="is_active" id="is_active"
+                                           value="0" @if ($document->is_active == 0) {{ 'checked' }} @endif
+                                           onclick="show();">
                                     <label class="form-check-label" for="inlineRadio1">Não está vigente</label>
                                 </div>
                                 @error('is_active')<p style="color: darkred">{{ $errors->first('is_active') }}</p>@enderror
                             </div>
                         </div>
                     </div>
+              <!-- -------------- DOCUMENT REVOKED BY -------------- -->
+              <div id="divRevokedDoc"
+                   style=@if($document->is_active == 0) "display: block"
+                    @else "display: none" @endif>
+                  <div class="dropdown py-1" id="revoked_by">
+                      <label>Foi revogado pelo documento: </label>
+
+                      <button id="dropdownRevokedBy" role="button"
+                              class="btn border px-3 btn-light col-4"
+                              data-toggle="dropdown" data-target="#"
+                              aria-haspopup="true" aria-expanded="true">
+                          @if (count($document->hasbeenrevoked) != 0)
+                              Atual:
+                              {{ $document->hasbeenrevoked->first()->name }} - {{  date('d/m/Y', strtotime($document->hasbeenrevoked->first()->date)) }}
+                              <span class="caret"></span>
+                          @else
+                              N/A <span class="caret"></span>
+                          @endif
+                      </button>
+
+                      <ul class="dropdown-menu scrollable-menu" role="menu" style="width: 50%" aria-labelledby="dropdownRevokedBy" >
+                          <input class="form-control" id="document_successor_input" type="text" placeholder="Search.." >
+                          @if (count($document->hasbeenrevoked) != 0)
+                              <li class="px-5" id="0">
+                                  <input
+                                      type="radio" name="document_successor_id" checked
+                                      value="{{ $document->hasbeenrevoked->first()->id }}" style="background: darkseagreen">
+
+                                  Atual: {{ $document->hasbeenrevoked->first()->name }} - {{ date('d/m/Y', strtotime($document->hasbeenrevoked->first()->date)) }}
+                              </li>
+                          @endif
+
+                          <li class="px-5" id="0">
+                              <input
+                                  type="radio" name="document_successor_id"
+                                  id="" value=""> N/A
+                          </li>
+
+                          @foreach(App\Document::all() as $document)
+                              <li class="px-5">
+                                  <input
+                                      type="radio" name="document_successor_id"
+                                      id="{{ $document->id }}"
+                                      value="{{ $document->id }}">
+                                  {{ $document->name }} - {{ date('d/m/Y', strtotime($document->date)) }}
+                              </li>
+                          @endforeach
+                      </ul>
+                  </div>
+              </div>
+
+              <script>
+                  function hide(){
+                      document.getElementById('divRevokedDoc').style.display ='none';
+                  }
+                  function show(){
+                      document.getElementById('divRevokedDoc').style.display = 'block';
+                  }
+
+              </script>
 
 <!-- -------------- TAGS -------------- -->
-                    <div class="form-row py-2">
+                    <div class="form-row py-3">
                         <div class="col-md-12">
                             <div class="dropdown" id="Tags">
                                 <label>Tags:</label>

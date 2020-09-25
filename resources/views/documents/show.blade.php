@@ -70,7 +70,18 @@ use App\Tag;
 
         <p><b>Validade:</b> Este documento <b><?php echo ($document->is_active ? "<span style=color:green>está vigente" : "<span style=color:red>não está vigente"); ?></b></p><br>
 
-        @if (count($related_documents)>0)
+        @if(!$document->is_active)
+            @if (count($document->hasbeenrevoked) != 0)
+                <p><b>Revogado pelo Documento:</b>
+                    <a style="color:navy" href= "/documentos/{{$document->hasbeenrevoked->first()->id}}" target="_blank">
+                        {{ $document->hasbeenrevoked->first()->name }} -
+                    {{ date('d/m/Y', strtotime( $document->hasbeenrevoked->first()->date)) }}
+                </p>
+                </a><br>
+            @endif
+        @endif
+
+@if (count($related_documents)>0)
 
                 <p><b>Documentos Relacionados:</b>
                 <ul>
