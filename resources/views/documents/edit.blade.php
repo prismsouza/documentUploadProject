@@ -151,13 +151,13 @@
                 to_delete = [];
                 names = [];
                 items = [];
+                file_name = "";
                 @foreach($document->files as $file)
                     @if ($file->alias == NULL)
                         names.push('{{$file->name}}');
                         items.push({ id:{{$file->id}} , name:'{{$file->name}}'});
                     @endif
                 @endforeach
-                console.log(items);
 
                 $(function() {
                     generateList();
@@ -166,8 +166,12 @@
                         var files = document.getElementById('files').files;
 
                         for (var i = 0; i < files.length; i++) {
-                            names.push(files.item(i).name);
+                            file_name = files.item(i).name;
+                            file_name = file_name.replace(/,/g, "");
+                            names.push(file_name);
+                            //names.push(files.item(i).name);
                         }
+                        console.log(names);
                         generateList();
                     });
                 });
@@ -186,7 +190,6 @@
 
                     var item = items.find(item => item.name === name);
                     if (item) to_delete.push(item.id);
-                    console.log(to_delete);
 
                     names.splice(position, 1);
                     $('.list_files').text("");

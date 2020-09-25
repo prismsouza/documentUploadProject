@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Contact extends Model
 {
     protected $fillable = ['message'];
+    use SoftDeletes;
     public $perPage = 10;
     use SoftDeletes;
     protected $dates = ['deleted_at'];

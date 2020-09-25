@@ -1,11 +1,12 @@
 <?php
 /*
  * WHAT TO DO
- * Not accept duplicated tag names
+ * Restore deleted files
  * Improve filter by word/description
  * Allow user to send a message to the system
  * Filter documents when click in a tag
  * Super admin access
+ * config/app.php o timezone para 'timezone' => 'America/Sao_Paulo', e o locale para 'locale' => 'pt-BR'
  */
 use Illuminate\Support\Facades\Route;
 Route::get('/', 'DocumentsController@index');

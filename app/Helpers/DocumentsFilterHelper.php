@@ -38,6 +38,7 @@ function getFilteredDocuments($request) {
     }
 
     if (request('tags') != NULL) {
+
         $tags = Session::get('tags');
         array_push($query, $tags);
         $documents = searchByTags($tags, $documents);
@@ -89,8 +90,15 @@ function searchByDate($first_date, $last_date, $documents)
 
 function searchByTags($tags, $documents)
 {
+
     $docs_tags = new Collection();
+    if (gettype($tags) != "array") {
+        $tags = Tag::where('name', $tags)->first()->id;
+        $tags = array($tags);
+    }
+
     foreach($tags as $tag_id) {
+
         $docs = Tag::where('id', $tag_id)->firstOrFail()->documents;
         foreach ($docs as $doc) {
             $doc = $documents->where('id', $doc->id)->first();

@@ -1,3 +1,6 @@
+<?php
+use App\Tag;
+?>
 @extends(($admin) ? 'layout_admin' : 'layout')
 @include('searchbar')
 
@@ -42,7 +45,7 @@
     </div>
         <p style="color: grey">Tags:
         @forelse ($document->tags as $tag)
-            <a style="color:darkgrey" class="px-2" href="{{ route ('documents.index',['tag' => $tag->name]) }}">
+            <a style="color:darkgrey" class="px-2" href="{{ route ('documents.index',['tags' => [$tag->id]]) }}">
                 {{ $tag->name }}
             </a>
         @empty

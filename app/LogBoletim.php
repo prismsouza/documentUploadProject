@@ -3,11 +3,13 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class LogBoletim extends Model
 {
     protected $table = "logs_boletim";
     protected $fillable = ['user_masp', 'boletim_id', 'action', 'created_at'];
+    use SoftDeletes;
 
 
     public function boletins()

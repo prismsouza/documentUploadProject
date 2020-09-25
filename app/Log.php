@@ -3,11 +3,13 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Log extends Model
 {
     protected $table = "logs";
     protected $fillable = ['user_masp', 'document_id', 'boletim_id', 'action', 'created_at'];
+    use SoftDeletes;
 
     public function documents()
     {

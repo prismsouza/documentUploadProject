@@ -113,7 +113,8 @@
             <td> {{ $document->description }}</td>
             <td>
                 <?php $category_name = $document->category->name; ?>
-                <a href="{{ $document->category->path() }}"  data-toggle="tooltip" title="acessar documentos dessa categoria">
+                <a href="{{ route('documents.index', ['categories' => [$document->category->id]]) }}"
+                   data-toggle="tooltip" title="acessar documentos dessa categoria">
                     {{ $category_name }}
                 </a>
             </td>

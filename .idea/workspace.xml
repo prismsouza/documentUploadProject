@@ -21,10 +21,24 @@
   <component name="ChangeListManager">
     <list default="true" id="70466de6-f2ca-45e6-9a16-4aac838e9201" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/CategoriesController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/CategoriesController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/TagsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/TagsController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/categories/create.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/categories/create.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/tags/create.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/tags/create.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Boletim.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Boletim.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Contact.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Contact.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Document.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Document.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Helpers/DocumentsFilterHelper.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Helpers/DocumentsFilterHelper.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/DocumentsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/DocumentsController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/FilesController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/FilesController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Log.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Log.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/LogBoletim.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/LogBoletim.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Logtrash.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Tag.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Tag.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Unit.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Unit.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/app.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/app.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/documents/create.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/documents/create.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/documents/edit.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/documents/edit.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/documents/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/documents/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/documents/show.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/documents/show.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/tags/show.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -264,7 +278,8 @@
       <workItem from="1600253730733" duration="11518000" />
       <workItem from="1600853495703" duration="15955000" />
       <workItem from="1600894693086" duration="9597000" />
-      <workItem from="1600940696025" duration="3140000" />
+      <workItem from="1600940696025" duration="10171000" />
+      <workItem from="1601026550390" duration="2530000" />
     </task>
     <servers />
   </component>
@@ -297,10 +312,10 @@
     </state>
     <state x="2217" y="363" width="1306" height="1059" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/1920.342.1920.1080/0.363.1920.717@1920.342.1920.1080" timestamp="1600263666707" />
     <state x="297" y="195" width="1306" height="704" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/1920.356.1920.1080/0.383.1920.697@0.383.1920.697" timestamp="1598996044768" />
-    <state x="693" y="377" width="524" height="491" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1600943184310">
+    <state x="693" y="377" width="524" height="491" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1600950268715">
       <screen x="0" y="363" width="1920" height="717" />
     </state>
-    <state x="693" y="377" width="524" height="491" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/1920.342.1920.1080/0.363.1920.717@0.363.1920.717" timestamp="1600943184310" />
+    <state x="693" y="377" width="524" height="491" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/1920.342.1920.1080/0.363.1920.717@0.363.1920.717" timestamp="1600950268715" />
     <state x="2613" y="363" width="524" height="491" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/1920.342.1920.1080/0.363.1920.717@1920.342.1920.1080" timestamp="1600854260212" />
     <state x="693" y="298" width="524" height="491" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/1920.356.1920.1080/0.383.1920.697@0.383.1920.697" timestamp="1598995989505" />
     <state x="2613" y="410" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/1920.389.1920.1080/0.410.1920.670@1920.389.1920.1080" timestamp="1599743495515" />

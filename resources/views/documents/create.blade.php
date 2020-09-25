@@ -160,6 +160,7 @@
 
                 <script>
                     var names = [];
+                    var file_name = '';
 
                     var generateList = function() {
                         names.forEach((name, i) => {
@@ -176,7 +177,9 @@
                         var files = document.getElementById('files').files;
 
                         for (var i = 0; i < files.length; i++) {
-                            names.push(files.item(i).name);
+                            file_name = files.item(i).name;
+                            file_name = file_name.replace(/,/g, "");
+                            names.push(file_name);
                         }
 
                         generateList();

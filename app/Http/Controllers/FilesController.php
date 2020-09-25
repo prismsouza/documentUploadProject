@@ -11,17 +11,14 @@ class FilesController extends Controller
     {
         $files = (request('files'));
         $fileNamesToUpload = explode(',', request('filesToUpload')[0]);
-        //$this->dumpArray($fileNamesToUpload);
-        //die();
-
         $choosen_files = [];
+
         foreach ($files as $f) {
-            if (in_array($f->getClientOriginalName(), $fileNamesToUpload)) {
-                //echo $f->getClientOriginalName();
+            $fileOriginalName = str_replace( ',', '', $f->getClientOriginalName());
+            if (in_array($fileOriginalName, $fileNamesToUpload)) {
                 array_push($choosen_files, $f);
             }
         }
-
             foreach ($choosen_files as $file) {
                 $file_toUpload = new File(request(['name', 'extension', 'type', 'size', 'alias']));
                 if ($isDocument) $file_toUpload->document_id = $document->id;

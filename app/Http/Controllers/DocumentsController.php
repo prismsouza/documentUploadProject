@@ -206,11 +206,11 @@ class DocumentsController extends Controller
 
     public function restore(Document $document)
     {
-        dd($document);die();
+        dd('oi');
         $document->restore();
+        $document->files()->restore();
+        $document->messages()->restore();
         storeLog(UsersController::getMasp(), $document->id, "restore", 1);
-        //$document->files()->restore();
-        //$document->messages()->restore();
         return redirect(route('documents.index'))->with('status', 'Documento restaurado com sucesso!');
     }
 
