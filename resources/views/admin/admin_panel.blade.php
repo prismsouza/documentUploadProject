@@ -118,11 +118,11 @@
                             Listar todos boletins e separatas
                         </a>
                     </li>
-                    <!--<li class="nav-item border">
+                    <li class="nav-item border">
                         <a class="btn btn-link" href="{{route('contacts.index')}}" target="_blank">
                             Listar mensagens/contatos recebidos
                         </a>
-                    </li>-->
+                    </li>
                 </ul>
             </div>
         </div>

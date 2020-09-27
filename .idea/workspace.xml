@@ -21,14 +21,19 @@
   <component name="ChangeListManager">
     <list default="true" id="70466de6-f2ca-45e6-9a16-4aac838e9201" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Document.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Document.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/DocumentsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/DocumentsController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/site/create_document.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/site/create_document.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/boletins/logs.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/boletins/logs.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/documents/create.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/documents/create.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/documents/edit.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/documents/edit.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/documents/logs.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/documents/logs.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/documents/show.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/documents/show.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Helpers/MessagesFilterHelper.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Helpers/MessagesFilterHelper.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/ContactController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/ContactController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/MessagesController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/MessagesController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/admin/admin_panel.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/admin_panel.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/contacts/create.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/contacts/create.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/contacts/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/contacts/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/documents/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/documents/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/documents/message_report.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/documents/message_report.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/footer.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/footer.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/layout.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layout.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/messages/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/messages/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/searchmessagebar.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/searchmessagebar.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -270,7 +275,8 @@
       <workItem from="1600894693086" duration="9597000" />
       <workItem from="1600940696025" duration="10171000" />
       <workItem from="1601026550390" duration="5632000" />
-      <workItem from="1601034162331" duration="4327000" />
+      <workItem from="1601034162331" duration="6151000" />
+      <workItem from="1601047727675" duration="8765000" />
     </task>
     <servers />
   </component>
@@ -294,19 +300,19 @@
       <screen x="0" y="383" width="1920" height="697" />
     </state>
     <state x="555" y="201" width="800" height="684" key="#com.intellij.execution.impl.EditConfigurationsDialog/1920.356.1920.1080/0.383.1920.697@0.383.1920.697" timestamp="1598974337305" />
-    <state x="660" y="342" width="589" height="403" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1600902955276">
+    <state x="660" y="342" width="623" height="403" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1601048347447">
       <screen x="0" y="363" width="1920" height="717" />
     </state>
-    <state x="660" y="342" width="589" height="403" key="#com.intellij.fileTypes.FileTypeChooser/1920.342.1920.1080/0.363.1920.717@0.363.1920.717" timestamp="1600902955276" />
+    <state x="660" y="342" width="623" height="403" key="#com.intellij.fileTypes.FileTypeChooser/1920.342.1920.1080/0.363.1920.717@0.363.1920.717" timestamp="1601048347447" />
     <state x="2217" y="363" width="1306" height="1059" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog" timestamp="1600263666707">
       <screen x="1920" y="342" width="1920" height="1080" />
     </state>
     <state x="2217" y="363" width="1306" height="1059" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/1920.342.1920.1080/0.363.1920.717@1920.342.1920.1080" timestamp="1600263666707" />
     <state x="297" y="195" width="1306" height="704" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/1920.356.1920.1080/0.383.1920.697@0.383.1920.697" timestamp="1598996044768" />
-    <state x="693" y="377" width="524" height="491" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1600950268715">
+    <state x="693" y="377" width="524" height="491" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1601052269852">
       <screen x="0" y="363" width="1920" height="717" />
     </state>
-    <state x="693" y="377" width="524" height="491" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/1920.342.1920.1080/0.363.1920.717@0.363.1920.717" timestamp="1600950268715" />
+    <state x="693" y="377" width="524" height="491" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/1920.342.1920.1080/0.363.1920.717@0.363.1920.717" timestamp="1601052269852" />
     <state x="2613" y="363" width="524" height="491" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/1920.342.1920.1080/0.363.1920.717@1920.342.1920.1080" timestamp="1600854260212" />
     <state x="693" y="298" width="524" height="491" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/1920.356.1920.1080/0.383.1920.697@0.383.1920.697" timestamp="1598995989505" />
     <state x="2613" y="410" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/1920.389.1920.1080/0.410.1920.670@1920.389.1920.1080" timestamp="1599743495515" />
@@ -345,9 +351,10 @@
     </state>
     <state x="687" y="469" width="618" height="522" key="find.popup/1920.342.1920.1080/0.363.1920.717@0.363.1920.717" timestamp="1600870172173" />
     <state x="2607" y="501" width="618" height="783" key="find.popup/1920.342.1920.1080/0.363.1920.717@1920.342.1920.1080" timestamp="1600267241004" />
-    <state x="2580" y="398" key="run.anything.popup" timestamp="1600201331123">
-      <screen x="1920" y="342" width="1920" height="1080" />
+    <state x="660" y="400" key="run.anything.popup" timestamp="1601055961861">
+      <screen x="0" y="363" width="1920" height="717" />
     </state>
+    <state x="660" y="400" key="run.anything.popup/1920.342.1920.1080/0.363.1920.717@0.363.1920.717" timestamp="1601055961861" />
     <state x="2580" y="398" key="run.anything.popup/1920.342.1920.1080/0.363.1920.717@1920.342.1920.1080" timestamp="1600201331123" />
     <state x="2580" y="445" key="run.anything.popup/1920.389.1920.1080/0.410.1920.670@1920.389.1920.1080" timestamp="1599860127456" />
     <state x="2641" y="806" width="540" height="179" key="vcs.readOnlyHandler.ReadOnlyStatusDialog" timestamp="1600106736427">

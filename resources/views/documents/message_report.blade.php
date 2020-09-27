@@ -18,7 +18,7 @@
                         <div class="form-group">
                             <h4 class="text-center"><b>{{ $document->name }}</b></h4>
                             <span class="col-form-label">
-                                Deseja reportar algum erro na página ou fazer alguma sugestão/alerta para correção do conteúdo?
+                                Deseja reportar algum erro na página ou fazer alguma sugestão/alerta para correção do conteúdo? (número máximo de caracteres: 800)
                             </span>
                         </div>
                         <div class="form-group">
@@ -26,6 +26,7 @@
                                     id="message"
                                     name="message"
                                     value="{{ old('message') }}"
+                                    maxlength="800"
                                     rows="6"></textarea>
                         </div>
                     </form>
@@ -38,11 +39,3 @@
         </div>
     </div>
 </form>
-
-<script>
-    $(document).ready(function(){
-        $("#send_button").click(function(){
-            alert("Sua mensagem foi enviada com sucesso");
-        });
-    });
-</script>

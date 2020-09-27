@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\CollectionHelper;
 use Illuminate\Http\Request;
 use App\Message;
 require_once  ('../app/Helpers/'. 'MessagesFilterHelper.php');
@@ -10,9 +11,11 @@ require_once  ('../app/Helpers/'. 'MessagesFilterHelper.php');
 class MessagesController extends Controller
 {
 
-    public function index()
+    public function index(Request $request)
     {
-        $messages = Message::orderBy('is_checked', 'ASC')->paginate();
+        $messages = getFilteredMessages($request);
+        $messages = $messages->sortBy('is_checked');
+        $messages = CollectionHelper::paginate($messages , count($messages), CollectionHelper::perPage());
         return view('messages.index', ['messages' => $messages]);
     }
 
@@ -24,19 +27,12 @@ class MessagesController extends Controller
     public function store(Request $request, $doc_id)
     {
         $message = new Message($this->validateMessage());
-        //if ($isdoc) {
-            $message->document_id = $doc_id;
-            $message->boletim_id = NULL;
-        /*} else {
-            $message->document_id = NULL;
-            $message->boletim_id = $doc_id;
-        }*/
+        $message->document_id = $doc_id;
+        $message->boletim_id = NULL;
+
         $message->is_checked = 0;
         $message->save();
-        //if ($isdoc) {
-            return redirect(route('documents.show', $doc_id));
-        //}
-        //return redirect(route('boletins.show', $doc_id));
+        return redirect(route('documents.show', $doc_id));
     }
 
     public function edit(Message $message)
@@ -60,10 +56,5 @@ class MessagesController extends Controller
         return request()->validate([
             'message' => 'required'
         ]);
-    }
-
-    public function filter(Request $request)
-    {
-        return getFilteredMessages($request);
     }
 }

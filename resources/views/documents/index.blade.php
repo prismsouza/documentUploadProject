@@ -43,10 +43,10 @@
     @if ($documents->isNotEmpty())
     <table class="table table-bordered bg-white table-striped" id="myTable">
         <thead class="text-center">
-            <th scope="col" style="cursor: pointer; width: 3%"> #</th>
-            <th scope="col" style="cursor: pointer; width: 22%"> Nome</th>
-            <th scope="col" style="cursor: pointer; width: 33%"> Descrição </th>
-            <th scope="col" style="cursor: pointer; width: 14%"> Categoria</th>
+            <th scope="col" style="width: 3%"> #</th>
+            <th scope="col" style="width: 22%"> Nome</th>
+            <th scope="col" style="width: 33%"> Descrição </th>
+            <th scope="col" style="width: 14%"> Categoria</th>
             <th scope="col" style="width: 10%; text-align: center"> Data</th>
 
             @if ($admin)
@@ -63,17 +63,14 @@
             @endif
 
         </thead>
-        <tbody>
+
     @endif
 
     <?php use App\Helpers\CollectionHelper;
         $c = 0;
-        if($documents instanceof Illuminate\Support\Collection) {
-            $documents = CollectionHelper::paginate($documents, count($documents), CollectionHelper::perPage());
-        }
         $page = $documents->currentPage();
     ?>
-
+        <tbody>
     @forelse($documents as $document)
         <?php
             $count = ($page*20 - 19) + $c;
@@ -187,4 +184,5 @@
         @if ($documents->total()>0)
             {{ $documents->links() }}
         @endif
+
 @endsection

@@ -23,6 +23,9 @@
             </div>
         </div>
     </div>
+        @if ($_SERVER['REQUEST_URI'] == '/documentos' || $_SERVER['REQUEST_URI'] == '/boletins')
+            @include('contacts/create')
+            @endif
 </div>
 @include('footer')
 </body>

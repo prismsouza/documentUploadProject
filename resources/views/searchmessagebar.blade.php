@@ -3,7 +3,7 @@
     <?php $categories = App\Category::all()->sortBy('name');
     $categories_array = request('categories') ? request('categories') : [];?>
 <div class="border p-2">
-<form method="POST" action="{{ route('messages.filter') }}" enctype="multipart/form-data" class="py-2"> @csrf
+<form method="POST" action="{{ route('messages.index') }}" enctype="multipart/form-data" class="py-2"> @csrf
     <div class="row">
         <div class="col" id="Nome/Descrição">
             Nome do Documento:

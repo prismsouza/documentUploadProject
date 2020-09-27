@@ -37,7 +37,8 @@ function getFilteredMessages($request) {
         $messages  = searchByStatus($is_checked, $messages);
     }
 
-    return view('messages.index', ['messages' => $messages])->withDetails($messages)->withQuery($query);
+    return $messages;
+    //return view('messages.index', ['messages' => $messages])->withDetails($messages)->withQuery($query);
 }
 
 function getMessages($docs, $messages) {

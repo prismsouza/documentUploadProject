@@ -3,18 +3,16 @@
  * WHAT TO DO
  * Restore deleted files
  * Improve filter by word/description
- * Allow user to send a message to the system
  * Filter documents when click in a tag
  * Super admin access
- * config/app.php o timezone para 'timezone' => 'America/Sao_Paulo', e o locale para 'locale' => 'pt-BR'
  */
 use Illuminate\Support\Facades\Route;
 Route::get('/', 'DocumentsController@index');
 
 Route::get('/admin', 'UsersController@getAdminUsers')->middleware('AuthenticateAdminUser')->name('admin_panel');
 
-Route::get('/mensagens', 'MessagesController@index')->name('messages.index');
-Route::get('/mensagens/{message}', 'MessagesController@update')->name('messages.update');
+Route::match(['post', 'get'],'/admin/mensagens', 'MessagesController@index')->name('messages.index');
+Route::get('/admin/mensagens/{message}', 'MessagesController@update')->name('messages.update');
 
 //Route::get('/usuario/documentos', 'DocumentsController@index_user')->name('documents_user.index');
 //Route::get('/usuario/documentos/{document}', 'DocumentsController@showUser')->name('documents_user.show');
@@ -25,9 +23,9 @@ Route::get('/admin/logs_boletim', 'BoletinsController@logs')->name('boletins.log
 Route::get('/admin/falhas', 'DocumentsController@showFailedDocuments')->name('documents.failed_documents');
 Route::get('/admin/boletins/falhas', 'BoletinsController@showFailedBoletins')->name('boletins.failed_boletins');
 
-Route::get('/fale_conosco', 'ContactController@index')->name('contacts.index');
-Route::get('/fale_conosco/save', 'ContactController@store')->name('contacts.store');
-Route::get('/fale_conosco/novo', 'ContactController@create')->name('contacts.create');
+Route::get('/admin/contato', 'ContactController@index')->name('contacts.index');
+Route::post('/admin/contato/save', 'ContactController@store')->name('contacts.store');
+Route::get('/admin/contato/novo', 'ContactController@create')->name('contacts.create');
 
 Route::get('/boletins/categorias/{category}', 'DocumentsController@showByCategory')->name('documents_category.index');
 //Route::get('/boletins', 'BoletinsController@index')->name('boletins.index');

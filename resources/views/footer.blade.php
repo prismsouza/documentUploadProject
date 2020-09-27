@@ -3,12 +3,6 @@
         margin-top:auto;
     }
 </style>
-<div class="container">
-    <!--<a class="btn-link" href="{{ route('contacts.create') }}">
-        <span style="color: black"> Para Sugestões ou Comentários, clique aqui e mande uma mensagem.</span>
-        <i class="fa fa-envelope" aria-hidden="true"></i>
-    </a>-->
-</div>
 <footer id="copyright">
     <div class="container">
 
