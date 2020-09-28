@@ -98,37 +98,27 @@ class BoletinsController extends Controller
         return redirect($boletim->path())->with('status', 'Documento ' . $boletim->name . ' atualizado com sucesso!');
     }
 
-    public function download(Boletim $boletim, $hash_id)
-    {
-        if ($hash_id != null) {
-            $file_path = public_path('documents') . '/' . $hash_id;
-            if (!file_exists($file_path)) {
-                $file_path = $file_path . '.pdf';
-                if (!file_exists($file_path)) {
-                    return redirect(route('boletins.index'))->with('status', 'Erro ao tentar fazer download da(o) ' . $boletim->name);
-
-                }
-            }
-            $file_name = $boletim->files->where('hash_id', $hash_id)->first()->name;
-            return response()->download($file_path, $file_name);
-        }
-        return 0;
-    }
-
     public function viewfile(Boletim $boletim, $file_id)
     {
-        $file_path = public_path('documents') . '/' . $boletim->files->where('id', $file_id)->first()->hash_id;
-        if (!file_exists($file_path)) {
-            $file_path = $file_path . '.pdf';
-            if (!file_exists($file_path)) {
-                return redirect('/boletins')->with('status', 'Erro ao tentar visualizar o documento ' . $boletim->name);
-            }
+        $hash_id = $boletim->files->where('id', $file_id)->first()->hash_id;
+        $file_path = FilesController::validatePDF($hash_id);
+
+        if ($file_path)
+            return FilesController::viewPDFFIle($file_path);
+
+        return redirect('/boletins')->with('status', 'Erro ao tentar visualizar o documento ' . $boletim->name);
+    }
+
+    public function download(Boletim $boletim, $hash_id)
+    {
+
+        $file_path = FilesController::validatePDF($hash_id);
+        if ($file_path) {
+            $file_name = $boletim->files->where('hash_id', $hash_id)->first()->name;
+            return FilesController::downloadPDFFile($file_path, $file_name);
         }
 
-        return  Response::make(file_get_contents($file_path), 200, [
-            'Content-Type' => 'application/pdf',
-            'Content-Disposition' => 'inline'
-        ]);
+        return redirect(route('boletins.index'))->with('status', 'Erro ao tentar fazer download do boletim ' . $boletim->name);
     }
 
     public function destroy(Boletim $boletim)
@@ -138,36 +128,19 @@ class BoletinsController extends Controller
         storeLog(UsersController::getMasp(), $boletim->id, "delete", 0);
 
         return redirect(route('boletins.index'))->with('status', 'Boletim ' . $boletim_name . ' deletado com sucesso!');
-
     }
 
     public function showFailedBoletins()
     {
+        if(!UsersController::isUserSuperAdmin())  return redirect(route('boletins.index'));
         $boletins = Boletim::all();
         return view('boletins.failed_boletins', ['boletins' => $boletins]);
     }
 
-    public function validateBoletim($option)
-    {
-        if ($option == "dont_update_path"){
-            return request()->validate([
-                'category_id' => 'required',
-                'name' => 'required',
-                'description' => 'required',
-                'date' => 'required'
-            ]);
-        }
-        return request()->validate([
-            'category_id' => 'required',
-            'name' => 'required',
-            'description' => 'required',
-            'file_name_pdf' => 'required',
-            'date' => 'required'
-        ]);
-    }
-
     public function logs()
     {
+        if(!UsersController::isUserSuperAdmin())  return redirect(route('boletins.index'));
+
         $logs = Log::orderBy('id', 'DESC')->whereNULL('document_id')->get();
         $logs = CollectionHelper::paginate($logs , count($logs), CollectionHelper::perPage());
 

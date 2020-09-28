@@ -55,6 +55,6 @@ class Boletim extends Model
 
     public function logs()
     {
-        return $this->hasMany(LogBoletim::class);
+        return $this->hasMany(Log::class);
     }
 }

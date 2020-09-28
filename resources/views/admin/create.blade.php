@@ -10,7 +10,7 @@
 </button>
 
 <div class="collapse" id="collapseCreate"><br>
-    <form method="POST" action="/admin">
+    <form method="POST" action="{{route('admin.store')}}">
         @csrf
         <div class="row px-3">
                 <input

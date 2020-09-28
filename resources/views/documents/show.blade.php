@@ -29,6 +29,7 @@ use App\Tag;
             <h4>{{ $document->description }}</h4><br>
         </div>
 
+        @if ($pdf_file != NULL)
         <div class="col-4">
             <div class="float-right">
                     <label class="px-2"> Download </label> <label class="px-4"> Visualizar</label><br>
@@ -42,6 +43,7 @@ use App\Tag;
                     </a>
              </div>
         </div>
+        @endif
     </div>
         <p style="color: grey">Tags:
         @forelse ($document->tags as $tag)

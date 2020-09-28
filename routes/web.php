@@ -1,21 +1,14 @@
 <?php
 /*
  * WHAT TO DO
+ * Fix filter when not on path
  * Restore deleted files
  * Improve filter by word/description
- * Filter documents when click in a tag
- * Super admin access
  */
 use Illuminate\Support\Facades\Route;
-Route::get('/', 'DocumentsController@index');
 
-Route::get('/admin', 'UsersController@getAdminUsers')->middleware('AuthenticateAdminUser')->name('admin_panel');
-
-Route::match(['post', 'get'],'/admin/mensagens', 'MessagesController@index')->name('messages.index');
-Route::get('/admin/mensagens/{message}', 'MessagesController@update')->name('messages.update');
-
-//Route::get('/usuario/documentos', 'DocumentsController@index_user')->name('documents_user.index');
-//Route::get('/usuario/documentos/{document}', 'DocumentsController@showUser')->name('documents_user.show');
+#---- ADMIN PANEL ----#
+Route::get('/admin', 'UsersController@index')->name('admin.index');
 Route::get('/admin/deletados', 'DocumentsController@showDeletedDocuments')->name('documents.deleted_documents');
 Route::post('/admin/deletados/{document}', 'DocumentsController@restore')->name('documents.restore');
 Route::get('/admin/logs', 'DocumentsController@logs')->name('documents.logs');
@@ -23,12 +16,26 @@ Route::get('/admin/logs_boletim', 'BoletinsController@logs')->name('boletins.log
 Route::get('/admin/falhas', 'DocumentsController@showFailedDocuments')->name('documents.failed_documents');
 Route::get('/admin/boletins/falhas', 'BoletinsController@showFailedBoletins')->name('boletins.failed_boletins');
 
-Route::get('/admin/contato', 'ContactController@index')->name('contacts.index');
-Route::post('/admin/contato/save', 'ContactController@store')->name('contacts.store');
-Route::get('/admin/contato/novo', 'ContactController@create')->name('contacts.create');
+Route::delete('/arquivos/delete/{file}', 'FilesController@destroy')->name('files.destroy');
 
+#---- DOCUMENTS ----#
+Route::get('/', 'DocumentsController@index');
+Route::match(['post', 'get'], '/documentos', 'DocumentsController@index')->name('documents.index');
+Route::post('/documentos/save', 'DocumentsController@store')->name('documents.store');
+Route::get('/documentos/novo', 'DocumentsController@create')->name('documents.create');
+Route::get('/documentos/{document}/download/{type}', 'DocumentsController@download')->name('documents.download');
+Route::get('/documentos/{document}/visualizar/{file_id}', 'DocumentsController@viewfile')->name('documents.viewfile');
+Route::get('/documentos/{document}', 'DocumentsController@show')->name('documents.show');
+Route::get('/documentos/{document}/editar', 'DocumentsController@edit')->name('documents.edit');
+Route::put('/documentos/{document}', 'DocumentsController@update')->name('documents.update');
+Route::delete('/documentos/delete/{document}', 'DocumentsController@destroy')->name('documents.destroy');
+Route::get('/documentos/categorias/{category}', 'DocumentsController@showByCategory')->name('documents_category.index');
+
+Route::get('refresh', 'DocumentsController@refreshSession')->name('documents.refresh_session');
+Route::get('refresh_boletim', 'BoletinsController@refreshSession')->name('boletins.refresh_session');
+
+#---- BOLETINS ----#
 Route::get('/boletins/categorias/{category}', 'DocumentsController@showByCategory')->name('documents_category.index');
-//Route::get('/boletins', 'BoletinsController@index')->name('boletins.index');
 Route::match(['post', 'get'], '/boletins', 'BoletinsController@index')->name('boletins.index');
 Route::post('/boletins/save', 'BoletinsController@store')->name('boletins.store');
 Route::get('/boletins/novo', 'BoletinsController@create')->name('boletins.create');
@@ -40,55 +47,44 @@ Route::delete('/boletins/delete/{boletim}', 'BoletinsController@destroy')->name(
 Route::get('/boletins/{boletim}/download/{type}', 'BoletinsController@download')->name('boletins.download');
 Route::get('/boletins/{boletim}/visualizar/{file_id}', 'BoletinsController@viewfile')->name('boletins.viewfile');
 
-Route::delete('/arquivos/delete/{file}', 'FilesController@destroy')->name('files.destroy');
-
-Route::get('/documentos/categorias/{category}', 'DocumentsController@showByCategory')->name('documents_category.index');
-
-//Route::get('/', 'DocumentsController@index')->name('documents.index');
-Route::match(['post', 'get'], '/documentos', 'DocumentsController@index')->name('documents.index');
-Route::post('/documentos/save', 'DocumentsController@store')->name('documents.store');
-Route::get('/documentos/novo', 'DocumentsController@create')->name('documents.create');
-Route::get('/documentos/{document}/download/{type}', 'DocumentsController@download')->name('documents.download');
-Route::get('/documentos/{document}/visualizar/{file_id}', 'DocumentsController@viewfile')->name('documents.viewfile');
-Route::get('/documentos/{document}', 'DocumentsController@show')->name('documents.show');
-Route::get('/documentos/{document}/editar', 'DocumentsController@edit')->name('documents.edit');
-Route::put('/documentos/{document}', 'DocumentsController@update')->name('documents.update');
-Route::delete('/documentos/delete/{document}', 'DocumentsController@destroy')->name('documents.destroy');
-Route::get('refresh', 'DocumentsController@refreshSession')->name('documents.refresh_session');
-Route::get('refresh_boletim', 'BoletinsController@refreshSession')->name('boletins.refresh_session');
-Route::get('/setViewAsAdmin', 'UsersController@setViewAsAdmin')->name('admin.view');
-Route::get('/setViewAsUser', 'UsersController@setViewAsUser')->name('user.view');
-
-
-Route::get('/categorias/ementario/editar', function(){
-    return view ('categories.ementario_edit');
-})->name('categories.ementario_edit');
-Route::put('/', 'FilesController@uploadDetachedFile')->name('categories.ementario_update');
-Route::get('/categorias/download/ementario', 'FilesController@download')->name('files.download');
-Route::get('/categorias/visualizar/ementario', 'FilesController@viewfile')->name('files.view');
-
+#---- CATEGORIES ----#
 Route::get('/categorias', 'CategoriesController@index')->name('categories.index');
-Route::post('/categorias', 'CategoriesController@store')->name('categories.store');;
+Route::post('/categorias/save', 'CategoriesController@store')->name('categories.store');;
 Route::get('/categorias/novo', 'CategoriesController@create')->name('categories.create');
 Route::get('/categorias/{category}', 'CategoriesController@show')->name('categories.show');
-Route::get('/categorias/{category}/edit', 'CategoriesController@edit')->name('categories.edit');
+Route::get('/categorias/{category}/editar', 'CategoriesController@edit')->name('categories.edit');
 Route::put('/categorias/{category}', 'CategoriesController@update')->name('categories.update');
 Route::delete('/categorias/delete/{category}', 'CategoriesController@destroy')->name('categories.destroy');
 
-Route::get('/admin', 'UsersController@index')->name('admins.index');
-Route::post('/admin', 'UsersController@store')->name('admins.store');;
-Route::get('/admin/novo', 'UsersController@create')->name('admins.create');
-Route::delete('/admin/delete/{user}', 'UsersController@destroy')->name('admins.destroy');
+Route::get('/ementario/editar','EmentarioController@edit')->name('ementario.edit');
+Route::post('/ementario', 'EmentarioController@update')->name('ementario.update');
+Route::get('/ementario/download', 'EmentarioController@download')->name('ementario.download');
+Route::get('/ementario/visualizar', 'EmentarioController@viewfile')->name('ementario.view');
 
+#---- ADMIN ----#
+Route::get('/setViewAsAdmin', 'UsersController@setViewAsAdmin')->name('admin.view');
+Route::get('/setViewAsUser', 'UsersController@setViewAsUser')->name('user.view');
+Route::post('/admin/save', 'UsersController@store')->name('admin.store');
+Route::get('/admin/novo', 'UsersController@create')->name('admin.create');
+Route::delete('/admin/delete/{user}', 'UsersController@destroy')->name('admin.destroy');
+
+#---- TAGS ----#
 Route::get('/tags', 'TagsController@index')->name('tags.index');
-Route::post('/tags', 'TagsController@store')->name('tags.store');
+Route::post('/tags/save', 'TagsController@store')->name('tags.store');
 Route::get('/tags/novo', 'TagsController@create')->name('tags.create');
 Route::get('/tags/{tag}', 'TagsController@show')->name('tags.show');
-Route::get('/tags/{tag}/edit', 'TagsController@edit')->name('tags.edit');
+Route::get('/tags/{tag}/editar', 'TagsController@edit')->name('tags.edit');
 Route::put('/tags/{tag}', 'TagsController@update')->name('tags.update');
 Route::delete('/tags/delete/{tag}', 'TagsController@destroy')->name('tags.destroy');
 
-//Route::any('/documentos','DocumentsController@sort')->name('documents.sort');
+#---- MESSAGES ----#
+Route::match(['post', 'get'],'/admin/mensagens', 'MessagesController@index')->name('messages.index');
+Route::get('/admin/mensagens/{message}', 'MessagesController@update')->name('messages.update');
 Route::any('/mensagens/pesquisa','MessagesController@filter')->name('messages.filter');
-Route::post('/documentos/{document}','MessagesController@store')->name('message.store');
+Route::post('/documentos/save','MessagesController@store')->name('message.store');
 Route::get('/documentos/mensagem', 'MessagesController@create')->name('message.create');
+
+#---- CONTACT US ----#
+Route::get('/admin/contato', 'ContactController@index')->name('contacts.index');
+Route::post('/admin/contato/save', 'ContactController@store')->name('contacts.store');
+Route::get('/admin/contato/novo', 'ContactController@create')->name('contacts.create');

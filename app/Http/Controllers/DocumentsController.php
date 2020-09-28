@@ -26,6 +26,7 @@ class DocumentsController extends Controller
         sessionRefresh();
         return redirect(route('documents.index'));
     }
+
     public function index(Request $request)
     {
         if (!Session::has('admin')) {
@@ -42,7 +43,6 @@ class DocumentsController extends Controller
         if (count($document->files->where('alias')->all()) == 0) {
             if (UsersController::isAdminView())
                 return view('documents.edit', compact('document'), ['tags' => Tag::all()]);
-            return $this->index();
         }
 
         $doc = Document::find($document->id);
@@ -103,17 +103,24 @@ class DocumentsController extends Controller
 
     public function viewfile(Document $document, $file_id)
     {
-        $file_path = public_path('documents') . '/' . $document->files->where('id', $file_id)->first()->hash_id;
-        if (!file_exists($file_path)) {
-            $file_path = $file_path . '.pdf';
-            if (!file_exists($file_path)) {
-                return redirect(route('documents.index'))->with('status', 'Erro ao tentar visualizar o documento ' . $document->name);
-            }
+        $hash_id = $document->files->where('id', $file_id)->first()->hash_id;
+        $file_path = FilesController::validatePDF($hash_id);
+
+        if ($file_path)
+            return FilesController::viewPDFFIle($file_path);
+
+        return redirect(route('documents.index'))->with('status', 'Erro ao tentar visualizar o documento ' . $document->name);
+    }
+
+    public function download(Document $document, $hash_id)
+    {
+        $file_path = FilesController::validatePDF($hash_id);
+        if ($file_path) {
+            $file_name = $document->files->where('hash_id', $hash_id)->first()->name;
+            return FilesController::downloadPDFFile($file_path, $file_name);
         }
-        return  Response::make(file_get_contents($file_path), 200, [
-            'Content-Type' => 'application/pdf',
-            'Content-Disposition' => 'inline'
-        ]);
+
+        return redirect(route('documents.index'))->with('status', 'Erro ao tentar fazer download do documento ' . $document->name);
     }
 
     public function showByCategory(Category $category)
@@ -123,7 +130,7 @@ class DocumentsController extends Controller
         $request['categories'] = [$category->id];
         Session::put('categories', $category->id);
 
-       if (Category::isCategoryBoletim($category->id)) {
+        if (Category::isCategoryBoletim($category->id)) {
             $documents = Boletim::orderBy('date', 'desc')->where('category_id', $category->id)->paginate();
         } else {
             $documents = Document::orderBy('date', 'desc')->where('category_id', $category->id)->paginate();
@@ -132,10 +139,11 @@ class DocumentsController extends Controller
 
         return view('documents.index', ['documents' => $documents, 'category_option' => $category_option, 'admin' => UsersController::isAdminView()]);
 
-       }
+    }
 
     public function showDeletedDocuments()
     {
+        if(!UsersController::isUserSuperAdmin())  return redirect(route('documents.index'));
         $documents = Document::onlyTrashed()->get()->sortBy('deleted_at');
         $documents = CollectionHelper::paginate($documents , count($documents), CollectionHelper::perPage());
 
@@ -144,6 +152,7 @@ class DocumentsController extends Controller
 
     public function showFailedDocuments()
     {
+        if(!UsersController::isUserSuperAdmin())  return redirect(route('documents.index'));
         $documents = Document::all();
         $documents = CollectionHelper::paginate($documents , count($documents), CollectionHelper::perPage());
         return view('documents.failed_documents', ['documents' => $documents]);
@@ -166,12 +175,18 @@ class DocumentsController extends Controller
 
         if (request()->has('filesToUpload') && request('files')) {
             //request('filesToUpload')[0] != null) {
+            if ($_FILES['files']['error'])
+                return redirect(route('documents.edit', $document))->with('status', 'ERRO no upload de arquivo(s)');
             $files->uploadMultipleFiles($request, $document, 1);
         }
 
         if (request('file_name_pdf')) {
+            if ($_FILES['file_name_pdf']['error'])
+                return redirect(route('documents.edit', $document))->with('status', 'ERRO no upload do arquivo principal');
+
             if (count($document->files->where('alias')->all()) != 0)
                 $document->files->whereNotNull('alias')->first()->delete();
+
             $files->uploadFile($request, $document, 'pdf', 1);
         }
 
@@ -185,22 +200,6 @@ class DocumentsController extends Controller
         return redirect($document->path())->with('status', 'Documento ' . $document->name . ' atualizado com sucesso!');
     }
 
-    public function download(Document $document, $hash_id)
-    {
-        if ($hash_id != null) {
-            $file_path = public_path('documents') . '/' . $hash_id;
-            if (!file_exists($file_path)) {
-                $file_path = $file_path . '.pdf';
-                if (!file_exists($file_path)) {
-                    return redirect('/documentos')->with('status', 'Erro ao tentar fazer download do documento ' . $document->name);
-                }
-            }
-
-            $file_name = $document->files->where('hash_id', $hash_id)->first()->name;
-            return response()->download($file_path, $file_name);
-        }
-        return 0;
-    }
 
     public function destroy(Document $document)
     {
@@ -212,7 +211,7 @@ class DocumentsController extends Controller
 
     public function restore(Document $document)
     {
-        dd('oi');
+        if(!UsersController::isUserSuperAdmin())  return redirect(route('documents.index'));
         $document->restore();
         $document->files()->restore();
         $document->messages()->restore();
@@ -222,6 +221,7 @@ class DocumentsController extends Controller
 
     public function logs()
     {
+        if(!UsersController::isUserSuperAdmin())  return redirect(route('documents.index'));
         $logs = Log::orderBy('id', 'DESC')->whereNULL('boletim_id')->get();
         $logs = CollectionHelper::paginate($logs , count($logs), CollectionHelper::perPage());
         return view('documents.logs', ['logs' => $logs]);

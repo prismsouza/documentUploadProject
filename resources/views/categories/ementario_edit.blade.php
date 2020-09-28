@@ -1,16 +1,22 @@
 @extends ('layout_admin')
 @section('content')
 
+    @if (session('status'))
+        <div class="alert alert-danger">
+            {{ session('status') }}
+        </div>
+    @endif
+
     <?php
     $files = App\File::all();
     $fileEmentario = $files->where('alias', 'ementario')->first();
     ?>
 
     <h1 class="heading has-text-weight-bold is-size-4 py-6">Editar Documento</h1>
-    <form method="POST" action="/"
+    <form method="POST" action="{{route('ementario.update')}}"
           enctype="multipart/form-data" class="p-5 border">
     @csrf
-    @method('PUT')
+    @method('POST')
 
         <!-- -------------- REPLACE PDF FILE-------------- -->
         <div class="form-row" ID="upload_file">

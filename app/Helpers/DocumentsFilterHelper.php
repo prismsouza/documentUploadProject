@@ -68,6 +68,7 @@ function searchByWord($word)
 function searchByCategories($categories, $documents)
 {
     $docs_categories = new Collection();
+
     foreach($categories as $category_id) {
         $docs = Category::where('id', $category_id)->firstOrFail()->documents;
 

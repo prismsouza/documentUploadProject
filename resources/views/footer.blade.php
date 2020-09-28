@@ -10,9 +10,11 @@
 
             <!-- HPM -->
             <div class="col-sm-3">
+                <a target="__blank" href="http://portais.ipsm.mg.gov.br/app/portalBeneficiario/sisben_portal_blk_layoutpublico/">
   					<span class="ui simple dropdown button centered small image" style="background:none; padding: 0;">
   						<img class="" src="http://intranet.bombeiros.mg.gov.br/assets/images/hpm.png" alt="Intranet PMMG" style="paddiing: 0; margin:0"/>
   					</span>
+                </a>
             </div><!-- end column HPM -->
 
             <!-- PORTAL -->

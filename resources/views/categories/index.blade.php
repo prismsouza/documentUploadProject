@@ -15,16 +15,16 @@
         <tr class="d-flex py-4">
             <td class="col-sm-4 border py-2">
                 <b>Ementário</b>
-                <a href="{{ route('files.view')}}" class="btn border btn-light float-md-right"
+                <a href="{{ route('ementario.view')}}" class="btn border btn-light float-md-right"
                    data-toggle="tooltip" title="visualizar" style="color:white" target="_blank">
                     <i class="fas fa-eye" style="color:cadetblue"></i>
                 </a>
                 <a data-toggle="tooltip" title="download"
-                   href="{{ route('files.download') }}" class="btn border btn-light float-md-right">
+                   href="{{ route('ementario.download') }}" class="btn border btn-light float-md-right">
                     <i class="fas fa-download" style="color:darkseagreen" aria-hidden="true"></i>
                 </a>
                 <a data-toggle="tooltip" title="editar"
-                   href="{{ route('categories.ementario_edit') }}" class="btn border btn-light float-md-right">
+                   href="{{ route('ementario.edit') }}" class="btn border btn-light float-md-right">
                     <i class="fas fa-edit small" style="color: black"></i>
                 </a>
 

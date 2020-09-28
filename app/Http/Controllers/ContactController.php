@@ -11,6 +11,7 @@ class ContactController extends Controller
 {
     public function index()
     {
+        if(!UsersController::isUserSuperAdmin())  return redirect(route('documents.index'));
         $messages = Contact::orderBy('created_at', 'DESC')->paginate(20);
         return view('contacts.index', ['contacts' => $messages]);
 

@@ -19,52 +19,50 @@ class FilesController extends Controller
                 array_push($choosen_files, $f);
             }
         }
-            foreach ($choosen_files as $file) {
-                $file_toUpload = new File(request(['name', 'extension', 'type', 'size', 'alias']));
-                if ($isDocument) $file_toUpload->document_id = $document->id;
-                else $file_toUpload->boletim_id = $document->id;
-                $file_toUpload->name = $file->getClientOriginalName();
-                $file_toUpload->extension = $file->extension();
-                $file_toUpload->type = $file->getMimeType();
-                $file_toUpload->size = $this->convertSize($file->getSize());
-                $file_toUpload->alias = null;
-                $file_toUpload->hash_id = sha1_file($file);
-                $file->storeAs('documents', $file_toUpload->hash_id);
-                $file_toUpload->save();
-            }
+
+        foreach ($choosen_files as $file) {
+            $file_toUpload = new File(request(['name', 'extension', 'type', 'size', 'alias']));
+            if ($isDocument) $file_toUpload->document_id = $document->id;
+            else $file_toUpload->boletim_id = $document->id;
+            $file_toUpload->name = $file->getClientOriginalName();
+
+            $file_toUpload->extension = $file->extension();
+            $file_toUpload->type = $file->getMimeType();
+            $file_toUpload->size = $this->convertSize($file->getSize());
+            $file_toUpload->alias = null;
+            $file_toUpload->hash_id = sha1_file($file);
+            $file->storeAs('documents', $file_toUpload->hash_id);
+            $file_toUpload->save();
+        }
     }
 
     public function uploadFile($request, $document, $type , $isDocument)
     {
         $file = new File(request(['name', 'extension', 'type', 'size', 'alias']));
-        //$this->dumpArray($request->all());
-        //echo "----- NEXTTTT ----  ";
-        //$this->dumpArray($file);
+        $file->name = $_FILES['file_name_' . $type]['name'];
 
-            $file->name = $_FILES['file_name_' . $type]['name'];
+        $file_ = $_FILES['file_name_' . $type]['name'];
+        $file->hash_id = sha1_file($request->file_name_pdf);
 
-            $file_ = $_FILES['file_name_' . $type]['name'];
-            $file->hash_id = sha1_file($request->file_name_pdf);
+        $file_info = new \SplFileInfo($file_);
+        $extension = $file_info->getExtension();
+        $file->extension = $extension;
 
-            $file_info = new \SplFileInfo($file_);
-            $extension = $file_info->getExtension();
-            $file->extension = $extension;
+        $file->type = $_FILES['file_name_' . $type]['type'];
 
-            $file->type = $_FILES['file_name_' . $type]['type'];
+        $file->size = $this->convertSize($request->file('file_name_' . $type)->getSize());
 
-            $file->size = $this->convertSize($request->file('file_name_' . $type)->getSize());
+        $date = date('d-m-Y', strtotime($document->date));
+        $file->alias = $document->name . '_' . $date . '.' . $file->extension;
 
-            $date = date('d-m-Y', strtotime($document->date));
-            $file->alias = $document->name . '_' . $date . '.' . $file->extension;
+        if ($isDocument)
+            $file->document_id = $document->id;
+        else
+            $file->boletim_id = $document->id;
 
-            if ($isDocument)
-                $file->document_id = $document->id;
-            else
-                $file->boletim_id = $document->id;
+        $file->save();
 
-            $file->save();
-
-            $request->file_name_pdf->storeAs('documents', $file->hash_id);
+        $request->file_name_pdf->storeAs('documents', $file->hash_id);
     }
 
     public function convertSize($file_size)
@@ -90,8 +88,8 @@ class FilesController extends Controller
         return redirect(route('documents.index'))->with('successMsg', 'Documento deletado');
     }
 
-    public function uploadDetachedFile() {
-        File::all()->where('alias', 'ementario')->first()->delete();
+    public function uploadDetachedPDFFile($alias) {
+        //File::all()->where('alias', 'ementario')->first()->delete();
 
         $file = request('file_name_pdf');
         $file_toUpload = new File(request(['name', 'extension', 'type', 'size', 'alias']));
@@ -101,34 +99,38 @@ class FilesController extends Controller
         $file_toUpload->extension = 'pdf';
         $file_toUpload->type = 'application/pdf';
         $file_toUpload->size = $this->convertSize($_FILES['file_name_pdf']['size']);
-        $file_toUpload->alias = 'ementario';
+        $file_toUpload->alias = $alias;
         $file_toUpload->hash_id = sha1_file($file);
 
         $file->storeAs('documents', $file_toUpload->hash_id);
         $file_toUpload->save();
     }
 
-    public function download()
+    public static function validatePDF($hash_id)
     {
-        $files = File::all();
-        $file = $files->where('alias', 'ementario')->first();
-
-        $file_path = public_path('documents') . '/' . $file->hash_id;
-        $file_name = "Ementario " . $file->created_at;
-        return response()->download($file_path, $file_name);
+        if($hash_id != null) {
+            $file_path = public_path('documents') . '/' . $hash_id;
+            if (!file_exists($file_path)) {
+                $file_path = $file_path . '.pdf';
+                if (!file_exists($file_path)) {
+                    return 0;
+                }
+            }
+        }
+        else
+            return 0;
+        return $file_path;
     }
 
-    public function viewfile()
-    {
-        $files = File::all();
-        $file = $files->where('alias', 'ementario')->first();
-
-        $file_path = public_path('documents') . '/' . $file->hash_id;
-
-        return  Response::make(file_get_contents($file_path), 200, [
+    public static function viewPDFFile($file_path) {
+        return Response::make(file_get_contents($file_path), 200, [
             'Content-Type' => 'application/pdf',
             'Content-Disposition' => 'inline'
         ]);
+    }
+
+    public static function downloadPDFFile($file_path, $file_name) {
+        return response()->download($file_path, $file_name);
     }
 
     public function dumpArray($array) {

@@ -1,7 +1,5 @@
 @extends('layout_admin')
 
-<?php $user = "admin_master"; // admin ?>
-
 @section('content')
     <a onclick="goBack()" class="btn btn-light border float-md-right">Voltar</a>
     <h3>Logs</h3>
@@ -23,8 +21,8 @@
 
             @forelse($logs as $log)
                 <?php
-                    $count = ($page*20 - 19) + $c;
-                    $c = $c + 1;
+                $count = ($page*20 - 19) + $c;
+                $c = $c + 1;
                 ?>
                 <tr class="small">
                     <td class="text-center">{{$count}}</td>
@@ -47,13 +45,13 @@
                         @else
                             {{ App\Boletim::onlyTrashed()->where('id', $log->boletim_id)->first()->name }}
                         @endif
-                     </td>
-                     <td class="text-center">
-                         @if ($log->action == "delete")
-                             <span style="color: darkred"> {{ $log->action }} </span>
-                         @else
+                    </td>
+                    <td class="text-center">
+                        @if ($log->action == "delete")
+                            <span style="color: darkred"> {{ $log->action }} </span>
+                        @else
                             {{ $log->action }}
-                         @endif
+                        @endif
                     </td>
                     <td class="text-center">
                         {{ date('d/m/Y - H:i:s', strtotime($log->created_at)) }}
@@ -66,7 +64,10 @@
 
             </tbody>
         </table>
-            @if ($logs->total()>0)
-                {{ $logs->links() }}
-            @endif
+        @if ($logs->total()>0)
+            {{ $logs->links() }}
+        @endif
 @endsection
+
+173 168
+conf

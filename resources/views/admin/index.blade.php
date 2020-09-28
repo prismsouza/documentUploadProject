@@ -12,7 +12,7 @@
         <div class="row">
             <div class="col-7">
                 <h2 style="display: inline-block;">Administradores</h2>
-                @include('admin.admins_create')
+                @include('admin.create')
 
                 <table class="table table-striped" id="table_admin">
                     <thead>
@@ -33,7 +33,7 @@
                             <td>
                                 <span class="btn-group">
                                     <a class="add btn btn-success" title="Salvar" id="create" name="create" data-toggle="tooltip"
-                                       href=" {{ route ('admins.create') }}" type="submit">
+                                       href=" {{ route ('admin.create') }}" type="submit">
                                         <i class="fas fa-save" style="color: black"></i>
 
                                     </a>
@@ -44,7 +44,7 @@
 
                                 </span>
 
-                                <form class="btn-group" method="POST" action="{{ route('admins.destroy', $user) }}" id="delete-form-{{ $user->id }}">
+                                <form class="btn-group" method="POST" action="{{ route('admin.destroy', $user) }}" id="delete-form-{{ $user->id }}">
                                     {{ csrf_field() }}
                                     {{ method_field('delete') }}
                                 </form>
@@ -56,7 +56,7 @@
                                             } else {
                                             event.preventDefault();
                                             }"
-                                           href=" {{ route ('admins.index') }}" style="color:white">
+                                           href=" {{ route ('admin.index') }}" style="color:white">
                                     <i class="far fa-trash-alt" style="color: black" aria-hidden="true" data-toggle="tooltip" title="excluir"></i>
                                 </a>
                             </td>

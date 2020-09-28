@@ -1,6 +1,12 @@
 @extends ('layout_admin')
 @section('content')
 
+    @if (session('status'))
+        <div class="alert alert-danger">
+            {{ session('status') }}
+        </div>
+    @endif
+
     <?php
     $documents = App\Document::all();
     ?>

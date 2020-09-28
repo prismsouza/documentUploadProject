@@ -1,6 +1,5 @@
+@if (Session::has('word') || (Session::has('categories') && gettype(Session::get('categories'))=="array") || Session::has('first_date') || Session::has('last_date') || Session::has('tags') || Session::has('is_active'))
 
-
-@if (Session::has('word') || Session::has('categories') || Session::has('first_date') || Session::has('last_date') || Session::has('tags') || Session::has('is_active'))
     <div class="border p-2">
         <b>Filtro aplicado:</b>
         @if (Session::get('word'))
