@@ -62,7 +62,7 @@ class UsersController extends Controller
         $users = User::orderBy('created_at', 'desc')->get();
         return view('admin.index', ['users' => $users]);
     }
-//oi
+//oioioi
     public function create()
     {
         if(!$this->isUserSuperAdmin())  return redirect(route('documents.index'));
