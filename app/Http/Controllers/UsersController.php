@@ -55,7 +55,7 @@ class UsersController extends Controller
     {
         return User::where('masp', $masp)->first();
     }
-
+    // oi
     public function index()
     {
         if(!$this->isUserSuperAdmin())  return redirect(route('documents.index'));
