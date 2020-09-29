@@ -11,6 +11,7 @@
 
     <h1 class="heading has-text-weight-bold is-size-4 py-6">Novo Boletim</h1>
     <form method="POST" action="{{ route ('boletins.store') }}" enctype="multipart/form-data" class="p-5 border"> @csrf
+
     <!-- -------------- CATEGORY -------------- -->
         <div class="form-row" id="category">
             <div class="col-md-12 mb-3">

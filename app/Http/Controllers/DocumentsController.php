@@ -63,7 +63,6 @@ class DocumentsController extends Controller
 
     public function store(DocumentCreateRequest $request)
     {
-        //dd($request->all());
         $request->validated();
         $document = new Document(request(['category_id', 'name', 'description', 'date', 'is_active']));
 

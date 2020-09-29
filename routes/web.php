@@ -81,7 +81,7 @@ Route::delete('/tags/delete/{tag}', 'TagsController@destroy')->name('tags.destro
 Route::match(['post', 'get'],'/admin/mensagens', 'MessagesController@index')->name('messages.index');
 Route::get('/admin/mensagens/{message}', 'MessagesController@update')->name('messages.update');
 Route::any('/mensagens/pesquisa','MessagesController@filter')->name('messages.filter');
-Route::post('/documentos/save','MessagesController@store')->name('message.store');
+Route::post('/documentos/mensagem/save','MessagesController@store')->name('message.store');
 Route::get('/documentos/mensagem', 'MessagesController@create')->name('message.create');
 
 #---- CONTACT US ----#
