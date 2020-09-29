@@ -29,13 +29,11 @@ Route::get('/documentos/{document}', 'DocumentsController@show')->name('document
 Route::get('/documentos/{document}/editar', 'DocumentsController@edit')->name('documents.edit');
 Route::put('/documentos/{document}', 'DocumentsController@update')->name('documents.update');
 Route::delete('/documentos/delete/{document}', 'DocumentsController@destroy')->name('documents.destroy');
-Route::get('/documentos/categorias/{category}', 'DocumentsController@showByCategory')->name('documents_category.index');
 
 Route::get('refresh', 'DocumentsController@refreshSession')->name('documents.refresh_session');
 Route::get('refresh_boletim', 'BoletinsController@refreshSession')->name('boletins.refresh_session');
 
 #---- BOLETINS ----#
-Route::get('/boletins/categorias/{category}', 'DocumentsController@showByCategory')->name('documents_category.index');
 Route::match(['post', 'get'], '/boletins', 'BoletinsController@index')->name('boletins.index');
 Route::post('/boletins/save', 'BoletinsController@store')->name('boletins.store');
 Route::get('/boletins/novo', 'BoletinsController@create')->name('boletins.create');

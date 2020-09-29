@@ -40,7 +40,7 @@ class Category extends Model
 
     public function path()
     {
-        return route('documents_category.index', $this);
+       // return route('documents_category.index', $this);
     }
 
     public function pathCategory()

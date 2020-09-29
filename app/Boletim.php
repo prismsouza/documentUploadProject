@@ -20,8 +20,6 @@ class Boletim extends Model
         return 'id';
     }
 
-
-
     public function path()
     {
         return route('boletins.show', $this);

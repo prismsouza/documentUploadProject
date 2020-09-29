@@ -1,8 +1,7 @@
 <?php
-    use App\Document;
-    $categories = App\Category::all()->sortBy('name');
-    $documents = Document::all();
-    Session::put('documents',  $documents);
+use App\Document;
+$categories = App\Category::all()->sortBy('name');
+$documents = Document::all();
 ?>
 
 
@@ -13,64 +12,75 @@
     </a>
 </span>
 
+<?php
 
-<ul class="nav nav-tabs flex-column lighten-4 list-group">
-    <li style="text-align: center">
-        <h3>Categorias</h3>
-    </li>
-    <li class="nav-item border">
-        <a class="list-group-item {{ (Request::is('documentos') || Request::is('/')) ? 'active' : ''}}"
-           href="/documentos">
-            <b>Todos</b>
-        </a>
-    </li>
+if (Session::has('categories') && count(Session::get('categories')) == 1 && !Request::is('boletins') ) {
+    $choosen_category = Session::get('categories')[0];
+} else {
+    $choosen_category = null;
+}
+?>
 
-    @foreach($categories as $category)
-        @if ($category->id == 1 ||  $category->id == 2|| $category->id == 3) @continue @endif
+<form method="POST" action="{{ route('documents.index') }}" enctype="multipart/form-data" class="py-2"> @csrf
+
+    <ul class="nav nav-tabs flex-column lighten-4 list-group">
+        <li style="text-align: center">
+            <h3>Categorias</h3>
+        </li>
         <li class="nav-item border">
-
-            @if (count($category->hassubcategory)>0)
-
-                <a type="button" class="collapsible list-group-item">
-                    {{ $category->name }}
-                    <i class="fa fa-plus float-md-right"  style="color: lightblue" aria-hidden="true"></i>
-                </a>
-                <div class="content">
-                    <i class="fas fa-chevron-right fa-xs"></i>
-                    <a class="border-bottom {{ Request::is('documentos/categorias/'.$category->name) ? 'active' : ''}}"
-                       href="{{ route('documents.index') }}" style="color: #6c757d">
-                        Todos
-                    </a>
-                    @foreach($category->hassubcategory as $sub_cat)<br>
-                        <i class="fas fa-chevron-right fa-xs"></i>
-                        <a class="border-bottom {{ Request::is('documentos/categorias/'.$sub_cat->name) ? 'active' : ''}}"
-                           href="{{ $sub_cat->path() }}" style="color: #6c757d">
-                            {{ $sub_cat->name }}
-                        </a>
-                    @endforeach
-                </div>
-            @else
-
-                    @if (count($category->hasparent)==0)
-                        <a class="list-group-item {{ Request::is('documentos/categorias/'.$category->name) ? 'active' : ''}}"
-                           href={{ $category->path() }}>
-                            {{ $category->name }}
-                        </a>
-                    @endif
-            @endif
+            <button class="list-group-item"
+                    href="{{route('documents.refresh_session')}}">
+                <b>Todos</b>
+            </button>
         </li>
 
-    @endforeach
+        @foreach($categories as $category)
+            @if ($category->id == 1 ||  $category->id == 2|| $category->id == 3) @continue @endif
+            <li class="nav-item border">
 
-</ul>
+                @if (count($category->hassubcategory)>0)
+                    <a class="collapsible list-group-item">
+                        {{ $category->name }}
+                        <i class="fa fa-plus float-md-right"  style="color: lightblue" aria-hidden="true"></i>
+                    </a>
+                    <div class="content">
+                        <i class="fas fa-chevron-right fa-xs"></i>
+                        <a type="submit"  class="border-bottom {{ $choosen_category == $category->id ? 'active' : ''}}"
+                           href="" style="color: #6c757d"
+                           name="categories[]" value="{{$category->hassubcategory}}">
+                            Todos
+                        </a>
+                        @foreach($category->hassubcategory as $sub_cat)<br>
+                        <i class="fas fa-chevron-right fa-xs"></i>
+                        <a type="submit" class="border-bottom {{ $choosen_category == $sub_cat->id ? 'active' : ''}}"
+                           href="{{ $sub_cat->path() }}" style="color: #6c757d"
+                           name="categories[]" value="{{$sub_cat->id}}">
+                            {{ $sub_cat->name }}
+                        </a>
+                        @endforeach
+                    </div>
+                @else
 
-<ul class="nav nav-tabs flex-column lighten-4 list-group">
-    <li style="text-align: center">
-        <h3>Outros</h3>
-    </li>
-    <li class="nav-item border">
-        @if ($admin)
-            <span>
+                    @if (count($category->hasparent)==0)
+                        <button type="submit" class="list-group-item {{ $choosen_category == $category->id  ? 'active' : ''}}"
+                                name="categories[]" value="{{$category->id}}">
+                            {{ $category->name }}
+                        </button>
+                    @endif
+                @endif
+            </li>
+
+        @endforeach
+
+    </ul>
+
+    <ul class="nav nav-tabs flex-column lighten-4 list-group">
+        <li style="text-align: center">
+            <h3>Outros</h3>
+        </li>
+        <li class="nav-item border">
+            @if ($admin)
+                <span>
                 <a class="btn btn-sm" data-toggle="tooltip" title="visualizar"
                    href="{{ route('ementario.view')}}" target="_blank">
                     Ementário
@@ -83,10 +93,10 @@
                 </a>
 
             </span>
-        @else
-            <span>
+            @else
+                <span>
                 <a class="btn" data-toggle="tooltip" title="visualizar"
-                      href="{{ route('ementario.view')}}" target="_blank">
+                   href="{{ route('ementario.view')}}" target="_blank">
                     Ementário <i class="fas fa-eye"></i>
                 </a>
             <a data-toggle="tooltip" title="download"
@@ -94,8 +104,9 @@
                 <i class="fas fa-download" style="color: black" aria-hidden="true"></i>
             </a>
             </span>
-        @endif
+            @endif
 
-    </li>
-</ul>
+        </li>
+    </ul>
+</form>
 <script src="{{ asset('site/lateralmenu.js') }}"></script>

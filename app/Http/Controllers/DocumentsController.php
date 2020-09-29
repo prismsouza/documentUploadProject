@@ -29,6 +29,7 @@ class DocumentsController extends Controller
 
     public function index(Request $request)
     {
+       //dd($request->all());
         if (!Session::has('admin')) {
             UsersController::setViewAsUser();
         }
@@ -120,24 +121,6 @@ class DocumentsController extends Controller
         }
 
         return redirect(route('documents.index'))->with('status', 'Erro ao tentar fazer download do documento ' . $document->name);
-    }
-
-    public function showByCategory(Category $category)
-    {
-        $this->refreshSession();
-        $request = new Request();
-        $request['categories'] = [$category->id];
-        Session::put('categories', $category->id);
-
-        if (Category::isCategoryBoletim($category->id)) {
-            $documents = Boletim::orderBy('date', 'desc')->where('category_id', $category->id)->paginate();
-        } else {
-            $documents = Document::orderBy('date', 'desc')->where('category_id', $category->id)->paginate();
-        }
-        $category_option = $category->name;
-
-        return view('documents.index', ['documents' => $documents, 'category_option' => $category_option, 'admin' => UsersController::isAdminView()]);
-
     }
 
     public function showDeletedDocuments()
