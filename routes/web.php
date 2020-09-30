@@ -1,7 +1,6 @@
 <?php
 /*
  * WHAT TO DO
- * Fix filter when not on path
  * Restore deleted files
  * Improve filter by word/description
  */

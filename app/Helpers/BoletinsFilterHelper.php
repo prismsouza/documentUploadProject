@@ -7,24 +7,21 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Session;
 
 function getFilteredBoletins($request) {
-
-   // dd($request->all());
     foreach ($request->all() as $key => $value) {
         Session::put($key, $value);
     }
 
     $documents = Boletim::all();
-    $query = [];
+
 
     if (Session::has('word')) {
         $word = Session::get('word');
-        array_push($query, $word);
         $documents = searchByWord($word, $documents);
     }
 
-    if (Session::has('categories') && $request->categories != null) {
+    //if (Session::has('categories') && $request->categories != null) {
+    if (request('categories') != NULL || Session::has('categories')) {
         $categories = Session::get('categories');
-        array_push($query, $categories);
         $documents = searchByCategories($categories, $documents);
     }
 
@@ -33,21 +30,24 @@ function getFilteredBoletins($request) {
         $last_date = Session::get('last_date');
         if ($first_date == null) $first_date = "0000-00-00";
         if ($last_date == null) $last_date = date("Y-m-d");
-        array_push($query, $first_date);
-        array_push($query, $last_date);
         $documents = searchByDate($first_date, $last_date, $documents);
     }
 
-    $documents = $documents->sortByDesc('date');
     return $documents;
 }
 
-function searchByWord($word)
+function searchByWord($sentence)
 {
-    $docs = Boletim::where('name','LIKE','%'.$word.'%')
-                        ->orWhere('description','LIKE','%'.$word.'%')
-                        ->get();
-    return $docs;
+    //dd([Session::get('word')]);
+    $docs_sentences = new Collection();
+    $docs = DB::select("select id, name, description from boletins WHERE MATCH (name, description) AGAINST ('$sentence') AND deleted_at IS NULL ");
+
+    foreach($docs as $doc) {
+        $document = Boletim::where('id', $doc->id)->first();
+        $docs_sentences->push($document);
+    }
+    Session::put('option', null);
+    return $docs_sentences;
 }
 
 function searchByCategories($categories, $documents)
@@ -71,26 +71,3 @@ function searchByDate($first_date, $last_date, $documents)
                         ->where('date','<=',$last_date);
     return $docs;
 }
-
-function searchByTags($tags, $documents)
-{
-    $docs_tags = new Collection();
-    foreach($tags as $tag_id) {
-        $docs = Tag::where('id', $tag_id)->firstOrFail()->documents;
-        foreach ($docs as $doc) {
-            $doc = $documents->where('id', $doc->id)->first();
-            if ($doc != null and !$docs_tags->contains($doc))
-                $docs_tags->push($doc);
-        }
-    }
-    return $docs_tags;
-}
-
-function searchByStatus($is_active, $documents)
-{
-    if ($is_active == -1) $is_active = 0;
-    $docs = $documents->where('is_active',$is_active);
-    return $docs;
-}
-
-

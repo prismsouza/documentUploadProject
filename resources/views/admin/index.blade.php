@@ -16,18 +16,26 @@
 
                 <table class="table table-striped" id="table_admin">
                     <thead>
-                        <tr>
-                            <th style="text-align: center">MASP</th>
-                            <th style="text-align: center">Unidade (quando inserido como admin)</th>
-                            <th style="text-align: center">Unidade Atual</th>
-                            <th style="text-align: center; width: 20%"></th>
-                        </tr>
+                    <tr>
+                        <th style="text-align: center">MASP</th>
+                        <th style="text-align: center">Super Administrador</th>
+                        <th style="text-align: center">Unidade (quando inserido como admin)</th>
+                        <th style="text-align: center">Unidade Atual</th>
+                        <th style="text-align: center; width: 20%"></th>
+                    </tr>
                     </thead>
                     <tbody>
                     @foreach($users as $user)
                         @if ($user->admin == -1) @continue @endif
                         <tr>
                             <td>{{$user->masp}}</td>
+                            <td><?php
+                                if ($user->isSuperAdmin) echo " <i class='far fa-check-circle' style='color: green'></i>";
+                                else echo '<i class="far fa-times-circle" style="color: red"></i>';
+                                ?>
+                            </td>
+
+
                             <td>{{$user->unit_oncreate}}</td>
                             <td>{{$user->unit_current}}</td>
                             <td>
@@ -50,13 +58,13 @@
                                 </form>
 
                                 <a type="submit" class="delete btn btn-danger" title="Deletar" id="destroy" name="destroy" data-toggle="tooltip"
-                                           onclick="if (confirm('Tem certeza que deseja DELETAR esse usuário?')){
-                                            event.preventDefault();
-                                            document.getElementById('delete-form-{{ $user->id }}').submit();
-                                            } else {
-                                            event.preventDefault();
-                                            }"
-                                           href=" {{ route ('admin.index') }}" style="color:white">
+                                   onclick="if (confirm('Tem certeza que deseja DELETAR esse usuário?')){
+                                       event.preventDefault();
+                                       document.getElementById('delete-form-{{ $user->id }}').submit();
+                                       } else {
+                                       event.preventDefault();
+                                       }"
+                                   href=" {{ route ('admin.index') }}" style="color:white">
                                     <i class="far fa-trash-alt" style="color: black" aria-hidden="true" data-toggle="tooltip" title="excluir"></i>
                                 </a>
                             </td>

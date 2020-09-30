@@ -29,7 +29,6 @@ class DocumentsController extends Controller
 
     public function index(Request $request)
     {
-       //dd($request->all());
         if (!Session::has('admin')) {
             UsersController::setViewAsUser();
         }

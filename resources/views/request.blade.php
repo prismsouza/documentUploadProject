@@ -1,5 +1,4 @@
-@if (Session::has('word') || (Session::has('categories') && gettype(Session::get('categories'))=="array") || Session::has('first_date') || Session::has('last_date') || Session::has('tags') || Session::has('is_active'))
-
+@if (Session::has('word') || Session::has('categories') || Session::has('first_date') || Session::has('last_date') || Session::has('tags') || Session::has('is_active'))
     <div class="border p-2">
         <b>Filtro aplicado:</b>
         @if (Session::get('word'))
@@ -7,7 +6,7 @@
             <b class="px-2"> {{ Session::get('word') }} </b>
         @endif
 
-        @if (Session::get('categories') && (request('categories') != NULL))
+        @if (Session::get('categories'))
             <br>Categorias:
             @foreach (Session::get('categories')  as $cat)
                 <b class="p-1">{{ $category = $categories->where('id', $cat)->first()->name }}</b>

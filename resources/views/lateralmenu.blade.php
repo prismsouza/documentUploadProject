@@ -4,23 +4,37 @@ $categories = App\Category::all()->sortBy('name');
 $documents = Document::all();
 ?>
 
-
 <span>
     <a class="list-group-item {{ Request::is('boletins') ? 'active' : ''}}"
-       href="/boletins">
+       href="{{route('boletins.refresh_session')}}">
         BGBM + BEBM + Separata
     </a>
 </span>
 
 <?php
-
-if (Session::has('categories') && count(Session::get('categories')) == 1 && !Request::is('boletins') ) {
+if (Session::has('categories') && count(Session::get('categories')) == 1 && !Request::is('boletins'))
     $choosen_category = Session::get('categories')[0];
-} else {
-    $choosen_category = null;
-}
+else $choosen_category = null;
 ?>
 
+<style>
+    .button {
+        cursor: pointer;
+        outline: none;
+        border: none;
+    }
+    .buttonsub {
+        background: white;
+        padding: 6px 0px 6px 0px;
+        font-size: 14px;
+        text-align: center;
+        cursor: pointer;
+        outline: none;
+        color: dimgrey;
+        border: none;
+    }
+    .buttonsub:hover {background-color: whitesmoke}
+</style>
 <form method="POST" action="{{ route('documents.index') }}" enctype="multipart/form-data" class="py-2"> @csrf
 
     <ul class="nav nav-tabs flex-column lighten-4 list-group">
@@ -28,41 +42,38 @@ if (Session::has('categories') && count(Session::get('categories')) == 1 && !Req
             <h3>Categorias</h3>
         </li>
         <li class="nav-item border">
-            <button class="list-group-item"
-                    href="{{route('documents.refresh_session')}}">
+            <a class="list-group-item" type="submit"
+               href="{{route('documents.refresh_session')}}">
                 <b>Todos</b>
-            </button>
+            </a>
         </li>
 
         @foreach($categories as $category)
             @if ($category->id == 1 ||  $category->id == 2|| $category->id == 3) @continue @endif
             <li class="nav-item border">
-
                 @if (count($category->hassubcategory)>0)
-                    <a class="collapsible list-group-item">
+                    <a class="collapsible button list-group-item" style="cursor: pointer">
                         {{ $category->name }}
                         <i class="fa fa-plus float-md-right"  style="color: lightblue" aria-hidden="true"></i>
                     </a>
                     <div class="content">
-                        <i class="fas fa-chevron-right fa-xs"></i>
-                        <a type="submit"  class="border-bottom {{ $choosen_category == $category->id ? 'active' : ''}}"
-                           href="" style="color: #6c757d"
-                           name="categories[]" value="{{$category->hassubcategory}}">
+                        <button type="submit" class="buttonsub {{ $choosen_category == $category->id ? 'active' : ''}}"
+                                name="categories[]" value="{{$category->id}}">
+                            <i class="fas fa-chevron-right fa-xs"></i>
                             Todos
-                        </a>
+                        </button>
                         @foreach($category->hassubcategory as $sub_cat)<br>
-                        <i class="fas fa-chevron-right fa-xs"></i>
-                        <a type="submit" class="border-bottom {{ $choosen_category == $sub_cat->id ? 'active' : ''}}"
-                           href="{{ $sub_cat->path() }}" style="color: #6c757d"
-                           name="categories[]" value="{{$sub_cat->id}}">
+
+                        <button type="submit" class="buttonsub  {{ $choosen_category == $sub_cat->id ? 'active' : ''}}"
+                                name="categories[]" value="{{$sub_cat->id}}">
+                            <i class="fas fa-chevron-right fa-xs"></i>
                             {{ $sub_cat->name }}
-                        </a>
+                        </button>
                         @endforeach
                     </div>
                 @else
-
                     @if (count($category->hasparent)==0)
-                        <button type="submit" class="list-group-item {{ $choosen_category == $category->id  ? 'active' : ''}}"
+                        <button type="submit" class="button list-group-item {{ $choosen_category == $category->id  ? 'active' : ''}}"
                                 name="categories[]" value="{{$category->id}}">
                             {{ $category->name }}
                         </button>
