@@ -68,6 +68,3 @@
             {{ $logs->links() }}
         @endif
 @endsection
-
-173 168
-conf

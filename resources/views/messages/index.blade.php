@@ -44,9 +44,7 @@
                 </td>
                 <td>
                     <?php $category_name = Category::where('id', $message->document->category_id )->first()->name; ?>
-                    <a href='{{ route('documents_category.index', $category_name) }}' target="_blank">
-                        {{ $category_name }}
-                    </a>
+                    {{ $category_name }}
                 </td>
                 <td>{{ $message->message }}</td>
                 <td>

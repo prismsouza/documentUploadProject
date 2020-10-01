@@ -13,7 +13,6 @@ function getFilteredBoletins($request) {
 
     $documents = Boletim::all();
 
-
     if (Session::has('word')) {
         $word = Session::get('word');
         $documents = searchByWord($word, $documents);

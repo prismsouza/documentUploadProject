@@ -2,7 +2,7 @@
     Reportar erro ou fazer sugestao
 </button>
 
-<form method="POST" action="{{ route ('message.store', $document->id) }}">
+<form method="POST" action="{{ route ('message.store') }}">
     @csrf
     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -21,6 +21,7 @@
                                 Deseja reportar algum erro na página ou fazer alguma sugestão/alerta para correção do conteúdo? (número máximo de caracteres: 800)
                             </span>
                         </div>
+                        <input style="display:none" name="document_id" value="{{ $document->id }}"/>
                         <div class="form-group">
                             <textarea class="form-control"
                                     id="message"

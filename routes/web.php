@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Route;
 #---- ADMIN PANEL ----#
 Route::get('/admin', 'UsersController@index')->name('admin.index');
 Route::get('/admin/deletados', 'DocumentsController@showDeletedDocuments')->name('documents.deleted_documents');
-Route::post('/admin/deletados/{document}', 'DocumentsController@restore')->name('documents.restore');
+Route::post('/admin/restaurar/{doc}', 'DocumentsController@restore')->name('documents.restore');
 Route::get('/admin/logs', 'DocumentsController@logs')->name('documents.logs');
 Route::get('/admin/logs_boletim', 'BoletinsController@logs')->name('boletins.logs');
 Route::get('/admin/falhas', 'DocumentsController@showFailedDocuments')->name('documents.failed_documents');

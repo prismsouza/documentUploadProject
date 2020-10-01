@@ -71,7 +71,7 @@
                     </td>
                     <td class="text-center">
                         <form method="POST" id="restore-form-{{ $document->id }}"
-                              action="{{ route('documents.restore', $document) }}"
+                              action="{{ route('documents.restore', $document->id) }}"
                               style="display: none;">
                             {{ csrf_field() }}
                         </form>

@@ -190,13 +190,14 @@ class DocumentsController extends Controller
         return redirect(route('documents.index'))->with('status', 'Documento ' . $document_name . ' deletado com sucesso!');
     }
 
-    public function restore(Document $document)
+    public function restore($id)
     {
+        $document = Document::withTrashed()->where('id', $id);
         if(!UsersController::isUserSuperAdmin())  return redirect(route('documents.index'));
         $document->restore();
-        $document->files()->restore();
-        $document->messages()->restore();
-        storeLog(UsersController::getMasp(), $document->id, "restore", 1);
+        $document->first()->files()->restore();
+        $document->first()->messages()->restore();
+        storeLog(UsersController::getMasp(), $id, "restore", 1);
         return redirect(route('documents.index'))->with('status', 'Documento restaurado com sucesso!');
     }
 

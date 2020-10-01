@@ -24,15 +24,15 @@ class MessagesController extends Controller
         return view('documents/message_report');
     }
 
-    public function store(Request $request, $doc_id)
+    public function store(Request $request)
     {
         $message = new Message($this->validateMessage());
-        $message->document_id = $doc_id;
+        $message->document_id = request('document_id');
         $message->boletim_id = NULL;
 
         $message->is_checked = 0;
         $message->save();
-        return redirect(route('documents.show', $doc_id));
+        return redirect(route('documents.show', $message->document_id))->with('status', 'Mensagem enviada');;
     }
 
     public function edit(Message $message)

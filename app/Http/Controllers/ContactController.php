@@ -27,7 +27,7 @@ class ContactController extends Controller
         $message = new Contact($this->validateMessage());
         $message->user_masp = UsersController::getMasp();
         $message->save();
-        return redirect(route('documents.index'))->with('status', 'Mensagem enviada');;
+        return redirect(route('documents.index'))->with('status', 'Mensagem enviada');
     }
 
     public function validateMessage()
