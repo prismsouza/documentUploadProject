@@ -4,7 +4,7 @@
     </div>
 @endif
 
-    <form method="POST" action="/categorias">
+    <form method="POST" action="{{ route ('categories.store') }}">
         @csrf
         <div class="row">
             <div class="col-4 field">

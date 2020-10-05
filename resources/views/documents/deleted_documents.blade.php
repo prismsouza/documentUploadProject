@@ -7,21 +7,21 @@
     @if ($documents->isNotEmpty())
         <table class="table table-bordered bg-white table-striped" id="myTable" >
             <thead class="text-center">
-            <th scope="col" style="width: 5%; text-align: center"> #</th>
-            <th cope="col" style="width: 26%; text-align: center">
+            <th scope="col" style="width: 4%; text-align: center"> #</th>
+            <th cope="col" style="width: 24%; text-align: center">
                 Nome
             </th>
             <th scope="col" style="width: 20%; text-align: center">
                 Descrição
             </th>
-            <th scope="col" style="width: 12%; text-align: center">
+            <th scope="col" style="width: 10%; text-align: center">
                 Categoria
             </th>
             <th scope="col" style="width: 9%; text-align: center">Data Documento</th>
             <th scope="col" style="width: 12%; text-align: center">Data Criação</th>
             <th scope="col" style="width: 7%; text-align: center">Excluído por</th>
             <th scope="col" style="width: 12%; text-align: center">Data Exclusão</th>
-            <th scope="col" style="width: 2%; text-align: center"></th>
+            <th scope="col" style="width: 7%; text-align: center">Restaurar</th>
 
             </thead>
             <tbody>

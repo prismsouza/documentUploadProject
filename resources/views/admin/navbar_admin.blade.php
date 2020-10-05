@@ -24,7 +24,7 @@
                     </a>
                 </td>
                 <td class="nav-item" style="width: 20%">
-                    <a class="nav-link {{ Request::is('mensagens') ? 'bg-light' : ''}}"
+                    <a class="nav-link {{ Request::is('admin/mensagens') ? 'bg-light' : ''}}"
                        href="{{ route('messages.index') }}"><b>Mensagens</b>
                     </a>
                 </td>

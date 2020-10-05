@@ -1,7 +1,6 @@
 <?php
 /*
  * WHAT TO DO
- * Restore deleted files
  * Improve filter by word/description
  */
 use Illuminate\Support\Facades\Route;

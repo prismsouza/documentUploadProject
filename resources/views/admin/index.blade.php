@@ -27,7 +27,8 @@
                     <tbody>
                     @foreach($users as $user)
                         @if ($user->admin == -1) @continue @endif
-                        <tr>
+                        <tr
+
                             <td>{{$user->masp}}</td>
                             <td><?php
                                 if ($user->isSuperAdmin) echo " <i class='far fa-check-circle' style='color: green'></i>";

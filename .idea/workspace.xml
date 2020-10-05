@@ -21,15 +21,10 @@
   <component name="ChangeListManager">
     <list default="true" id="70466de6-f2ca-45e6-9a16-4aac838e9201" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Helpers/BoletinsFilterHelper.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Helpers/BoletinsFilterHelper.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/ContactController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/ContactController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/DocumentsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/DocumentsController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/MessagesController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/MessagesController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Policies/DocumentPolicy.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/boletins/logs.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/boletins/logs.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/admin/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/admin/navbar_admin.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/navbar_admin.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/documents/deleted_documents.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/documents/deleted_documents.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/documents/message_report.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/documents/message_report.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/messages/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/messages/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/tags/create.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/tags/create.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -218,18 +213,18 @@
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/app/Helpers" />
+      <recent name="$PROJECT_DIR$/resources/views/admin" />
+      <recent name="$PROJECT_DIR$/resources/views/trash" />
+      <recent name="$PROJECT_DIR$/app/Http/trash" />
+    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/app/Http/Requests" />
       <recent name="$PROJECT_DIR$/app" />
       <recent name="$PROJECT_DIR$/resources/views/boletins" />
       <recent name="$PROJECT_DIR$/resources/views/documents" />
       <recent name="$PROJECT_DIR$/resources/views" />
-    </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/app/Helpers" />
-      <recent name="$PROJECT_DIR$/resources/views/admin" />
-      <recent name="$PROJECT_DIR$/resources/views/trash" />
-      <recent name="$PROJECT_DIR$/app/Http/trash" />
     </key>
   </component>
   <component name="RunManager" selected="JavaScript Debug.DocumentsController.php">
@@ -277,7 +272,12 @@
       <workItem from="1601465128672" duration="13211000" />
       <workItem from="1601487919164" duration="112000" />
       <workItem from="1601554837430" duration="1271000" />
-      <workItem from="1601561130413" duration="3922000" />
+      <workItem from="1601561130413" duration="4440000" />
+      <workItem from="1601640765544" duration="1310000" />
+      <workItem from="1601662647972" duration="599000" />
+      <workItem from="1601898511592" duration="1064000" />
+      <workItem from="1601912054230" duration="327000" />
+      <workItem from="1601916796403" duration="66000" />
     </task>
     <servers />
   </component>

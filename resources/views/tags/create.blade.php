@@ -1,4 +1,4 @@
-    <form method="POST" action="{{ route('tags.index') }}">
+    <form method="POST" action="{{ route('tags.store') }}">
         @csrf
         <div class="row">
             <div class="col-4 field">
