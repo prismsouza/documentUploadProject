@@ -27,7 +27,7 @@
                     <tbody>
                     @foreach($users as $user)
                         @if ($user->admin == -1) @continue @endif
-                        <tr
+                        <tr>
 
                             <td>{{$user->masp}}</td>
                             <td><?php
@@ -35,8 +35,6 @@
                                 else echo '<i class="far fa-times-circle" style="color: red"></i>';
                                 ?>
                             </td>
-
-
                             <td>{{$user->unit_oncreate}}</td>
                             <td>{{$user->unit_current}}</td>
                             <td>
