@@ -155,9 +155,11 @@ class DocumentsController extends Controller
         }
 
         if (request()->has('filesToUpload') && request('files')) {
+            //dd(request('files'));
             //request('filesToUpload')[0] != null) {
-            if ($_FILES['files']['error'])
-                return redirect(route('documents.edit', $document))->with('status', 'ERRO no upload de arquivo(s)');
+            //if ($_FILES['files']['error'])
+                //dd(request('files'));
+                //return redirect(route('documents.edit', $document))->with('status', 'ERRO no upload de arquivo(s)');
             $files->uploadMultipleFiles($request, $document, 1);
         }
 
