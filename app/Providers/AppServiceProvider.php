@@ -2,8 +2,7 @@
 
 namespace App\Providers;
 
-use App\Helpers\Collection;
-use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -25,19 +24,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-       /* Collection::macro('paginate', function($perPage, $total = null, $page = null, $pageName = 'page') {
-            $page = $page ?: LengthAwarePaginator::resolveCurrentPage($pageName);
-
-            return new LengthAwarePaginator(
-                $this->forPage($page, $perPage),
-                $total ?: $this->count(),
-                $perPage,
-                $page,
-                [
-                    'path' => LengthAwarePaginator::resolveCurrentPath(),
-                    'pageName' => $pageName,
-                ]
-            );
-        });*/
+        if(config('app.env') === 'production') {
+            URL::forceScheme('https');
+        }
     }
 }
