@@ -3,26 +3,8 @@ use App\Document;
 $categories = App\Category::all()->sortBy('name');
 $documents = Document::all();
 ?>
-<style>
-    @media screen and (min-width: 992px) {
-        #menulinks {
-            display: block;
-        }
-        #shmenulinks {
-            display: none;
-        }
-    }
 
-    @media screen and (max-width: 991px) {
-        #shmenulinks {
-            display: block;
-        }
-    }
-</style>
-
-<a id="shmenulinks" class="nav-link" style="border-radius: 0.25rem; cursor: pointer; width: 100%;" data-toggle="collapse" aria-expanded="true" aria-controls="menulinks" data-target="#menulinks"><i class="fa fa-bars" aria-hidden="true"></i></a>
-
-<div id="menulinks" class="nav-pills collapse">
+<div>
     <ul class="nav nav-tabs flex-column lighten-4 list-group">
         <li class="nav-item border">
         <a class="list-group-item {{ Request::is('boletins') ? 'active' : ''}}"
