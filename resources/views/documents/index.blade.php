@@ -8,9 +8,14 @@
 @section('content')
     @if (session('status'))
         <div class="alert alert-success">
-            {{ session('status') }}
+            {{ $request->session() }}
         </div>
     @endif
+    <?php
+    //print_r(Session::all());
+    ?>
+
+
     Número de resultados: <b>{{ $documents->total() }} </b>
         <div class="float-md-right">
             @if (UsersController::isUserSuperAdmin() && Session::get('admin') == 1)

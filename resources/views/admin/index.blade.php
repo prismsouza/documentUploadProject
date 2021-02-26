@@ -10,7 +10,7 @@
 
     <div id="wrapper">
         <div class="row">
-            <div class="col-7">
+            <div class="col-lg-7 col-md-12">
                 <h2 style="display: inline-block;">Administradores</h2>
                 @include('admin.create')
 
@@ -18,8 +18,8 @@
                     <thead>
                     <tr>
                         <th style="text-align: center">MASP</th>
-                        <th style="text-align: center">Super Administrador</th>
-                        <th style="text-align: center">Unidade (quando inserido como admin)</th>
+                        <th style="text-align: center">Super Admin</th>
+                        <th style="text-align: center">Unidade</th>
                         <th style="text-align: center">Unidade Atual</th>
                         <th style="text-align: center; width: 20%"></th>
                     </tr>
@@ -55,7 +55,7 @@
                                     {{ method_field('delete') }}
                                 </form>
 
-                                <a type="submit" class="delete btn btn-danger" title="Deletar" id="destroy" name="destroy" data-toggle="tooltip"
+                                <a type="submit" class="delete btn-sm btn-danger" title="Deletar" id="destroy" name="destroy" data-toggle="tooltip"
                                    onclick="if (confirm('Tem certeza que deseja DELETAR esse usuário?')){
                                        event.preventDefault();
                                        document.getElementById('delete-form-{{ $user->id }}').submit();
@@ -83,7 +83,7 @@
 
             <div class="menu col-1"></div>
 
-            <div class="menu col-4 text-center light lighten-1">
+            <div class="menu col-lg-4 col-md-0 col-sm-0 text-center light lighten-1">
                 <ul class="nav nav-tabs flex-column lighten-4 list-group">
                     <li style="text-align: center">
                         <h2>Acesso Rápido</h2>
