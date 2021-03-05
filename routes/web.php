@@ -5,6 +5,10 @@
  */
 use Illuminate\Support\Facades\Route;
 
+Route::get('/manutencao', function () {
+    return view('manutencao');
+});
+
 #---- ADMIN PANEL ----#
 Route::get('/admin', 'UsersController@index')->name('admin.index');
 Route::get('/admin/deletados', 'DocumentsController@showDeletedDocuments')->name('documents.deleted_documents');
