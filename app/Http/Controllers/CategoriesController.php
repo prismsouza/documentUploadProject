@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Category;
 use App\Document;
 use App\Http\Requests\CategoryRequest;
+use App\Http\Requests\CategoryUpdateRequest;
 use Illuminate\Http\Request;
 
 class CategoriesController extends Controller
@@ -38,8 +39,9 @@ class CategoriesController extends Controller
         return view('categories.edit', compact('category'));
     }
 
-    public function update(CategoryRequest $request, Category $category)
+    public function update(CategoryUpdateRequest $request, Category $category)
     {
+        //dd($request->all());
         $request->validated();
         $category->update($request->all());
         return redirect(route('categories.index'));

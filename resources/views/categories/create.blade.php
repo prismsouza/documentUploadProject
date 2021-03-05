@@ -41,7 +41,7 @@
             </div>
             <div class="col">
                 <div class="field is-grouped" id="btn_create_document">
-                    <button class="btn btn-dark btn-outline-light border" type="submit">Criar Categoria</button>
+                    <button id="create" class="btn btn-dark btn-outline-light border" type="submit">Criar Categoria</button>
                 </div>
             </div>
         </div>

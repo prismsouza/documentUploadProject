@@ -31,10 +31,9 @@
                     </div>
                 </div>
 
-                <button class="btn btn-light float-md-right border" style="color: black" type="submit">
+                <button id="edit" class="btn btn-light float-md-right border" style="color: black" type="submit">
                     <i class="fas fa-save" data-toggle="tooltip" title="salvar"></i>
                 </button>
             </form>
         </div>
-    </div>
 
