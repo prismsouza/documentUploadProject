@@ -15,6 +15,7 @@
                     name="name"
                     id="name"
                     value="{{ old('name') }}">
+                    @error('name')<p style="color: darkred">{{ $errors->first('name') }}</p>@enderror
             </div>
             <div class="col-6 field">
                 <label for="description">Descrição *</label>
@@ -24,6 +25,7 @@
                     name="description"
                     id="description"
                     value="{{ old('description') }}">
+                    @error('description')<p style="color: darkred">{{ $errors->first('description') }}</p>@enderror
             </div>
         </div>
         <div class="row">
@@ -35,6 +37,7 @@
                     name="hint"
                     id="hint"
                     value="{{ old('hint') }}">
+                @error('hint')<p style="color: darkred">{{ $errors->first('hint') }}</p>@enderror
             </div>
             <div class="col">
                 <div class="field is-grouped" id="btn_create_document">

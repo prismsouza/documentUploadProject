@@ -46,7 +46,7 @@ class CategoriesController extends Controller
             dd ($category->hasparent->first()->name);
         else
             dd("no parent");*/
-        dd($request->all());
+        //dd($request->all());
         $category->update($request->all());
         return redirect(route('categories.index'));
     }
