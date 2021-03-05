@@ -40,12 +40,10 @@
             <td class="col-sm-4 border py-2">
                 <div class="title">
                     <h5>
-                        <a href="{{ $category->path()  }}">
                             @if (count($category->hasparent)>0)
                                 {{  $category->hasparent->first()->name }} /
                             @endif
                             {{ $category->name }}
-                        </a>
 
                 <div class="btn-group float-md-right" role="group" aria-label="Basic example">
                     @if ($category->id != 1 && $category->id != 2 && $category->id != 3 && $category->id != 24)
