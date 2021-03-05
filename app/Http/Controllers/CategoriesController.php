@@ -40,13 +40,8 @@ class CategoriesController extends Controller
 
     public function update(CategoryRequest $request, Category $category)
     {
-
         $request->validated();
-        /*if (count($category->hasparent)>0)
-            dd ($category->hasparent->first()->name);
-        else
-            dd("no parent");*/
-        dd($request->all());
+
         $category->update($request->all());
         return redirect(route('categories.index'));
     }
