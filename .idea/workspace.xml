@@ -21,11 +21,7 @@
   <component name="ChangeListManager">
     <list default="true" id="70466de6-f2ca-45e6-9a16-4aac838e9201" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/admin/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/index.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/admin/navbar_admin.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/navbar_admin.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/documents/deleted_documents.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/documents/deleted_documents.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/tags/create.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/tags/create.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Helpers/DocumentsFilterHelper.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Helpers/DocumentsFilterHelper.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -213,18 +209,18 @@
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/app/Helpers" />
-      <recent name="$PROJECT_DIR$/resources/views/admin" />
-      <recent name="$PROJECT_DIR$/resources/views/trash" />
-      <recent name="$PROJECT_DIR$/app/Http/trash" />
-    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/app/Http/Requests" />
       <recent name="$PROJECT_DIR$/app" />
       <recent name="$PROJECT_DIR$/resources/views/boletins" />
       <recent name="$PROJECT_DIR$/resources/views/documents" />
       <recent name="$PROJECT_DIR$/resources/views" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/app/Helpers" />
+      <recent name="$PROJECT_DIR$/resources/views/admin" />
+      <recent name="$PROJECT_DIR$/resources/views/trash" />
+      <recent name="$PROJECT_DIR$/app/Http/trash" />
     </key>
   </component>
   <component name="RunManager" selected="JavaScript Debug.DocumentsController.php">
@@ -278,6 +274,10 @@
       <workItem from="1601898511592" duration="1064000" />
       <workItem from="1601912054230" duration="327000" />
       <workItem from="1601916796403" duration="66000" />
+      <workItem from="1615813633539" duration="36000" />
+      <workItem from="1615813693770" duration="175000" />
+      <workItem from="1615813898458" duration="603000" />
+      <workItem from="1616071654520" duration="3354000" />
     </task>
     <servers />
   </component>
@@ -295,73 +295,6 @@
       </map>
     </option>
     <option name="oldMeFiltersMigrated" value="true" />
-  </component>
-  <component name="WindowStateProjectService">
-    <state x="555" y="201" width="800" height="684" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1598974337305">
-      <screen x="0" y="383" width="1920" height="697" />
-    </state>
-    <state x="555" y="201" width="800" height="684" key="#com.intellij.execution.impl.EditConfigurationsDialog/1920.356.1920.1080/0.383.1920.697@0.383.1920.697" timestamp="1598974337305" />
-    <state x="660" y="342" width="623" height="403" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1601048347447">
-      <screen x="0" y="363" width="1920" height="717" />
-    </state>
-    <state x="660" y="342" width="623" height="403" key="#com.intellij.fileTypes.FileTypeChooser/1920.342.1920.1080/0.363.1920.717@0.363.1920.717" timestamp="1601048347447" />
-    <state x="2217" y="363" width="1306" height="1059" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog" timestamp="1600263666707">
-      <screen x="1920" y="342" width="1920" height="1080" />
-    </state>
-    <state x="2217" y="363" width="1306" height="1059" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/1920.342.1920.1080/0.363.1920.717@1920.342.1920.1080" timestamp="1600263666707" />
-    <state x="297" y="195" width="1306" height="704" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/1920.356.1920.1080/0.383.1920.697@0.383.1920.697" timestamp="1598996044768" />
-    <state x="693" y="377" width="524" height="491" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1601052269852">
-      <screen x="0" y="363" width="1920" height="717" />
-    </state>
-    <state x="693" y="377" width="524" height="491" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/1920.342.1920.1080/0.363.1920.717@0.363.1920.717" timestamp="1601052269852" />
-    <state x="2613" y="363" width="524" height="491" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/1920.342.1920.1080/0.363.1920.717@1920.342.1920.1080" timestamp="1600854260212" />
-    <state x="693" y="298" width="524" height="491" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/1920.356.1920.1080/0.383.1920.697@0.383.1920.697" timestamp="1598995989505" />
-    <state x="2613" y="410" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/1920.389.1920.1080/0.410.1920.670@1920.389.1920.1080" timestamp="1599743495515" />
-    <state x="738" y="287" width="424" height="520" key="FileChooserDialogImpl" timestamp="1600871899100">
-      <screen x="0" y="363" width="1920" height="717" />
-    </state>
-    <state x="738" y="287" width="424" height="520" key="FileChooserDialogImpl/1920.342.1920.1080/0.363.1920.717@0.363.1920.717" timestamp="1600871899100" />
-    <state width="263" height="500" key="HiddenNamespacesPopup" timestamp="1598974263004">
-      <screen x="0" y="383" width="1920" height="697" />
-    </state>
-    <state width="263" height="500" key="HiddenNamespacesPopup/1920.356.1920.1080/0.383.1920.697@0.383.1920.697" timestamp="1598974263004" />
-    <state x="582" y="377" width="745" height="512" key="NewPhpClassDialog" timestamp="1600941226650">
-      <screen x="0" y="363" width="1920" height="717" />
-    </state>
-    <state x="582" y="377" width="745" height="512" key="NewPhpClassDialog/1920.342.1920.1080/0.363.1920.717@0.363.1920.717" timestamp="1600941226650" />
-    <state x="2502" y="363" width="673" height="568" key="NewPhpClassDialog/1920.342.1920.1080/0.363.1920.717@1920.342.1920.1080" timestamp="1600171327184" />
-    <state x="582" y="259" width="745" height="568" key="NewPhpClassDialog/1920.356.1920.1080/0.383.1920.697@0.383.1920.697" timestamp="1598995962657" />
-    <state x="2291" y="477" width="1022" height="737" key="SettingsEditor" timestamp="1598966442378">
-      <screen x="1920" y="356" width="1920" height="1080" />
-    </state>
-    <state x="2291" y="477" width="1022" height="737" key="SettingsEditor/1920.356.1920.1080/0.383.1920.697@1920.356.1920.1080" timestamp="1598966442378" />
-    <state x="675" y="402" width="560" height="283" key="com.intellij.database.actions.DdlActions$DeleteProvider2$1" timestamp="1598992320453">
-      <screen x="0" y="383" width="1920" height="697" />
-    </state>
-    <state x="675" y="402" width="560" height="283" key="com.intellij.database.actions.DdlActions$DeleteProvider2$1/1920.356.1920.1080/0.383.1920.697@0.383.1920.697" timestamp="1598992320453" />
-    <state x="713" y="341" width="484" height="409" key="com.intellij.database.psi.DbRenamePsiElementProcessor.DbRenameDialog" timestamp="1598992492531">
-      <screen x="0" y="383" width="1920" height="697" />
-    </state>
-    <state x="713" y="341" width="484" height="409" key="com.intellij.database.psi.DbRenamePsiElementProcessor.DbRenameDialog/1920.356.1920.1080/0.383.1920.697@0.383.1920.697" timestamp="1598992492531" />
-    <state x="549" y="304" width="652" height="495" key="com.intellij.database.view.ui.AbstractDbRefactoringDialog" timestamp="1598992452511">
-      <screen x="0" y="383" width="1920" height="697" />
-    </state>
-    <state x="549" y="304" width="652" height="495" key="com.intellij.database.view.ui.AbstractDbRefactoringDialog/1920.356.1920.1080/0.383.1920.697@0.383.1920.697" timestamp="1598992452511" />
-    <state x="687" y="469" width="618" height="522" key="find.popup" timestamp="1601554953692">
-      <screen x="0" y="363" width="1920" height="717" />
-    </state>
-    <state x="687" y="469" width="618" height="522" key="find.popup/1920.342.1920.1080/0.363.1920.717@0.363.1920.717" timestamp="1601554953692" />
-    <state x="2607" y="501" width="618" height="783" key="find.popup/1920.342.1920.1080/0.363.1920.717@1920.342.1920.1080" timestamp="1600267241004" />
-    <state x="660" y="400" key="run.anything.popup" timestamp="1601055961861">
-      <screen x="0" y="363" width="1920" height="717" />
-    </state>
-    <state x="660" y="400" key="run.anything.popup/1920.342.1920.1080/0.363.1920.717@0.363.1920.717" timestamp="1601055961861" />
-    <state x="2580" y="398" key="run.anything.popup/1920.342.1920.1080/0.363.1920.717@1920.342.1920.1080" timestamp="1600201331123" />
-    <state x="2580" y="445" key="run.anything.popup/1920.389.1920.1080/0.410.1920.670@1920.389.1920.1080" timestamp="1599860127456" />
-    <state x="2641" y="806" width="540" height="179" key="vcs.readOnlyHandler.ReadOnlyStatusDialog" timestamp="1600106736427">
-      <screen x="1920" y="342" width="1920" height="1080" />
-    </state>
-    <state x="2641" y="806" width="540" height="179" key="vcs.readOnlyHandler.ReadOnlyStatusDialog/1920.342.1920.1080/0.363.1920.717@1920.342.1920.1080" timestamp="1600106736427" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

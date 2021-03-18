@@ -49,14 +49,19 @@ function getFilteredDocuments($request) {
 function searchByWord($sentence)
 {
     $docs_sentences = new Collection();
-    $docs = DB::select("select id, name, description from documents WHERE MATCH (name) AGAINST ('$sentence') OR MATCH (description) AGAINST ('$sentence') AND deleted_at IS NULL ");
+    //$docs = DB::select("select id, name, description from documents WHERE MATCH (name) AGAINST ('$sentence') OR MATCH (description) AGAINST ('$sentence') AND deleted_at IS NULL ");
 
-    //dd($docs);
+    $docs = DB::table('documents')
+            ->where('name', 'LIKE', '%'.$sentence.'%')
+            ->orwhere('description', 'LIKE', '%'.$sentence.'%')
+            ->where('deleted_at', '=', NULL)->get();
+
     foreach($docs as $doc) {
         $document = Document::where('id', $doc->id)->first();
         $docs_sentences->push($document);
     }
     Session::put('option', null);
+    //dd($docs_sentences);
     return $docs_sentences;
 }
 
