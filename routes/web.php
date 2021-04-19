@@ -34,6 +34,8 @@ Route::delete('/documentos/delete/{document}', 'DocumentsController@destroy')->n
 
 Route::get('refresh', 'DocumentsController@refreshSession')->name('documents.refresh_session');
 Route::get('refresh_boletim', 'BoletinsController@refreshSession')->name('boletins.refresh_session');
+Route::get('refreshindex', 'DocumentsController@refreshSessionIndex')->name('documents.refresh_session_index');
+
 
 #---- BOLETINS ----#
 Route::match(['post', 'get'], '/boletins', 'BoletinsController@index')->name('boletins.index');
