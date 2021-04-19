@@ -18,10 +18,10 @@
                     <thead>
                     <tr>
                         <th style="text-align: center">MASP</th>
+                        <th style="text-align: center" width="50%">Nome</th>
                         <th style="text-align: center">Super Admin</th>
                         <th style="text-align: center">Unidade</th>
-                        <th style="text-align: center">Unidade Atual</th>
-                        <th style="text-align: center; width: 20%"></th>
+                        <th style="text-align: center; width: 15%"></th>
                     </tr>
                     </thead>
                     <tbody>
@@ -29,13 +29,13 @@
                         @if ($user->admin == -1) @continue @endif
                         <tr>
                             <td>{{$user->masp}}</td>
+                            <td>{{$user->name}}</td>
                             <td><?php
                                 if ($user->isSuperAdmin) echo " <i class='far fa-check-circle' style='color: green'></i>";
                                 else echo '<i class="far fa-times-circle" style="color: red"></i>';
                                 ?>
                             </td>
                             <td>{{$user->unit_oncreate}}</td>
-                            <td>{{$user->unit_current}}</td>
                             <td>
                                 <span class="btn-group">
                                     <a class="add btn btn-success" title="Salvar" id="create" name="create" data-toggle="tooltip"

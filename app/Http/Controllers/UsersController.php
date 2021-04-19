@@ -5,11 +5,16 @@ namespace App\Http\Controllers;
 use App\Http\Requests\UserCreateRequest;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Session;
+
 
 class UsersController extends Controller
 {
     public $user = 0;
+    const PRODEMGE_API_URL_BM_NUMBER = "http://www.bpms.mg.gov.br/cbmmg-bpms-frontend/rest/acessoExternoBombeiros/consultarBombeiroAuth?matricula=";
+    const PRODEMGE_API_AUTH_KEY = "basic 48aee24f1e18a898260436381445069d";
+
 
     public static function setViewAsAdmin()
     {
@@ -55,14 +60,14 @@ class UsersController extends Controller
     {
         return User::where('masp', $masp)->first();
     }
-    // oi
+
     public function index()
     {
         if(!$this->isUserSuperAdmin())  return redirect(route('documents.index'));
         $users = User::orderBy('created_at', 'desc')->get();
         return view('admin.index', ['users' => $users]);
     }
-//oioioi
+
     public function create()
     {
         if(!$this->isUserSuperAdmin())  return redirect(route('documents.index'));
@@ -73,7 +78,9 @@ class UsersController extends Controller
     {
         $request->validated();
         $users = User::onlyTrashed()->get()->sortBy('deleted_at');
-        //dd ($request->masp); die();
+        $json = $this->getMilitaryData($request);
+        $json = json_decode($json);
+
         if (User::all()->where('masp', $request->masp)->first()) {
             $user = User::all()->where('masp', $request->masp)->first();
             return $this->update($request, $user);
@@ -82,11 +89,17 @@ class UsersController extends Controller
         else if ($users->where('masp', $request->masp)->first()) {
             $user = $users->where('masp', $request->masp)->first();
             $user->restore();
+            $user->name = $json->name;
+            $user->unit_oncreate = $json->unit_name;
+            $user->save();
             return redirect(route('admin.index'))->with('status', 'Administrador ' . $user->masp . '  inserido com sucesso!');
 
         }
         $user = new User(request(['masp']));
+        $user->name = $json->name;
+        $user->unit_oncreate = $json->unit_name;
         $user->save();
+
         return redirect(route('admin.index'))->with('status', 'Administrador ' . $user->masp . '  inserido com sucesso!');
     }
 
@@ -106,6 +119,11 @@ class UsersController extends Controller
     {
         if(!$this->isUserSuperAdmin())  return redirect(route('documents.index'));
         $request->validated();
+        $json = $this->getMilitaryData($request);
+        $json = json_decode($json);
+        $user->name = $json->name;
+        $user->unit_oncreate = $json->unit_name;
+        $user->save();
         return redirect(route('admin.index'))->with('status', 'Administrador ' . $user->masp . '  já existe e foi atualizado');
     }
 
@@ -123,6 +141,25 @@ class UsersController extends Controller
     public function getAdminUsers() {
         if(!$this->isUserSuperAdmin())  return redirect(route('documents.index'));
         return view('admin_panel');
+    }
+
+
+    public function getMilitaryData(Request $request)
+    {
+        $masp = substr($request->masp, 0, 6);
+        $url = sprintf("%s%s", self::PRODEMGE_API_URL_BM_NUMBER, $masp);
+
+        $response = Http::withHeaders([
+            'Authorization' => self::PRODEMGE_API_AUTH_KEY
+        ])->get($url);
+        $military_data = new \stdClass();
+        $military_data->number = sprintf("%s-%s", $response["bombeiroMilitar"]["numeroServidor"], $response["bombeiroMilitar"]["digitoVerificador"]);
+        $name = explode(" ", $response["bombeiroMilitar"]["nomeServidor"]);
+        $military_data->name = $response["bombeiroMilitar"]["nomeServidor"];
+        $military_data->graduation = $response["bombeiroMilitar"]["postoGraduacao"];
+        $military_data->unit_number = $response["bombeiroMilitar"]["unidade"]["codigo"];
+        $military_data->unit_name = $response["bombeiroMilitar"]["unidade"]["nomeAbreviado"];
+        return json_encode($military_data);
     }
 
     public function dumpArray($array) {

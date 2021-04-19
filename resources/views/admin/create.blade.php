@@ -16,7 +16,7 @@
                 <input
                     class="input @error('masp') is-danger @enderror col-2"
                     type="text"
-                    name="masp" minlength="6" maxlength="7"
+                    name="masp" minlength="7" maxlength="7"
                     id="masp" placeholder="MASP"
                     value="{{ old('masp') }}">
                     @error('masp')<p class="help is-danger">{{ $errors->first('name') }}</p>@enderror

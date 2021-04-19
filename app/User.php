@@ -22,8 +22,6 @@ class User extends Authenticatable
         return $this->hasMany(Document::class);
     }
 
-
-
     public function unit()
     {
         return $this->belongsTo(Unit::class);
