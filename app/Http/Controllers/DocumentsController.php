@@ -24,7 +24,7 @@ class DocumentsController extends Controller
 {
     public function refreshSession() {
         sessionRefresh();
-        return redirect(route('documents.index'));
+        return redirect(route('documents.home'));
     }
 
     public function index(Request $request)
@@ -32,11 +32,19 @@ class DocumentsController extends Controller
         if (!Session::has('admin')) {
             UsersController::setViewAsUser();
         }
+        print_r($request->all());
         $documents = getFilteredDocuments($request);
         $documents = getOrderedDocuments($request, $documents);
         $documents = CollectionHelper::paginate($documents , count($documents), CollectionHelper::perPage());
+
+        //return view('documents.index');
         return view('documents.index', ['documents' => $documents, 'category_option' => null, 'admin' => UsersController::isAdminView()]);
     }
+    public function home(Request $request)
+    {
+        return view('documents.home', ['admin' => UsersController::isAdminView()]);
+    }
+
 
     public function show(Document $document)
     {

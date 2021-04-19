@@ -21,8 +21,10 @@
   <component name="ChangeListManager">
     <list default="true" id="70466de6-f2ca-45e6-9a16-4aac838e9201" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Helpers/DocumentsFilterHelper.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Helpers/DocumentsFilterHelper.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/DocumentsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/DocumentsController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Providers/AppServiceProvider.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Providers/AppServiceProvider.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/boletins/edit.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/boletins/edit.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -205,16 +207,16 @@
     <property name="DatabaseDriversLRU" value="mysql" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/app/Http/Requests" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/resources/views/documents" />
     <property name="settings.editor.selected.configurable" value="preferences.sourceCode.PHP" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/resources/views/documents" />
       <recent name="$PROJECT_DIR$/app/Http/Requests" />
       <recent name="$PROJECT_DIR$/app" />
       <recent name="$PROJECT_DIR$/resources/views/boletins" />
-      <recent name="$PROJECT_DIR$/resources/views/documents" />
       <recent name="$PROJECT_DIR$/resources/views" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
@@ -279,7 +281,10 @@
       <workItem from="1615813693770" duration="175000" />
       <workItem from="1615813898458" duration="603000" />
       <workItem from="1616071654520" duration="3954000" />
-      <workItem from="1616079371562" duration="1552000" />
+      <workItem from="1616079371562" duration="2156000" />
+      <workItem from="1616523833893" duration="301000" />
+      <workItem from="1616524154072" duration="599000" />
+      <workItem from="1618796113885" duration="2005000" />
     </task>
     <servers />
   </component>

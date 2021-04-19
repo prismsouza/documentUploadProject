@@ -72,7 +72,7 @@
                                 type="text" maxlength="138"
                                 name="description" id="description"
                         value="{{ $boletim->description }}">
-
+z
                     @error('description')
                     <p class="help is-danger">{{ $errors->first('description') }}</p>
                     @enderror

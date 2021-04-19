@@ -21,7 +21,7 @@ Route::get('/admin/boletins/falhas', 'BoletinsController@showFailedBoletins')->n
 Route::delete('/arquivos/delete/{file}', 'FilesController@destroy')->name('files.destroy');
 
 #---- DOCUMENTS ----#
-Route::get('/', 'DocumentsController@index');
+Route::get('/home', 'DocumentsController@home')->name('documents.home');
 Route::match(['post', 'get'], '/documentos', 'DocumentsController@index')->name('documents.index');
 Route::post('/documentos/save', 'DocumentsController@store')->name('documents.store');
 Route::get('/documentos/novo', 'DocumentsController@create')->name('documents.create');
