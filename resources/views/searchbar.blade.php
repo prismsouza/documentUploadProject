@@ -165,7 +165,7 @@
                             </button>
 
                             <a class="btn btn-light border float-md-right"
-                               href="{{ route('documents.refresh_session') }}">
+                               href="{{ route('documents.refresh_session_index') }}">
                                 Limpar <i class="fas fa-eraser px-2"></i>
                             </a>
                             <a class="btn btn-light border float-md-right"

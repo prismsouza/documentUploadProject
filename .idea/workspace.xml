@@ -20,7 +20,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="70466de6-f2ca-45e6-9a16-4aac838e9201" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/searchbar.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/searchbar.blade.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -280,7 +280,7 @@
       <workItem from="1616079371562" duration="2156000" />
       <workItem from="1616523833893" duration="301000" />
       <workItem from="1616524154072" duration="599000" />
-      <workItem from="1618796113885" duration="2676000" />
+      <workItem from="1618796113885" duration="2782000" />
     </task>
     <servers />
   </component>
