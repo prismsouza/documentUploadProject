@@ -45,7 +45,7 @@ $documents = Document::all();
             </li>
             <li class="nav-item border">
                 <a class="list-group-item" type="submit"
-                   href="{{route('documents.refresh_session')}}">
+                   href="{{route('documents.index')}}">
                     <b>Todos</b>
                 </a>
             </li>
