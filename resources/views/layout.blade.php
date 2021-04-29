@@ -23,7 +23,7 @@
             </div>
         </div>
     </div>
-        @if ($_SERVER['REQUEST_URI'] == '/documentos' || $_SERVER['REQUEST_URI'] == '/boletins')
+        @if ($_SERVER['REQUEST_URI'] == '/' || $_SERVER['REQUEST_URI'] == '/documentos' || $_SERVER['REQUEST_URI'] == '/boletins')
             @include('contacts/create')
             @endif
 </div>
