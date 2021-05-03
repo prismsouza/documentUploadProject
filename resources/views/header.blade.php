@@ -33,7 +33,7 @@
                     Links relacionados<span class="float-md-right"> <span class="caret"></span></span>
                 </a>
 
-                <div class="dropdown-menu" aria-labelledby="navbarDropdown" style="width: 130%">
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown" style="width: 180%">
                     <a class="dropdown-item py-2"
                        href="http://pesquisalegislativa.mg.gov.br/Legislacao.aspx" target="_blank">
                         Normas Poder Executivo MG</a>

@@ -23,5 +23,23 @@
             <i class="fas fa-user-cog"></i>Visão do Administrador
         </a>
     @endif
-</div><br><br>
-    @endsection
+</div><br>
+
+@if (UsersController::isUserAdmin() && Session::get('admin') == 1)
+    <a href="{{ route('documents.create') }}">
+        <button class="btn btn-dark btn-outline-light border" type="submit">
+            Novo Documento
+        </button>
+    </a><p></p>
+@endif
+
+@if (UsersController::isUserAdmin() && Session::get('admin') == 0)
+
+<br><br>
+    <div style="border:1px dashed red; padding: 10px"><strong>Obs.: </strong>
+        Para acesso como administrador deste Módulo, a Unidade deverá encaminhar
+        uma solicitação à BM1 através do Sistema Eletronico de Informações - SEI.
+    </div>
+
+@endif
+@endsection
