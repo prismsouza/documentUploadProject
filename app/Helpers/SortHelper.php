@@ -21,6 +21,8 @@ function getOrderedDocuments($request, $documents)
     } elseif (Session::get('option') == 'dataCreatedAtDesc') {
         $documents = $documents->sortByDesc('created_at');
     }
+    else
+        $documents = $documents->sortByDesc('date');
     //$documents = CollectionHelper::paginate($documents , count($documents), CollectionHelper::perPage());
 
     return $documents;
