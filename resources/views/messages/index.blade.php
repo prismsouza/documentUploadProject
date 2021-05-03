@@ -15,11 +15,12 @@
     </div>
 
     <table class="table table-bordered table-striped">
-        <tr>
+        <tr class="text-center">
             <th style="width: 4%" >#</th>
             <th>Documento</th>
             <th style="width: 10%">Categoria</th>
             <th style="width: 40%" >Mensagem</th>
+            <th style="width: 10%" >Usuário</th>
             <th style="width: 10%" >Data</th>
             <th style="width: 5%">Verificada</th>
         </tr>
@@ -47,6 +48,7 @@
                     {{ $category_name }}
                 </td>
                 <td>{{ $message->message }}</td>
+                <td>{{ $message->user_masp }}</td>
                 <td>
                     <?php $date= date('d/m/Y', strtotime($message->created_at)); ?>
                     {{ $date }}

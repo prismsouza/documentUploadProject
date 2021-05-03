@@ -10,7 +10,7 @@
 
     <div id="wrapper">
         <div class="row">
-            <div class="col-lg-7 col-md-12">
+            <div class="col-lg-9 col-md-12">
                 <h2 style="display: inline-block;">Administradores</h2>
                 @include('admin.create')
 
@@ -21,7 +21,8 @@
                         <th style="text-align: center" width="50%">Nome</th>
                         <th style="text-align: center">Super Admin</th>
                         <th style="text-align: center">Unidade</th>
-                        <th style="text-align: center; width: 15%"></th>
+                        <th style="text-align: center">Criado em</th>
+                        <th style="text-align: center; width: 8%"></th>
                     </tr>
                     </thead>
                     <tbody>
@@ -36,6 +37,7 @@
                                 ?>
                             </td>
                             <td>{{$user->unit_oncreate}}</td>
+                            <td>{{ date('d/m/Y', strtotime($user->created_at)) }}</td>
                             <td>
                                 <span class="btn-group">
                                     <a class="add btn btn-success" title="Salvar" id="create" name="create" data-toggle="tooltip"
@@ -81,9 +83,8 @@
                 });
             </script>
 
-            <div class="menu col-1"></div>
-
-            <div class="menu col-lg-4 col-md-0 col-sm-0 text-center light lighten-1">
+            <div class="menu col-lg-3 col-md-0 col-sm-0 text-center light lighten-1">
+                <br>
                 <ul class="nav nav-tabs flex-column lighten-4 list-group">
                     <li style="text-align: center">
                         <h2>Acesso Rápido</h2>
@@ -94,7 +95,7 @@
                             Listar documentos
                         </a>
                     </li>
-                    <li class="nav-item border">
+                    <!--<li class="nav-item border">
                         <a class="btn btn-link" href="{{route('documents.failed_documents')}}" target="_blank">
                             Listar documentos com falha no PDF
                         </a>
@@ -103,7 +104,7 @@
                         <a class="btn btn-link" href="{{route('boletins.failed_boletins')}}" target="_blank">
                             Listar boletins com falha no PDF
                         </a>
-                    </li>
+                    </li>-->
                     <li class="nav-item border">
                         <a class="btn btn-link" href="{{route('documents.deleted_documents')}}" target="_blank">
                             Listar documentos deletados
@@ -126,7 +127,7 @@
                     </li>
                     <li class="nav-item border">
                         <a class="btn btn-link" href="{{route('contacts.index')}}" target="_blank">
-                            Listar mensagens/contatos recebidos
+                            Mensagens/contatos recebidos
                         </a>
                     </li>
                 </ul>

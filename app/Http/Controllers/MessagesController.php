@@ -14,7 +14,7 @@ class MessagesController extends Controller
     public function index(Request $request)
     {
         $messages = getFilteredMessages($request);
-        $messages = $messages->sortBy('is_checked');
+        $messages = $messages->sortByDesc('created_at')->sortBy('is_checked');
         $messages = CollectionHelper::paginate($messages , count($messages), CollectionHelper::perPage());
         return view('messages.index', ['messages' => $messages]);
     }
@@ -29,7 +29,7 @@ class MessagesController extends Controller
         $message = new Message($this->validateMessage());
         $message->document_id = request('document_id');
         $message->boletim_id = NULL;
-
+        $message->user_masp = UsersController::getMasp();
         $message->is_checked = 0;
         $message->save();
         return redirect(route('documents.show', $message->document_id))->with('status', 'Mensagem enviada');;
